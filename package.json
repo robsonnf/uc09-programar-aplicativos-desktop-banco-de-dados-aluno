@@ -1,0 +1,8 @@
+{
+  "name": "uc09-programar-aplicativos-desktop-banco-de-dados-aluno",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/servir.mjs"
+  }
+}
