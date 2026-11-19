@@ -37,7 +37,7 @@ Cada fase usa o que a anterior construiu. O projeto é contínuo: o repositório
 | A04 | 1 | Ambiente virtual, módulos, exceções e histórico local | [Abrir aula](lessons/0004-ambiente-virtual-modulos-excecoes-e-historico-local.html) |
 | A05 | 1 | POO básica: classes, objetos e composição | [Abrir aula](lessons/0005-poo-basica-classes-objetos-e-composicao.html) |
 | A06 | 2 | Modelagem relacional e SQL essencial | [Abrir aula](lessons/0006-modelagem-relacional-e-sql-essencial.html) |
-| A07 | 2 | Conexão Python–banco e ciclo da conexão | Planejada |
+| A07 | 2 | Conexão Python–banco e ciclo da conexão | [Abrir aula](lessons/0007-conexao-python-banco-e-ciclo-da-conexao.html) |
 | A08 | 2 | Inserção e consulta parametrizadas | Planejada |
 | A09 | 2 | Atualização e remoção por identificador | Planejada |
 | A10 | 2 | Transações, integridade e persistência | Planejada |
