@@ -36,7 +36,7 @@ Cada fase usa o que a anterior construiu. O projeto é contínuo: o repositório
 | A03 | 1 | Raciocínio no papel, pseudocódigo e tradução para Python | [Abrir aula](lessons/0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html) |
 | A04 | 1 | Ambiente virtual, módulos, exceções e histórico local | [Abrir aula](lessons/0004-ambiente-virtual-modulos-excecoes-e-historico-local.html) |
 | A05 | 1 | POO básica: classes, objetos e composição | [Abrir aula](lessons/0005-poo-basica-classes-objetos-e-composicao.html) |
-| A06 | 2 | Modelagem relacional e SQL essencial | Planejada |
+| A06 | 2 | Modelagem relacional e SQL essencial | [Abrir aula](lessons/0006-modelagem-relacional-e-sql-essencial.html) |
 | A07 | 2 | Conexão Python–banco e ciclo da conexão | Planejada |
 | A08 | 2 | Inserção e consulta parametrizadas | Planejada |
 | A09 | 2 | Atualização e remoção por identificador | Planejada |
