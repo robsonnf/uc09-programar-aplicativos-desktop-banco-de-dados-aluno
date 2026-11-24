@@ -1,0 +1,604 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A13 · Grave e apague pela janela: cadastro e listagem no MySQL</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A13" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A13</span><span>Cadastro e listagem integrados ao banco<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Adicionado, mas não gravado</a></li><li><a href="#esteira">Do clique à linha gravada</a></li><li><a href="#gravar">Um clique, uma transação</a></li><li><a href="#selecao">Escolher a linha, confirmar, apagar pelo id</a></li><li><a href="#conexao">Quando o MySQL não responde</a></li><li><a href="#tutorial">Tutorial: remover do acervo, com pergunta e falha</a></li><li><a href="#pratica">A janela que grava</a></li><li><a href="#auditoria">A janela que grava se sustenta?</a></li><li><a href="#registro">Entregue o que prova a janela que grava</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A14</span><span>Edição, exclusão e sincronização da interface<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A15</span><span>Sprint CRUD, testes de fluxo e devolutiva<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A16</span><span>Filtros, ordenação e consulta vazia<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A17</span><span>JOIN, agregações e listagens estruturadas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A18</span><span>Arquivos, caminhos, codificação e CSV<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A19</span><span>Carga massiva, inconsistências e transações em lote<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A20</span><span>MVC aplicado à refatoração do aplicativo<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A21</span><span>Repository/DAO, serviços e responsabilidades<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A22</span><span>Consolidação arquitetural e testes de regressão<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A23</span><span>ORM: ambiente, mapeamento, sessão e transação<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A24</span><span>ORM: relacionamentos, CRUD e consultas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A25</span><span>SQL direto × ORM e decisão documentada<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A13</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Grave e apague pela janela: cadastro e listagem no MySQL</h1><p class="thesis">A janela da A12 valida e entrega o item, mas nada chega ao banco. Hoje o Adicionar grava no MySQL numa transação, somando no item de mesmo nome; a lista ganha seleção e o botão Remover, com confirmação; e a janela sobrevive ao MySQL desligado, avisando no status em vez de fechar. No fim, você depura uma ligação herdada que dizia Adicionado sem gravar e apagava o item errado.</p><p data-idoc="caveat">A aula continua na janela da A12, no MySQL da A08 e com o em_transacao da A10. Editar o item e manter a janela em dia com o que outras pessoas gravam ficam para a A14. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Gravar pela janela com uma transação por ação, reaproveitando repositório e em_transacao</li><li>Somar no item de mesmo nome com SELECT ... FOR UPDATE, e explicar por que o nome do MySQL não diferencia maiúsculas</li><li>Usar a seleção da lista (o evento virtual &lt;&lt;TreeviewSelect&gt;&gt;) e confirmar antes de apagar pelo id</li><li>Traduzir a falta do MySQL em ConnectionError na ligação e mostrar o aviso na janela sem fechá-la</li><li>Rastrear e corrigir uma ligação herdada a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A12: kits/janela.py com validação e eventos, abrir_janela.py com fontes e anotar, tests/test_janela.py e tests/test_fontes.py</li><li>em_transacao da A10 (com três tentativas) e remover_item da A09 em kits/repositorio.py</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app; permissão para parar e ligar o serviço MySQL84, ou o professor faz isso no projetor</li></ul><section id="partida" data-stop="partida"><h2>Adicionado, mas não gravado <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#partida" aria-label="Versão para leitura: Adicionado, mas não gravado">↗</a></h2><p>Antes do seu abrir_janela.py, alguém fez outra ligação entre a janela e o banco, abrir_legado.py, e vieram quatro relatos. Adicionar mostra Adicionado: Alicate (4), mas o Alicate não aparece na lista, nem fechando e abrindo a janela. Depois que um colega mexeu nisso, adicionar Cabo no kit 1 passou a criar uma segunda linha Cabo.</p><p>Remover o Cabo do kit 1 apagou também o Cabo do kit 2. E, com o MySQL desligado, a janela nem abre: aparece um traceback com o número 2003.</p><p>Em dupla, antes de abrir o código: a janela é a mesma da A12, que passou em todos os testes. Onde podem estar os defeitos, e que teste da A12 poderia ter pego algum deles?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: adicionar_item em kits/repositorio.py; kits/janela.py com Remover, Recarregar e o aviso de banco fora; abrir_janela.py com protegido, fontes e gravacoes; tests/test_janela.py e tests/test_fontes.py; e a seção Cadastro e remoção no banco no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam e, pela janela, Cabo com 2 leva o Cabo do kit 1 a 5 no banco kits.</p></div></section><section id="esteira" data-stop="esteira"><h2>Do clique à linha gravada <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#esteira" aria-label="Versão para leitura: Do clique à linha gravada">↗</a></h2><ol class="pipeline"><li><strong>Validar</strong><p>A janela confere com as regras do domínio, como na A12.</p></li><li><strong>Entregar</strong><p>A janela chama adicionar ou remover, que vieram de fora.</p></li><li><strong>Transação</strong><p>A ligação abre uma em_transacao: trava, decide, grava e faz commit, ou desfaz tudo.</p></li><li><strong>Traduzir</strong><p>Se o MySQL não responde, a ligação troca o erro do conector por ConnectionError.</p></li><li><strong>Mostrar</strong><p>A janela avisa o resultado ou a recusa e lê a lista de novo.</p></li><li><strong>Provar</strong><p>Testar a janela com um banco de mentira e a ligação com o kits_teste, inclusive com o servidor fora.</p></li></ol></section><section id="gravar" data-stop="gravar"><h2>Um clique, uma transação <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#gravar" aria-label="Versão para leitura: Um clique, uma transação">↗</a></h2><p>Cada ação da janela é uma transação curta: abrir, fazer, commit. Nada de uma conexão aberta enquanto a pessoa pensa, como no relato 4 da A11. A ligação usa a em_transacao da A10, que faz commit no fim, desfaz no erro e tenta de novo no deadlock. O relato 1 de hoje é o contrário: uma conexão aberta à mão, um INSERT e um close sem commit. O conector começa com o autocommit desligado, e fechar sem commit desfaz o que estava pendente. A janela disse Adicionado porque ninguém reclamou.</p><p>Adicionar um item que o kit já tem soma no existente, como a transferência da A10: um item por nome em cada kit. Para isso, adicionar_item procura o item de mesmo nome com SELECT ... FOR UPDATE e decide: se existe, UPDATE; se não, INSERT. O FOR UPDATE segura o que leu até o commit. Sem ele, dois cadastros de Alicate ao mesmo tempo leem que não há Alicate e criam duas linhas; os testes do projeto provam isso com dois técnicos.</p><p>O MySQL compara textos pela regra de comparação da tabela, e a padrão do 8.4, utf8mb4_0900_ai_ci, não diferencia maiúsculas de minúsculas: WHERE nome = &#x27;cabo&#x27; encontra o Cabo. Para os kits, é o que se quer: cabo e Cabo são o mesmo item, e a soma vai para a linha que já existia, com o nome como estava.</p><div class="versus"><div class="bad"><h3>Conexão à mão, sem commit</h3><p>O INSERT fica pendente e o close o desfaz. A janela mostra Adicionado mesmo assim.</p><pre><code>con = mysql.connector.connect(**ler_config())
+cur = con.cursor()
+cur.execute(&#x27;INSERT INTO item ...&#x27;, valores)
+con.close()</code></pre></div><div class="good"><h3>Uma em_transacao por ação</h3><p>Commit no fim, rollback no erro, nova tentativa no deadlock.</p><pre><code>def adicionar(kit_id, item):
+    return protegido(lambda: em_transacao(
+        lambda con: adicionar_item(con, kit_id, item), config))</code></pre></div></div></section><section id="selecao" data-stop="selecao"><h2>Escolher a linha, confirmar, apagar pelo id <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#selecao" aria-label="Versão para leitura: Escolher a linha, confirmar, apagar pelo id">↗</a></h2><p>Na A11, cada linha da lista guardou o id do item como iid. Agora ele serve: lista.selection() devolve o iid da linha escolhida, e remover recebe esse id. Apagar pelo nome, como no relato 3, apaga todos os itens com aquele nome, de todos os kits.</p><p>Quando a seleção muda, por clique ou pelas setas do teclado, o Treeview gera o evento virtual &lt;&lt;TreeviewSelect&gt;&gt;, com dois sinais de menor e maior. Ele é ligado com bind, como o Enter da A12. A janela usa esse evento para ligar o botão Remover só quando há uma linha escolhida; trocar de kit desliga de novo.</p><p>Remover não tem volta, então a janela pergunta antes, com o nome do item. A pergunta usa tkinter.messagebox.askyesno, uma caixa de diálogo do próprio Windows que espera Sim ou Não e devolve True ou False. A janela não chama messagebox direto: recebe uma função perguntar, como recebe adicionar. Nos testes, perguntar é uma função de mentira que responde o que o teste quiser, sem abrir caixa nenhuma.</p></section><section id="conexao" data-stop="conexao"><h2>Quando o MySQL não responde <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#conexao" aria-label="Versão para leitura: Quando o MySQL não responde">↗</a></h2><p>Um aplicativo desktop fica aberto por horas, e o banco pode parar no meio: o serviço foi desligado, a rede caiu, o servidor reiniciou. O conector avisa com erros numerados: 2003 (não conseguiu conectar), 2013 (perdeu a conexão no meio de um comando), 2055 e 2005 (conexão perdida ou servidor não encontrado). Sem tratamento, o erro vira traceback no terminal: ao abrir, a janela nem aparece; depois de aberta, o callback falha e a pessoa não vê nada.</p><p>A janela não sabe SQL nem conhece o conector, então quem traduz é a ligação: protegido roda a operação e troca esses erros por ConnectionError, uma exceção do próprio Python, com uma mensagem que diz o que fazer. A janela mostra ConnectionError como mostra LookupError e ValueError: no status ou no aviso, sem fechar e sem apagar o que foi digitado. O botão Recarregar tenta de novo.</p><p>Só esses erros são traduzidos. Uma senha errada (1045) ou um SQL errado (1064) continuam como vieram: não são o banco fora do ar, são defeitos ou configuração, e escondê-los atrás de um aviso educado atrasaria o conserto.</p><div class="table-wrap"><table><caption>Quem trata o quê</caption><thead><tr><th scope="col">Situação</th><th scope="col">Quem percebe</th><th scope="col">O que a pessoa vê</th></tr></thead><tbody><tr><td>Quantidade dez</td><td>A janela, com ler_quantidade</td><td>O erro embaixo do campo Quantidade</td></tr><tr><td>Kit removido por outra pessoa</td><td>adicionar_item, com o erro 1452 traduzido em LookupError</td><td>Não adicionado: Kit N não existe</td></tr><tr><td>Item já removido por outra pessoa</td><td>remover_item, com rowcount 0</td><td>Não removido: Item N não existe</td></tr><tr><td>MySQL desligado</td><td>protegido, com os erros 2003, 2005, 2013 e 2055</td><td>A mensagem no status ou no aviso, e o botão Recarregar</td></tr><tr><td>Senha errada no banco.ini</td><td>Ninguém traduz: é configuração</td><td>O traceback no terminal, com o erro 1045</td></tr></tbody></table></div></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: remover do acervo, com pergunta e falha <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#tutorial" aria-label="Versão para leitura: Tutorial: remover do acervo, com pergunta e falha">↗</a></h2><p>O tutorial usa um acervo de livros guardado num dicionário, sem banco: o assunto é a seleção, a pergunta e a falha. Crie acervo.py na raiz do projeto com o código do passo 1. Os passos seguintes entram antes do janela.mainloop(), ou trocam uma função, como diz cada legenda. Rode com .\.venv\Scripts\python.exe acervo.py.</p><p>As imagens são capturas reais das janelas geradas por esse código, depois das ações de cada legenda, no Windows 11 com CustomTkinter 6.0.0, inclusive a caixa de diálogo. A tela do terminal veio da execução do mesmo código.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo acervo.py inteiro</figcaption><pre><code>from tkinter import messagebox, ttk
+
+import customtkinter as ctk
+
+ACERVO = {1: (&#x27;Guia de Redes&#x27;, 2), 2: (&#x27;Atlas&#x27;, 1), 3: (&#x27;Dicionário&#x27;, 4)}
+
+ctk.set_appearance_mode(&#x27;light&#x27;)
+janela = ctk.CTk()
+janela.title(&#x27;Acervo do Centro&#x27;)
+janela.geometry(&#x27;460x320&#x27;)
+janela.grid_columnconfigure(0, weight=1)
+janela.grid_rowconfigure(0, weight=1)
+
+lista = ttk.Treeview(janela, columns=(&#x27;titulo&#x27;, &#x27;exemplares&#x27;), show=&#x27;headings&#x27;, selectmode=&#x27;browse&#x27;)
+lista.heading(&#x27;titulo&#x27;, text=&#x27;Título&#x27;)
+lista.heading(&#x27;exemplares&#x27;, text=&#x27;Exemplares&#x27;)
+lista.grid(row=0, column=0, columnspan=2, sticky=&#x27;nsew&#x27;, padx=12, pady=(12, 6))
+aviso = ctk.CTkLabel(janela, text=&#x27;&#x27;, anchor=&#x27;w&#x27;)
+aviso.grid(row=1, column=0, padx=12, pady=(0, 12), sticky=&#x27;ew&#x27;)
+remover = ctk.CTkButton(janela, text=&#x27;Remover&#x27;, width=110, state=&#x27;disabled&#x27;)
+remover.grid(row=1, column=1, padx=12, pady=(0, 12), sticky=&#x27;e&#x27;)
+
+
+def mostrar():
+    lista.delete(*lista.get_children())
+    for livro_id, (titulo, exemplares) in ACERVO.items():
+        lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(livro_id), values=(titulo, exemplares))
+    remover.configure(state=&#x27;disabled&#x27;)
+
+
+mostrar()
+janela.mainloop()
+</code></pre></figure><figure class="janela"><figcaption>Passo 1 · A lista e o botão desligado</figcaption><p>Rode e clique em Remover.</p><img src="../figuras/A13/passo1.png" width="462" height="352" alt="Janela Acervo do Centro com a lista Guia de Redes 2, Atlas 1 e Dicionário 4 e o botão Remover desbotado."><p class="tela-nota"><strong>Repare:</strong> O botão está desligado e ainda não tem command: nada acontece.</p></figure><figure class="code-block"><figcaption>Passo 2 · Antes do janela.mainloop(): a seleção liga o botão</figcaption><pre><code>def selecionou(_evento):
+    escolhido = lista.selection()
+    remover.configure(state=&#x27;normal&#x27; if escolhido else &#x27;disabled&#x27;)
+    if escolhido:
+        aviso.configure(text=f&#x27;Selecionado: {lista.item(escolhido[0], &quot;values&quot;)[0]}&#x27;, text_color=(&#x27;gray10&#x27;, &#x27;#DCE4EE&#x27;))
+
+
+lista.bind(&#x27;&lt;&lt;TreeviewSelect&gt;&gt;&#x27;, selecionou)
+</code></pre></figure><figure class="janela"><figcaption>Passo 2 · Escolha o Atlas</figcaption><p>Rode e clique na linha do Atlas.</p><img src="../figuras/A13/passo2.png" width="462" height="352" alt="A mesma janela com a linha Atlas destacada, o texto Selecionado: Atlas e o botão Remover ligado."><p class="tela-nota"><strong>Repare:</strong> O &lt;&lt;TreeviewSelect&gt;&gt; chegou com o evento, por isso selecionou recebe _evento.</p></figure><figure class="code-block"><figcaption>Passo 3 · Antes do janela.mainloop(): perguntar e apagar</figcaption><pre><code>def apagar(livro_id):
+    del ACERVO[livro_id]
+
+
+def remover_selecionado():
+    livro_id = int(lista.selection()[0])
+    titulo = ACERVO[livro_id][0]
+    if not messagebox.askyesno(&#x27;Confirmar&#x27;, f&#x27;Remover {titulo} do acervo?&#x27;):
+        return
+    apagar(livro_id)
+    aviso.configure(text=f&#x27;Removido: {titulo}&#x27;)
+    mostrar()
+
+
+remover.configure(command=remover_selecionado)
+</code></pre></figure><figure class="janela"><figcaption>Passo 3 · A pergunta</figcaption><p>Rode, escolha o Atlas e clique em Remover.</p><img src="../figuras/A13/passo3.png" width="224" height="152" alt="Caixa de diálogo Confirmar com o ícone de pergunta, o texto Remover Atlas do acervo? e os botões Sim e Não."><p class="tela-nota"><strong>Repare:</strong> Enquanto a caixa está aberta, a janela de trás não responde: o askyesno só volta com a resposta.</p></figure><figure class="janela"><figcaption>Passo 4 · Depois do Sim</figcaption><p>Responda Sim.</p><img src="../figuras/A13/passo4.png" width="462" height="352" alt="A janela sem o Atlas na lista, com o texto Removido: Atlas e o botão Remover desbotado."><p class="tela-nota"><strong>Repare:</strong> mostrar leu o acervo de novo e desligou o botão: não há mais linha escolhida.</p></figure><figure class="code-block"><figcaption>Passo 5 · Troque a função apagar: o servidor não responde</figcaption><pre><code>def apagar(livro_id):
+    raise ConnectionError(&#x27;Sem conexão com o servidor.&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 5 · O erro que a janela engole</figcaption><p>Rode, escolha o Atlas, clique em Remover e responda Sim. A janela não muda; olhe o PowerShell.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 5 · O erro que a janela engole"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo.py</kbd>
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File &quot;C:\Python314\Lib\tkinter\__init__.py&quot;, line 2114, in __call__
+    return self.func(*args)
+           ~~~~~~~~~^^^^^^^
+  File &quot;C:\projetos\kits\.venv\Lib\site-packages\customtkinter\windows\widgets\ctk_button.py&quot;, line 564, in _on_release
+    self._command()
+    ~~~~~~~~~~~~~^^
+  File &quot;C:\projetos\kits\acervo.py&quot;, line 50, in remover_selecionado
+    apagar(livro_id)
+    ~~~~~~^^^^^^^^^^
+  File &quot;C:\projetos\kits\acervo.py&quot;, line 42, in apagar
+    raise ConnectionError(&#x27;Sem conexão com o servidor.&#x27;)
+ConnectionError: Sem conexão com o servidor.</code></pre><p class="tela-nota"><strong>Repare:</strong> O ConnectionError escapou do callback do clique (_on_release). A pessoa respondeu Sim e não ficou sabendo de nada.</p></figure><figure class="code-block"><figcaption>Passo 6 · Troque a função remover_selecionado inteira</figcaption><pre><code>def remover_selecionado():
+    livro_id = int(lista.selection()[0])
+    titulo = ACERVO[livro_id][0]
+    if not messagebox.askyesno(&#x27;Confirmar&#x27;, f&#x27;Remover {titulo} do acervo?&#x27;):
+        return
+    try:
+        apagar(livro_id)
+    except ConnectionError as erro:
+        aviso.configure(text=f&#x27;Não removido: {erro}&#x27;, text_color=&#x27;#c62828&#x27;)
+    else:
+        aviso.configure(text=f&#x27;Removido: {titulo}&#x27;)
+    mostrar()
+</code></pre></figure><figure class="janela"><figcaption>Passo 6 · A falha na janela</figcaption><p>Rode, escolha o Atlas, clique em Remover e responda Sim.</p><img src="../figuras/A13/passo6.png" width="462" height="352" alt="A janela com o Atlas ainda na lista e, em vermelho, Não removido: Sem conexão com o servidor."><p class="tela-nota"><strong>Repare:</strong> O except pegou só o ConnectionError. O Atlas continua na lista porque mostrar leu o acervo como ele está.</p></figure><div class="table-wrap"><table><caption>Mensagens desta aula</caption><thead><tr><th scope="col">Mensagem</th><th scope="col">O que significa</th><th scope="col">O que fazer</th></tr></thead><tbody><tr><td>DatabaseError: 2003 (HY000): Can&#x27;t connect to MySQL server</td><td>O MySQL não aceitou a conexão: serviço parado, porta errada ou firewall.</td><td>Ligue o serviço MySQL84 e clique em Recarregar; no código, traduza com protegido.</td></tr><tr><td>2013 (HY000): Lost connection to MySQL server during query</td><td>A conexão caiu no meio de um comando.</td><td>A transação foi desfeita; tente a ação de novo.</td></tr><tr><td>Adicionado na janela, e nada no banco</td><td>Uma conexão fechada sem commit.</td><td>Grave com em_transacao ou conexao_banco.</td></tr><tr><td>Duas linhas com o mesmo nome no mesmo kit</td><td>INSERT sem procurar o item de mesmo nome, ou procura sem FOR UPDATE.</td><td>adicionar_item com SELECT ... FOR UPDATE.</td></tr><tr><td>Exception in Tkinter callback seguido de ConnectionError</td><td>A falta do banco escapou de um callback.</td><td>Capture ConnectionError na janela e mostre no aviso.</td></tr></tbody></table></div></section><section id="pratica" data-stop="pratica"><h2>A janela que grava <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#pratica" aria-label="Versão para leitura: A janela que grava">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: repositório, ligação com os testes no kits_teste, janela com os testes de mentira e só então a ligação herdada. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>Depois de adicionar Cabo com 2 e escolher o Notebook</figcaption><p>Capturada com abrir_janela.py gravando no banco kits.</p><img src="../figuras/A13/kits.png" width="762" height="532" alt="Janela Kits de manutenção com o botão Recarregar no topo, a lista Cabo 5 e Notebook 2 com o Notebook destacado, o botão Remover item ligado e o aviso verde Adicionado: Cabo (2)."></figure><figure class="janela"><figcaption>Com o MySQL fora do ar</figcaption><p>Capturada com abrir_janela.py e o banco.ini apontando para uma porta sem MySQL: o conector deu o erro 2003 de verdade.</p><img src="../figuras/A13/kits-fora.png" width="762" height="532" alt="Janela Kits de manutenção com o seletor de kit e os botões desligados, a lista vazia e no status a mensagem Sem conexão com o MySQL (erro 2003). Confira se o serviço está ligado e clique em Recarregar."></figure><div class="workbench"><h3>kits/repositorio.py: adicionar_item</h3><p>Acrescente adicionar_item(con, kit_id, item) ao repositório, seguindo os comentários: procura travando o item de mesmo nome no kit, soma nele ou cria com inserir_item, traduz o kit inexistente em LookupError e devolve o id. Não faz commit nem rollback. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes de gravação de tests/test_fontes.py passam, inclusive o dos dois cadastros ao mesmo tempo, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à transferir da A10: ela já procura o item de mesmo nome no destino. O que dá para reaproveitar?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+
+def adicionar_item(con, kit_id, item):
+    &quot;&quot;&quot;Põe o item no kit: soma no item de mesmo nome, se houver, ou cria um. Devolve o id.
+    Não grava nem desfaz: rode dentro de em_transacao.&quot;&quot;&quot;
+    # 1. Procure, TRAVANDO, o item com esse nome nesse kit.
+    # 2. Se existe, some a quantidade nele e devolva o id dele.
+    # 3. Se não existe, crie com inserir_item (A08) e devolva o id novo.
+    #    Kit inexistente (erro 1452): LookupError(&#x27;Kit N não existe&#x27;).
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: protegido, fontes e gravacoes</h3><p>Complete abrir_janela.py seguindo os comentários: protegido traduz os erros de SEM_CONEXAO em ConnectionError; fontes devolve kits e itens, como na A12, passando por protegido; gravacoes devolve adicionar e remover, cada uma numa em_transacao e passando por protegido. O anotar da A12 sai. Entrega: abrir_janela.py.</p><p>Concluído quando: Os testes de tests/test_fontes.py passam, inclusive os três que você vai completar, e a janela abre com os itens do banco kits.</p><details><summary>Dica para realizar a atividade</summary><p>Por que protegido recebe uma função sem argumentos (operacao), e não o resultado de uma chamada?</p></details><pre><code id="work-abrir">&quot;&quot;&quot;Abre a janela de itens ligada ao MySQL. Uso: python abrir_janela.py&quot;&quot;&quot;
+from tkinter import messagebox
+
+import mysql.connector
+
+from kits.banco import conexao_banco, em_transacao
+from kits.janela import JanelaItens
+from kits.repositorio import adicionar_item, listar_itens, listar_kits, remover_item
+
+# Erros do conector que querem dizer &quot;o MySQL não está respondendo&quot;: recusado, perdido no meio, fechado.
+SEM_CONEXAO = {2003, 2005, 2013, 2055}
+
+
+def protegido(operacao):
+    &quot;&quot;&quot;Roda operacao() e troca a falta do MySQL (os errno de SEM_CONEXAO) por ConnectionError, com uma
+    mensagem que diga o erro e o que fazer. Qualquer outro erro segue como veio.&quot;&quot;&quot;
+    ...
+
+
+def fontes(config=None):
+    &quot;&quot;&quot;kits() e itens(kit_id), como na A12, agora passando por protegido.&quot;&quot;&quot;
+    ...
+
+
+def gravacoes(config=None):
+    &quot;&quot;&quot;adicionar(kit_id, item) e remover(item_id): cada uma numa em_transacao, passando por protegido.&quot;&quot;&quot;
+    ...
+
+
+def perguntar(texto):
+    return messagebox.askyesno(&#x27;Confirmar&#x27;, texto)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaItens(*fontes(), *gravacoes(), perguntar).mainloop()
+</code></pre><div class="atelier" data-source="work-abrir" data-filename="abrir_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: gravar, remover e banco fora</h3><p>O arquivo substitui o da A12 e já tem oito testes, inclusive o de dois cadastros iguais ao mesmo tempo e o da janela gravando no banco. Escreva os três marcados com Complete: a soma no item de mesmo nome; a remoção pelo id; e o ConnectionError com o servidor fora, usando uma porta onde não há MySQL. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os onze testes passam com o seu código. Depois troque, em adicionar_item, o SELECT ... FOR UPDATE por um SELECT comum: o teste dos dois cadastros ao mesmo tempo precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>A porta 1 não tem MySQL em nenhuma máquina da turma. connection_timeout evita esperar demais.</p></details><pre><code id="work-testes-fontes">&quot;&quot;&quot;A janela ligada ao MySQL: cada teste recria as tabelas no kits_teste.&quot;&quot;&quot;
+import threading
+import unittest
+
+from abrir_janela import fontes, gravacoes
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+from kits.modelo import ItemKit
+from tests.test_janela import fechar
+from tests.test_repositorio import TESTE, comandos
+
+ESTOQUE_INICIAL = [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)]
+
+
+class TestFontes(unittest.TestCase):
+    def setUp(self):
+        # Uma conexão esquecida com a transação aberta segura as tabelas e faria o DROP TABLE do esquema
+        # esperar para sempre. Com 5 segundos, o teste falha com o erro 1205 em vez de travar.
+        self.gravar(&#x27;SET SESSION lock_wait_timeout = 5&#x27;,
+                    *[c for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(script)])
+        self.kits, self.itens = fontes(TESTE)
+        self.adicionar, self.remover = gravacoes(TESTE)
+
+    def gravar(self, *sqls):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for sql in sqls:
+                cur.execute(sql)
+
+    def estoque(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;)
+            return cur.fetchall()
+
+    # A11: ler.
+
+    def test_kits_em_ordem_alfabetica(self):
+        self.gravar(&quot;INSERT INTO kit (nome) VALUES (&#x27;Almoxarifado&#x27;)&quot;)
+        self.assertEqual([nome for _, nome in self.kits()],
+                         [&#x27;Almoxarifado&#x27;, &#x27;Treinamento Redes&#x27;, &#x27;Treinamento Suporte&#x27;])
+
+    def test_itens_so_do_kit_pedido(self):
+        self.assertEqual(self.itens(2), [(3, &#x27;Cabo&#x27;, 5)])
+        self.assertEqual(self.itens(99), [])
+
+    def test_consulta_seguinte_ve_o_que_outra_conexao_gravou(self):
+        self.assertEqual(len(self.itens(1)), 2)
+        self.gravar(&quot;INSERT INTO item (kit_id, nome, quantidade) VALUES (1, &#x27;Alicate&#x27;, 4)&quot;)
+        self.assertIn(&#x27;Alicate&#x27;, [nome for _, nome, _ in self.itens(1)])
+
+    # A13: gravar.
+
+    def test_adicionar_cria_o_item_e_devolve_o_id(self):
+        item_id = self.adicionar(1, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL + [(item_id, 1, &#x27;Alicate&#x27;, 4)])
+
+
+    def test_nome_com_outras_maiusculas_soma_no_mesmo_item(self):
+        # A comparação do MySQL (utf8mb4_0900_ai_ci) não diferencia maiúsculas de minúsculas.
+        self.assertEqual(self.adicionar(1, ItemKit(&#x27;cabo&#x27;, 1)), 1)
+        self.assertEqual(self.estoque()[0], (1, 1, &#x27;Cabo&#x27;, 4))
+
+    def test_kit_inexistente_vira_lookup_error_e_nada_muda(self):
+        with self.assertRaises(LookupError):
+            self.adicionar(99, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL)
+
+
+    def test_dois_cadastros_iguais_ao_mesmo_tempo_viram_um_item(self):
+        largada = threading.Barrier(2)
+        erros = []
+
+        def tecnico():
+            largada.wait()
+            try:
+                self.adicionar(1, ItemKit(&#x27;Alicate&#x27;, 1))
+            except Exception as erro:  # o teste quer ver qualquer erro, não escondê-lo
+                erros.append(erro)
+
+        tecnicos = [threading.Thread(target=tecnico) for _ in range(2)]
+        for t in tecnicos:
+            t.start()
+        for t in tecnicos:
+            t.join()
+        self.assertEqual(erros, [])
+        alicates = [linha for linha in self.estoque() if linha[2] == &#x27;Alicate&#x27;]
+        self.assertEqual([(kit, nome, q) for _, kit, nome, q in alicates], [(1, &#x27;Alicate&#x27;, 2)])
+
+
+    def test_janela_com_o_banco_adiciona_e_remove(self):
+        janela = JanelaItens(self.kits, self.itens, self.adicionar, self.remover, lambda texto: True)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        janela.nome.insert(0, &#x27;Cabo&#x27;)
+        janela.quantidade.insert(0, &#x27;2&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual([janela.lista.item(i, &#x27;values&#x27;) for i in janela.lista.get_children()],
+                         [(&#x27;Cabo&#x27;, &#x27;5&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        janela.lista.selection_set(&#x27;2&#x27;)
+        janela.update()
+        janela.remover.invoke()
+        self.assertEqual(self.estoque(), [(1, 1, &#x27;Cabo&#x27;, 5), (3, 2, &#x27;Cabo&#x27;, 5)])
+
+    # Complete: adicionar Cabo com 2 no kit 1 soma no item 1, que fica com 5, e devolve 1.
+
+    # Complete: remover(1) apaga só o item 1; remover(1) de novo levanta LookupError.
+
+    # Complete: com a porta 1 na configuração ({**TESTE, &#x27;port&#x27;: 1, &#x27;connection_timeout&#x27;: 3}), kits, itens,
+    # adicionar e remover levantam ConnectionError com a mensagem do erro 2003.
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/janela.py: Remover, Recarregar e o banco fora</h3><p>Faça na sua JanelaItens da A12 as mudanças descritas no arquivo: cinco funções recebidas; Recarregar no topo e Remover item embaixo da lista; o &lt;&lt;TreeviewSelect&gt;&gt; ligando o Remover; recarregar e mostrar tratando ConnectionError; e remover_selecionado perguntando antes e apagando pelo id. Ajuste o tests/test_janela.py pelo arquivo do campo seguinte. A janela continua sem importar nada do banco. Entrega: kits/janela.py.</p><p>Concluído quando: Os vinte e um testes de tests/test_janela.py passam, inclusive os três que você vai completar, e as duas imagens acima se repetem na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 2 do tutorial. E onde a janela fica sabendo que trocou de kit, para desligar o Remover?</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A12. O resto da JanelaItens continua igual.
+
+# Recusas que a janela sabe explicar. ConnectionError é o banco fora do ar, traduzido por quem liga a janela ao MySQL.
+RECUSAS = (LookupError, ValueError, ConnectionError)
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;listar_kits() devolve [(id, nome)]; listar_itens(kit_id) devolve [(id, nome, quantidade)];
+    adicionar(kit_id, item) recebe um ItemKit já validado; remover(item_id) apaga o item;
+    perguntar(texto) devolve True ou False. As quatro primeiras podem recusar com LookupError,
+    ValueError ou ConnectionError.&quot;&quot;&quot;
+
+    def __init__(self, listar_kits, listar_itens, adicionar, remover, perguntar):
+        # Guarde as cinco funções. Os kits passam a ser carregados por self.recarregar(), no fim.
+        ...
+
+    def _montar_topo(self):
+        # Ao lado do seletor, self.recarregar_botao: Recarregar, chamando self.recarregar.
+        ...
+
+    def _montar_lista(self):
+        # Abaixo da lista, self.remover: Remover item, desligado, chamando self.remover_selecionado.
+        # O evento virtual &#x27;&lt;&lt;TreeviewSelect&gt;&gt;&#x27; da lista liga o botão quando há uma linha escolhida.
+        ...
+
+    def item_selecionado(self):
+        &quot;&quot;&quot;(id, nome) da linha escolhida na lista, ou None.&quot;&quot;&quot;
+        ...
+
+    def recarregar(self):
+        &quot;&quot;&quot;Busca os kits de novo e mostra o escolhido (o mesmo de antes, se ainda existir).
+        Sem kits: Nenhum kit cadastrado. Sem conexão: a mensagem do ConnectionError no status.
+        Nos dois casos, lista vazia e seletor, Adicionar e Remover desligados.&quot;&quot;&quot;
+        ...
+
+    def mostrar(self, _escolha=None):
+        # Como na A12, mais: Remover desligado a cada troca, e ConnectionError vira a mensagem no status.
+        ...
+
+    def confirmar(self):
+        # Como na A12, capturando RECUSAS na entrega.
+        ...
+
+    def remover_selecionado(self):
+        &quot;&quot;&quot;Pergunta com o nome do item (&#x27;Remover Nome deste kit? A remoção não pode ser desfeita.&#x27;),
+        apaga pelo id só com Sim, avisa Removido: Nome. ou Não removido: e a recusa, e mostra a lista de novo.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_janela.py: o banco de mentira</h3><p>O arquivo substitui o da A12: a janela agora recebe as cinco funções de um BancoDeMentira, que guarda kits e itens em listas, registra o que a janela pediu e pode falhar de propósito. Ele já tem dezoito testes, inclusive o do Recarregar que mantém o kit escolhido. Escreva os três marcados com Complete: remover com Não e com Sim; o banco fora ao abrir, e o Recarregar recuperando; e o banco fora ao trocar de kit. Entrega: tests/test_janela.py.</p><p>Concluído quando: Os vinte e um testes passam com o seu código. Depois troque, em remover_selecionado, o if not self._perguntar(...) por if False: o teste da remoção com Não precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para escolher uma linha no teste, lista.selection_set(&#x27;2&#x27;) e janela.update(): o update entrega o &lt;&lt;TreeviewSelect&gt;&gt;.</p></details><pre><code id="work-testes-janela">&quot;&quot;&quot;A janela com um banco de mentira: roda sem MySQL, mas abre uma janela de verdade por alguns instantes.&quot;&quot;&quot;
+import copy
+import unittest
+
+from kits.janela import JanelaItens
+
+KITS = [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)]
+ITENS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+FORA = ConnectionError(&#x27;Sem conexão com o MySQL (erro 2003).&#x27;)
+
+
+def fechar(janela):
+    # O CustomTkinter agenda tarefas com after (o ícone da barra de título, por exemplo).
+    # Cancelar antes de destruir evita avisos de &quot;invalid command name&quot; no fim do teste.
+    for tarefa in janela.tk.call(&#x27;after&#x27;, &#x27;info&#x27;):
+        janela.after_cancel(tarefa)
+    janela.destroy()
+
+
+class BancoDeMentira:
+    &quot;&quot;&quot;Guarda kits e itens em listas e registra o que a janela pediu. falhas: {nome da função: exceção}.&quot;&quot;&quot;
+
+    def __init__(self, kits=KITS, itens=ITENS, resposta=True):
+        self.kits = list(kits)
+        self.itens = copy.deepcopy(itens)
+        self.resposta = resposta
+        self.falhas = {}
+        self.pedidos = []
+        self.entregues = []
+        self.removidos = []
+        self.perguntas = []
+
+    def _talvez_falhar(self, nome):
+        if nome in self.falhas:
+            raise self.falhas[nome]
+
+    def listar_kits(self):
+        self._talvez_falhar(&#x27;listar_kits&#x27;)
+        return list(self.kits)
+
+    def listar_itens(self, kit_id):
+        self._talvez_falhar(&#x27;listar_itens&#x27;)
+        self.pedidos.append(kit_id)
+        return list(self.itens.get(kit_id, []))
+
+    def adicionar(self, kit_id, item):
+        self._talvez_falhar(&#x27;adicionar&#x27;)
+        self.entregues.append((kit_id, item.nome, item.quantidade))
+        self.itens.setdefault(kit_id, []).append((100 + len(self.entregues), item.nome, item.quantidade))
+
+    def remover(self, item_id):
+        self._talvez_falhar(&#x27;remover&#x27;)
+        self.removidos.append(item_id)
+        for kit_id, itens in self.itens.items():
+            self.itens[kit_id] = [i for i in itens if i[0] != item_id]
+
+    def perguntar(self, texto):
+        self.perguntas.append(texto)
+        return self.resposta
+
+
+class TestJanela(unittest.TestCase):
+    def abrir(self, banco=None):
+        self.banco = banco or BancoDeMentira()
+        b = self.banco
+        janela = JanelaItens(b.listar_kits, b.listar_itens, b.adicionar, b.remover, b.perguntar)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def escolher(self, janela, kit_id):
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(f&#x27;(kit {kit_id})&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+
+    def preencher(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            if texto:
+                campo.insert(0, texto)
+
+    def selecionar(self, janela, item_id):
+        janela.lista.selection_set(str(item_id))
+        janela.update()
+
+    def erros(self, janela):
+        return janela.erro_nome.cget(&#x27;text&#x27;), janela.erro_quantidade.cget(&#x27;text&#x27;)
+
+    # A11: a lista e a grade.
+
+    def test_abre_no_primeiro_kit_com_os_itens_dele(self):
+        janela = self.abrir()
+        self.assertEqual(janela.kit_atual(), 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_cada_linha_guarda_o_id_do_item(self):
+        janela = self.abrir()
+        self.assertEqual(janela.lista.get_children(), (&#x27;1&#x27;, &#x27;2&#x27;))
+
+    def test_trocar_de_kit_troca_a_lista_sem_repetir(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.escolher(janela, 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.banco.pedidos, [1, 2, 1])
+
+    def test_status_conta_itens_e_unidades(self):
+        janela = self.abrir()
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens · 5 unidades&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;1 item · 5 unidades&#x27;)
+
+    def test_lista_cresce_com_a_janela(self):
+        janela = self.abrir()
+        janela.geometry(&#x27;640x420&#x27;)
+        janela.update()
+        largura, altura = janela.lista.winfo_width(), janela.lista.winfo_height()
+        janela.geometry(&#x27;1100x740&#x27;)
+        janela.update()
+        self.assertGreater(janela.lista.winfo_width(), largura + 300)
+        self.assertGreater(janela.lista.winfo_height(), altura + 200)
+
+    def test_sem_kits_avisa_e_nao_deixa_adicionar(self):
+        janela = self.abrir(BancoDeMentira(kits=[]))
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;Nenhum kit cadastrado.&#x27;)
+        self.assertEqual(self.banco.pedidos, [])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # A12: eventos e validação.
+
+    def test_abre_sem_erros_e_so_o_clique_valida(self):
+        janela = self.abrir()
+        self.assertEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        janela.adicionar.invoke()
+        self.assertNotEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_valido_entrega_e_a_lista_mostra_o_item_novo(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;  Alicate &#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+        self.assertEqual(self.linhas(janela)[-1], (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_quantidade_invalida_mostra_a_mensagem_do_dominio(self):
+        janela = self.abrir()
+        for texto, mensagem in ((&#x27;dez&#x27;, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (&#x27;0&#x27;, &#x27;0 não é maior que zero&#x27;),
+                                (&#x27;2.5&#x27;, &quot;&#x27;2.5&#x27; não é um número inteiro&quot;)):
+            with self.subTest(texto):
+                self.preencher(janela, &#x27;Alicate&#x27;, texto)
+                janela.adicionar.invoke()
+                self.assertEqual(self.erros(janela), (&#x27;&#x27;, mensagem))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_nome_em_branco_e_quantidade_errada_aparecem_juntos(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;   &#x27;, &#x27;-1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;-1 não é maior que zero&#x27;))
+
+    def test_enter_no_campo_confirma_como_o_botao(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Return&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+
+    def test_digitar_no_campo_apaga_o_erro_dele(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;&#x27;, &#x27;dez&#x27;)
+        janela.adicionar.invoke()
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=&#x27;BackSpace&#x27;)
+        janela.update()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;&#x27;))
+
+    def test_recusa_de_quem_grava_aparece_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = LookupError(&#x27;Kit 1 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não adicionado: Kit 1 não existe&#x27;)
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_defeito_de_quem_grava_nao_e_escondido(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&quot;&#x27;ItemKit&#x27; object has no attribute &#x27;nme&#x27;&quot;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        with self.assertRaises(AttributeError):
+            janela.confirmar()
+
+    # A13: remover e banco fora do ar.
+
+    def test_remover_so_liga_com_uma_linha_escolhida(self):
+        janela = self.abrir()
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.selecionar(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+
+    def test_remover_recusado_avisa_e_mostra_a_lista_de_agora(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;remover&#x27;] = LookupError(&#x27;Item 2 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não removido: Item 2 não existe&#x27;)
+        self.assertEqual(banco.pedidos, [1, 1])
+
+
+    def test_recarregar_mantem_o_kit_e_mostra_o_que_mudou(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.banco.itens[2].append((4, &#x27;Alicate&#x27;, 1))
+        janela.recarregar_botao.invoke()
+        self.assertEqual(janela.kit_atual(), 2)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;), (&#x27;Alicate&#x27;, &#x27;1&#x27;)])
+
+    def test_banco_fora_ao_adicionar_avisa_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;adicionar&#x27;] = FORA
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Não adicionado: {FORA}&#x27;)
+        self.assertEqual(janela.nome.get(), &#x27;Alicate&#x27;)
+
+    # Complete: com resposta Não, remover pergunta e não apaga nada; com Sim, apaga pelo id, a lista
+    # mostra o kit sem o item e o aviso diz Removido: Notebook. Use BancoDeMentira(resposta=False).
+
+    # Complete: com listar_kits falhando com FORA, a janela abre com a mensagem no status e Adicionar
+    # desligado; tirada a falha, o botão Recarregar mostra os itens do kit 1.
+
+    # Complete: com listar_itens falhando com FORA, trocar de kit mostra a mensagem no status e a lista vazia.
+</code></pre><div class="atelier" data-source="work-testes-janela" data-filename="test_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>abrir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como abrir_legado.py na raiz, rode com a sua janela e reproduza cada relato no banco kits recriado, conferindo no cliente mysql. Corrija o relato 1 antes do 2. Para o relato 4, pare o serviço MySQL84 ou troque a porta do banco.ini por 1 (e desfaça depois). Para cada relato, registre a linha culpada, a evidência e a correção, e o teste do seu tests/test_fontes.py que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O abrir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm causa com a linha, evidência observada no cliente mysql ou no terminal, correção e teste; o relato 1 explica o close sem commit com o autocommit desligado.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 1, a janela diz Adicionado porque ninguém levantou erro. Quem deveria fazer o commit, e quando?</p></details><pre><code id="work-ligacao-legado">&quot;&quot;&quot;Ligação herdada entre a janela e o banco. Uso: python abrir_legado.py&quot;&quot;&quot;
+from tkinter import messagebox
+
+import mysql.connector
+
+from kits.banco import conexao_banco, ler_config
+from kits.janela import JanelaItens
+from kits.repositorio import listar_itens, listar_kits
+
+
+def kits():
+    with conexao_banco() as con:
+        return listar_kits(con)
+
+
+def itens(kit_id):
+    with conexao_banco() as con:
+        return listar_itens(con, kit_id)
+
+
+def adicionar(kit_id, item):
+    con = mysql.connector.connect(**ler_config())
+    cur = con.cursor()
+    cur.execute(&#x27;INSERT INTO item (kit_id, nome, quantidade) VALUES (%s, %s, %s)&#x27;,
+                (kit_id, item.nome, item.quantidade))
+    con.close()
+
+
+def remover(item_id):
+    with conexao_banco() as con:
+        cur = con.cursor()
+        cur.execute(&#x27;SELECT nome FROM item WHERE id = %s&#x27;, (item_id,))
+        nome = cur.fetchall()[0][0]
+        cur.execute(&#x27;DELETE FROM item WHERE nome = %s&#x27;, (nome,))
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaItens(kits, itens, adicionar, remover, lambda texto: messagebox.askyesno(&#x27;Confirmar&#x27;, texto)).mainloop()
+</code></pre><div class="atelier" data-source="work-ligacao-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o banco kits recriado (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql): .\.venv\Scripts\python.exe abrir_legado.py."></div><p>Na raiz do projeto, com o banco kits recriado (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql): .\.venv\Scripts\python.exe abrir_legado.py.</p></div><div class="workbench"><h3>README.md: a seção Cadastro e remoção no banco</h3><p>Acrescente ao README.md do projeto a seção Cadastro e remoção no banco: o que a janela faz (soma no mesmo nome, remoção com confirmação, banco fora); como o código garante cada coisa; e como conferir, inclusive o teste com o serviço parado. A seção Cadastro pela janela da A12 fala do anotar: atualize-a ou marque-a como histórico. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, adiciona, remove e provoca o aviso de banco fora, e diz em que arquivo está cada garantia.</p><details><summary>Dica para realizar a atividade</summary><p>Quem ler vai querer saber por que cabo somou no Cabo. Está explicado?</p></details><pre><code id="work-readme">## Cadastro e remoção no banco
+
+### O que a janela faz
+
+### Como o código garante
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: remover com a tecla Delete</h3><p>Ligue a tecla Delete da lista ao mesmo remover_selecionado, escreva o teste com event_generate e diga por que a pergunta de confirmação continua. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: Delete com uma linha escolhida pergunta e remove como o botão; sem linha escolhida, não faz nada; o teste passa.</p><details><summary>Dica para realizar a atividade</summary><p>Eventos de teclado vão para o widget com foco. Quem precisa ter o foco, a lista ou a janela?</p></details><pre><code id="work-bonus-delete"># Remover com a tecla Delete
+
+## Como
+
+## Como testar
+
+## Por que não apagar direto
+</code></pre><div class="atelier" data-source="work-bonus-delete" data-filename="delete.md" data-execution="Teste na sua JanelaItens e rode .\.venv\Scripts\python.exe -m unittest -v."></div><p>Teste na sua JanelaItens e rode .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A janela que grava se sustenta? <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#auditoria" aria-label="Versão para leitura: A janela que grava se sustenta?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Uma função abre a conexão com mysql.connector.connect, faz um INSERT e chama con.close(), sem commit. O que fica no banco?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Nada: o conector começa com o autocommit desligado, e fechar desfaz o pendente" autocomplete="off">Nada: o conector começa com o autocommit desligado, e fechar desfaz o pendente</label><label class="option"><input type="radio" name="q01" value="A linha nova: o close grava o que estava pendente" autocomplete="off">A linha nova: o close grava o que estava pendente</label><label class="option"><input type="radio" name="q01" value="Depende do tamanho da linha" autocomplete="off">Depende do tamanho da linha</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare com o relato 1 e com o passo 2 do tutorial da A10.</p></details></fieldset><fieldset data-question="q02"><legend>O kit 1 tem Cabo com 3. Pela janela, alguém adiciona cabo, com c minúsculo, com 2. O que acontece no banco?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="O Cabo do kit 1 vai a 5: a comparação padrão do MySQL não diferencia maiúsculas" autocomplete="off">O Cabo do kit 1 vai a 5: a comparação padrão do MySQL não diferencia maiúsculas</label><label class="option"><input type="radio" name="q02" value="Aparece uma linha cabo com 2" autocomplete="off">Aparece uma linha cabo com 2</label><label class="option"><input type="radio" name="q02" value="A janela recusa: o nome já existe" autocomplete="off">A janela recusa: o nome já existe</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Qual é a regra de comparação padrão do MySQL 8.4?</p></details></fieldset><fieldset data-question="q03"><legend>Com o MySQL parado, a pessoa clica em Adicionar com Alicate e 4. O que a sua janela mostra?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Não adicionado: e a mensagem do erro 2003, com os campos ainda preenchidos" autocomplete="off">Não adicionado: e a mensagem do erro 2003, com os campos ainda preenchidos</label><label class="option"><input type="radio" name="q03" value="Um traceback no terminal, e nada na janela" autocomplete="off">Um traceback no terminal, e nada na janela</label><label class="option"><input type="radio" name="q03" value="Adicionado: Alicate (4)." autocomplete="off">Adicionado: Alicate (4).</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem traduz o erro do conector, e quem mostra?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>remover apaga com DELETE FROM item WHERE nome = %s, usando o nome da linha escolhida.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>protegido traduz qualquer mysql.connector.Error em ConnectionError.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E uma senha errada no banco.ini, ou um erro de digitação no SQL?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>adicionar_item procura o item de mesmo nome com SELECT ... FOR UPDATE antes de decidir entre UPDATE e INSERT.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que os dois técnicos do teste fariam sem a trava?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>A janela importa messagebox e chama askyesno direto no remover_selecionado, em vez de receber perguntar.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Como seria o teste da remoção com Não?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>O botão Remover item fica desligado até alguém escolher uma linha.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que remover sem nada escolhido apagaria?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Com o MySQL fora do ar ao abrir, a janela abre mesmo assim, com a mensagem no status e os botões desligados.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a pessoa faria se a janela nem abrisse?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-ligacao"><p>Outra dupla entregou a ligação abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def gravacoes(config=None):
+    con = mysql.connector.connect(**(config or ler_config()))
+
+    def adicionar(kit_id, item):
+        adicionar_item(con, kit_id, item)
+        con.commit()
+
+    def remover(item_id):
+        try:
+            remover_item(con, item_id)
+            con.commit()
+        except mysql.connector.Error:
+            raise ConnectionError(&#x27;Sem conexão com o MySQL&#x27;)
+
+    return adicionar, remover</code></pre><fieldset data-question="ac-conexao" data-claim="ac-conexao"><legend>Uma conexão só, aberta antes de tudo, fica dias aberta: o servidor a derruba por inatividade, e daí em diante toda gravação falha, mesmo com o MySQL ligado.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-conexao" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-conexao" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-rollback" data-claim="ac-rollback"><legend>Se adicionar_item falhar no meio, ninguém faz rollback: o que ficou pendente na conexão compartilhada entra no commit da próxima ação.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-rollback" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-rollback" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-commit" data-claim="ac-commit"><legend>Fazer commit logo depois de cada gravação é um erro: o certo seria um commit só, quando a janela fechar.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-commit" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-commit" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a janela que grava <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#registro" aria-label="Versão para leitura: Entregue o que prova a janela que grava">↗</a></h2><p>Entregue, no repositório do projeto: kits/repositorio.py com adicionar_item; kits/janela.py; abrir_janela.py; tests/test_janela.py e tests/test_fontes.py; e a seção Cadastro e remoção no banco no README.md. O acervo.py e o abrir_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos da ligação herdada, a saída dos testes e o SELECT do kit 1 no cliente mysql depois de adicionar Cabo com 2 pela janela. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>A janela da A12 passou em todos os testes e, mesmo assim, ligada ao abrir_legado.py, disse Adicionado sem gravar nada. Que testes pegaram esse defeito, e por que os da janela não podiam pegar?</p><p>Na A14, a janela ganha a edição do item escolhido e aprende a se manter em dia quando outra pessoa grava no mesmo kit. A separação entre janela, ligação e repositório é o que vai deixar isso pequeno.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/tkinter.messagebox.html">Python 3: tkinter.messagebox</a></li><li><a href="https://docs.python.org/3/library/tkinter.ttk.html#virtual-events">Python 3: tkinter.ttk, eventos virtuais do Treeview</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking-reads.html">MySQL 8.4: leituras com trava (FOR UPDATE)</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/charset-unicode-sets.html">MySQL 8.4: regras de comparação (collations) do Unicode</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-api-errors.html">MySQL Connector/Python: erros e exceções</a></li><li><a href="https://dev.mysql.com/doc/mysql-errors/8.4/en/client-error-reference.html">MySQL 8.4: códigos de erro do cliente (2003, 2013, 2055)</a></li></ul><a data-idoc="source" href="leitura-0013-cadastro-e-listagem-integrados-ao-banco.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

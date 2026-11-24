@@ -1,6 +1,6 @@
 # UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop — Aluno
 
-Material de estudo e prática da **UC09 do Curso Técnico em Desenvolvimento de Sistemas**. Ao longo da unidade você constrói um aplicativo desktop em **Python** integrado a um banco de dados **SQLite**: modela os dados, grava e consulta com segurança, liga a interface ao banco, organiza a arquitetura, documenta e entrega um executável.
+Material de estudo e prática da **UC09 do Curso Técnico em Desenvolvimento de Sistemas**. Ao longo da unidade você constrói um aplicativo desktop em **Python** integrado a um banco de dados, primeiro no **SQLite** e depois no **MySQL**: modela os dados, grava e consulta com segurança, liga a interface ao banco, organiza a arquitetura, documenta e entrega um executável.
 
 O percurso tem **31 aulas e 92 horas de encontros**, em 6 fases. As aulas são publicadas aqui conforme ficam prontas; as demais aparecem como **Planejada**.
 
@@ -38,12 +38,12 @@ Cada fase usa o que a anterior construiu. O projeto é contínuo: o repositório
 | A05 | 1 | POO básica: classes, objetos e composição | [Abrir aula](lessons/0005-poo-basica-classes-objetos-e-composicao.html) |
 | A06 | 2 | Modelagem relacional e SQL essencial | [Abrir aula](lessons/0006-modelagem-relacional-e-sql-essencial.html) |
 | A07 | 2 | Conexão Python–banco e ciclo da conexão | [Abrir aula](lessons/0007-conexao-python-banco-e-ciclo-da-conexao.html) |
-| A08 | 2 | Inserção e consulta parametrizadas | Planejada |
-| A09 | 2 | Atualização e remoção por identificador | Planejada |
-| A10 | 2 | Transações, integridade e persistência | Planejada |
-| A11 | 3 | Interface desktop: janela, organização e widgets | Planejada |
-| A12 | 3 | Eventos, callbacks e validação de entradas | Planejada |
-| A13 | 3 | Cadastro e listagem integrados ao banco | Planejada |
+| A08 | 2 | Inserção e consulta parametrizadas | [Abrir aula](lessons/0008-insercao-e-consulta-parametrizadas.html) |
+| A09 | 2 | Atualização e remoção por identificador | [Abrir aula](lessons/0009-atualizacao-e-remocao-por-identificador.html) |
+| A10 | 2 | Transações, integridade e persistência | [Abrir aula](lessons/0010-transacoes-integridade-e-persistencia.html) |
+| A11 | 3 | Interface desktop: janela, organização e widgets | [Abrir aula](lessons/0011-interface-desktop-janela-organizacao-e-widgets.html) |
+| A12 | 3 | Eventos, callbacks e validação de entradas | [Abrir aula](lessons/0012-eventos-callbacks-e-validacao-de-entradas.html) |
+| A13 | 3 | Cadastro e listagem integrados ao banco | [Abrir aula](lessons/0013-cadastro-e-listagem-integrados-ao-banco.html) |
 | A14 | 3 | Edição, exclusão e sincronização da interface | Planejada |
 | A15 | 3 | Sprint CRUD, testes de fluxo e devolutiva | Planejada |
 | A16 | 4 | Filtros, ordenação e consulta vazia | Planejada |

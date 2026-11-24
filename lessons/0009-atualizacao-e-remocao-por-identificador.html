@@ -1,0 +1,578 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A09 · Altere e remova pelo id: retirada sem perda e remoção com regra</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A09" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A09</span><span>Atualização e remoção por identificador<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Três relatos do primeiro dia no servidor</a></li><li><a href="#esteira">Mudar só a linha certa, mesmo com todo mundo mexendo</a></li><li><a href="#identificador">Pelo id, e conferindo quantas linhas mudaram</a></li><li><a href="#concorrencia">Duas retiradas ao mesmo tempo</a></li><li><a href="#restricao">Estoque zerado: a regra do banco contra a regra do objeto</a></li><li><a href="#remocao">Apagar, desativar ou levar junto</a></li><li><a href="#terminal">Tutorial: alterar e remover pelo terminal, tela a tela</a></li><li><a href="#pratica">Retirada sem perda e remoção com regra</a></li><li><a href="#auditoria">A retirada se sustenta?</a></li><li><a href="#registro">Entregue o que prova a retirada e a remoção</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><span>Edição, exclusão e sincronização da interface<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A15</span><span>Sprint CRUD, testes de fluxo e devolutiva<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A16</span><span>Filtros, ordenação e consulta vazia<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A17</span><span>JOIN, agregações e listagens estruturadas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A18</span><span>Arquivos, caminhos, codificação e CSV<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A19</span><span>Carga massiva, inconsistências e transações em lote<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A20</span><span>MVC aplicado à refatoração do aplicativo<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A21</span><span>Repository/DAO, serviços e responsabilidades<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A22</span><span>Consolidação arquitetural e testes de regressão<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A23</span><span>ORM: ambiente, mapeamento, sessão e transação<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A24</span><span>ORM: relacionamentos, CRUD e consultas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A25</span><span>SQL direto × ORM e decisão documentada<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A09</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Altere e remova pelo id: retirada sem perda e remoção com regra</h1><p class="thesis">Com o banco no servidor, várias pessoas mexem nos kits ao mesmo tempo. Três relatos chegaram: remover um Cabo apagou os Cabos de dois kits, duas retiradas simultâneas descontaram uma só, e retirar o último Notebook deu erro. Hoje você altera e remove sempre pelo id, faz a retirada numa conta só dentro do banco e decide o que acontece quando um kit com itens é removido.</p><p data-idoc="caveat">A aula continua no MySQL da A08 e no mesmo repositório. Transações com vários comandos e o tratamento de falhas no meio de um lote são o tema da A10; a interface gráfica começa na A11. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Atualizar e remover pelo identificador e conferir quantas linhas cada comando mudou</li><li>Explicar por que ler, subtrair no Python e gravar perde retiradas simultâneas, e escrever a retirada num UPDATE só</li><li>Ajustar uma regra do banco em uso com ALTER TABLE, sem apagar os dados</li><li>Comparar apagar, desativar e apagar em cascata, e tratar a recusa de remover um kit com itens</li><li>Rastrear e corrigir um script de estoque que alterava pelo nome e perdia retiradas</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A08: kits/banco.py com banco.ini, kits/repositorio.py, tests/test_repositorio.py e sql/mysql</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li><li>Exceções da A04 e regras do ItemKit da A05: retirar mais do que existe é recusado, e retirar tudo deixa zero</li></ul><section id="partida" data-stop="partida"><h2>Três relatos do primeiro dia no servidor <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#partida" aria-label="Versão para leitura: Três relatos do primeiro dia no servidor">↗</a></h2><p>O suporte começou a usar o servidor com um script de estoque herdado, que retira e remove itens pelo nome. No primeiro dia chegaram três relatos. Remover o Cabo do kit 1 apagou também o Cabo do kit 2. Dois técnicos retiraram 1 Notebook cada, ao mesmo tempo, em máquinas diferentes: o armário ficou vazio, mas o banco mostra 1. E retirar os 2 Notebooks que restavam terminou com Check constraint &#x27;item_chk_1&#x27; is violated.</p><p>Em dupla, antes de abrir o script, escrevam uma hipótese para cada relato. O terceiro é diferente dos outros dois: pensem se o defeito está no script ou numa regra.</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: sql/mysql/migracao_a09.sql e o esquema.sql atualizado; retirar, remover_item, remover_kit e KitComItens em kits/repositorio.py; tests/test_retirada.py; verificar_concorrencia.py e estoque.py corrigido, na raiz; e a seção Retirada e remoção no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam e verificar_concorrencia.py termina com Estoque confere.</p></div></section><section id="esteira" data-stop="esteira"><h2>Mudar só a linha certa, mesmo com todo mundo mexendo <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#esteira" aria-label="Versão para leitura: Mudar só a linha certa, mesmo com todo mundo mexendo">↗</a></h2><ol class="pipeline"><li><strong>Achar a linha</strong><p>Escolher pelo id, nunca pelo nome, e conferir com um SELECT antes.</p></li><li><strong>Mudar no banco</strong><p>Descontar numa conta só, dentro do UPDATE, e só se houver saldo.</p></li><li><strong>Contar o que mudou</strong><p>Ler o rowcount: zero linhas é um aviso, não um sucesso.</p></li><li><strong>Ajustar a regra</strong><p>Mudar um CHECK de um banco em uso com ALTER TABLE, sem apagar os dados.</p></li><li><strong>Decidir a remoção</strong><p>Apagar, desativar ou levar junto: escolher e tratar a recusa do banco.</p></li><li><strong>Provar</strong><p>Testar com três retiradas ao mesmo tempo e com um kit que ainda tem itens.</p></li></ol></section><section id="identificador" data-stop="identificador"><h2>Pelo id, e conferindo quantas linhas mudaram <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#identificador" aria-label="Versão para leitura: Pelo id, e conferindo quantas linhas mudaram">↗</a></h2><p>O nome de um item se repete entre kits: há um Cabo no kit 1 e outro no kit 2. Um UPDATE ou DELETE com WHERE nome = &#x27;Cabo&#x27; atinge os dois. O id é a única coluna que aponta para uma linha só, e é por ele que o aplicativo altera e remove. O hábito da A06 continua valendo: antes de mudar, um SELECT com o mesmo WHERE mostra exatamente o que vai mudar.</p><p>Depois de um UPDATE ou DELETE, cur.rowcount diz quantas linhas o comando mudou. Zero é um aviso: o id não existe, ou a condição do WHERE não foi atendida. O repositório transforma esse zero num erro com nome, LookupError, em vez de seguir como se tivesse dado certo.</p><div class="callout alerta"><span class="callout-title">Mudou zero linhas não quer dizer que a linha não existe</span><p>O MySQL conta só as linhas que de fato mudaram. Um UPDATE que grava o mesmo valor que já estava lá encontra a linha e devolve rowcount 0, como mostra o passo 2 do tutorial (Rows matched: 1, Changed: 0). Para saber se o id existe nesse caso, faça um SELECT.</p></div></section><section id="concorrencia" data-stop="concorrencia"><h2>Duas retiradas ao mesmo tempo <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#concorrencia" aria-label="Versão para leitura: Duas retiradas ao mesmo tempo">↗</a></h2><p>O script herdado faz a retirada em três tempos: lê o saldo, pede confirmação e grava o saldo menos a quantidade. Com uma pessoa só, funciona. Com duas ao mesmo tempo, as duas leem o mesmo saldo antes que qualquer uma grave, e a segunda gravação apaga a primeira. É a atualização perdida, e a tabela abaixo mostra o relato do Notebook passo a passo.</p><p>A correção é não levar o saldo para o Python. O UPDATE faz a conta dentro do banco, SET quantidade = quantidade - %s, e só se houver saldo, AND quantidade &gt;= %s. O InnoDB trava a linha enquanto um UPDATE trabalha nela: o segundo espera o primeiro terminar e então faz a conta com o valor novo. Se o saldo acabou, o WHERE não é atendido, nenhuma linha muda e o rowcount 0 vira a recusa.</p><div class="table-wrap"><table><caption>O relato do Notebook, com o script herdado (saldo inicial 2)</caption><thead><tr><th scope="col">Tempo</th><th scope="col">Técnico 1</th><th scope="col">Técnico 2</th><th scope="col">No banco</th></tr></thead><tbody><tr><td>1</td><td>Lê o saldo: 2</td><td></td><td>2</td></tr><tr><td>2</td><td></td><td>Lê o saldo: 2</td><td>2</td></tr><tr><td>3</td><td>Confirma e grava 2 - 1 = 1</td><td></td><td>1</td></tr><tr><td>4</td><td></td><td>Confirma e grava 2 - 1 = 1</td><td>1: uma retirada se perdeu</td></tr></tbody></table></div><figure class="code-block"><figcaption>A retirada numa conta só (exemplo: empréstimo de livros)</figcaption><pre><code># Exemplo com livros. con é uma conexão aberta; o livro 2 tem 1 exemplar.
+def emprestar(con, livro_id):
+    cur = con.cursor()
+    cur.execute(&#x27;UPDATE livro SET exemplares = exemplares - 1 WHERE id = %s AND exemplares &gt;= 1&#x27;,
+                (livro_id,))
+    return cur.rowcount == 1   # 1 linha mudou: emprestado; 0: sem exemplar ou livro inexistente
+
+
+print(emprestar(con, 2))
+print(emprestar(con, 2))
+print(emprestar(con, 99))
+# Saída:
+# True
+# False
+# False
+</code></pre></figure><div class="versus"><div class="bad"><h3>Ler, subtrair no Python, gravar</h3><p>Entre a leitura e a gravação, outra pessoa pode ter retirado. O valor gravado já nasce velho.</p><pre><code>cur.execute(&#x27;SELECT quantidade FROM item WHERE id = %s&#x27;, (item_id,))
+saldo = cur.fetchall()[0][0]
+cur.execute(&#x27;UPDATE item SET quantidade = %s WHERE id = %s&#x27;,
+            (saldo - quantidade, item_id))</code></pre></div><div class="good"><h3>A conta dentro do UPDATE</h3><p>O banco faz a conta com o valor do momento, e só se houver saldo. O rowcount diz se a retirada aconteceu.</p><pre><code>cur.execute(&#x27;UPDATE item SET quantidade = quantidade - %s &#x27;
+            &#x27;WHERE id = %s AND quantidade &gt;= %s&#x27;,
+            (quantidade, item_id, quantidade))
+if cur.rowcount == 0:
+    ...  # sem saldo ou id inexistente</code></pre></div></div></section><section id="restricao" data-stop="restricao"><h2>Estoque zerado: a regra do banco contra a regra do objeto <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#restricao" aria-label="Versão para leitura: Estoque zerado: a regra do banco contra a regra do objeto">↗</a></h2><p>O terceiro relato não é defeito do script. Na A05, o ItemKit aceita retirar tudo e ficar com zero. Na A06, o banco ganhou CHECK (quantidade &gt; 0), que fazia sentido para o cadastro, e na A08 a regra foi para o MySQL. Quando a retirada chega a zero, o banco recusa uma situação que o domínio considera normal.</p><p>A decisão desta aula separa as duas coisas: cadastrar com zero continua proibido, e quem garante é o ItemKit; estoque zerado é permitido, e o banco só recusa negativo, com CHECK (quantidade &gt;= 0). Num banco que já tem dados, a regra muda com ALTER TABLE: apaga o CHECK antigo pelo nome e cria o novo. O nome do CHECK antigo foi dado pelo MySQL, item_chk_1; daqui em diante, dê você mesmo o nome das regras, com CONSTRAINT nome, para não precisar descobri-lo depois.</p><div class="callout alerta"><span class="callout-title">Uma migração é um arquivo, não um comando digitado uma vez</span><p>Cada máquina da turma tem um banco kits da A08. O ALTER TABLE vai num arquivo, sql/mysql/migracao_a09.sql, que qualquer um roda com SOURCE, e o esquema.sql muda junto, para que um banco novo já nasça com a regra nova.</p></div></section><section id="remocao" data-stop="remocao"><h2>Apagar, desativar ou levar junto <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#remocao" aria-label="Versão para leitura: Apagar, desativar ou levar junto">↗</a></h2><p>Remover uma linha que outras referenciam pede uma decisão. O padrão do MySQL é recusar: apagar um kit que ainda tem itens dá o erro 1451, porque a chave estrangeira de item aponta para ele. Há outras escolhas, e cada uma tem um preço. A tabela compara as quatro, e o tutorial mostra cada uma no banco de treino.</p><p>Para o projeto, a turma fica com o padrão: um item é apagado de verdade, pelo id, e um kit com itens é recusado. O repositório traduz o erro 1451 numa exceção do domínio, KitComItens, com uma mensagem que diz o que fazer. Qualquer outro erro do banco segue como veio, como na regra de exceções da A04.</p><div class="table-wrap"><table><caption>Quatro jeitos de remover</caption><thead><tr><th scope="col">Jeito</th><th scope="col">O que acontece</th><th scope="col">Ganha</th><th scope="col">Paga</th></tr></thead><tbody><tr><td>DELETE (apagar)</td><td>A linha sai do banco.</td><td>Simples; o banco fica só com o que existe.</td><td>Não há como saber depois que a linha existiu.</td></tr><tr><td>Exclusão lógica</td><td>Uma coluna ativo vira FALSE; a linha fica.</td><td>Histórico e um desfazer fácil.</td><td>Toda consulta precisa de WHERE ativo; esquecer mostra dado removido.</td></tr><tr><td>Recusar (padrão, RESTRICT)</td><td>Apagar o kit com itens dá o erro 1451.</td><td>Ninguém apaga o que ainda é usado sem perceber.</td><td>O aplicativo precisa explicar a recusa ao usuário.</td></tr><tr><td>ON DELETE CASCADE</td><td>Apagar o kit apaga os itens junto.</td><td>Uma remoção só limpa tudo.</td><td>Um clique errado leva tudo, sem aviso.</td></tr></tbody></table></div><figure class="code-block"><figcaption>Traduzir a recusa do banco num erro do domínio (exemplo: autores e livros)</figcaption><pre><code># Exemplo com livros. con é uma conexão aberta; o autor 1 tem livros, o autor 2 não.
+import mysql.connector
+
+
+class AutorComLivros(Exception):
+    &quot;&quot;&quot;O banco recusou apagar o autor porque ainda há livros dele.&quot;&quot;&quot;
+
+
+def remover_autor(con, autor_id):
+    cur = con.cursor()
+    try:
+        cur.execute(&#x27;DELETE FROM autor WHERE id = %s&#x27;, (autor_id,))
+    except mysql.connector.IntegrityError as erro:
+        if erro.errno == 1451:   # uma chave estrangeira ainda aponta para esta linha
+            raise AutorComLivros(f&#x27;Autor {autor_id} ainda tem livros&#x27;) from erro
+        raise
+    return cur.rowcount   # quantas linhas foram apagadas
+
+
+try:
+    remover_autor(con, 1)
+except AutorComLivros as erro:
+    print(erro)
+print(remover_autor(con, 2))
+print(remover_autor(con, 2))
+# Saída:
+# Autor 1 ainda tem livros
+# 1
+# 0
+</code></pre></figure></section><section id="terminal" data-stop="terminal"><h2>Tutorial: alterar e remover pelo terminal, tela a tela <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#terminal" aria-label="Versão para leitura: Tutorial: alterar e remover pelo terminal, tela a tela">↗</a></h2><p>O tutorial usa autor e livro no banco kits_teste, agora com uma coluna exemplares. Os passos 3 a 5 precisam de dois terminais abertos lado a lado, os dois na raiz do projeto. O passo 10 apaga as tabelas de treino.</p><p>Como ler as telas: nas linhas que começam com PS C:\projetos\kits&gt;, mysql&gt;, -&gt; ou Enter password:, o texto em destaque é o que você digita; o resto é a resposta do computador. O número da conexão e os tempos mudam a cada vez.</p><p>As telas foram capturadas de sessões reais do cliente mysql 8.4.9 no Windows, inclusive as dos dois terminais, na ordem em que os comandos foram digitados.</p><figure class="tela"><figcaption>Passo 1 · Prepare as tabelas de treino</figcaption><p>Como kits_app, no banco kits_teste. Repare no CHECK com nome escolhido, exemplares_positivos, e nos dois livros chamados Guia, de autores diferentes.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Prepare as tabelas de treino"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE autor (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(80) NOT NULL);</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE livro (</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  id INT AUTO_INCREMENT PRIMARY KEY,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  autor_id INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  titulo VARCHAR(120) NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  exemplares INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CONSTRAINT exemplares_positivos CHECK (exemplares &gt; 0),</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FOREIGN KEY (autor_id) REFERENCES autor(id)</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>);</kbd>
+Query OK, 0 rows affected (0.03 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO autor (id, nome) VALUES (1, &#x27;Autora Ficticia&#x27;), (2, &#x27;Autor Ficticio&#x27;);</kbd>
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (id, autor_id, titulo, exemplares) VALUES (1, 1, &#x27;Guia&#x27;, 3), (2, 1, &#x27;Atlas&#x27;, 2), (3, 2, &#x27;Guia&#x27;, 5);</kbd>
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Um INSERT com várias linhas mostra Records: quantas linhas entraram, quantas eram repetidas e quantos avisos houve.</p></figure><figure class="tela"><figcaption>Passo 2 · Pelo nome muda demais; pelo id, só uma linha</figcaption><p>O SELECT com o mesmo WHERE mostra o que o UPDATE vai atingir: dois livros. Pelo id, uma linha. Repare na diferença entre Rows matched e Changed.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · Pelo nome muda demais; pelo id, só uma linha"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, autor_id, titulo, exemplares FROM livro WHERE titulo = &#x27;Guia&#x27;;</kbd>
++----+----------+--------+------------+
+| id | autor_id | titulo | exemplares |
++----+----------+--------+------------+
+|  1 |        1 | Guia   |          3 |
+|  3 |        2 | Guia   |          5 |
++----+----------+--------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 4 WHERE titulo = &#x27;Guia&#x27;;</kbd>
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, titulo, exemplares FROM livro WHERE id = 1;</kbd>
++----+--------+------------+
+| id | titulo | exemplares |
++----+--------+------------+
+|  1 | Guia   |          4 |
++----+--------+------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 3 WHERE id = 1;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 3 WHERE id = 1;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 5 WHERE id = 3;</kbd>
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O segundo UPDATE do livro 1 encontra a linha (Rows matched: 1) mas não muda nada (Changed: 0), porque o valor já era 3. No Python, esse caso dá rowcount 0. O último comando devolve o Guia do autor 2 aos 5 exemplares de antes.</p></figure><figure class="tela"><figcaption>Passo 3 · Terminal 1: lê o saldo</figcaption><p>Abra o primeiro terminal e leia os exemplares do Atlas, o livro 2. Como o script herdado, a pessoa vê 2 na tela e vai conferir o armário. Não feche este terminal.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Terminal 1: lê o saldo"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+</code></pre></figure><figure class="tela"><figcaption>Passo 4 · Terminal 2: lê, subtrai de cabeça e grava</figcaption><p>No segundo terminal, outra pessoa lê o mesmo 2, empresta um exemplar e grava 2 - 1 = 1.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · Terminal 2: lê, subtrai de cabeça e grava"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 29
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 1 WHERE id = 2;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+</code></pre></figure><figure class="tela"><figcaption>Passo 5 · Terminal 1: grava a conta velha</figcaption><p>De volta ao primeiro terminal, a primeira pessoa grava a conta que fez com o 2 que tinha lido: 1. Saíram dois exemplares e o banco mostra 1.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 5 · Terminal 1: grava a conta velha"><code><span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 1 WHERE id = 2;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> O MySQL nem conta como mudança, porque o valor já era 1 (Changed: 0). Nenhum erro, nenhum aviso: a retirada do terminal 2 simplesmente sumiu. Saia dos dois terminais com exit.</p></figure><figure class="tela"><figcaption>Passo 6 · A conta dentro do UPDATE, e a regra que barra o zero</figcaption><p>Volte o Atlas para 2 e retire com a conta dentro do UPDATE. A primeira retirada passa. A segunda levaria o saldo a zero, e o CHECK exemplares_positivos recusa. SHOW CREATE TABLE mostra o nome da regra; o ALTER TABLE troca por uma que aceita zero, sem apagar os dados.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 6 · A conta dentro do UPDATE, e a regra que barra o zero"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 30
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 2 WHERE id = 2;</kbd>
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2 AND exemplares &gt;= 1;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2 AND exemplares &gt;= 1;</kbd>
+ERROR 3819 (HY000): Check constraint &#x27;exemplares_positivos&#x27; is violated.
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW CREATE TABLE livro\G</kbd>
+*************************** 1. row ***************************
+       Table: livro
+Create Table: CREATE TABLE `livro` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `autor_id` int NOT NULL,
+  `titulo` varchar(120) NOT NULL,
+  `exemplares` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `autor_id` (`autor_id`),
+  CONSTRAINT `livro_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autor` (`id`),
+  CONSTRAINT `exemplares_positivos` CHECK ((`exemplares` &gt; 0))
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE livro DROP CHECK exemplares_positivos;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE livro ADD CONSTRAINT exemplares_nao_negativos CHECK (exemplares &gt;= 0);</kbd>
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2 AND exemplares &gt;= 1;</kbd>
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2 AND exemplares &gt;= 1;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, titulo, exemplares FROM livro WHERE id = 2;</kbd>
++----+--------+------------+
+| id | titulo | exemplares |
++----+--------+------------+
+|  2 | Atlas  |          0 |
++----+--------+------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Depois da troca, a retirada que zera passa. A seguinte não encontra saldo: Rows matched: 0. É essa linha que o Python lê como rowcount 0 e transforma em recusa.</p></figure><figure class="tela"><figcaption>Passo 7 · DELETE pelo id e a recusa do pai com filhos</figcaption><p>Apagar o livro 3 muda uma linha; apagar de novo, zero. Apagar o autor 1, que ainda tem livros, é recusado com o erro 1451.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 7 · DELETE pelo id e a recusa do pai com filhos"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 31
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM livro WHERE id = 3;</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM livro WHERE id = 3;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM autor WHERE id = 1;</kbd>
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`kits_teste`.`livro`, CONSTRAINT `livro_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autor` (`id`))
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O 1451 é o espelho do 1452 da A08: aquele recusa um filho sem pai; este recusa apagar um pai que ainda tem filhos.</p></figure><figure class="tela"><figcaption>Passo 8 · Exclusão lógica: desativar em vez de apagar</figcaption><p>Uma coluna ativo, com padrão TRUE, marca quem está em uso. Desativar o autor 2 é um UPDATE. A consulta com WHERE ativo esconde o autor; a consulta sem o filtro mostra que a linha continua lá.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 8 · Exclusão lógica: desativar em vez de apagar"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 32
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE autor ADD COLUMN ativo BOOLEAN NOT NULL DEFAULT TRUE;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE autor SET ativo = FALSE WHERE id = 2;</kbd>
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome FROM autor WHERE ativo;</kbd>
++----+-----------------+
+| id | nome            |
++----+-----------------+
+|  1 | Autora Ficticia |
++----+-----------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome, ativo FROM autor;</kbd>
++----+-----------------+-------+
+| id | nome            | ativo |
++----+-----------------+-------+
+|  1 | Autora Ficticia |     1 |
+|  2 | Autor Ficticio  |     0 |
++----+-----------------+-------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O preço aparece na última consulta: quem esquecer o WHERE ativo vê o autor removido.</p></figure><figure class="tela"><figcaption>Passo 9 · ON DELETE CASCADE: apagar leva os filhos junto</figcaption><p>A chave estrangeira é recriada com ON DELETE CASCADE. Agora apagar o autor 1 é aceito, e os dois livros dele somem junto, sem nenhum aviso.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 9 · ON DELETE CASCADE: apagar leva os filhos junto"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE livro DROP FOREIGN KEY livro_ibfk_1;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE livro ADD CONSTRAINT livro_autor FOREIGN KEY (autor_id) REFERENCES autor(id) ON DELETE CASCADE;</kbd>
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT count(*) FROM livro WHERE autor_id = 1;</kbd>
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM autor WHERE id = 1;</kbd>
+Query OK, 1 row affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT count(*) FROM livro;</kbd>
++----------+
+| count(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Para trocar uma chave estrangeira, apague a antiga pelo nome (livro_ibfk_1, dado pelo MySQL) e crie a nova com um nome seu.</p></figure><figure class="tela"><figcaption>Passo 10 · Apague as tabelas de treino</figcaption><p>Apague livro e depois autor. SHOW TABLES confirma que o kits_teste ficou vazio: os testes do projeto criam ali as tabelas dos kits.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 10 · Apague as tabelas de treino"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE livro;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE autor;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW TABLES;</kbd>
+Empty set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre></figure><div class="table-wrap"><table><caption>Mensagens desta aula</caption><thead><tr><th scope="col">Mensagem</th><th scope="col">O que significa</th><th scope="col">O que fazer</th></tr></thead><tbody><tr><td>Rows matched: 2  Changed: 2</td><td>O WHERE atingiu duas linhas.</td><td>Se você queria uma só, o WHERE está errado: use o id.</td></tr><tr><td>Rows matched: 1  Changed: 0</td><td>A linha existe, mas o valor já era aquele.</td><td>Não é erro. No Python, rowcount 0: confira com um SELECT se precisar saber se o id existe.</td></tr><tr><td>Rows matched: 0  Changed: 0</td><td>Nenhuma linha atendeu o WHERE.</td><td>Id inexistente ou, na retirada, saldo insuficiente.</td></tr><tr><td>ERROR 3819 (HY000): Check constraint ... is violated</td><td>Uma regra CHECK recusou o valor.</td><td>Confira se a regra está certa antes de mudar o valor. Para mudar a regra, ALTER TABLE.</td></tr><tr><td>ERROR 1451 (23000): Cannot delete or update a parent row</td><td>Ainda há filhos apontando para a linha.</td><td>Remova os filhos antes, ou trate a recusa no aplicativo.</td></tr><tr><td>ERROR 3821 (HY000): Check constraint ... is not found in the table</td><td>O nome da regra no DROP CHECK está errado, ou a migração já rodou.</td><td>Copie o nome exato do SHOW CREATE TABLE.</td></tr></tbody></table></div></section><section id="pratica" data-stop="pratica"><h2>Retirada sem perda e remoção com regra <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#pratica" aria-label="Versão para leitura: Retirada sem perda e remoção com regra">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: migração, repositório, testes, prova da concorrência e só então o script herdado. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>sql/mysql/migracao_a09.sql: estoque zerado passa a valer</h3><p>Escreva a migração que troca, no banco kits, o CHECK da quantidade por um que aceita zero e recusa negativo, com um nome escolhido por você. Mude também o sql/mysql/esquema.sql: o CHECK novo, com o mesmo nome, e dê nome à chave estrangeira. Entrega: sql/mysql/migracao_a09.sql e sql/mysql/esquema.sql atualizado.</p><p>Concluído quando: Depois do SOURCE da migração no banco kits, SHOW CREATE TABLE item\G mostra o CHECK novo, os dados continuam lá e um UPDATE que zera um item é aceito; um UPDATE que deixaria negativo é recusado com o erro 3819.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 6 do tutorial. De onde veio o nome exemplares_positivos, e de onde vem o nome do CHECK do seu item?</p></details><pre><code id="work-migracao">-- A09: ajusta o banco kits que já existe, sem apagar os dados.
+-- 1. Descubra o nome do CHECK da quantidade: SHOW CREATE TABLE item\G
+-- 2. Apague esse CHECK.
+-- 3. Crie de novo com nome escolhido por você, aceitando zero.
+-- Depois, mude também o sql/mysql/esquema.sql, para que um banco novo já nasça assim.
+</code></pre><div class="atelier" data-source="work-migracao" data-filename="migracao_a09.sql" data-execution="Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SHOW CREATE TABLE item\G, depois SOURCE sql/mysql/migracao_a09.sql e SHOW CREATE TABLE item\G de novo."></div><p>Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SHOW CREATE TABLE item\G, depois SOURCE sql/mysql/migracao_a09.sql e SHOW CREATE TABLE item\G de novo.</p></div><div class="workbench"><h3>kits/repositorio.py: retirar, remover_item e remover_kit</h3><p>Acrescente ao repositório da A08 a exceção KitComItens e três funções. retirar(con, item_id, quantidade) recusa quantidade que não seja inteiro positivo, desconta num UPDATE só e só se houver saldo, e devolve o saldo novo; sem linha mudada, levanta LookupError para id inexistente e QuantidadeInvalida para saldo insuficiente. remover_item(con, item_id) apaga pelo id ou levanta LookupError. remover_kit(con, kit_id) apaga pelo id, transforma o erro 1451 em KitComItens e deixa qualquer outro erro seguir; id inexistente, LookupError. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os sete testes de tests/test_retirada.py passam, inclusive os três que você vai completar na próxima atividade, e os seis da A08 continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte a emprestar, no exemplo dos livros. Em retirar, quando o rowcount é 0, o que um SELECT do saldo permite separar?</p></details><pre><code id="work-repositorio"># Acrescente ao seu kits/repositorio.py da A08 (os imports vão para o topo do arquivo).
+import mysql.connector
+
+from kits.regras import QuantidadeInvalida
+
+
+class KitComItens(Exception):
+    &quot;&quot;&quot;O kit ainda tem itens, e o banco recusou a remoção.&quot;&quot;&quot;
+
+
+def retirar(con, item_id, quantidade):
+    # Recuse quantidade que não seja inteiro positivo (QuantidadeInvalida).
+    # Desconte NO BANCO, num UPDATE só, e só se houver saldo. Não leia o saldo para subtrair no Python.
+    # Nenhuma linha mudou: item inexistente (LookupError) ou saldo insuficiente (QuantidadeInvalida).
+    # Devolva o saldo novo.
+    ...
+
+
+def remover_item(con, item_id):
+    # Apague pelo id. Nenhuma linha apagada: LookupError.
+    ...
+
+
+def remover_kit(con, kit_id):
+    # Apague pelo id. Se o banco recusar porque o kit tem itens (erro 1451), levante KitComItens.
+    # Qualquer outro erro segue como veio. Nenhuma linha apagada: LookupError.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_retirada.py: complete os três testes que faltam</h3><p>O arquivo usa o TESTE e o comandos da A08 e já tem quatro testes, inclusive o dos três técnicos ao mesmo tempo. Escreva os três marcados com Complete: retirar mais que o saldo é recusado e o saldo não muda; id inexistente em retirar e em remover_item levanta LookupError; um kit com itens é recusado com KitComItens e continua no banco, e um kit sem itens é removido. Entrega: tests/test_retirada.py.</p><p>Concluído quando: Os sete testes passam com o seu repositório. Depois, troque o UPDATE de retirar por ler, subtrair no Python e gravar, com um time.sleep(0.3) entre a leitura e a gravação para fazer o papel da confirmação: o teste dos três técnicos precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que o saldo não mudou, consulte de novo numa conexão nova, como saldo() faz. Para o kit vazio, insira um kit novo antes de removê-lo.</p></details><pre><code id="work-testes-retirada">&quot;&quot;&quot;Testes de retirada e remoção pelo id: cada teste recria as tabelas no kits_teste.&quot;&quot;&quot;
+import threading
+import unittest
+
+from kits.banco import conexao_banco
+from kits.regras import QuantidadeInvalida
+from kits.repositorio import KitComItens, remover_item, remover_kit, retirar
+from tests.test_repositorio import TESTE, comandos
+
+
+class TestRetirada(unittest.TestCase):
+    def setUp(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;):
+                for comando in comandos(script):
+                    cur.execute(comando)
+
+    def consultar(self, sql, valores=()):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(sql, valores)
+            return cur.fetchall()
+
+    def saldo(self, item_id):
+        return self.consultar(&#x27;SELECT quantidade FROM item WHERE id = %s&#x27;, (item_id,))[0][0]
+
+    def test_retirar_desconta_e_devolve_o_saldo(self):
+        with conexao_banco(TESTE) as con:
+            self.assertEqual(retirar(con, 1, 1), 2)
+        self.assertEqual(self.saldo(1), 2)
+        self.assertEqual(self.saldo(3), 5, &#x27;o Cabo do kit 2 não pode mudar&#x27;)
+
+    def test_retirar_tudo_deixa_zero(self):
+        with conexao_banco(TESTE) as con:
+            self.assertEqual(retirar(con, 2, 2), 0)
+        self.assertEqual(self.saldo(2), 0)
+
+    def test_remover_item_apaga_so_aquela_linha(self):
+        with conexao_banco(TESTE) as con:
+            remover_item(con, 1)
+        self.assertEqual(self.consultar(&#x27;SELECT id FROM item ORDER BY id&#x27;), [(2,), (3,)])
+
+    def test_tres_tecnicos_ao_mesmo_tempo_nao_perdem_retirada(self):
+        largada = threading.Barrier(3)
+        resultados = []
+
+        def tecnico():
+            largada.wait()
+            try:
+                with conexao_banco(TESTE) as con:
+                    retirar(con, 2, 1)
+                resultados.append(&#x27;retirou&#x27;)
+            except QuantidadeInvalida:
+                resultados.append(&#x27;recusado&#x27;)
+
+        tecnicos = [threading.Thread(target=tecnico) for _ in range(3)]
+        for t in tecnicos:
+            t.start()
+        for t in tecnicos:
+            t.join()
+        self.assertEqual(sorted(resultados), [&#x27;recusado&#x27;, &#x27;retirou&#x27;, &#x27;retirou&#x27;])
+        self.assertEqual(self.saldo(2), 0)
+
+    # Complete: retirar mais que o saldo levanta QuantidadeInvalida, e o saldo continua o mesmo.
+
+    # Complete: retirar e remover_item com um id que não existe levantam LookupError.
+
+    # Complete: remover_kit de um kit com itens levanta KitComItens e o kit continua no banco;
+    # um kit sem itens é removido.
+</code></pre><div class="atelier" data-source="work-testes-retirada" data-filename="test_retirada.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto.</p></div><div class="workbench"><h3>verificar_concorrencia.py: a prova das três retiradas</h3><p>Escreva o script que põe o Notebook do kit 1 com saldo 2 no banco kits e solta três técnicos ao mesmo tempo, cada um retirando 1 na sua própria conexão. Use threading.Barrier(3) para os três começarem juntos. Mostre o saldo antes, quantas retiradas foram aceitas e recusadas, o saldo depois e se o estoque confere. Entrega: verificar_concorrencia.py, na raiz.</p><p>Concluído quando: A saída mostra Saldo antes: 2, Retiradas aceitas: 2, Retiradas recusadas: 1, Saldo depois: 0 e Estoque confere, em todas as execuções.</p><details><summary>Dica para realizar a atividade</summary><p>Por que cada técnico precisa da sua própria conexão? O que aconteceria se os três usassem a mesma?</p></details><pre><code id="work-verificar-concorrencia">&quot;&quot;&quot;Três técnicos retiram 1 Notebook ao mesmo tempo, com saldo 2: duas retiradas passam e uma é recusada.&quot;&quot;&quot;
+import threading
+
+from kits.banco import conexao_banco
+from kits.regras import QuantidadeInvalida
+from kits.repositorio import retirar
+
+ITEM = 2  # Notebook do kit 1
+
+
+def saldo():
+    # Leia a quantidade do ITEM numa conexão própria.
+    ...
+
+
+def main():
+    # 1. Ponha o saldo do ITEM em 2 e mostre &quot;Saldo antes: N&quot;.
+    # 2. Crie três threads; cada uma espera na mesma threading.Barrier(3) e retira 1,
+    #    na sua própria conexão. Conte as aceitas e as recusadas (QuantidadeInvalida).
+    # 3. Mostre &quot;Retiradas aceitas: N&quot;, &quot;Retiradas recusadas: N&quot; e &quot;Saldo depois: N&quot;.
+    # 4. Mostre &quot;Estoque confere&quot; se depois == antes - aceitas; senão, &quot;ERRO: uma retirada se perdeu&quot;.
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</code></pre><div class="atelier" data-source="work-verificar-concorrencia" data-filename="verificar_concorrencia.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe verificar_concorrencia.py e cole a saída no registro desta página. Rode três vezes: o resultado não pode mudar."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe verificar_concorrencia.py e cole a saída no registro desta página. Rode três vezes: o resultado não pode mudar.</p></div><div class="workbench"><h3>estoque.py: rastreie e corrija o script herdado</h3><p>Antes de mudar qualquer linha, reproduza os relatos no banco kits recriado: remova Cabo e conte os Cabos; abra dois terminais e retire 1 Notebook em cada um, confirmando nos dois só depois que os dois mostrarem o saldo; e retire os 2 Notebooks antes da migração. Encontre os defeitos e diga qual relato é do script e qual é da regra do banco. Corrija usando o repositório: o script passa a receber ids, retirar ITEM_ID QUANTIDADE, remover ITEM_ID e remover-kit KIT_ID, mostra Recusado: e a mensagem para LookupError, QuantidadeInvalida e KitComItens, e mostra o uso para argumentos inválidos. Entrega: estoque.py corrigido, na raiz, e os defeitos com a evidência de cada um no registro.</p><p>Concluído quando: Com o banco recriado e migrado: estoque.py remover 1 apaga só o Cabo do kit 1; estoque.py retirar 2 5 mostra Recusado; estoque.py remover-kit 1 mostra Recusado: Kit 1 ainda tem itens; e estoque.py remover Cabo mostra o uso.</p><details><summary>Dica para realizar a atividade</summary><p>No relato dos dois técnicos, o que cada terminal mostrou na pergunta de confirmação? E qual WHERE os dois UPDATE usaram?</p></details><pre><code id="work-estoque-legado">&quot;&quot;&quot;Script herdado: retira e remove itens pelo nome.
+
+Uso: python estoque.py retirar NOME QUANTIDADE
+     python estoque.py remover NOME
+Relatos do suporte:
+- remover Cabo apagou o Cabo do kit 1 e também o do kit 2;
+- dois técnicos retiraram 1 Notebook cada, ao mesmo tempo, e o banco descontou só 1;
+- retirar os 2 Notebooks terminou com Check constraint &#x27;item_chk_1&#x27; is violated.
+&quot;&quot;&quot;
+import sys
+
+from kits.banco import conexao_banco
+
+
+def retirar(con, nome, quantidade, confirmar=input):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT quantidade FROM item WHERE nome = %s&#x27;, (nome,))
+    saldo = cur.fetchall()[0][0]
+    resposta = confirmar(f&#x27;{nome}: {saldo} em estoque. Retirar {quantidade}? (s/n) &#x27;)
+    if resposta != &#x27;s&#x27;:
+        return saldo
+    cur.execute(&#x27;UPDATE item SET quantidade = %s WHERE nome = %s&#x27;, (saldo - quantidade, nome))
+    return saldo - quantidade
+
+
+def remover(con, nome):
+    cur = con.cursor()
+    cur.execute(&#x27;DELETE FROM item WHERE nome = %s&#x27;, (nome,))
+
+
+def main(argumentos):
+    with conexao_banco() as con:
+        if argumentos[0] == &#x27;retirar&#x27;:
+            print(&#x27;Novo saldo:&#x27;, retirar(con, argumentos[1], int(argumentos[2])))
+        elif argumentos[0] == &#x27;remover&#x27;:
+            remover(con, argumentos[1])
+            print(&#x27;Removido.&#x27;)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main(sys.argv[1:])
+</code></pre><div class="atelier" data-source="work-estoque-legado" data-filename="estoque.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe estoque.py remover Cabo e .\.venv\Scripts\python.exe estoque.py retirar Notebook 1, em dois terminais. Recrie o banco antes de cada relato: SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql no banco kits."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe estoque.py remover Cabo e .\.venv\Scripts\python.exe estoque.py retirar Notebook 1, em dois terminais. Recrie o banco antes de cada relato: SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql no banco kits.</p></div><div class="workbench"><h3>README.md: a seção Retirada e remoção</h3><p>Acrescente ao README.md do projeto a seção Retirada e remoção: as regras (sempre pelo id, estoque zerado válido, kit com itens recusado); como atualizar um banco kits da A08 com a migração; o que retirar, remover_item e remover_kit garantem; e os comandos para rodar os testes, verificar_concorrencia.py e o estoque.py, com o resultado esperado. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, atualiza um banco da A08, roda os testes e verificar_concorrencia.py e obtém o resultado descrito.</p><details><summary>Dica para realizar a atividade</summary><p>Escreva para quem tem um banco da A08 com dados que não podem ser perdidos. Qual comando ele roda primeiro?</p></details><pre><code id="work-readme">## Retirada e remoção
+
+### Regras
+
+### Atualizar um banco kits da A08
+
+### Como o código garante
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: e se o item fosse só desativado?</h3><p>Sem mudar o projeto, planeje a exclusão lógica para os itens: o ALTER TABLE, o comando que substitui o DELETE e a lista de tudo o que teria de mudar no repositório e nos testes. Diga quando a troca valeria a pena para os kits. Entrega (opcional): o texto no registro desta página.</p><p>Concluído quando: A lista cobre as três consultas do repositório, a retirada e o remover_kit, e a conclusão diz o que se ganha e o que se paga.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 8 do tutorial. Em quais funções do repositório um item desativado ainda apareceria?</p></details><pre><code id="work-bonus-inativo"># E se o item fosse só desativado?
+
+## O SQL
+
+## O que mais teria de mudar
+
+## Quando vale a pena
+</code></pre><div class="atelier" data-source="work-bonus-inativo" data-filename="inativo.md" data-execution="Texto para o registro desta página. Não é preciso mudar o banco nem o código."></div><p>Texto para o registro desta página. Não é preciso mudar o banco nem o código.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A retirada se sustenta? <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#auditoria" aria-label="Versão para leitura: A retirada se sustenta?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Dois técnicos retiram 1 de um item com saldo 2, ao mesmo tempo, usando o script herdado: lê o saldo, confirma e grava saldo - 1. Com que saldo o item fica?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="1: os dois leram 2 e gravaram 1, e uma retirada se perdeu" autocomplete="off">1: os dois leram 2 e gravaram 1, e uma retirada se perdeu</label><label class="option"><input type="radio" name="q01" value="0: o banco soma as duas retiradas" autocomplete="off">0: o banco soma as duas retiradas</label><label class="option"><input type="radio" name="q01" value="O segundo técnico recebe um erro de bloqueio" autocomplete="off">O segundo técnico recebe um erro de bloqueio</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Refaça os passos 3 a 5 do tutorial e anote o que cada terminal leu antes de gravar.</p></details></fieldset><fieldset data-question="q02"><legend>Um UPDATE item SET nome = &#x27;Cabo&#x27; WHERE id = 1 roda no Python, e o item 1 já se chamava Cabo. Quanto vale cur.rowcount?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="0: a linha foi encontrada, mas nada mudou" autocomplete="off">0: a linha foi encontrada, mas nada mudou</label><label class="option"><input type="radio" name="q02" value="1: a linha existe" autocomplete="off">1: a linha existe</label><label class="option"><input type="radio" name="q02" value="Levanta LookupError" autocomplete="off">Levanta LookupError</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare Rows matched e Changed no passo 2 do tutorial.</p></details></fieldset><fieldset data-question="q03"><legend>Retirar os 2 Notebooks dá Check constraint &#x27;item_chk_1&#x27; is violated. Qual é a correção mais adequada?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Trocar o CHECK por quantidade &gt;= 0 com ALTER TABLE, porque estoque zerado é válido e o cadastro com zero já é barrado pelo ItemKit" autocomplete="off">Trocar o CHECK por quantidade &gt;= 0 com ALTER TABLE, porque estoque zerado é válido e o cadastro com zero já é barrado pelo ItemKit</label><label class="option"><input type="radio" name="q03" value="Apagar o item quando a retirada chegar a zero" autocomplete="off">Apagar o item quando a retirada chegar a zero</label><label class="option"><input type="radio" name="q03" value="Retirar o CHECK e confiar só no Python" autocomplete="off">Retirar o CHECK e confiar só no Python</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a A05 diz sobre retirar tudo? E quem mais, além do aplicativo, escreve no banco?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>remover_item apaga com DELETE FROM item WHERE nome = %s, passando o nome por parâmetro.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O parâmetro protege contra injeção. Ele garante que só uma linha seja apagada?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>retirar faz UPDATE item SET quantidade = quantidade - %s WHERE id = %s AND quantidade &gt;= %s e confere o rowcount.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Onde a conta é feita, e com o valor de quando?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>verificar_concorrencia.py usa uma conexão só, compartilhada pelos três técnicos.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Três pessoas em máquinas diferentes têm uma conexão cada uma.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>remover_kit captura mysql.connector.Error, de qualquer número, e levanta KitComItens.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Senha errada ou servidor desligado também viram kit com itens?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>A migração fica em sql/mysql/migracao_a09.sql, e o esquema.sql muda junto, com o mesmo CHECK.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Como fica o banco de quem já tem dados, e o de quem cria um banco novo?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Para não ver mais o erro 1451, a dupla recria a chave estrangeira do item com ON DELETE CASCADE.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece com os itens quando alguém remove o kit errado?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-retirada"><p>Outra dupla entregou a retirada abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def retirar(con, item_id, quantidade):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT quantidade FROM item WHERE id = %s&#x27;, (item_id,))
+    saldo = cur.fetchall()[0][0]
+    if quantidade &gt; saldo:
+        raise QuantidadeInvalida(&#x27;saldo insuficiente&#x27;)
+    cur.execute(&#x27;UPDATE item SET quantidade = %s WHERE id = %s&#x27;, (saldo - quantidade, item_id))
+    return saldo - quantidade</code></pre><fieldset data-question="ac-perde" data-claim="ac-perde"><legend>Duas retiradas ao mesmo tempo podem ler o mesmo saldo, e uma delas se perde.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-perde" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-perde" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-injecao" data-claim="ac-injecao"><legend>item_id vai concatenado no comando e permite injeção de SQL.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-injecao" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-injecao" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-inexistente" data-claim="ac-inexistente"><legend>Com um id que não existe, o fetchall devolve uma lista vazia e o [0][0] levanta IndexError em vez de LookupError.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-inexistente" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-inexistente" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a retirada e a remoção <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#registro" aria-label="Versão para leitura: Entregue o que prova a retirada e a remoção">↗</a></h2><p>Entregue, no repositório do projeto: sql/mysql/migracao_a09.sql e esquema.sql atualizado; kits/repositorio.py com retirar, remover_item, remover_kit e KitComItens; tests/test_retirada.py; verificar_concorrencia.py e estoque.py corrigido, na raiz; e a seção Retirada e remoção no README.md.</p><p>No registro desta página, cole a saída de três execuções de verificar_concorrencia.py e, para o script herdado, os defeitos com a evidência de cada um, dizendo qual relato era do script e qual era da regra do banco.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>No relato do Notebook, nenhum dos dois técnicos fez nada errado e nenhum erro apareceu. Onde estava o defeito, e o que no seu retirar impede que ele se repita?</p><p>Na A10, uma operação passa a ter vários comandos, como mover um item de um kit para outro, e o tudo ou nada da A07 volta com o MySQL.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/update.html">MySQL 8.4: UPDATE</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/delete.html">MySQL 8.4: DELETE</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html">MySQL 8.4: FOREIGN KEY, ON DELETE e ON UPDATE</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-table-check-constraints.html">MySQL 8.4: CHECK constraints</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/alter-table.html">MySQL 8.4: ALTER TABLE</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html">MySQL 8.4: bloqueios do InnoDB</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-rowcount.html">MySQL Connector/Python: cursor.rowcount</a></li><li><a href="https://docs.python.org/3/library/threading.html#barrier-objects">Python: threading.Barrier</a></li></ul><a data-idoc="source" href="leitura-0009-atualizacao-e-remocao-por-identificador.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-20</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

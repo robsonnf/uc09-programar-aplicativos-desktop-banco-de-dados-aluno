@@ -1,0 +1,644 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A10 · Transfira com tudo ou nada: transação, travas e o que fica gravado</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A10" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A10</span><span>Transações, integridade e persistência<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Um Cabo que sumiu no caminho</a></li><li><a href="#esteira">Vários comandos que valem juntos</a></li><li><a href="#transacao">Três comandos, uma transação</a></li><li><a href="#isolamento">O que uma transação enxerga das outras</a></li><li><a href="#bloqueio">Espera, desistência e deadlock</a></li><li><a href="#persistencia">O que fica gravado</a></li><li><a href="#terminal">Tutorial: transações no terminal, tela a tela</a></li><li><a href="#pratica">Transferência com tudo ou nada</a></li><li><a href="#auditoria">A transferência se sustenta?</a></li><li><a href="#registro">Entregue o que prova a transferência</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><span>Edição, exclusão e sincronização da interface<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A15</span><span>Sprint CRUD, testes de fluxo e devolutiva<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A16</span><span>Filtros, ordenação e consulta vazia<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A17</span><span>JOIN, agregações e listagens estruturadas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A18</span><span>Arquivos, caminhos, codificação e CSV<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A19</span><span>Carga massiva, inconsistências e transações em lote<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A20</span><span>MVC aplicado à refatoração do aplicativo<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A21</span><span>Repository/DAO, serviços e responsabilidades<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A22</span><span>Consolidação arquitetural e testes de regressão<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A23</span><span>ORM: ambiente, mapeamento, sessão e transação<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A24</span><span>ORM: relacionamentos, CRUD e consultas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A25</span><span>SQL direto × ORM e decisão documentada<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A10</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Transfira com tudo ou nada: transação, travas e o que fica gravado</h1><p class="thesis">Mover unidades de um kit para outro são três comandos: tirar da origem, pôr no destino e anotar no histórico. Se só parte deles ficar gravada, um Cabo some ou aparece do nada. Hoje você junta os três numa transação no MySQL, trava o que vai ler para decidir, trata o deadlock tentando de novo e confere o que sobrevive quando o servidor reinicia.</p><p data-idoc="caveat">A aula continua no MySQL da A08 e no mesmo repositório, com a retirada e a remoção da A09. Transações com centenas de linhas, como a importação de um arquivo, voltam na A23; a interface gráfica começa na A11. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Juntar vários comandos numa transação no MySQL e provar que um erro no meio desfaz todos</li><li>Explicar o que uma transação enxerga das outras no REPEATABLE READ e quando usar SELECT ... FOR UPDATE</li><li>Reconhecer espera por trava (erro 1205) e deadlock (erro 1213), e tentar de novo a transação inteira</li><li>Mostrar que CREATE TABLE grava o que estava pendente e que só o que recebeu commit sobrevive a reiniciar o servidor</li><li>Rastrear e corrigir um script de transferência que deixava parte do trabalho gravada</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A09: kits/banco.py com conexao_banco, kits/repositorio.py com retirar, tests/ e sql/mysql com a migração da A09</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li><li>Tudo ou nada da A07: commit grava, rollback desfaz e o erro segue para quem chamou</li></ul><section id="partida" data-stop="partida"><h2>Um Cabo que sumiu no caminho <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#partida" aria-label="Versão para leitura: Um Cabo que sumiu no caminho">↗</a></h2><p>O suporte começou a mover itens entre kits com um script herdado, transferir.py, e chegaram dois relatos. Transferir 1 Cabo do item 1 para o kit 9, que não existe, mostrou Falhou, mas o kit 1 ficou com um Cabo a menos. Um colega tentou corrigir trocando o print do erro por raise: agora aparece o erro inteiro, e o Cabo continua saindo do kit 1.</p><p>Em dupla, antes de abrir o script, escrevam o que precisaria acontecer para o Cabo sair da origem e não chegar a lugar nenhum. A correção do colega era certa? Por que não bastou?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: sql/mysql/migracao_a10.sql e o esquema.sql atualizado; em_transacao em kits/banco.py; transferir em kits/repositorio.py; tests/test_transferencia.py; verificar_transferencias.py e transferir.py corrigido, na raiz; e a seção Transferência entre kits no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam e verificar_transferencias.py termina com Transferências com erro: 0 e Total confere.</p></div></section><section id="esteira" data-stop="esteira"><h2>Vários comandos que valem juntos <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#esteira" aria-label="Versão para leitura: Vários comandos que valem juntos">↗</a></h2><ol class="pipeline"><li><strong>Abrir</strong><p>Começar a transação: no Python o conector já abre; no cliente mysql, START TRANSACTION.</p></li><li><strong>Travar o que decide</strong><p>Ler com SELECT ... FOR UPDATE a linha cujo valor decide o que fazer.</p></li><li><strong>Fazer os passos</strong><p>Tirar da origem, pôr no destino, anotar no histórico, sem commit no meio.</p></li><li><strong>Fechar</strong><p>Sem erro, commit. Com erro, rollback de tudo, e o erro segue.</p></li><li><strong>Tentar de novo</strong><p>Se o banco escolher a transação como vítima de deadlock, rodar a transação inteira outra vez.</p></li><li><strong>Provar</strong><p>Testar o erro no meio, duas pessoas ao mesmo tempo e o servidor reiniciando.</p></li></ol></section><section id="transacao" data-stop="transacao"><h2>Três comandos, uma transação <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#transacao" aria-label="Versão para leitura: Três comandos, uma transação">↗</a></h2><p>Na A07, no SQLite, o tudo ou nada era um lote de INSERT. Agora os comandos são diferentes entre si: um UPDATE na origem, um UPDATE ou INSERT no destino e um INSERT no histórico. Se o segundo falhar e o primeiro ficar, a unidade some; se o terceiro faltar, a unidade muda de lugar sem deixar rastro.</p><p>No Python, o conector do MySQL começa com o autocommit desligado: o primeiro comando abre uma transação, e tudo fica pendente até o commit ou o rollback, como no sqlite3. O conexao_banco da A08 já faz isso: sem erro, commit; com erro, rollback e o erro segue. O que muda nesta aula é onde ficam os comandos: todos dentro do mesmo bloco, e nenhum commit no meio.</p><p>Um erro de um comando não desfaz a transação. O MySQL recusa só aquele comando, e os anteriores continuam pendentes, esperando o seu commit ou rollback. O exemplo mostra isso: depois da recusa, a própria transação ainda vê o saldo descontado.</p><figure class="code-block"><figcaption>Mover exemplares entre filiais, com a recusa no meio (exemplo: livros)</figcaption><pre><code>import mysql.connector
+
+
+def mover(con, livro_id, filial_destino, exemplares):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT titulo, exemplares FROM livro WHERE id = %s FOR UPDATE&#x27;, (livro_id,))
+    titulo, saldo = cur.fetchall()[0]
+    if exemplares &gt; saldo:
+        raise ValueError(f&#x27;só há {saldo} exemplares&#x27;)
+    cur.execute(&#x27;UPDATE livro SET exemplares = exemplares - %s WHERE id = %s&#x27;, (exemplares, livro_id))
+    cur.execute(&#x27;INSERT INTO livro (filial_id, titulo, exemplares) VALUES (%s, %s, %s)&#x27;,
+                (filial_destino, titulo, exemplares))
+    cur.execute(&#x27;INSERT INTO movimento (livro_id, exemplares) VALUES (%s, %s)&#x27;, (livro_id, exemplares))
+
+
+def total(con):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT SUM(exemplares) FROM livro&#x27;)
+    return int(cur.fetchall()[0][0])
+
+
+# con: conexão aberta pelo conector; o autocommit começa desligado
+print(&#x27;Antes:&#x27;, total(con))
+try:
+    mover(con, 1, 9, 2)   # a filial 9 não existe
+    con.commit()
+except mysql.connector.IntegrityError as erro:
+    print(&#x27;Recusado pelo banco:&#x27;, erro.errno)
+    print(&#x27;Ainda dentro da transação:&#x27;, total(con))
+    con.rollback()        # desfaz também o UPDATE que já tinha passado
+print(&#x27;Depois do rollback:&#x27;, total(con))
+# Saída:
+# Antes: 6
+# Recusado pelo banco: 1452
+# Ainda dentro da transação: 4
+# Depois do rollback: 6
+</code></pre></figure><div class="callout alerta"><span class="callout-title">No cliente mysql é ao contrário</span><p>O cliente mysql começa com autocommit ligado: cada comando é gravado na hora. Para juntar comandos numa transação no cliente, abra com START TRANSACTION e feche com COMMIT ou ROLLBACK, como no tutorial.</p></div></section><section id="isolamento" data-stop="isolamento"><h2>O que uma transação enxerga das outras <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#isolamento" aria-label="Versão para leitura: O que uma transação enxerga das outras">↗</a></h2><p>Enquanto uma transação está aberta, outras conexões continuam gravando. O nível de isolamento padrão do MySQL, REPEATABLE READ, faz uma promessa: dentro da transação, o mesmo SELECT devolve sempre a mesma coisa, como uma foto tirada na primeira leitura. Os passos 4 a 6 do tutorial mostram a foto: outra conexão grava 5, e a transação continua lendo 2.</p><p>A foto é boa para um relatório, que precisa de números coerentes entre si. Para decidir uma escrita, é perigosa: você conferiria o saldo numa foto velha. A leitura com FOR UPDATE não usa a foto. Ela lê o valor mais recente e trava a linha até o fim da transação, e quem quiser mudar a linha espera. É assim que a transferência confere o saldo da origem antes de descontar.</p><div class="table-wrap"><table><caption>Dois níveis de isolamento do MySQL</caption><thead><tr><th scope="col">Nível</th><th scope="col">Um SELECT comum dentro da transação vê</th><th scope="col">Quando aparece</th></tr></thead><tbody><tr><td>REPEATABLE READ (padrão)</td><td>A foto da primeira leitura: o mesmo valor do começo ao fim.</td><td>É o que o kits usa, sem configurar nada.</td></tr><tr><td>READ COMMITTED</td><td>O último valor que recebeu commit, a cada SELECT.</td><td>Comum em outros bancos, como o PostgreSQL; no MySQL, só se alguém mudar a configuração.</td></tr></tbody></table></div><div class="versus"><div class="bad"><h3>Conferir com um SELECT comum</h3><p>Outra transação pode descontar entre a sua leitura e o seu UPDATE: você decide com um saldo que já mudou.</p><pre><code>cur.execute(&#x27;SELECT quantidade FROM item WHERE id = %s&#x27;, (item_id,))</code></pre></div><div class="good"><h3>Conferir travando</h3><p>Lê o valor mais recente e segura a linha até o commit ou o rollback.</p><pre><code>cur.execute(&#x27;SELECT quantidade FROM item WHERE id = %s FOR UPDATE&#x27;, (item_id,))</code></pre></div></div></section><section id="bloqueio" data-stop="bloqueio"><h2>Espera, desistência e deadlock <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#bloqueio" aria-label="Versão para leitura: Espera, desistência e deadlock">↗</a></h2><p>Quem pede uma linha travada espera. Se a espera passa de innodb_lock_wait_timeout, 50 segundos por padrão, o comando desiste com o erro 1205. É sinal de uma transação que ficou aberta tempo demais, como um terminal esquecido com START TRANSACTION.</p><p>O deadlock é diferente: duas transações esperam uma pela outra, e nenhuma espera resolveria. Transferir um Cabo do kit 1 para o kit 2 trava o item 1 e depois o item 3. Ao mesmo tempo, transferir um Cabo do kit 2 para o kit 1 trava o item 3 e depois o item 1. O MySQL percebe o ciclo na hora, escolhe uma vítima, desfaz a transação inteira dela e devolve o erro 1213. A outra segue.</p><p>A vítima não fez nada errado. A resposta certa é rodar a transação inteira de novo, numa conexão nova, porque o banco já desfez tudo o que ela tinha feito. Repetir só o comando que falhou é pior do que desistir: o destino receberia a unidade sem a origem ter perdido nada. Três tentativas no total bastam na prática, mesmo com a máquina ocupada; se a terceira também for vítima, o erro segue para quem chamou.</p><div class="table-wrap"><table><caption>O deadlock da troca de Cabos</caption><thead><tr><th scope="col">Tempo</th><th scope="col">Técnico 1: kit 1 para kit 2</th><th scope="col">Técnico 2: kit 2 para kit 1</th></tr></thead><tbody><tr><td>1</td><td>Trava o item 1 e desconta</td><td></td></tr><tr><td>2</td><td></td><td>Trava o item 3 e desconta</td></tr><tr><td>3</td><td>Pede o item 3: espera o técnico 2</td><td></td></tr><tr><td>4</td><td></td><td>Pede o item 1: espera o técnico 1. Ciclo.</td></tr><tr><td>5</td><td>Vítima: erro 1213, tudo desfeito</td><td>Recebe o item 1 e segue</td></tr><tr><td>6</td><td>Nova tentativa, do começo</td><td>Commit</td></tr></tbody></table></div><div class="versus"><div class="bad"><h3>Repetir o comando que falhou</h3><p>O banco já desfez o desconto da origem. Repetir só o último passo cria uma unidade do nada.</p><pre><code>try:
+    cur.execute(somar_no_destino, valores)
+except mysql.connector.Error as erro:
+    if erro.errno == 1213:
+        cur.execute(somar_no_destino, valores)</code></pre></div><div class="good"><h3>Repetir a transação inteira</h3><p>Uma conexão nova, todos os passos de novo, e um limite de tentativas.</p><pre><code>for tentativa in (1, 2, 3):
+    try:
+        with conexao_banco() as con:
+            return operacao(con)
+    except mysql.connector.Error as erro:
+        if erro.errno != 1213 or tentativa == 3:
+            raise</code></pre></div></div></section><section id="persistencia" data-stop="persistencia"><h2>O que fica gravado <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#persistencia" aria-label="Versão para leitura: O que fica gravado">↗</a></h2><p>Commit é a promessa de persistência: depois dele, a mudança sobrevive a desligar o cliente, a queda da rede e a reiniciar o servidor. O que estava pendente, sem commit, some. Os passos 14 a 16 do tutorial reiniciam o serviço com uma transação aberta e mostram as duas coisas.</p><p>Há comandos que fazem commit sem você pedir. CREATE TABLE, ALTER TABLE e DROP TABLE, os comandos que mudam a estrutura, gravam o que estava pendente antes de rodar, mesmo um CREATE TABLE IF NOT EXISTS que não cria nada. Depois deles, o ROLLBACK não tem mais o que desfazer. Por isso a estrutura muda em migrações, rodadas sozinhas, e nunca no meio de uma operação do aplicativo.</p><p>O rollback desfaz as linhas, mas não devolve os números do AUTO_INCREMENT. Um INSERT recusado ou desfeito gasta o id que receberia, e o próximo item pula um número. Ids servem para identificar, não para contar: nunca conte com ids sem buracos.</p><div class="callout alerta"><span class="callout-title">A tabela movimentacao nasce numa migração</span><p>Crie a tabela em sql/mysql/migracao_a10.sql e no esquema.sql, como na A09. O código do aplicativo só lê e escreve linhas: nenhum CREATE TABLE dentro de transferir.</p></div></section><section id="terminal" data-stop="terminal"><h2>Tutorial: transações no terminal, tela a tela <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#terminal" aria-label="Versão para leitura: Tutorial: transações no terminal, tela a tela">↗</a></h2><p>O tutorial usa filial, livro e movimento no banco kits_teste. Os passos 4 a 12 precisam de dois terminais abertos lado a lado, os dois na raiz do projeto; os passos 14 a 16 reiniciam o serviço do MySQL e pedem um PowerShell aberto como administrador. O passo 17 apaga as tabelas de treino.</p><p>Como ler as telas: nas linhas que começam com PS C:\projetos\kits&gt;, mysql&gt;, -&gt; ou Enter password:, o texto em destaque é o que você digita; o resto é a resposta do computador. O número da conexão e os tempos mudam a cada vez.</p><p>As telas foram capturadas de sessões reais do cliente mysql 8.4.9 no Windows, inclusive as dos dois terminais, na ordem em que os comandos foram digitados.</p><figure class="tela"><figcaption>Passo 1 · Prepare as tabelas de treino</figcaption><p>Como kits_app, no banco kits_teste. O Guia existe nas duas filiais; o Atlas, só no Centro.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Prepare as tabelas de treino"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE filial (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(80) NOT NULL);</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE livro (</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  id INT AUTO_INCREMENT PRIMARY KEY,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  filial_id INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  titulo VARCHAR(120) NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  exemplares INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CONSTRAINT exemplares_nao_negativos CHECK (exemplares &gt;= 0),</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CONSTRAINT livro_filial FOREIGN KEY (filial_id) REFERENCES filial(id)</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>);</kbd>
+Query OK, 0 rows affected (0.03 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE movimento (id INT AUTO_INCREMENT PRIMARY KEY, livro_id INT NOT NULL, exemplares INT NOT NULL);</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO filial (id, nome) VALUES (1, &#x27;Centro&#x27;), (2, &#x27;Norte&#x27;);</kbd>
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (id, filial_id, titulo, exemplares) VALUES (1, 1, &#x27;Guia&#x27;, 3), (2, 1, &#x27;Atlas&#x27;, 2), (3, 2, &#x27;Guia&#x27;, 1);</kbd>
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre></figure><figure class="tela"><figcaption>Passo 2 · Três comandos que valem juntos</figcaption><p>START TRANSACTION abre a transação. Os dois UPDATE e o INSERT ficam pendentes até o COMMIT, que grava os três de uma vez.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · Três comandos que valem juntos"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 2 WHERE id = 1;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares + 2 WHERE id = 3;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO movimento (livro_id, exemplares) VALUES (1, 2);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>COMMIT;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, filial_id, titulo, exemplares FROM livro;</kbd>
++----+-----------+--------+------------+
+| id | filial_id | titulo | exemplares |
++----+-----------+--------+------------+
+|  1 |         1 | Guia   |          1 |
+|  2 |         1 | Atlas  |          2 |
+|  3 |         2 | Guia   |          3 |
++----+-----------+--------+------------+
+3 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Sem o START TRANSACTION, o cliente gravaria cada comando na hora, e um erro no terceiro deixaria os dois primeiros gravados.</p></figure><figure class="tela"><figcaption>Passo 3 · Um erro no meio e o ROLLBACK</figcaption><p>Mover um Atlas para a filial 9, que não existe. O UPDATE passa e o INSERT é recusado.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Um erro no meio e o ROLLBACK"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (filial_id, titulo, exemplares) VALUES (9, &#x27;Atlas&#x27;, 1);</kbd>
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`kits_teste`.`livro`, CONSTRAINT `livro_filial` FOREIGN KEY (`filial_id`) REFERENCES `filial` (`id`))
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Depois da recusa, a transação ainda vê o Atlas com 1: o erro desfez só o comando que falhou. É o ROLLBACK que devolve os 2.</p></figure><figure class="tela"><figcaption>Passo 4 · Terminal 1: abre a transação e lê</figcaption><p>No primeiro terminal, abra uma transação e leia os exemplares do Atlas. Não feche este terminal.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · Terminal 1: abre a transação e lê"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+</code></pre></figure><figure class="tela"><figcaption>Passo 5 · Terminal 2: muda e grava</figcaption><p>No segundo terminal, sem transação, grave 5 exemplares no Atlas. Aqui a leitura já mostra 5.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 5 · Terminal 2: muda e grava"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = 5 WHERE id = 2;</kbd>
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+</code></pre></figure><figure class="tela"><figcaption>Passo 6 · Terminal 1: a foto e a leitura que trava</figcaption><p>De volta ao primeiro terminal, leia de novo. Depois leia com FOR UPDATE e feche com COMMIT.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 6 · Terminal 1: a foto e a leitura que trava"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2;</kbd>
++------------+
+| exemplares |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2 FOR UPDATE;</kbd>
++------------+
+| exemplares |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>COMMIT;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> O SELECT comum repete o 2 da primeira leitura: é a foto do REPEATABLE READ. O FOR UPDATE lê o valor de agora, 5.</p></figure><figure class="tela"><figcaption>Passo 7 · Terminal 1: trava a linha</figcaption><p>Abra outra transação no primeiro terminal e leia o Atlas com FOR UPDATE. A linha fica travada até o fim desta transação.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 7 · Terminal 1: trava a linha"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT exemplares FROM livro WHERE id = 2 FOR UPDATE;</kbd>
++------------+
+| exemplares |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+</code></pre></figure><figure class="tela"><figcaption>Passo 8 · Terminal 2: espera e desiste</figcaption><p>No segundo terminal, diminua a espera para 5 segundos, só nesta sessão, e tente mudar o Atlas. O comando fica parado e, passados os 5 segundos, desiste.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 8 · Terminal 2: espera e desiste"><code><span class="tela-prompt">mysql&gt; </span><kbd>SET SESSION innodb_lock_wait_timeout = 5;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 2;</kbd>
+ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction</code></pre><p class="tela-nota"><strong>Repare:</strong> O padrão é esperar 50 segundos. O erro 1205 desfaz só o comando que esperava, não a transação.</p></figure><figure class="tela"><figcaption>Passo 9 · Terminal 1: solta a trava e começa uma troca</figcaption><p>Feche a transação do passo 7 com COMMIT. Abra outra e tire um Guia do Centro (livro 1).</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 9 · Terminal 1: solta a trava e começa uma troca"><code><span class="tela-prompt">mysql&gt; </span><kbd>COMMIT;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 1;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+</code></pre></figure><figure class="tela"><figcaption>Passo 10 · Terminal 2: a troca no sentido contrário</figcaption><p>No segundo terminal, abra uma transação, tire um Guia do Norte (livro 3) e tente pôr um no Centro (livro 1). O último comando fica parado: o livro 1 está com o terminal 1.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 10 · Terminal 2: a troca no sentido contrário"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares - 1 WHERE id = 3;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares + 1 WHERE id = 1;</kbd></code></pre></figure><figure class="tela"><figcaption>Passo 11 · Terminal 1: fecha o ciclo</figcaption><p>No primeiro terminal, tente pôr um Guia no Norte (livro 3), que está com o terminal 2. Agora cada um espera o outro.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 11 · Terminal 1: fecha o ciclo"><code><span class="tela-prompt">mysql&gt; </span><kbd>UPDATE livro SET exemplares = exemplares + 1 WHERE id = 3;</kbd>
+ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, exemplares FROM livro WHERE id IN (1, 3);</kbd>
++----+------------+
+| id | exemplares |
++----+------------+
+|  1 |          1 |
+|  3 |          3 |
++----+------------+
+2 rows in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> O MySQL percebe o ciclo na hora e escolhe uma vítima: o terminal 1. A transação inteira dele foi desfeita, inclusive o desconto do passo 9, e o SELECT mostra os valores sem ele.</p></figure><figure class="tela"><figcaption>Passo 12 · Terminal 2: segue sozinho</figcaption><p>Volte ao segundo terminal. O comando que estava parado já terminou; faça o COMMIT. Saia dos dois terminais com exit.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 12 · Terminal 2: segue sozinho"><code>Query OK, 1 row affected (0.83 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>COMMIT;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, exemplares FROM livro WHERE id IN (1, 3);</kbd>
++----+------------+
+| id | exemplares |
++----+------------+
+|  1 |          2 |
+|  3 |          2 |
++----+------------+
+2 rows in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> O tempo do comando parado mostra quanto ele esperou. No aplicativo, é aqui que a vítima rodaria a transferência inteira de novo.</p></figure><figure class="tela"><figcaption>Passo 13 · CREATE TABLE grava o que estava pendente</figcaption><p>Numa transação, anote um movimento e rode um CREATE TABLE IF NOT EXISTS de uma tabela que já existe. Depois tente desfazer com ROLLBACK.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 13 · CREATE TABLE grava o que estava pendente"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO movimento (livro_id, exemplares) VALUES (2, 1);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE IF NOT EXISTS movimento (id INT);</kbd>
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT livro_id, exemplares FROM movimento;</kbd>
++----------+------------+
+| livro_id | exemplares |
++----------+------------+
+|        1 |          2 |
+|        2 |          1 |
++----------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O CREATE TABLE não criou nada (1 warning: a tabela já existe), mas gravou o INSERT antes de rodar. O ROLLBACK não tinha mais o que desfazer.</p></figure><figure class="tela"><figcaption>Passo 14 · Terminal 1: uma transação pendente</figcaption><p>Abra o primeiro terminal, comece uma transação e anote um movimento de 9 exemplares. Não faça COMMIT nem feche o terminal.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 14 · Terminal 1: uma transação pendente"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO movimento (livro_id, exemplares) VALUES (3, 9);</kbd>
+Query OK, 1 row affected (0.00 sec)
+</code></pre></figure><figure class="tela"><figcaption>Passo 15 · Terminal 2: um movimento gravado</figcaption><p>No segundo terminal, sem transação, anote um movimento de 1 exemplar e saia. Esse já está gravado.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 15 · Terminal 2: um movimento gravado"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO movimento (livro_id, exemplares) VALUES (3, 1);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre></figure><figure class="tela"><figcaption>Passo 16 · Reinicie o serviço e volte ao terminal 1</figcaption><p>Num PowerShell aberto como administrador, reinicie o MySQL com Restart-Service MySQL84. Volte ao primeiro terminal, que ficou aberto, e consulte os movimentos.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 16 · Reinicie o serviço e volte ao terminal 1"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT livro_id, exemplares FROM movimento;</kbd>
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    9
+Current database: kits_teste
+
++----------+------------+
+| livro_id | exemplares |
++----------+------------+
+|        1 |          2 |
+|        2 |          1 |
+|        3 |          1 |
++----------+------------+
+3 rows in set (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O cliente perdeu a conexão (erro 2013), reconectou sozinho e repetiu a consulta. O movimento de 1, que recebeu commit, continua lá; o de 9, que estava pendente, sumiu.</p></figure><figure class="tela"><figcaption>Passo 17 · Apague as tabelas de treino</figcaption><p>Apague movimento, livro e filial. SHOW TABLES confirma que o kits_teste ficou vazio: os testes do projeto criam ali as tabelas dos kits.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 17 · Apague as tabelas de treino"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE movimento;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE livro;</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE filial;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW TABLES;</kbd>
+Empty set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre></figure><div class="table-wrap"><table><caption>Mensagens desta aula</caption><thead><tr><th scope="col">Mensagem</th><th scope="col">O que significa</th><th scope="col">O que fazer</th></tr></thead><tbody><tr><td>ERROR 1452 (23000) no meio de uma transação</td><td>Só aquele comando foi recusado; os anteriores continuam pendentes.</td><td>ROLLBACK, ou deixe o conexao_banco desfazer, e trate a recusa.</td></tr><tr><td>ERROR 1205 (HY000): Lock wait timeout exceeded</td><td>O comando esperou uma trava por tempo demais e desistiu.</td><td>Procure a transação que ficou aberta, como um terminal esquecido, e feche-a.</td></tr><tr><td>ERROR 1213 (40001): Deadlock found when trying to get lock</td><td>Esta transação foi a vítima de um ciclo de esperas e foi desfeita inteira.</td><td>Rode a transação inteira de novo, numa conexão nova.</td></tr><tr><td>Query OK, 0 rows affected, 1 warning, num CREATE TABLE IF NOT EXISTS</td><td>A tabela já existia; mesmo assim, o que estava pendente foi gravado.</td><td>Tire comandos de estrutura de dentro das transações; use uma migração.</td></tr><tr><td>ERROR 2013 (HY000): Lost connection to MySQL server during query</td><td>O servidor caiu ou reiniciou durante a conversa.</td><td>No cliente, ele reconecta sozinho; no aplicativo, abra outra conexão e confira o que recebeu commit.</td></tr></tbody></table></div></section><section id="pratica" data-stop="pratica"><h2>Transferência com tudo ou nada <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#pratica" aria-label="Versão para leitura: Transferência com tudo ou nada">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: migração, em_transacao, transferir, testes, prova com dois técnicos e só então o script herdado. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>sql/mysql/migracao_a10.sql: o histórico das transferências</h3><p>Escreva a migração que cria, no banco kits, a tabela movimentacao: uma linha por transferência, com o item de origem, o item de destino, a quantidade e o momento, e uma regra com nome que recuse quantidade zero ou negativa. Responda nos comentários se ela deve ter chave estrangeira para item, e por quê. Mude também o sql/mysql/esquema.sql: a mesma tabela e o DROP TABLE IF EXISTS na ordem certa. Entrega: sql/mysql/migracao_a10.sql e sql/mysql/esquema.sql atualizado.</p><p>Concluído quando: Depois do SOURCE da migração no banco kits, os kits e itens continuam lá, SHOW CREATE TABLE movimentacao\G mostra a regra com nome, e um INSERT de quantidade 0 é recusado com o erro 3819. SOURCE do esquema.sql roda duas vezes seguidas sem erro.</p><details><summary>Dica para realizar a atividade</summary><p>O que aconteceria com uma chave estrangeira para item quando a A09 remove um item que já foi transferido?</p></details><pre><code id="work-migracao">-- sql/mysql/migracao_a10.sql: acrescenta o histórico a um banco kits da A09, sem mexer nos dados.
+-- Antes de escrever, responda nos comentários:
+-- 1. Que colunas uma linha do histórico precisa para dizer de onde saiu, para onde foi, quanto e quando?
+-- 2. Que regra impede uma movimentação de zero ou negativa? Dê nome a ela.
+-- 3. O histórico deve ter chave estrangeira para item? O que aconteceria ao remover um item que já foi transferido?
+-- Depois escreva o comando, e acrescente a mesma tabela ao sql/mysql/esquema.sql
+-- (lembre do DROP TABLE IF EXISTS, na ordem certa).
+</code></pre><div class="atelier" data-source="work-migracao" data-filename="migracao_a10.sql" data-execution="Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SOURCE sql/mysql/migracao_a10.sql e SHOW CREATE TABLE movimentacao\G."></div><p>Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SOURCE sql/mysql/migracao_a10.sql e SHOW CREATE TABLE movimentacao\G.</p></div><div class="workbench"><h3>kits/banco.py: em_transacao, com uma nova tentativa no deadlock</h3><p>Acrescente em_transacao(operacao, config=None, tentativas=3) ao kits/banco.py. Ela roda operacao(con) dentro de um conexao_banco e devolve o que a operação devolver. Num deadlock, erro 1213, roda a operação inteira de novo, numa conexão nova, até completar as tentativas. Qualquer outro erro, e o deadlock da última tentativa, seguem como vieram. Entrega: kits/banco.py.</p><p>Concluído quando: Os testes de deadlock de tests/test_transferencia.py passam: a operação roda duas vezes, com conexões diferentes, depois de um 1213; um erro 1452 não é repetido; três 1213 seguidos deixam o erro seguir.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela do deadlock. Por que a nova tentativa precisa de outro conexao_banco, e não só de outro execute?</p></details><pre><code id="work-banco"># Acrescente ao fim do seu kits/banco.py da A08 (mysql.connector e conexao_banco já estão lá).
+
+DEADLOCK = 1213
+
+
+def em_transacao(operacao, config=None, tentativas=3):
+    # Rode operacao(con) dentro de um conexao_banco(config) e devolva o que ela devolver:
+    # sem erro, tudo é gravado; com erro, tudo é desfeito.
+    # Se o erro for um deadlock (errno DEADLOCK), o banco já desfez a transação inteira:
+    # rode a operação inteira de novo, numa conexão nova, até completar `tentativas` vezes.
+    # Qualquer outro erro, e o deadlock da última tentativa, seguem como vieram.
+    ...
+</code></pre><div class="atelier" data-source="work-banco" data-filename="banco.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto.</p></div><div class="workbench"><h3>kits/repositorio.py: transferir</h3><p>Acrescente transferir(con, item_id, kit_destino, quantidade) ao repositório. Ela trava e lê a origem, recusa o que não pode ser feito (quantidade inválida, item inexistente, destino igual à origem, saldo insuficiente), desconta da origem, soma no item de mesmo nome do destino ou cria esse item, e registra a movimentação. Kit de destino inexistente vira LookupError. Ela não faz commit nem rollback: quem chama usa em_transacao. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os sete testes de tests/test_transferencia.py passam, inclusive os três que você vai completar na próxima atividade, e os testes da A08 e da A09 continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao exemplo dos livros. Qual comando dele trava a origem, e o que mudaria se ele não travasse?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py da A09.
+
+
+def transferir(con, item_id, kit_destino, quantidade):
+    &quot;&quot;&quot;Move unidades de um item para outro kit e registra a movimentação.
+
+    Não grava nem desfaz: rode dentro de em_transacao, para que os passos valham juntos ou nenhum valha.
+    Devolve o id do item no kit de destino.
+    &quot;&quot;&quot;
+    # 1. Recuse quantidade que não seja inteiro positivo (QuantidadeInvalida).
+    # 2. Leia kit, nome e saldo da origem TRAVANDO a linha. Item inexistente: LookupError.
+    #    Destino igual à origem: ValueError. Saldo menor que a quantidade: QuantidadeInvalida.
+    # 3. Desconte da origem.
+    # 4. Procure, travando, o item de mesmo nome no kit de destino: se existe, some nele;
+    #    se não existe, crie. Kit de destino inexistente (erro 1452): LookupError.
+    # 5. Registre a movimentação: origem, destino e quantidade.
+    # Nada de commit, rollback ou CREATE TABLE aqui dentro.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_transferencia.py: complete os três testes que faltam</h3><p>O arquivo usa o TESTE e o comandos da A08 e já tem quatro testes, inclusive o de duas transferências do mesmo item ao mesmo tempo e o da nova tentativa. Escreva os três marcados com Complete: saldo insuficiente não muda nada; kit de destino inexistente levanta LookupError e não muda nada, nem o saldo da origem; em_transacao não repete um erro que não é deadlock e desiste depois de três deadlocks. Entrega: tests/test_transferencia.py.</p><p>Concluído quando: Os sete testes passam com o seu código. Depois, ponha um con.commit() em transferir logo depois de descontar da origem: o teste do kit inexistente precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que nada mudou, compare o estoque inteiro e o histórico com o que o setUp gravou. Para simular um deadlock sem provocá-lo, veja a função deadlock() no topo do arquivo.</p></details><pre><code id="work-testes-transferencia">&quot;&quot;&quot;Testes da transferência entre kits: cada teste recria as tabelas no kits_teste.&quot;&quot;&quot;
+import threading
+import unittest
+
+import mysql.connector
+
+from kits.banco import conexao_banco, em_transacao
+from kits.regras import QuantidadeInvalida
+from kits.repositorio import transferir
+from tests.test_repositorio import TESTE, comandos
+
+ESTOQUE_INICIAL = [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)]
+
+
+def deadlock():
+    return mysql.connector.errors.InternalError(msg=&#x27;Deadlock found when trying to get lock&#x27;, errno=1213)
+
+
+class TestTransferencia(unittest.TestCase):
+    def setUp(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;):
+                for comando in comandos(script):
+                    cur.execute(comando)
+
+    def consultar(self, sql, valores=()):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(sql, valores)
+            return cur.fetchall()
+
+    def estoque(self):
+        return self.consultar(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;)
+
+    def historico(self):
+        return self.consultar(&#x27;SELECT origem_id, destino_id, quantidade FROM movimentacao ORDER BY id&#x27;)
+
+    def transferir(self, item_id, kit_destino, quantidade):
+        return em_transacao(lambda con: transferir(con, item_id, kit_destino, quantidade), TESTE)
+
+    def test_soma_no_item_de_mesmo_nome_do_destino(self):
+        self.assertEqual(self.transferir(1, 2, 2), 3)
+        self.assertEqual(self.estoque(), [(1, 1, &#x27;Cabo&#x27;, 1), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 7)])
+        self.assertEqual(self.historico(), [(1, 3, 2)])
+
+    def test_cria_o_item_quando_o_destino_nao_tem(self):
+        novo = self.transferir(2, 2, 2)
+        self.assertEqual(self.consultar(&#x27;SELECT kit_id, nome, quantidade FROM item WHERE id = %s&#x27;, (novo,)),
+                         [(2, &#x27;Notebook&#x27;, 2)])
+        self.assertEqual(self.consultar(&#x27;SELECT quantidade FROM item WHERE id = 2&#x27;), [(0,)])
+        self.assertEqual(self.historico(), [(2, novo, 2)])
+
+    def test_duas_transferencias_do_mesmo_item_ao_mesmo_tempo(self):
+        largada = threading.Barrier(2)
+        resultados = []
+
+        def tecnico():
+            largada.wait()
+            try:
+                self.transferir(1, 2, 2)
+                resultados.append(&#x27;transferida&#x27;)
+            except QuantidadeInvalida:
+                resultados.append(&#x27;recusada&#x27;)
+            except Exception as erro:
+                resultados.append(repr(erro))
+
+        tecnicos = [threading.Thread(target=tecnico) for _ in range(2)]
+        for t in tecnicos:
+            t.start()
+        for t in tecnicos:
+            t.join()
+        self.assertEqual(sorted(resultados), [&#x27;recusada&#x27;, &#x27;transferida&#x27;])
+        self.assertEqual(self.consultar(&#x27;SELECT quantidade FROM item WHERE id IN (1, 3) ORDER BY id&#x27;), [(1,), (7,)])
+
+    def test_deadlock_roda_a_operacao_inteira_de_novo_numa_conexao_nova(self):
+        conexoes = []
+
+        def operacao(con):
+            conexoes.append(con)
+            if len(conexoes) == 1:
+                raise deadlock()
+            return &#x27;feito&#x27;
+
+        self.assertEqual(em_transacao(operacao, TESTE), &#x27;feito&#x27;)
+        self.assertEqual(len(conexoes), 2)
+        self.assertIsNot(conexoes[0], conexoes[1])
+
+    # Complete: transferir mais que o saldo levanta QuantidadeInvalida, e nada muda: nem o estoque, nem o histórico.
+
+    # Complete: transferir para um kit que não existe levanta LookupError, e nada muda:
+    # o saldo da origem continua o mesmo e o histórico continua vazio.
+
+    # Complete: em_transacao não tenta de novo um erro que não é deadlock (a operação roda uma vez só),
+    # e desiste depois da terceira vítima de deadlock, deixando o erro 1213 seguir.
+</code></pre><div class="atelier" data-source="work-testes-transferencia" data-filename="test_transferencia.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste com o seu sql/mysql/esquema.sql; o kits fica intacto.</p></div><div class="workbench"><h3>verificar_transferencias.py: dois técnicos trocando Cabos</h3><p>Escreva o script que põe 10 nos dois Cabos do banco kits e solta dois técnicos ao mesmo tempo, em sentidos opostos: um transfere 1 Cabo do kit 1 para o kit 2, cinco vezes; o outro, do kit 2 para o kit 1. Cada transferência é um em_transacao. Mostre a soma dos Cabos antes e depois, quantas transferências foram feitas e quantas deram erro, quantas movimentações novas apareceram e se o total confere. Entrega: verificar_transferencias.py, na raiz.</p><p>Concluído quando: A saída mostra Cabos antes: 20, Transferências feitas: 10, Transferências com erro: 0, Cabos depois: 20, Movimentações novas: 10 e Total confere, em todas as execuções. Com tentativas=1 no em_transacao, aparecem transferências com erro, e o total continua conferindo.</p><details><summary>Dica para realizar a atividade</summary><p>Com tentativas=1, por que o total confere mesmo com erros? O que o banco fez com a transação da vítima?</p></details><pre><code id="work-verificar-transferencias">&quot;&quot;&quot;Dois técnicos trocam Cabos entre os kits ao mesmo tempo, em sentidos opostos: nenhum Cabo some nem aparece.&quot;&quot;&quot;
+import threading
+
+from kits.banco import conexao_banco, em_transacao
+from kits.repositorio import transferir
+
+CABO_KIT_1, CABO_KIT_2 = 1, 3
+VEZES = 5
+
+
+def consultar(sql):
+    # Rode a consulta numa conexão própria e devolva o primeiro valor como int.
+    ...
+
+
+def main():
+    # 1. Ponha os dois Cabos com 10 e mostre &quot;Cabos antes: N&quot; (a soma dos Cabos).
+    #    Guarde também quantas movimentações já existem.
+    # 2. Crie dois técnicos (threads) que esperam na mesma threading.Barrier(2):
+    #    um transfere 1 Cabo do CABO_KIT_1 para o kit 2, VEZES vezes; o outro, do CABO_KIT_2 para o kit 1.
+    #    Cada transferência é um em_transacao próprio. Conte as feitas e as que terminaram com erro.
+    # 3. Mostre &quot;Transferências feitas: N&quot;, &quot;Transferências com erro: N&quot;, &quot;Cabos depois: N&quot;
+    #    e &quot;Movimentações novas: N&quot;.
+    # 4. Mostre &quot;Total confere&quot; se a soma não mudou e há uma movimentação nova por transferência feita;
+    #    senão, &quot;ERRO: o estoque não fecha&quot;.
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</code></pre><div class="atelier" data-source="work-verificar-transferencias" data-filename="verificar_transferencias.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe verificar_transferencias.py e cole a saída no registro desta página. Rode três vezes, e uma quarta com tentativas=1."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe verificar_transferencias.py e cole a saída no registro desta página. Rode três vezes, e uma quarta com tentativas=1.</p></div><div class="workbench"><h3>transferir.py: rastreie e corrija o script herdado</h3><p>Antes de mudar qualquer linha, reproduza os dois relatos no banco kits recriado e migrado: transfira 1 Cabo do item 1 para o kit 9 e consulte o item 1; depois troque o print do except por raise, como o colega, e repita. Encontre os defeitos e mostre a evidência de cada um. Corrija usando em_transacao e transferir: o script recebe ITEM_ID KIT_DESTINO QUANTIDADE, mostra Recusado: e a mensagem para LookupError e ValueError, e mostra o uso para argumentos inválidos. Entrega: transferir.py corrigido, na raiz, e os defeitos com a evidência de cada um no registro.</p><p>Concluído quando: Com o banco recriado: transferir.py 1 9 1 mostra Recusado: Kit 9 não existe e o item 1 continua com 3; transferir.py 2 2 3 mostra Recusado; transferir.py 2 2 2 transfere e cria o Notebook no kit 2; e transferir.py 1 dois 1 mostra o uso.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 13 do tutorial. Em que linha do script herdado a retirada do Cabo deixou de poder ser desfeita?</p></details><pre><code id="work-transferir-legado">&quot;&quot;&quot;Script herdado: transfere unidades de um item para outro kit e anota no histórico.
+
+Uso: python transferir.py ITEM_ID KIT_DESTINO QUANTIDADE
+Relatos do suporte:
+- transferir 1 Cabo do item 1 para o kit 9, que não existe, mostrou Falhou, mas o kit 1 ficou com um Cabo a menos;
+- duas pessoas trocando Cabos entre os kits 1 e 2 ao mesmo tempo: algumas transferências mostraram Falhou
+  com Deadlock found, e a contagem de Cabos não fechou no fim do dia.
+&quot;&quot;&quot;
+import sys
+
+import mysql.connector
+
+from kits.banco import conexao_banco
+from kits.repositorio import retirar
+
+
+def transferir(con, item_id, kit_destino, quantidade):
+    cur = con.cursor()
+    retirar(con, item_id, quantidade)
+    cur.execute(&#x27;CREATE TABLE IF NOT EXISTS movimentacao (&#x27;
+                &#x27;id INT AUTO_INCREMENT PRIMARY KEY, origem_id INT NOT NULL, destino_id INT NOT NULL, &#x27;
+                &#x27;quantidade INT NOT NULL, momento TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)&#x27;)
+    cur.execute(&#x27;SELECT nome FROM item WHERE id = %s&#x27;, (item_id,))
+    nome = cur.fetchall()[0][0]
+    cur.execute(&#x27;UPDATE item SET quantidade = quantidade + %s WHERE kit_id = %s AND nome = %s&#x27;,
+                (quantidade, kit_destino, nome))
+    if cur.rowcount == 0:
+        cur.execute(&#x27;INSERT INTO item (kit_id, nome, quantidade) VALUES (%s, %s, %s)&#x27;,
+                    (kit_destino, nome, quantidade))
+        destino_id = cur.lastrowid
+    else:
+        cur.execute(&#x27;SELECT id FROM item WHERE kit_id = %s AND nome = %s&#x27;, (kit_destino, nome))
+        destino_id = cur.fetchall()[0][0]
+    cur.execute(&#x27;INSERT INTO movimentacao (origem_id, destino_id, quantidade) VALUES (%s, %s, %s)&#x27;,
+                (item_id, destino_id, quantidade))
+
+
+def main(argumentos):
+    with conexao_banco() as con:
+        try:
+            transferir(con, int(argumentos[0]), int(argumentos[1]), int(argumentos[2]))
+            print(&#x27;Transferido.&#x27;)
+        except mysql.connector.Error as erro:
+            print(&#x27;Falhou:&#x27;, erro)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main(sys.argv[1:])
+</code></pre><div class="atelier" data-source="work-transferir-legado" data-filename="transferir.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe transferir.py 1 9 1. Recrie o banco antes de cada relato: SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql no banco kits."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe transferir.py 1 9 1. Recrie o banco antes de cada relato: SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql no banco kits.</p></div><div class="workbench"><h3>README.md: a seção Transferência entre kits</h3><p>Acrescente ao README.md do projeto a seção Transferência entre kits: as regras (tudo ou nada, histórico, nada de comando de estrutura dentro de uma transação); como atualizar um banco kits da A09 com a migração; o que transferir e em_transacao garantem; e os comandos para rodar os testes, verificar_transferencias.py e o transferir.py, com o resultado esperado. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, atualiza um banco da A09, roda os testes e verificar_transferencias.py e obtém o resultado descrito.</p><details><summary>Dica para realizar a atividade</summary><p>Escreva para quem vai mexer no código depois: onde ele não pode pôr um commit, e por quê?</p></details><pre><code id="work-readme">## Transferência entre kits
+
+### Regras
+
+### Atualizar um banco kits da A09
+
+### Como o código garante
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: dá para não ter deadlock?</h3><p>Sem mudar o projeto, explique por que a troca de Cabos em sentidos opostos dá deadlock e planeje uma transferir que trava as duas linhas sempre na mesma ordem. Diga que caso essa ideia não cobre e se a nova tentativa ainda seria necessária. Entrega (opcional): o texto no registro desta página.</p><p>Concluído quando: O plano trava origem e destino numa ordem que não depende do sentido da transferência, aponta o caso do destino que ainda não existe e conclui sobre a nova tentativa com um argumento.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela do deadlock. Se os dois técnicos pedissem primeiro o item de menor id, o tempo 4 aconteceria?</p></details><pre><code id="work-bonus-ordem"># Dá para não ter deadlock na transferência?
+
+## Por que acontece
+
+## Travar sempre na mesma ordem
+
+## Ainda vale ter a nova tentativa?
+</code></pre><div class="atelier" data-source="work-bonus-ordem" data-filename="ordem.md" data-execution="Texto para o registro desta página. Não é preciso mudar o banco nem o código."></div><p>Texto para o registro desta página. Não é preciso mudar o banco nem o código.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A transferência se sustenta? <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#auditoria" aria-label="Versão para leitura: A transferência se sustenta?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Numa transação aberta, você leu exemplares = 2. Outra conexão grava 5 e faz commit. Você repete o mesmo SELECT, sem FOR UPDATE, ainda na mesma transação. O que aparece?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="2: no REPEATABLE READ a transação continua vendo a foto da primeira leitura" autocomplete="off">2: no REPEATABLE READ a transação continua vendo a foto da primeira leitura</label><label class="option"><input type="radio" name="q01" value="5: o SELECT sempre mostra o último commit" autocomplete="off">5: o SELECT sempre mostra o último commit</label><label class="option"><input type="radio" name="q01" value="Erro 1205: a linha está travada pela outra conexão" autocomplete="off">Erro 1205: a linha está travada pela outra conexão</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Refaça os passos 4 a 6 do tutorial.</p></details></fieldset><fieldset data-question="q02"><legend>Uma transação faz um INSERT na movimentacao, depois CREATE TABLE IF NOT EXISTS movimentacao, com a tabela já existindo, e depois ROLLBACK. O INSERT fica?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Fica: o CREATE TABLE gravou o que estava pendente, mesmo sem criar nada" autocomplete="off">Fica: o CREATE TABLE gravou o que estava pendente, mesmo sem criar nada</label><label class="option"><input type="radio" name="q02" value="Some: o ROLLBACK desfaz tudo desde o começo da transação" autocomplete="off">Some: o ROLLBACK desfaz tudo desde o começo da transação</label><label class="option"><input type="radio" name="q02" value="Some: como a tabela já existia, o CREATE TABLE não fez nada" autocomplete="off">Some: como a tabela já existia, o CREATE TABLE não fez nada</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare com o passo 13 do tutorial.</p></details></fieldset><fieldset data-question="q03"><legend>Uma transferência recebeu o erro 1213 no comando que soma no destino. O que em_transacao deve fazer?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Rodar a transferência inteira de novo, numa conexão nova: o banco já desfez tudo o que ela tinha feito" autocomplete="off">Rodar a transferência inteira de novo, numa conexão nova: o banco já desfez tudo o que ela tinha feito</label><label class="option"><input type="radio" name="q03" value="Repetir só o comando que somava no destino" autocomplete="off">Repetir só o comando que somava no destino</label><label class="option"><input type="radio" name="q03" value="Fazer commit do desconto da origem e avisar o usuário" autocomplete="off">Fazer commit do desconto da origem e avisar o usuário</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o SELECT do passo 11 mostrou sobre o desconto do passo 9?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>transferir faz con.commit() logo depois de descontar da origem, para não perder a retirada se o resto falhar.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Se o destino falhar depois desse commit, o que o rollback ainda consegue desfazer?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>transferir começa com CREATE TABLE IF NOT EXISTS movimentacao, para funcionar também em bancos sem a migração.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 13 do tutorial.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>transferir lê o saldo da origem com SELECT ... FOR UPDATE antes de conferir se dá para transferir.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece com outra transferência do mesmo item enquanto esta não termina?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O script faz try: ... except Exception: print(&#x27;Falhou&#x27;) dentro do with conexao_banco().</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Se o erro não sai do bloco, o conexao_banco faz commit ou rollback?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>em_transacao tenta de novo qualquer mysql.connector.Error, até três vezes.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Um kit de destino que não existe passa a existir na segunda tentativa?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>A tabela movimentacao não tem chave estrangeira para item.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece com o histórico, e com a remoção da A09, quando um item transferido é removido?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-tentativa"><p>Outra dupla entregou a transferência abaixo, com uma nova tentativa feita por ela, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def transferir(con, item_id, kit_destino, nome, quantidade):
+    cur = con.cursor()
+    cur.execute(&#x27;UPDATE item SET quantidade = quantidade - %s WHERE id = %s&#x27;, (quantidade, item_id))
+    somar = &#x27;UPDATE item SET quantidade = quantidade + %s WHERE kit_id = %s AND nome = %s&#x27;
+    try:
+        cur.execute(somar, (quantidade, kit_destino, nome))
+    except mysql.connector.Error as erro:
+        if erro.errno != 1213:
+            raise
+        cur.execute(somar, (quantidade, kit_destino, nome))
+    con.commit()</code></pre><fieldset data-question="ac-parcial" data-claim="ac-parcial"><legend>Depois do deadlock, o banco já desfez o desconto da origem; repetir só a soma põe a unidade no destino sem tirar da origem.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-parcial" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-parcial" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-separar" data-claim="ac-separar"><legend>Os dois UPDATE deveriam ficar em transações separadas, uma para cada kit, para travar menos.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-separar" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-separar" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-saldo" data-claim="ac-saldo"><legend>Não há conferência de saldo: transferir mais que o disponível cai no CHECK como DatabaseError 3819, e não como QuantidadeInvalida.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-saldo" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-saldo" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a transferência <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#registro" aria-label="Versão para leitura: Entregue o que prova a transferência">↗</a></h2><p>Entregue, no repositório do projeto: sql/mysql/migracao_a10.sql e esquema.sql atualizado; kits/banco.py com em_transacao; kits/repositorio.py com transferir; tests/test_transferencia.py; verificar_transferencias.py e transferir.py corrigido, na raiz; e a seção Transferência entre kits no README.md.</p><p>No registro desta página, cole a saída de três execuções de verificar_transferencias.py e a de uma com tentativas=1 e, para o script herdado, os defeitos com a evidência de cada um, dizendo por que a correção do colega não bastou.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0010-transacoes-integridade-e-persistencia.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>No passo 11, o terminal 1 recebeu um erro sem ter feito nada errado. O que o banco fez com a transação dele, e por que o seu em_transacao repete a operação inteira, e não só o último comando?</p><p>Na A11 começa a interface desktop: a janela vai chamar o mesmo repositório, e tudo o que você provou hoje continua valendo por baixo dela.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/commit.html">MySQL 8.4: START TRANSACTION, COMMIT e ROLLBACK</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/implicit-commit.html">MySQL 8.4: comandos que fazem commit implícito</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html">MySQL 8.4: níveis de isolamento</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking-reads.html">MySQL 8.4: leituras com trava (FOR UPDATE)</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-deadlocks.html">MySQL 8.4: deadlocks no InnoDB</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-parameters.html#sysvar_innodb_lock_wait_timeout">MySQL 8.4: innodb_lock_wait_timeout</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-commit.html">MySQL Connector/Python: commit e autocommit</a></li></ul><a data-idoc="source" href="leitura-0010-transacoes-integridade-e-persistencia.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-20</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

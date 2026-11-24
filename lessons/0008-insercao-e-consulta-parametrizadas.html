@@ -1,0 +1,457 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A08 · Troque para o MySQL e proteja a busca: valores sempre por parâmetro</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A08" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A08</span><span>Inserção e consulta parametrizadas<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">A busca que quebra e a busca que vaza</a></li><li><a href="#esteira">Do arquivo ao servidor, sem colar texto no SQL</a></li><li><a href="#mysql">Do arquivo ao servidor</a></li><li><a href="#segredos">Senha fora do código, usuário com o mínimo</a></li><li><a href="#parametros">Valores por parâmetro, nunca colados no SQL</a></li><li><a href="#objetos">Linhas viram objetos, objetos viram linhas</a></li><li><a href="#terminal">Tutorial: o MySQL pelo terminal, tela a tela</a></li><li><a href="#pratica">Construa o banco MySQL e a busca segura</a></li><li><a href="#auditoria">A busca está protegida?</a></li><li><a href="#registro">Entregue o que prova o seu banco MySQL</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><span>Edição, exclusão e sincronização da interface<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A15</span><span>Sprint CRUD, testes de fluxo e devolutiva<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A16</span><span>Filtros, ordenação e consulta vazia<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A17</span><span>JOIN, agregações e listagens estruturadas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A18</span><span>Arquivos, caminhos, codificação e CSV<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A19</span><span>Carga massiva, inconsistências e transações em lote<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A20</span><span>MVC aplicado à refatoração do aplicativo<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A21</span><span>Repository/DAO, serviços e responsabilidades<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A22</span><span>Consolidação arquitetural e testes de regressão<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A23</span><span>ORM: ambiente, mapeamento, sessão e transação<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A24</span><span>ORM: relacionamentos, CRUD e consultas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A25</span><span>SQL direto × ORM e decisão documentada<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A08</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Troque para o MySQL e proteja a busca: valores sempre por parâmetro</h1><p class="thesis">O aplicativo dos kits sai do arquivo kits.db e passa a usar um servidor MySQL. Na mudança, um script de busca herdado quebra com um apóstrofo e mostra itens de outro kit quando alguém digita um trecho de SQL. Hoje você monta o banco no MySQL, troca o módulo de conexão e escreve inserção e consulta com parâmetros, devolvendo objetos do domínio.</p><p data-idoc="caveat">A partir desta aula o banco é um MySQL 8.4 instalado em cada máquina. Atualizar e remover por identificador é tema da A09; interface gráfica e ORM ficam para depois. Use dados fictícios e senhas de treino, nunca a senha de uma conta sua.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Criar no MySQL o banco, o usuário do aplicativo e as tabelas dos kits, com chaves estrangeiras que funcionam</li><li>Ler a configuração de conexão de um arquivo fora do Git, sem senha no código</li><li>Inserir e consultar com valores por parâmetro e explicar por que texto colado no SQL é um defeito</li><li>Transformar linhas do banco em objetos Kit e ItemKit da A05 e objetos em linhas</li><li>Rastrear e corrigir um script de busca que quebrava com apóstrofo e deixava vazar itens de outro kit</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A07 com .venv, kits/banco.py, kits/modelo.py e kits/regras.py e testes rodando com unittest</li><li>MySQL Server 8.4 instalado na máquina e a senha do root, combinada com o professor ou o técnico do laboratório</li><li>Bloco with da A07: grava no sucesso, desfaz e relança no erro, fecha sempre</li></ul><section id="partida" data-stop="partida"><h2>A busca que quebra e a busca que vaza <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#partida" aria-label="Versão para leitura: A busca que quebra e a busca que vaza">↗</a></h2><p>O suporte vai usar o aplicativo dos kits em várias máquinas ao mesmo tempo, e um arquivo kits.db em cada computador não serve mais: os dados passam para um servidor MySQL. Na mudança, um colega deixou pronto um script de busca de itens.</p><p>Dois relatos chegaram no primeiro dia. Buscar D&#x27;Avila no kit 1 termina com um erro de sintaxe do MySQL. E alguém que digitou &#x27; OR 1=1 --  na busca do kit 1 viu na tela itens do kit 2. Em dupla, antes de abrir o script, escrevam uma hipótese para cada relato.</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: sql/mysql/esquema.sql e sql/mysql/dados.sql; kits/banco.py trocado para o MySQL; kits/repositorio.py; tests/test_repositorio.py; buscar.py corrigido; banco.exemplo.ini, requirements.txt e banco.ini no .gitignore; e a seção Banco MySQL no README.md. Faça um commit revisado, sem banco.ini, e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam e buscar.py devolve Nenhum item encontrado para os dois relatos.</p></div></section><section id="esteira" data-stop="esteira"><h2>Do arquivo ao servidor, sem colar texto no SQL <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#esteira" aria-label="Versão para leitura: Do arquivo ao servidor, sem colar texto no SQL">↗</a></h2><ol class="pipeline"><li><strong>Conferir o servidor</strong><p>Achar o cliente mysql e entrar como root para ver se o MySQL responde.</p></li><li><strong>Criar banco e usuário</strong><p>Criar os bancos kits e kits_teste e um usuário só do aplicativo, com acesso só a eles.</p></li><li><strong>Traduzir o esquema</strong><p>Reescrever as tabelas da A06 no MySQL, com chave estrangeira que de fato é conferida.</p></li><li><strong>Trocar a conexão</strong><p>Ler host, usuário, senha e banco de um arquivo fora do Git e manter o bloco da A07.</p></li><li><strong>Parâmetros e objetos</strong><p>Inserir e buscar com %s, devolvendo e recebendo objetos do domínio.</p></li><li><strong>Provar</strong><p>Testar com apóstrofo, com SQL digitado na busca e com kit inexistente.</p></li></ol></section><section id="mysql" data-stop="mysql"><h2>Do arquivo ao servidor <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#mysql" aria-label="Versão para leitura: Do arquivo ao servidor">↗</a></h2><p>No SQLite o banco é um arquivo, e quem abre o arquivo é dono de tudo. O MySQL é um servidor: um programa que fica rodando como serviço do Windows e atende conexões. Para conectar, você informa onde ele está (host e porta), quem você é (usuário e senha) e qual banco quer usar. Um mesmo servidor guarda vários bancos; nesta aula, kits para o aplicativo e kits_teste para os testes.</p><p>O SQL que você escreveu na A06 quase todo serve, mas não todo. A tabela abaixo reúne as diferenças desta aula. A mais perigosa é a da chave estrangeira: o MySQL aceita REFERENCES escrito na mesma linha da coluna, não reclama de nada e não cria a chave. Só a cláusula FOREIGN KEY (coluna) REFERENCES tabela(coluna) cria a regra.</p><div class="table-wrap"><table><caption>SQLite (A06 e A07) e MySQL (a partir de hoje)</caption><thead><tr><th scope="col">Assunto</th><th scope="col">SQLite</th><th scope="col">MySQL</th></tr></thead><tbody><tr><td>Onde está o banco</td><td>Um arquivo, kits.db</td><td>Um servidor, com host, porta, usuário, senha e nome do banco</td></tr><tr><td>Abrir pelo Python</td><td>sqlite3.connect(caminho)</td><td>mysql.connector.connect(host=..., port=..., user=..., password=..., database=...)</td></tr><tr><td>Executar um comando</td><td>con.execute(...)</td><td>cur = con.cursor(), depois cur.execute(...)</td></tr><tr><td>Marcador de valor</td><td>?</td><td>%s, para qualquer tipo de valor</td></tr><tr><td>Chave estrangeira</td><td>Só com PRAGMA foreign_keys = ON em cada conexão</td><td>Sempre conferida, mas só se criada com FOREIGN KEY (...) REFERENCES; o REFERENCES na linha da coluna é ignorado</td></tr><tr><td>Número automático</td><td>INTEGER PRIMARY KEY</td><td>INT AUTO_INCREMENT PRIMARY KEY</td></tr><tr><td>Texto</td><td>TEXT</td><td>VARCHAR(n), com o tamanho máximo</td></tr><tr><td>Transação no Python</td><td>Abre sozinha; commit grava</td><td>Igual: commit grava, e fechar sem commit descarta</td></tr><tr><td>with na conexão</td><td>Grava ou desfaz, e não fecha</td><td>Fecha, e não grava: o que estava pendente é descartado</td></tr><tr><td>Erro do CHECK no Python</td><td>IntegrityError</td><td>DatabaseError, código 3819</td></tr></tbody></table></div><div class="callout alerta"><span class="callout-title">O REFERENCES que não protege</span><p>kit_id INT NOT NULL REFERENCES kit(id) cria a tabela sem erro e sem a chave. Um item do kit 99 entra. Confira sempre com SHOW CREATE TABLE item\G: se não aparecer uma linha CONSTRAINT ... FOREIGN KEY, a regra não existe.</p></div></section><section id="segredos" data-stop="segredos"><h2>Senha fora do código, usuário com o mínimo <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#segredos" aria-label="Versão para leitura: Senha fora do código, usuário com o mínimo">↗</a></h2><p>O aplicativo precisa da senha do banco, mas a senha não pode estar no código: o código vai para o Git, e o Git guarda o histórico para sempre, mesmo que a linha seja apagada depois. A configuração fica em banco.ini, na raiz do projeto, listado no .gitignore. O repositório leva só banco.exemplo.ini, com a mesma forma e uma senha de mentira, para quem clonar saber o que preencher.</p><p>O aplicativo também não usa o root. O root pode apagar qualquer banco do servidor. O usuário kits_app só enxerga os bancos kits e kits_teste: se a senha dele vazar, o estrago fica limitado a eles. É o princípio do menor privilégio.</p><p>O módulo configparser, da biblioteca padrão, lê arquivos .ini. A seção [DEFAULT] vale para todas as outras; as seções [mysql] e [teste] só trocam o nome do banco. Assim o aplicativo usa kits e os testes usam kits_teste, com o mesmo usuário.</p><figure class="code-block"><figcaption>banco.exemplo.ini (entra no Git; copie para banco.ini e troque a senha)</figcaption><pre><code># Copie este arquivo para banco.ini, na raiz do projeto, e troque a senha pela sua.
+# banco.ini fica fora do Git (.gitignore); este exemplo entra no Git, sem senha de verdade.
+[DEFAULT]
+host = localhost
+port = 3306
+user = kits_app
+password = troque-esta-senha
+
+[mysql]
+database = kits
+
+[teste]
+database = kits_teste
+</code></pre></figure><div class="versus"><div class="bad"><h3>Senha no código</h3><p>Vai para o Git no primeiro commit. Trocar de máquina ou de senha exige mudar o código.</p><pre><code>con = mysql.connector.connect(
+    host=&#x27;localhost&#x27;, user=&#x27;root&#x27;, password=&#x27;minhasenha&#x27;, database=&#x27;kits&#x27;)</code></pre></div><div class="good"><h3>Configuração fora do Git</h3><p>O código pede a configuração; cada máquina tem o seu banco.ini, e o usuário só acessa os bancos dos kits.</p><pre><code>with conexao_banco() as con:   # lê banco.ini, seção [mysql]
+    ...
+
+with conexao_banco(ler_config(&#x27;teste&#x27;)) as con:
+    ...</code></pre></div></div></section><section id="parametros" data-stop="parametros"><h2>Valores por parâmetro, nunca colados no SQL <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#parametros" aria-label="Versão para leitura: Valores por parâmetro, nunca colados no SQL">↗</a></h2><p>Montar o comando com f-string cola o texto do usuário dentro do SQL. Um apóstrofo no texto fecha a string antes da hora e o comando vira lixo: é o erro de sintaxe do primeiro relato. Pior: um texto escrito de propósito vira parte do comando. Em &#x27; OR 1=1 -- , o apóstrofo fecha a string, OR 1=1 torna a condição sempre verdadeira e -- transforma o resto em comentário. Isso é injeção de SQL, e é o segundo relato.</p><p>Com parâmetros, o comando e os valores viajam separados. Você escreve %s onde vai cada valor e passa os valores numa tupla. O conector prepara cada valor como dado, com as aspas e os escapes certos, e o servidor nunca o lê como comando. cur.statement mostra o que o servidor recebeu.</p><ul><li>Um %s para cada valor, inclusive números. Nunca escreva &#x27;%s&#x27; com aspas: o conector já põe as aspas.</li><li>Os valores vão numa tupla. Com um valor só, a vírgula é obrigatória: (nome,). (1) sem vírgula é só o número 1, e o conector recusa.</li><li>Os curingas do LIKE vão no valor, não no comando: LIKE %s com f&#x27;%{trecho}%&#x27;.</li><li>Nome de tabela ou de coluna não pode ser parâmetro. Se ele variar, escolha de uma lista fixa do próprio código.</li></ul><figure class="code-block"><figcaption>A busca com parâmetro (exemplo: livros)</figcaption><pre><code># Exemplo com livros. con é uma conexão aberta; a tabela livro tem os títulos
+# &quot;O&#x27;Brien em Campo&quot; (90 páginas) e &quot;Primeiro&quot; (120 páginas).
+def buscar_livros(con, trecho):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT titulo, paginas FROM livro WHERE titulo LIKE %s ORDER BY titulo&#x27;,
+                (f&#x27;%{trecho}%&#x27;,))
+    linhas = cur.fetchall()
+    print(cur.statement)   # o comando como o servidor recebeu
+    return linhas
+
+
+print(buscar_livros(con, &quot;O&#x27;Brien&quot;))
+print(buscar_livros(con, &quot;&#x27; OR 1=1 -- &quot;))
+# Saída:
+# SELECT titulo, paginas FROM livro WHERE titulo LIKE &#x27;%O\&#x27;Brien%&#x27; ORDER BY titulo
+# [(&quot;O&#x27;Brien em Campo&quot;, 90)]
+# SELECT titulo, paginas FROM livro WHERE titulo LIKE &#x27;%\&#x27; OR 1=1 -- %&#x27; ORDER BY titulo
+# []
+</code></pre></figure><div class="versus"><div class="bad"><h3>Texto colado com f-string</h3><p>Quebra com apóstrofo e obedece a quem digita SQL na busca.</p><pre><code>cur.execute(f&quot;SELECT titulo FROM livro WHERE titulo LIKE &#x27;%{trecho}%&#x27;&quot;)</code></pre></div><div class="good"><h3>Valor por parâmetro</h3><p>O apóstrofo é só um caractere; o SQL digitado vira texto procurado e não acha nada.</p><pre><code>cur.execute(&#x27;SELECT titulo FROM livro WHERE titulo LIKE %s&#x27;, (f&#x27;%{trecho}%&#x27;,))</code></pre></div></div><div class="callout alerta"><span class="callout-title">Trocar &#x27; por &#x27;&#x27; não resolve</span><p>Escapar à mão é esquecer um caso: outra aspa, uma barra invertida, um campo numérico sem aspas nenhuma. Parâmetro não é cuidado extra para casos raros: é o único jeito de passar um valor.</p></div></section><section id="objetos" data-stop="objetos"><h2>Linhas viram objetos, objetos viram linhas <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#objetos" aria-label="Versão para leitura: Linhas viram objetos, objetos viram linhas">↗</a></h2><p>O resto do aplicativo trabalha com Kit e ItemKit, as classes da A05, e não com tuplas soltas. Um módulo de repositório faz a ponte: recebe um objeto e grava as linhas, lê as linhas e devolve objetos. O código da interface, nas próximas aulas, não vai ver SQL nenhum.</p><p>Isso também dá duas camadas de proteção. O ItemKit recusa quantidade zero antes de qualquer conexão; o CHECK do banco recusa de novo se alguém escrever direto no banco. Depois do INSERT, cur.lastrowid devolve o id que o AUTO_INCREMENT gerou, que é o identificador que a A09 vai usar para atualizar e remover.</p><figure class="code-block"><figcaption>Objeto para linha e linha para objeto (exemplo: livros)</figcaption><pre><code># Exemplo com livros. con é uma conexão aberta; o autor 1 já tem o livro &quot;Primeiro&quot;.
+class Livro:
+    def __init__(self, titulo, paginas):
+        if type(paginas) is not int or paginas &lt;= 0:
+            raise ValueError(f&#x27;{paginas!r} não é um número de páginas válido&#x27;)
+        self.titulo = titulo
+        self.paginas = paginas
+
+
+def inserir_livro(con, autor_id, livro):
+    cur = con.cursor()
+    cur.execute(&#x27;INSERT INTO livro (autor_id, titulo, paginas) VALUES (%s, %s, %s)&#x27;,
+                (autor_id, livro.titulo, livro.paginas))
+    return cur.lastrowid   # o id que o AUTO_INCREMENT gerou
+
+
+def carregar_livros(con, autor_id):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT titulo, paginas FROM livro WHERE autor_id = %s ORDER BY id&#x27;, (autor_id,))
+    return [Livro(titulo, paginas) for titulo, paginas in cur.fetchall()]
+
+
+print(inserir_livro(con, 1, Livro(&#x27;Segundo&#x27;, 80)))
+print([livro.titulo for livro in carregar_livros(con, 1)])
+# Saída:
+# 2
+# [&#x27;Primeiro&#x27;, &#x27;Segundo&#x27;]
+</code></pre></figure><div class="callout alerta"><span class="callout-title">Unread result found</span><p>Depois de um SELECT, leia as linhas com fetchall() antes de executar o próximo comando no mesmo cursor. Sem isso, o conector recusa o próximo execute com InternalError: Unread result found.</p></div></section><section id="terminal" data-stop="terminal"><h2>Tutorial: o MySQL pelo terminal, tela a tela <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#terminal" aria-label="Versão para leitura: Tutorial: o MySQL pelo terminal, tela a tela">↗</a></h2><p>Este tutorial monta o servidor da aula e ensina o cliente mysql, o programa de terminal que vem com o MySQL. Os passos 4 a 6 usam autor e livro, o exemplo das seções anteriores, no banco kits_teste; o passo 9 apaga essas tabelas de treino. No fim há um resumo do mesmo caminho no MySQL Workbench.</p><p>Como ler as telas: nas linhas que começam com PS C:\projetos\kits&gt;, mysql&gt;, -&gt; ou Enter password:, o texto em destaque é o que você digita; o resto é a resposta do computador. Na senha, o cliente mostra um asterisco por letra. Na sua máquina o prompt mostra a pasta do seu projeto, e o número da conexão e os tempos mudam a cada vez.</p><p>As telas foram capturadas de sessões reais do cliente mysql 8.4.9 no Windows. A senha mostrada, troque-esta-senha, é a do exemplo; use a sua.</p><figure class="tela"><figcaption>Passo 1 · Ache o cliente mysql</figcaption><p>O instalador não põe o mysql no PATH. A primeira linha acrescenta a pasta dele ao PATH só neste terminal; repita ao abrir outro, ou peça ao técnico para incluir de vez. A segunda confirma a versão.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Ache o cliente mysql"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>$env:Path += &quot;;C:\Program Files\MySQL\MySQL Server 8.4\bin&quot;</kbd>
+<span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql --version</kbd>
+C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe  Ver 8.4.9 for Win64 on x86_64 (MySQL Community Server - GPL)</code></pre><p class="tela-nota"><strong>Repare:</strong> Se aparecer que mysql não é reconhecido, a pasta está errada ou o MySQL não foi instalado: confira em C:\Program Files\MySQL. O serviço do Windows se chama MySQL84 e precisa estar em execução.</p></figure><figure class="tela"><figcaption>Passo 2 · Entre como root e confira o servidor</figcaption><p>Com -p, o cliente pede a senha sem mostrá-la. O prompt mysql&gt; diz que o servidor respondeu. Todo comando termina em ponto e vírgula; o resultado vem em tabela, com a contagem de linhas e o tempo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · Entre como root e confira o servidor"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u root -p</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>******************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 31
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT VERSION();</kbd>
++-----------+
+| VERSION() |
++-----------+
+| 8.4.9     |
++-----------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW DATABASES;</kbd>
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Um servidor recém-instalado tem só os quatro bancos do próprio MySQL. Saia com exit.</p></figure><figure class="tela"><figcaption>Passo 3 · Crie os bancos e o usuário do aplicativo</figcaption><p>Ainda como root: crie o banco do aplicativo, o banco dos testes e o usuário kits_app, com acesso só aos dois. Se o laboratório não der a senha do root à turma, o professor ou o técnico faz este passo antes da aula.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Crie os bancos e o usuário do aplicativo"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u root -p</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>******************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 32
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE DATABASE kits;</kbd>
+Query OK, 1 row affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE DATABASE kits_teste;</kbd>
+Query OK, 1 row affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE USER &#x27;kits_app&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;troque-esta-senha&#x27;;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>GRANT ALL PRIVILEGES ON kits.* TO &#x27;kits_app&#x27;@&#x27;localhost&#x27;;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>GRANT ALL PRIVILEGES ON kits_teste.* TO &#x27;kits_app&#x27;@&#x27;localhost&#x27;;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Query OK, 0 rows affected é sucesso: CREATE USER e GRANT não mudam linhas de tabela. Daqui em diante, o root não é mais usado.</p></figure><figure class="tela"><figcaption>Passo 4 · A armadilha do REFERENCES na linha da coluna</figcaption><p>Agora como kits_app, no banco kits_teste. O livro foi criado com REFERENCES na linha de autor_id, como no SQLite. O livro de um autor que não existe entra sem erro, e o SHOW CREATE TABLE mostra por quê.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · A armadilha do REFERENCES na linha da coluna"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE autor (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(80) NOT NULL);</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE livro (</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  id INT AUTO_INCREMENT PRIMARY KEY,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  autor_id INT NOT NULL REFERENCES autor(id),</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  titulo VARCHAR(120) NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  paginas INT NOT NULL CHECK (paginas &gt; 0)</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>);</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (autor_id, titulo, paginas) VALUES (9, &#x27;Orfao&#x27;, 10);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW CREATE TABLE livro\G</kbd>
+*************************** 1. row ***************************
+       Table: livro
+Create Table: CREATE TABLE `livro` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `autor_id` int NOT NULL,
+  `titulo` varchar(120) NOT NULL,
+  `paginas` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `livro_chk_1` CHECK ((`paginas` &gt; 0))
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Terminar o comando com \G em vez de ; mostra o resultado na vertical. Na definição que o MySQL guardou existe o CHECK, mas não existe nenhuma FOREIGN KEY: o REFERENCES foi lido e jogado fora.</p></figure><figure class="tela"><figcaption>Passo 5 · A chave estrangeira que funciona</figcaption><p>Recrie o livro com a cláusula FOREIGN KEY (autor_id) REFERENCES autor(id) no fim. Agora o livro sem autor é recusado com o erro 1452. Com o autor cadastrado, o livro entra e o JOIN funciona.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 5 · A chave estrangeira que funciona"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE livro;</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE livro (</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  id INT AUTO_INCREMENT PRIMARY KEY,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  autor_id INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  titulo VARCHAR(120) NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  paginas INT NOT NULL CHECK (paginas &gt; 0),</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FOREIGN KEY (autor_id) REFERENCES autor(id)</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>);</kbd>
+Query OK, 0 rows affected (0.03 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (autor_id, titulo, paginas) VALUES (9, &#x27;Orfao&#x27;, 10);</kbd>
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`kits_teste`.`livro`, CONSTRAINT `livro_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autor` (`id`))
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO autor (id, nome) VALUES (1, &#x27;Autora Ficticia&#x27;);</kbd>
+Query OK, 1 row affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (autor_id, titulo, paginas) VALUES (1, &#x27;Primeiro&#x27;, 120);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT l.titulo, a.nome FROM livro AS l JOIN autor AS a ON a.id = l.autor_id;</kbd>
++----------+-----------------+
+| titulo   | nome            |
++----------+-----------------+
+| Primeiro | Autora Ficticia |
++----------+-----------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> Enquanto um comando não termina em ponto e vírgula, o prompt vira -&gt; e o cliente espera o resto. É assim que se escreve uma tabela em várias linhas.</p></figure><figure class="tela"><figcaption>Passo 6 · Rode um arquivo .sql com SOURCE</figcaption><p>É assim que você vai rodar sql/mysql/esquema.sql e dados.sql. Abra o cliente na pasta em que o arquivo está, ou use o caminho a partir dela, e digite SOURCE seguido do nome do arquivo. O primeiro comando só mostra o arquivo de treino.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 6 · Rode um arquivo .sql com SOURCE"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>Get-Content treino.sql</kbd>
+INSERT INTO autor (id, nome) VALUES (2, &#x27;Autor Ficticio&#x27;);
+INSERT INTO livro (autor_id, titulo, paginas) VALUES (2, &#x27;Segundo&#x27;, 80);
+INSERT INTO livro (autor_id, titulo, paginas) VALUES (7, &#x27;Sem autor&#x27;, 50);
+SELECT count(*) AS livros FROM livro;
+<span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SOURCE treino.sql</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`kits_teste`.`livro`, CONSTRAINT `livro_ibfk_1` FOREIGN KEY (`autor_id`) REFERENCES `autor` (`id`))
++--------+
+| livros |
++--------+
+|      2 |
++--------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> O SOURCE não para no erro: o livro 7 foi recusado e o resto do arquivo rodou. Leia a tela inteira, e não só a última linha, depois de cada SOURCE.</p></figure><figure class="tela"><figcaption>Passo 7 · Uma consulta sem entrar no cliente</figcaption><p>Com -e e o SQL entre aspas, o cliente conecta, executa, mostra o resultado e sai. Serve para conferir o que o Python gravou, em uma conexão nova.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 7 · Uma consulta sem entrar no cliente"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste -e &quot;SELECT titulo, paginas FROM livro&quot;</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
++----------+---------+
+| titulo   | paginas |
++----------+---------+
+| Primeiro |     120 |
+| Segundo  |      80 |
++----------+---------+</code></pre></figure><figure class="tela"><figcaption>Passo 8 · Leia a mensagem de erro</figcaption><p>Cada erro do MySQL tem um número, um código entre parênteses e a explicação. Depois de um erro dentro do cliente a conexão continua aberta, e o comando recusado não gravou nada.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 8 · Leia a mensagem de erro"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>************</kbd>
+ERROR 1045 (28000): Access denied for user &#x27;kits_app&#x27;@&#x27;localhost&#x27; (using password: YES)
+<span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 38
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELEC titulo FROM livro;</kbd>
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;SELEC titulo FROM livro&#x27; at line 1
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO livro (autor_id, titulo, paginas) VALUES (1, &#x27;Vazio&#x27;, 0);</kbd>
+ERROR 3819 (HY000): Check constraint &#x27;livro_chk_1&#x27; is violated.
+<span class="tela-prompt">mysql&gt; </span><kbd>USE outro_banco;</kbd>
+ERROR 1044 (42000): Access denied for user &#x27;kits_app&#x27;@&#x27;localhost&#x27; to database &#x27;outro_banco&#x27;
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT count(*) FROM livro</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>\c</kbd>
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre><p class="tela-nota"><strong>Repare:</strong> 1045: senha errada ou usuário que não existe. 1064: erro de sintaxe; o trecho depois de near mostra onde o MySQL se perdeu. 3819: o CHECK recusou o valor. 1044: o kits_app não tem acesso a esse banco. O \c cancela um comando que você não quer terminar.</p></figure><figure class="tela"><figcaption>Passo 9 · Apague as tabelas de treino</figcaption><p>As tabelas autor e livro foram só treino. Apague primeiro livro, que depende de autor, e depois autor. SHOW TABLES confirma que o kits_teste ficou vazio: os testes do projeto vão criar ali as tabelas dos kits.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 9 · Apague as tabelas de treino"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE livro;</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE autor;</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW TABLES;</kbd>
+Empty set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>exit</kbd>
+Bye</code></pre></figure><div class="table-wrap"><table><caption>Mensagens que você vai encontrar na prática</caption><thead><tr><th scope="col">Mensagem</th><th scope="col">O que significa</th><th scope="col">O que fazer</th></tr></thead><tbody><tr><td>ERROR 2003 (HY000): Can&#x27;t connect to MySQL server on &#x27;localhost:3306&#x27;</td><td>O servidor não está rodando, ou a porta é outra.</td><td>Confira o serviço MySQL84 em Serviços do Windows e a porta no banco.ini.</td></tr><tr><td>ERROR 1045 (28000): Access denied for user &#x27;kits_app&#x27;@&#x27;localhost&#x27;</td><td>Senha errada ou usuário não criado.</td><td>Refaça o passo 3 ou confira a senha no banco.ini.</td></tr><tr><td>ERROR 1044 (42000): Access denied for user &#x27;kits_app&#x27;@&#x27;localhost&#x27; to database</td><td>O usuário não tem acesso a esse banco.</td><td>Confira o nome do banco; o kits_app só acessa kits e kits_teste.</td></tr><tr><td>ERROR 1452 (23000): Cannot add or update a child row</td><td>O kit_id aponta para um kit que não existe.</td><td>É a recusa esperada. Se ela não acontece, procure a FOREIGN KEY com SHOW CREATE TABLE.</td></tr><tr><td>ERROR 3819 (HY000): Check constraint ... is violated</td><td>O CHECK recusou o valor.</td><td>Corrija o valor; não apague a regra.</td></tr><tr><td>ERROR 1050 (42S01): Table &#x27;kit&#x27; already exists</td><td>O esquema rodou de novo sem apagar a tabela.</td><td>O esquema começa com DROP TABLE IF EXISTS, item antes de kit.</td></tr><tr><td>InternalError: Unread result found</td><td>O Python executou outro comando sem ler as linhas do SELECT anterior.</td><td>Use fetchall() antes do próximo execute.</td></tr></tbody></table></div><div class="table-wrap"><table><caption>O mesmo caminho no MySQL Workbench (alternativa visual)</caption><thead><tr><th scope="col">Para</th><th scope="col">No Workbench</th></tr></thead><tbody><tr><td>Conectar</td><td>Na tela inicial, clique no + ao lado de MySQL Connections. Preencha Connection Name, Hostname 127.0.0.1, Port 3306 e Username kits_app; em Default Schema, kits. Use Test Connection e salve.</td></tr><tr><td>Escrever e executar SQL</td><td>Abra a conexão e escreva na aba de consulta. Ctrl+Enter executa o comando em que está o cursor; Ctrl+Shift+Enter executa tudo, como um SOURCE.</td></tr><tr><td>Ver o resultado</td><td>O resultado de um SELECT aparece na grade abaixo do editor. O painel Output lista cada comando, com um sinal verde de sucesso ou vermelho de erro e o número do erro.</td></tr><tr><td>Ver as tabelas</td><td>No painel Navigator, na aba Schemas. Depois de criar uma tabela, clique com o botão direito no banco e use Refresh All para ela aparecer.</td></tr><tr><td>Conferir a chave estrangeira</td><td>Rode SHOW CREATE TABLE item; e confira a linha CONSTRAINT ... FOREIGN KEY, como no passo 4. O Workbench também aceita o REFERENCES na linha da coluna sem avisar.</td></tr></tbody></table></div></section><section id="pratica" data-stop="pratica"><h2>Construa o banco MySQL e a busca segura <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#pratica" aria-label="Versão para leitura: Construa o banco MySQL e a busca segura">↗</a></h2><p>Antes de começar, faça os passos 1 a 3 do tutorial: o servidor responde, e os bancos kits e kits_teste e o usuário kits_app existem. Continue no repositório do projeto, na raiz, com o ambiente .venv. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>No .venv, instale o conector oficial: .\.venv\Scripts\python.exe -m pip install mysql-connector-python. Depois registre a versão instalada em requirements.txt com .\.venv\Scripts\python.exe -m pip freeze &gt; requirements.txt. A ordem importa: esquema, conexão, repositório, testes e só então o script herdado. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>sql/mysql/esquema.sql: as tabelas dos kits no MySQL</h3><p>Copie o seu sql/esquema.sql da A06 e traduza para o MySQL, seguindo a lista de conferência do arquivo. O script começa apagando as tabelas, item antes de kit, para poder rodar de novo; usa AUTO_INCREMENT e VARCHAR; não tem PRAGMA; e cria a chave estrangeira com a cláusula FOREIGN KEY. Salve também sql/mysql/dados.sql: é o dados.sql da A06 sem a linha do PRAGMA. Entrega: sql/mysql/esquema.sql e sql/mysql/dados.sql.</p><p>Concluído quando: Depois de SOURCE dos dois arquivos no banco kits, SHOW CREATE TABLE item\G mostra uma CONSTRAINT ... FOREIGN KEY, e um INSERT de item no kit 99 é recusado com o erro 1452.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 4 do tutorial. O que o SHOW CREATE TABLE do livro tinha e o que faltava? Rode o SOURCE duas vezes seguidas: o seu script aguenta?</p></details><pre><code id="work-esquema-mysql">-- Copie aqui o seu sql/esquema.sql da A06 e traduza para o MySQL.
+-- Confira cada item (tabela &quot;Do arquivo ao servidor&quot; e passo 4 do tutorial):
+--   [ ] começa apagando as tabelas, item antes de kit: DROP TABLE IF EXISTS
+--   [ ] sem PRAGMA: no MySQL ele é erro de sintaxe
+--   [ ] INT AUTO_INCREMENT PRIMARY KEY no lugar de INTEGER PRIMARY KEY
+--   [ ] VARCHAR(n) no lugar de TEXT
+--   [ ] o CHECK da quantidade continua
+--   [ ] a chave estrangeira está na cláusula FOREIGN KEY (...) REFERENCES ..., no fim da tabela
+</code></pre><div class="atelier" data-source="work-esquema-mysql" data-filename="esquema.sql" data-execution="Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SOURCE sql/mysql/esquema.sql e depois SOURCE sql/mysql/dados.sql. Confira com SHOW CREATE TABLE item\G e com um INSERT no kit 99."></div><p>Na raiz do projeto: mysql -u kits_app -p kits e, no prompt, SOURCE sql/mysql/esquema.sql e depois SOURCE sql/mysql/dados.sql. Confira com SHOW CREATE TABLE item\G e com um INSERT no kit 99.</p></div><div class="workbench"><h3>kits/banco.py: a conexão passa a ser com o MySQL</h3><p>Troque o módulo da A07. caminho_config() devolve o banco.ini da raiz do projeto. ler_config(secao=&#x27;mysql&#x27;, caminho=None) recusa com FileNotFoundError um banco.ini que não existe, dizendo como criá-lo, e devolve um dicionário com host, port como inteiro, user, password e database. conexao_banco(config=None) conecta com a configuração recebida ou com ler_config(), e mantém as garantias da A07: grava no sucesso, desfaz e relança no erro, fecha sempre. Crie banco.exemplo.ini como o da seção Senha fora do código, copie para banco.ini com a sua senha e acrescente banco.ini ao .gitignore. Entrega: kits/banco.py, banco.exemplo.ini, requirements.txt e o .gitignore atualizado.</p><p>Concluído quando: Os testes de tests/test_repositorio.py passam; git status não mostra banco.ini; e, com banco.ini renomeado, ler_config() levanta FileNotFoundError com uma mensagem que diz o que fazer.</p><details><summary>Dica para realizar a atividade</summary><p>conexao_banco é o bloco da A07 quase sem mudança: o que muda é só a linha que abre a conexão. Por que o with do próprio mysql.connector não serve no lugar dele?</p></details><pre><code id="work-banco">&quot;&quot;&quot;Conexão com o MySQL dos kits: lê banco.ini, grava ou desfaz e fecha.&quot;&quot;&quot;
+import configparser
+from contextlib import contextmanager
+from pathlib import Path
+
+import mysql.connector
+
+
+def caminho_config():
+    # Devolva o banco.ini da raiz do projeto, calculado a partir deste arquivo (como na A07).
+    ...
+
+
+def ler_config(secao=&#x27;mysql&#x27;, caminho=None):
+    # Recuse com FileNotFoundError um banco.ini que não existe, dizendo como criar.
+    # Leia o arquivo com configparser e devolva um dicionário com
+    # host, port (inteiro), user, password e database da seção pedida.
+    ...
+
+
+@contextmanager
+def conexao_banco(config=None):
+    # Conecte com a configuração recebida ou com ler_config().
+    # Terminou bem: grave. Deu erro: desfaça e deixe o erro seguir.
+    # Em qualquer caso, feche a conexão.
+    ...
+</code></pre><div class="atelier" data-source="work-banco" data-filename="banco.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe -c &quot;from kits.banco import ler_config; print(ler_config()[&#x27;database&#x27;])&quot; deve mostrar kits. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe -c &quot;from kits.banco import ler_config; print(ler_config()[&#x27;database&#x27;])&quot; deve mostrar kits. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/repositorio.py: objetos para dentro e para fora do banco</h3><p>Escreva as três funções. inserir_item(con, kit_id, item) recebe um ItemKit da A05, grava com %s e devolve o id gerado. buscar_itens(con, kit_id, trecho) devolve [(id, nome, quantidade), ...] só dos itens daquele kit cujo nome contém o trecho, em ordem de id. carregar_kit(con, kit_id) devolve um Kit com o nome e os itens do banco, ou levanta LookupError se o kit não existe. Nenhum valor colado no SQL. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os seis testes de tests/test_repositorio.py passam, inclusive os três que você vai completar na próxima atividade.</p><details><summary>Dica para realizar a atividade</summary><p>Volte aos exemplos dos livros. Qual a diferença entre o id que você passa para o INSERT e o que o lastrowid devolve? E em carregar_kit, qual método do Kit da A05 já cria o ItemKit?</p></details><pre><code id="work-repositorio">&quot;&quot;&quot;Itens do banco como objetos do domínio (A05). Valores sempre por parâmetro, nunca colados no SQL.&quot;&quot;&quot;
+from kits.modelo import Kit
+
+
+def inserir_item(con, kit_id, item):
+    # item é um ItemKit da A05: ele já validou nome e quantidade.
+    # Insira no kit_id com %s para cada valor e devolva o id gerado pelo banco.
+    ...
+
+
+def buscar_itens(con, kit_id, trecho):
+    # Devolva [(id, nome, quantidade), ...] dos itens DESTE kit cujo nome contém o trecho,
+    # em ordem de id. O trecho vem do usuário: ele vai como valor, nunca dentro do SQL.
+    ...
+
+
+def carregar_kit(con, kit_id):
+    # Monte um Kit (A05) com o nome do kit e os seus itens, na ordem de id.
+    # Kit que não existe: LookupError.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_repositorio.py: complete os três testes que faltam</h3><p>O arquivo já recria as tabelas no kits_teste e tem três testes. Escreva os três marcados com Complete: a busca no kit 1 não atravessa para o kit 2, nem com o texto do segundo relato; um bloco com um item válido e outro no kit 99 termina em IntegrityError e não deixa nada gravado; carregar_kit de um kit inexistente levanta LookupError. Entrega: tests/test_repositorio.py.</p><p>Concluído quando: Os seis testes passam com o seu repositório. Depois, troque o execute de buscar_itens por uma f-string, como no script herdado: pelo menos um teste precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que nada ficou gravado, conte os itens em outra conexão, como contar_itens faz. Para o erro do kit 99, qual exceção do mysql.connector aparece no passo 5 do tutorial?</p></details><pre><code id="work-testes-repositorio">&quot;&quot;&quot;Testes do repositório: cada teste recria as tabelas no banco kits_teste, nunca no kits.&quot;&quot;&quot;
+import unittest
+from pathlib import Path
+
+import mysql.connector
+
+from kits.banco import conexao_banco, ler_config
+from kits.modelo import ItemKit
+from kits.repositorio import buscar_itens, carregar_kit, inserir_item
+
+RAIZ = Path(__file__).resolve().parent.parent
+TESTE = ler_config(&#x27;teste&#x27;)
+
+
+def comandos(script):
+    &quot;&quot;&quot;Os comandos de um arquivo da pasta sql/mysql, sem comentários, um por item.&quot;&quot;&quot;
+    texto = (RAIZ / &#x27;sql&#x27; / &#x27;mysql&#x27; / script).read_text(encoding=&#x27;utf-8&#x27;)
+    linhas = [l for l in texto.splitlines() if not l.strip().startswith(&#x27;--&#x27;)]
+    return [c.strip() for c in &#x27;\n&#x27;.join(linhas).split(&#x27;;&#x27;) if c.strip()]
+
+
+class TestRepositorio(unittest.TestCase):
+    def setUp(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;):
+                for comando in comandos(script):
+                    cur.execute(comando)
+
+    def contar_itens(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT count(*) FROM item&#x27;)
+            return cur.fetchall()[0][0]
+
+    def test_inserir_devolve_o_id_e_grava(self):
+        with conexao_banco(TESTE) as con:
+            novo = inserir_item(con, 1, ItemKit(&#x27;Mouse&#x27;, 2))
+        with conexao_banco(TESTE) as con:
+            self.assertEqual(buscar_itens(con, 1, &#x27;Mouse&#x27;), [(novo, &#x27;Mouse&#x27;, 2)])
+
+    def test_apostrofo_e_um_caractere_comum(self):
+        with conexao_banco(TESTE) as con:
+            inserir_item(con, 2, ItemKit(&quot;Cabo D&#x27;Avila&quot;, 1))
+            nomes = [nome for _, nome, _ in buscar_itens(con, 2, &quot;D&#x27;Avila&quot;)]
+        self.assertEqual(nomes, [&quot;Cabo D&#x27;Avila&quot;])
+
+    def test_carregar_kit_monta_o_objeto_do_dominio(self):
+        with conexao_banco(TESTE) as con:
+            kit = carregar_kit(con, 1)
+        self.assertEqual(kit.nome, &#x27;Treinamento Redes&#x27;)
+        self.assertEqual([item.nome for item in kit.itens], [&#x27;Cabo&#x27;, &#x27;Notebook&#x27;])
+        self.assertEqual(kit.total(), 5)
+
+    # Complete: no kit 1, buscar Cabo traz só o Cabo do kit 1, e buscar &#x27; OR 1=1 --  não traz nada.
+
+    # Complete: um bloco que insere um item válido e depois um no kit 99 termina em
+    # mysql.connector.IntegrityError, e a contagem de itens fica igual.
+
+    # Complete: carregar_kit de um kit que não existe levanta LookupError.
+</code></pre><div class="atelier" data-source="work-testes-repositorio" data-filename="test_repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>buscar.py: rastreie e corrija o script herdado</h3><p>Antes de mudar qualquer linha, rode o script com os dois relatos e anote a saída. Para cada um, imprima o comando montado e explique o que o MySQL recebeu. Encontre três defeitos: o que acontece com o texto da busca e com o número do kit, onde está a senha e o que acontece com a conexão se o execute der erro. Corrija usando conexao_banco e buscar_itens; o script continua recebendo KIT e TRECHO na linha de comando e recusa um KIT que não seja número. Entrega: buscar.py corrigido, na raiz, e os três defeitos com a evidência de cada um no registro.</p><p>Concluído quando: Com o banco recriado, buscar.py 1 &quot;D&#x27;Avila&quot; e buscar.py 1 &quot;&#x27; OR 1=1 -- &quot; mostram Nenhum item encontrado, sem erro; buscar.py 1 Cabo mostra só (1, &#x27;Cabo&#x27;, 3); e o arquivo não tem senha.</p><details><summary>Dica para realizar a atividade</summary><p>Troque o cur.execute(...) por um print do mesmo f-string e rode de novo. O que vem depois do -- no comando impresso?</p></details><pre><code id="work-busca-legada">&quot;&quot;&quot;Script herdado: busca itens de um kit pelo nome.
+
+Uso: python buscar.py KIT TRECHO
+Relatos do suporte:
+- python buscar.py 1 &quot;D&#x27;Avila&quot; termina com erro de sintaxe do MySQL;
+- python buscar.py 1 &quot;&#x27; OR 1=1 -- &quot; mostra itens do kit 2.
+&quot;&quot;&quot;
+import sys
+
+import mysql.connector
+
+con = mysql.connector.connect(host=&#x27;localhost&#x27;, user=&#x27;kits_app&#x27;, password=&#x27;troque-esta-senha&#x27;, database=&#x27;kits&#x27;)
+cur = con.cursor()
+kit, trecho = sys.argv[1], sys.argv[2]
+cur.execute(f&quot;SELECT id, nome, quantidade FROM item WHERE kit_id = {kit} AND nome LIKE &#x27;%{trecho}%&#x27;&quot;)
+for linha in cur.fetchall():
+    print(linha)
+con.close()
+</code></pre><div class="atelier" data-source="work-busca-legada" data-filename="buscar.py" data-execution="Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe buscar.py 1 &quot;D&#x27;Avila&quot; e depois .\.venv\Scripts\python.exe buscar.py 1 &quot;&#x27; OR 1=1 -- &quot;. O script herdado tem a senha do exemplo; se a sua for outra, troque só para reproduzir os relatos e não faça commit dessa versão."></div><p>Na raiz do projeto, no PowerShell: .\.venv\Scripts\python.exe buscar.py 1 &quot;D&#x27;Avila&quot; e depois .\.venv\Scripts\python.exe buscar.py 1 &quot;&#x27; OR 1=1 -- &quot;. O script herdado tem a senha do exemplo; se a sua for outra, troque só para reproduzir os relatos e não faça commit dessa versão.</p></div><div class="workbench"><h3>README.md: a seção Banco MySQL</h3><p>Acrescente ao README.md do projeto a seção Banco MySQL: requisitos (servidor, cliente no PATH, conector no requirements.txt); como preparar o banco em uma máquina nova, do usuário às tabelas; como criar o banco.ini a partir do exemplo; o que conexao_banco e o repositório garantem; e os comandos para rodar os testes e os dois relatos da busca, com o resultado esperado. A seção Conexão com o banco da A07 fala do SQLite: marque-a como histórico ou remova-a. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README e a senha do root, prepara o banco numa máquina, roda os testes e obtém o resultado descrito.</p><details><summary>Dica para realizar a atividade</summary><p>Escreva para o colega que vai fazer a A09 em outra máquina. Qual é a primeira coisa que falha se ele pular o banco.ini?</p></details><pre><code id="work-readme">## Banco MySQL
+
+### Requisitos
+
+### Preparar o banco (uma vez por máquina)
+
+### Como o código usa o banco
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: a busca por 100%</h3><p>Cadastre no kit 1 os itens Fonte 100% e Fonte 1000 e busque 100%. Explique por que vieram os dois, se o valor foi por parâmetro. Mude buscar_itens para que % e _ digitados pelo usuário valham como caracteres comuns, e escreva um teste que prove. Entrega (opcional): a função, o teste e a explicação no registro desta página.</p><p>Concluído quando: O teste novo passa, a busca por 100% traz só Fonte 100%, e os seis testes anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>O parâmetro protege o comando, mas dentro do LIKE o % do valor ainda é curinga. Qual caractere o LIKE do MySQL usa, por padrão, para dizer que o seguinte vale por ele mesmo?</p></details><pre><code id="work-bonus-curinga"># A busca por 100%
+
+## O que a busca trouxe e por quê
+
+## A mudança em buscar_itens
+
+## O teste
+</code></pre><div class="atelier" data-source="work-bonus-curinga" data-filename="curinga.md" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado, o banco.ini preenchido e kits\__init__.py e tests\__init__.py vazios. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A busca está protegida? <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#auditoria" aria-label="Versão para leitura: A busca está protegida?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou com cur.statement antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>O esquema da A06 foi copiado para o MySQL com kit_id INT NOT NULL REFERENCES kit(id). Um item do kit 99 entra sem erro. Por quê?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="O MySQL ignora REFERENCES escrito na linha da coluna; a chave só existe com a cláusula FOREIGN KEY" autocomplete="off">O MySQL ignora REFERENCES escrito na linha da coluna; a chave só existe com a cláusula FOREIGN KEY</label><label class="option"><input type="radio" name="q01" value="Faltou PRAGMA foreign_keys = ON no começo do script" autocomplete="off">Faltou PRAGMA foreign_keys = ON no começo do script</label><label class="option"><input type="radio" name="q01" value="O MySQL só confere a chave estrangeira no commit" autocomplete="off">O MySQL só confere a chave estrangeira no commit</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Rode SHOW CREATE TABLE item\G e procure a palavra CONSTRAINT.</p></details></fieldset><fieldset data-question="q02"><legend>cur.execute(&quot;SELECT id FROM item WHERE nome = &#x27;%s&#x27;&quot;, (nome,)) dá erro de sintaxe mesmo com nome = &#x27;Cabo&#x27;. Por quê?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="O conector já põe aspas no valor; com aspas em volta do %s elas ficam duplicadas" autocomplete="off">O conector já põe aspas no valor; com aspas em volta do %s elas ficam duplicadas</label><label class="option"><input type="radio" name="q02" value="O %s só funciona com números" autocomplete="off">O %s só funciona com números</label><label class="option"><input type="radio" name="q02" value="Falta chamar commit antes do SELECT" autocomplete="off">Falta chamar commit antes do SELECT</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Tire as aspas, rode de novo e imprima cur.statement: onde o conector pôs as aspas?</p></details></fieldset><fieldset data-question="q03"><legend>Um script faz um INSERT dentro de with mysql.connector.connect(...) as con: e o bloco termina sem erro. Em uma conexão nova, a linha aparece?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Não: esse with fecha a conexão sem commit, e o que estava pendente é descartado" autocomplete="off">Não: esse with fecha a conexão sem commit, e o que estava pendente é descartado</label><label class="option"><input type="radio" name="q03" value="Sim: o with grava no sucesso, como o do sqlite3" autocomplete="off">Sim: o with grava no sucesso, como o do sqlite3</label><label class="option"><input type="radio" name="q03" value="Sim, e a conexão continua aberta depois do bloco" autocomplete="off">Sim, e a conexão continua aberta depois do bloco</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare com a pergunta sobre o with da A07 e confira com uma consulta rápida, como no passo 7 do tutorial.</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>banco.ini, com a senha, está no .gitignore; o repositório tem banco.exemplo.ini com uma senha de mentira.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que alguém que clonar o repositório precisa saber, e o que não pode ver?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O aplicativo conecta como root, para nunca ter erro de permissão.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o root pode apagar que o kits_app não pode?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>A busca usa LIKE %s e passa f&#x27;%{trecho}%&#x27; como valor.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>A f-string está montando o comando ou o valor?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O usuário escolhe ordenar por nome ou por quantidade; o código confere a escolha numa lista fixa e só então põe o nome da coluna no ORDER BY com f-string. O valor da busca vai por %s.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Nome de coluna pode ser parâmetro? De onde vem o texto que entra no comando?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>inserir_item recebe um ItemKit, que já recusa quantidade zero, e o banco também tem o CHECK (quantidade &gt; 0).</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem escreve no banco sem passar pelo ItemKit?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Para o apóstrofo não quebrar a busca, o código troca &#x27; por &#x27;&#x27; antes de montar a f-string.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E o número do kit, que não tem aspas no comando? E uma barra invertida no texto?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-busca"><p>Outra dupla entregou a busca abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def buscar_itens(con, kit_id, trecho):
+    cur = con.cursor()
+    sql = &#x27;SELECT id, nome, quantidade FROM item WHERE kit_id = %s AND nome LIKE %s&#x27;
+    cur.execute(sql, (kit_id, &#x27;%&#x27; + trecho + &#x27;%&#x27;))
+    return cur.fetchall()</code></pre><fieldset data-question="ac-concatena" data-claim="ac-concatena"><legend>&#x27;%&#x27; + trecho + &#x27;%&#x27; concatena texto do usuário e abre brecha para injeção de SQL.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-concatena" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-concatena" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-sem-ordem" data-claim="ac-sem-ordem"><legend>Sem ORDER BY, a ordem das linhas não é garantida, e um teste que compara listas pode falhar de vez em quando.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-sem-ordem" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-sem-ordem" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-curinga" data-claim="ac-curinga"><legend>Um trecho com % ou _ funciona como curinga: buscar 100% traz também 1000.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-curinga" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-curinga" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova o seu banco MySQL <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#registro" aria-label="Versão para leitura: Entregue o que prova o seu banco MySQL">↗</a></h2><p>Entregue, no repositório do projeto: sql/mysql/esquema.sql e dados.sql; kits/banco.py e kits/repositorio.py; tests/test_repositorio.py; buscar.py corrigido; banco.exemplo.ini e requirements.txt; o .gitignore com banco.ini; e a seção Banco MySQL no README.md.</p><p>No registro desta página, cole a saída dos testes e das duas buscas dos relatos com o buscar.py corrigido. Para o script herdado, escreva os três defeitos com a evidência de cada um e diga se as hipóteses da abertura se confirmaram.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou e que nenhum arquivo tem a sua senha. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0008-insercao-e-consulta-parametrizadas.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Por que buscar &#x27; OR 1=1 --  mostrava itens do kit 2 no script herdado e não mostra nada no seu buscar.py, se o texto digitado é o mesmo?</p><p>Na A09, os itens passam a ser atualizados e removidos pelo id que o lastrowid devolveu hoje, com o mesmo cuidado: o id também vai por parâmetro.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html">MySQL 8.4: FOREIGN KEY constraints</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/mysql.html">MySQL 8.4: o cliente mysql</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/creating-accounts.html">MySQL 8.4: CREATE USER e GRANT</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html">MySQL Connector/Python: cursor.execute</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-connectargs.html">MySQL Connector/Python: argumentos de conexão</a></li><li><a href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench: manual</a></li><li><a href="https://docs.python.org/3/library/configparser.html">Python: configparser</a></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">OWASP: prevenção de injeção de SQL</a></li><li><a href="https://roadmap.sh/backend">roadmap.sh: Backend Developer (bancos relacionais e MySQL)</a></li></ul><a data-idoc="source" href="leitura-0008-insercao-e-consulta-parametrizadas.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-20</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>
