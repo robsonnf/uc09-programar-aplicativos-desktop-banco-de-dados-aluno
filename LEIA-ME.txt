@@ -8,6 +8,8 @@ O percurso tem **31 aulas e 92 horas de encontros**, em 6 fases. As aulas são p
 
 ## Comece por aqui
 
+**Projeto final da UC09.** O projeto final da UC09 é um software desktop com integração completa com banco de dados, construído aula a aula com o que todas as aulas ensinam: requisitos, modelo em objetos, banco com integridade, interface, consultas, importação, arquitetura em camadas, ORM, documentação e executável. Ele é a principal evidência dos indicadores I1 a I4 e é defendido na A31: um projeto completo e bem defendido é o caminho para o melhor resultado na UC.
+
 1. Abra o site das aulas, ou baixe este repositório e abra `index.html`.
 2. Entre na aula indicada pelo professor e leia os objetivos e o que é preciso antes de começar.
 3. Estude a teoria e rode os exemplos no seu computador, comparando com o resultado esperado.
