@@ -1,0 +1,338 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A21 · Repositório, serviço e quem liga: cada responsabilidade no seu lugar</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A21" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A21</span><span>Repository/DAO, serviços e responsabilidades<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Separou, mas trocou os papéis</a></li><li><a href="#esteira">De um depósito a quatro arquivos</a></li><li><a href="#papeis">Repositório, serviço e raiz de composição</a></li><li><a href="#injecao">Receber as dependências</a></li><li><a href="#tutorial">Tutorial: o empréstimo do acervo</a></li><li><a href="#pratica">Cada coisa no seu arquivo</a></li><li><a href="#auditoria">Cada coisa está no seu lugar?</a></li><li><a href="#registro">Entregue o que prova a separação</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A21</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Repositório, serviço e quem liga: cada responsabilidade no seu lugar</h1><p class="thesis">O abrir_janela.py virou um depósito: tem o serviço de dados, a tradução de erros, o log, as caixas de diálogo e o começo do programa. Hoje cada responsabilidade ganha o seu arquivo. O repositório continua com o SQL; o serviço, em kits/dados.py, abre a conexão ou a transação de cada pedido, traduz os erros e registra o log; as caixas de diálogo vão para kits/dialogos.py; e o abrir_janela.py só liga as peças. O serviço passa a receber o repositório, a conexão e a transação, e por isso é testado sem MySQL.</p><p data-idoc="caveat">A aula continua no projeto da A20. O comportamento não muda; só o lugar das coisas. Os testes do banco e de fluxo mudam uma linha: o import do DadosMySQL. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Distinguir repositório (o SQL de cada operação), serviço (conexão, transação, tradução de erros e log) e raiz de composição (quem liga as peças)</li><li>Mover o DadosMySQL para kits/dados.py e as caixas de diálogo para kits/dialogos.py, deixando o abrir_janela.py só com a ligação</li><li>Receber as dependências no __init__, com as de verdade como padrão, para testar o serviço com peças de mentira</li><li>Testar tradução de erros, uso da transação e log sem MySQL, em milissegundos</li><li>Achar, rodando os testes, as responsabilidades trocadas de um serviço herdado</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A20 com todos os testes passando</li><li>em_transacao da A10, protegido da A13, o log da A19 e o objeto de dados recebido pela janela, da A14</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Separou, mas trocou os papéis <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#partida" aria-label="Versão para leitura: Separou, mas trocou os papéis">↗</a></h2><p>Outra equipe também tirou o serviço de dados do abrir_janela.py, num dados_herdado.py, e vieram quatro relatos.</p><p>Remover um kit com itens escreve um erro no terminal, e a janela não diz nada. O importacoes.log parou de crescer, embora as importações continuem acontecendo. Um erro de programação, um SQL com a vírgula no lugar errado, aparece na janela como Sem conexão com o MySQL, e a equipe passou uma tarde reiniciando o serviço. E, num momento de muito uso, uma gravação que antes era repetida depois de um deadlock (A10) passou a falhar na primeira tentativa.</p><p>Em dupla, antes de abrir o código: que responsabilidade cada relato mostra que está no lugar errado ou sumiu?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: kits/dados.py com o DadosMySQL; kits/dialogos.py; abrir_janela.py só com a ligação; tests/test_dados.py; o import novo em tests/test_fontes.py e tests/test_fluxo.py; e docs/arquitetura.md atualizado. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: todos os testes passam, e os de tests/test_dados.py rodam sem MySQL.</p></div></section><section id="esteira" data-stop="esteira"><h2>De um depósito a quatro arquivos <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#esteira" aria-label="Versão para leitura: De um depósito a quatro arquivos">↗</a></h2><ol class="pipeline"><li><strong>Rodar</strong><p>Todos os testes passam antes de mexer.</p></li><li><strong>Serviço</strong><p>DadosMySQL e protegido vão para kits/dados.py.</p></li><li><strong>Diálogos</strong><p>perguntar, pedir_nome e escolher_arquivo vão para kits/dialogos.py.</p></li><li><strong>Ligação</strong><p>abrir_janela.py fica com o log e a montagem das peças.</p></li><li><strong>Receber</strong><p>O serviço recebe repositório, conexão e transação, com os de verdade como padrão.</p></li><li><strong>Testar sem banco</strong><p>Peças de mentira provam a tradução, a transação e o log.</p></li></ol></section><section id="papeis" data-stop="papeis"><h2>Repositório, serviço e raiz de composição <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#papeis" aria-label="Versão para leitura: Repositório, serviço e raiz de composição">↗</a></h2><p>O repositório, kits/repositorio.py, sabe o SQL de cada operação: listar, adicionar, editar, importar. Cada função recebe uma conexão pronta e não abre, não confirma e não desfaz: por isso várias delas cabem numa transação só, como na importação da A19. É o que a literatura chama de repositório ou DAO, objeto de acesso a dados.</p><p>O serviço, kits/dados.py, atende um pedido da janela de cada vez: abre a conexão (para ler) ou a transação (para gravar), chama o repositório, traduz os erros que a janela sabe explicar (banco fora do ar, kit com itens) e registra no log o que precisa ficar registrado. Ele não sabe SQL nem janela.</p><p>A raiz de composição, abrir_janela.py, é o único lugar que conhece todas as peças de verdade: configura o log, cria o serviço, escolhe as caixas de diálogo e entrega tudo à janela. Trocar uma peça, por exemplo um serviço que lê de outro banco, é mudar uma linha ali.</p><div class="table-wrap"><table><caption>Cada arquivo e o que ele não pode saber</caption><thead><tr><th scope="col">Arquivo</th><th scope="col">Responsabilidade</th><th scope="col">Não pode importar</th></tr></thead><tbody><tr><td>kits/repositorio.py</td><td>O SQL de cada operação</td><td>janela, serviço, tkinter</td></tr><tr><td>kits/dados.py</td><td>Conexão, transação, tradução, log</td><td>tkinter, customtkinter, janela</td></tr><tr><td>kits/dialogos.py</td><td>Caixas de diálogo do sistema</td><td>mysql, repositório</td></tr><tr><td>kits/janela.py e kits/controle.py</td><td>Visão e controle (A20)</td><td>mysql, repositório, banco</td></tr><tr><td>abrir_janela.py</td><td>Ligar as peças</td><td>nada: é o único que conhece todas</td></tr></tbody></table></div></section><section id="injecao" data-stop="injecao"><h2>Receber as dependências <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#injecao" aria-label="Versão para leitura: Receber as dependências">↗</a></h2><p>Até a A20, o DadosMySQL chamava conexao_banco e em_transacao direto, e as funções do repositório pelo nome. Para testá-lo, só com o MySQL ligado. Agora ele recebe as três peças no __init__: repo, conectar e transacao. Os valores padrão são os de verdade, então o abrir_janela.py e os testes do banco continuam chamando DadosMySQL() ou DadosMySQL(TESTE) como antes.</p><p>Nos testes do serviço, as peças são de mentira: um repositório que anota cada chamada e levanta o erro combinado, uma conexão que é só um nome, uma transação que anota que foi usada. É a mesma ideia do objeto de dados recebido pela janela (A14) e da visão recebida pelo controle (A20), agora um andar abaixo.</p><p>O que cada teste do serviço prova é a responsabilidade dele: que gravar passa pela transação (e assim herda a nova tentativa no deadlock), que o erro 2003 vira ConnectionError e o 1064 não, que KitComItens vira ValueError, e que a importação deixa uma linha no log.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o empréstimo do acervo <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#tutorial" aria-label="Versão para leitura: Tutorial: o empréstimo do acervo">↗</a></h2><p>O tutorial separa o empréstimo de um livro em repositório e serviço, num SQLite em arquivo. A regra do empréstimo usa três operações do repositório numa transação só. Crie os três arquivos na raiz do projeto, com os nomes das legendas.</p><p>As telas são de execuções reais desse código, com Python 3.14; o tempo do Ran foi fixado.</p><figure class="code-block"><figcaption>Passo 1 · repositorio_acervo.py</figcaption><pre><code>&quot;&quot;&quot;repositorio_acervo.py: o SQL do acervo. Cada função recebe a conexão; nenhuma abre, confirma ou desfaz.&quot;&quot;&quot;
+
+
+def exemplares(con, livro_id):
+    linha = con.execute(&#x27;SELECT exemplares FROM livro WHERE id = ?&#x27;, (livro_id,)).fetchone()
+    if linha is None:
+        raise LookupError(f&#x27;Livro {livro_id} não existe&#x27;)
+    return linha[0]
+
+
+def baixar(con, livro_id):
+    con.execute(&#x27;UPDATE livro SET exemplares = exemplares - 1 WHERE id = ?&#x27;, (livro_id,))
+
+
+def registrar_emprestimo(con, livro_id, pessoa):
+    con.execute(&#x27;INSERT INTO emprestimo (livro_id, pessoa) VALUES (?, ?)&#x27;, (livro_id, pessoa))
+</code></pre></figure><figure class="code-block"><figcaption>Passo 2 · servico_acervo.py</figcaption><pre><code>&quot;&quot;&quot;servico_acervo.py: a regra do empréstimo, que usa três operações do repositório numa transação só.&quot;&quot;&quot;
+import sqlite3
+
+import repositorio_acervo
+
+
+class ServicoAcervo:
+    def __init__(self, conectar, repo=repositorio_acervo):
+        self._conectar = conectar  # devolve uma conexão nova
+        self._repo = repo
+
+    def emprestar(self, livro_id, pessoa):
+        con = self._conectar()
+        try:
+            with con:  # no sqlite3, o with confirma no fim ou desfaz se algo der errado
+                if self._repo.exemplares(con, livro_id) &lt; 1:
+                    raise ValueError(&#x27;nenhum exemplar disponível&#x27;)
+                self._repo.baixar(con, livro_id)
+                self._repo.registrar_emprestimo(con, livro_id, pessoa)
+        finally:
+            con.close()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    import os
+    if os.path.exists(&#x27;acervo.db&#x27;):
+        os.remove(&#x27;acervo.db&#x27;)
+    con = sqlite3.connect(&#x27;acervo.db&#x27;)
+    con.executescript(&quot;CREATE TABLE livro (id INTEGER PRIMARY KEY, titulo TEXT, exemplares INTEGER);&quot;
+                      &quot;CREATE TABLE emprestimo (livro_id INTEGER, pessoa TEXT);&quot;
+                      &quot;INSERT INTO livro VALUES (2, &#x27;Atlas&#x27;, 1);&quot;)
+    con.close()
+    servico = ServicoAcervo(lambda: sqlite3.connect(&#x27;acervo.db&#x27;))
+    for pessoa in (&#x27;Ana&#x27;, &#x27;Bruno&#x27;):
+        try:
+            servico.emprestar(2, pessoa)
+            print(f&#x27;{pessoa}: emprestado&#x27;)
+        except ValueError as erro:
+            print(f&#x27;{pessoa}: recusado ({erro})&#x27;)
+    con = sqlite3.connect(&#x27;acervo.db&#x27;)
+    print(&#x27;exemplares:&#x27;, con.execute(&#x27;SELECT exemplares FROM livro WHERE id = 2&#x27;).fetchone()[0])
+    print(&#x27;empréstimos:&#x27;, con.execute(&#x27;SELECT pessoa FROM emprestimo&#x27;).fetchall())
+    con.close()
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · O serviço com o banco de verdade</figcaption><p>Rode com .\.venv\Scripts\python.exe servico_acervo.py.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · O serviço com o banco de verdade"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe servico_acervo.py</kbd>
+Ana: emprestado
+Bruno: recusado (nenhum exemplar disponível)
+exemplares: 0
+empréstimos: [(&#x27;Ana&#x27;,)]</code></pre><p class="tela-nota"><strong>Repare:</strong> Bruno foi recusado pela regra, e nada dele ficou: a transação desfez.</p></figure><figure class="code-block"><figcaption>Passo 3 · test_servico_acervo.py</figcaption><pre><code>&quot;&quot;&quot;test_servico_acervo.py: a regra testada sem banco, com um repositório e uma conexão de mentira.&quot;&quot;&quot;
+import unittest
+
+from servico_acervo import ServicoAcervo
+
+
+class ConexaoDeMentira:
+    def __init__(self):
+        self.fim = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, tipo, valor, rastro):
+        self.fim = &#x27;desfeita&#x27; if tipo else &#x27;confirmada&#x27;
+
+    def close(self):
+        pass
+
+
+class RepoDeMentira:
+    def __init__(self, exemplares):
+        self._exemplares = exemplares
+        self.feito = []
+
+    def exemplares(self, con, livro_id):
+        return self._exemplares
+
+    def baixar(self, con, livro_id):
+        self.feito.append((&#x27;baixar&#x27;, livro_id))
+
+    def registrar_emprestimo(self, con, livro_id, pessoa):
+        self.feito.append((&#x27;registrar&#x27;, livro_id, pessoa))
+
+
+class TestServicoAcervo(unittest.TestCase):
+    def test_com_exemplar_baixa_registra_e_confirma(self):
+        con, repo = ConexaoDeMentira(), RepoDeMentira(1)
+        ServicoAcervo(lambda: con, repo).emprestar(2, &#x27;Ana&#x27;)
+        self.assertEqual((repo.feito, con.fim), ([(&#x27;baixar&#x27;, 2), (&#x27;registrar&#x27;, 2, &#x27;Ana&#x27;)], &#x27;confirmada&#x27;))
+
+    def test_sem_exemplar_recusa_nao_mexe_e_desfaz(self):
+        con, repo = ConexaoDeMentira(), RepoDeMentira(0)
+        with self.assertRaises(ValueError):
+            ServicoAcervo(lambda: con, repo).emprestar(2, &#x27;Bruno&#x27;)
+        self.assertEqual((repo.feito, con.fim), ([], &#x27;desfeita&#x27;))
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · O serviço sem banco</figcaption><p>Rode com .\.venv\Scripts\python.exe -m unittest -v test_servico_acervo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · O serviço sem banco"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_servico_acervo</kbd>
+test_com_exemplar_baixa_registra_e_confirma (test_servico_acervo.TestServicoAcervo.test_com_exemplar_baixa_registra_e_confirma) ... ok
+test_sem_exemplar_recusa_nao_mexe_e_desfaz (test_servico_acervo.TestServicoAcervo.test_sem_exemplar_recusa_nao_mexe_e_desfaz) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK</code></pre><p class="tela-nota"><strong>Repare:</strong> Nenhum arquivo de banco foi aberto: o repositório e a conexão eram de mentira, e os testes provaram a regra e a transação.</p></figure></section><section id="pratica" data-stop="pratica"><h2>Cada coisa no seu arquivo <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#pratica" aria-label="Versão para leitura: Cada coisa no seu arquivo">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Antes de tudo, rode todos os testes. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: kits/dados.py com os testes dele, kits/dialogos.py, abrir_janela.py, o import nos testes do banco, todos os testes, o serviço herdado e o documento. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>kits/dados.py: o serviço que recebe as peças</h3><p>Crie kits/dados.py trazendo do abrir_janela.py o registro, SEM_CONEXAO, protegido e o DadosMySQL, e faça as três mudanças do arquivo. Em tests/test_fontes.py e tests/test_fluxo.py, troque from abrir_janela import DadosMySQL por from kits.dados import DadosMySQL. Entrega: kits/dados.py e os dois imports.</p><p>Concluído quando: Os oito testes de tests/test_dados.py passam, inclusive os três que você vai completar, e os testes do banco e de fluxo continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>self._repo.KitComItens: a exceção também vem do repositório recebido, para o teste poder trocá-la.</p></details><pre><code id="work-dados">&quot;&quot;&quot;O serviço de dados dos kits (A21). Salve como kits/dados.py.
+
+Traga para cá, do seu abrir_janela.py: registro, SEM_CONEXAO, protegido e a classe DadosMySQL.
+Depois faça as três mudanças abaixo. Nada de tkinter nem customtkinter aqui.
+&quot;&quot;&quot;
+import logging
+
+import mysql.connector
+
+from kits import repositorio
+from kits.banco import conexao_banco, em_transacao
+
+
+class DadosMySQL:
+    def __init__(self, config=None, repo=repositorio, conectar=conexao_banco, transacao=em_transacao):
+        # 1. Guarde as quatro peças. Os padrões são as de verdade; os testes passam peças de mentira.
+        ...
+
+    # 2. _consultar abre self._conectar(self.config); _gravar usa self._transacao(operacao, self.config).
+    #    Nenhum dos dois chama conexao_banco ou em_transacao direto.
+
+    # 3. Cada método usa a função do repositório recebido: self._repo.listar_kits, self._repo.criar_kit...
+    #    e o remover_kit traduz self._repo.KitComItens. O importar continua registrando no log.
+</code></pre><div class="atelier" data-source="work-dados" data-filename="dados.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes do banco recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes do banco recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_dados.py: o serviço sem MySQL</h3><p>Salve em tests/test_dados.py. O RepositorioDeMentira anota cada chamada como (nome, conexão, argumentos); a conexão e a transação de mentira anotam em self.aberturas. Ele já tem cinco testes. Escreva os três marcados com Complete. Entrega: tests/test_dados.py.</p><p>Concluído quando: Os oito testes passam com o seu código em menos de um segundo, sem MySQL. Depois troque o _gravar para usar self._conectar no lugar da transação: o seu teste da transação precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.repo.falhas[&#x27;criar_kit&#x27;] = mysql.connector.Error(errno=1064, msg=&#x27;syntax&#x27;) combina o erro.</p></details><pre><code id="work-testes-dados">&quot;&quot;&quot;O serviço DadosMySQL sem MySQL: repositório, conexão e transação de mentira, que anotam o que receberam.&quot;&quot;&quot;
+import contextlib
+import unittest
+
+import mysql.connector
+
+from kits.dados import DadosMySQL
+
+
+class KitComItens(Exception):
+    pass
+
+
+class RepositorioDeMentira:
+    &quot;&quot;&quot;Cada função anota (nome, conexão, argumentos) e devolve o combinado, ou levanta a falha combinada.&quot;&quot;&quot;
+    KitComItens = KitComItens
+
+    def __init__(self):
+        self.chamadas = []
+        self.falhas = {}
+        self.respostas = {}
+
+    def __getattr__(self, nome):
+        def funcao(con, *args):
+            self.chamadas.append((nome, con, *args))
+            if nome in self.falhas:
+                raise self.falhas[nome]
+            return self.respostas.get(nome)
+        return funcao
+
+
+class TestDados(unittest.TestCase):
+    def setUp(self):
+        self.repo = RepositorioDeMentira()
+        self.aberturas = []
+
+        @contextlib.contextmanager
+        def conectar(config):
+            self.aberturas.append((&#x27;conexão&#x27;, config))
+            yield &#x27;con-leitura&#x27;
+
+        def transacao(operacao, config):
+            self.aberturas.append((&#x27;transação&#x27;, config))
+            return operacao(&#x27;con-transação&#x27;)
+
+        self.dados = DadosMySQL({&#x27;database&#x27;: &#x27;kits_teste&#x27;}, repo=self.repo, conectar=conectar, transacao=transacao)
+
+    def test_consulta_abre_uma_conexao_com_a_config_e_entrega_ao_repositorio(self):
+        self.repo.respostas[&#x27;listar_kits&#x27;] = [(1, &#x27;Treinamento Redes&#x27;)]
+        self.assertEqual(self.dados.listar_kits(), [(1, &#x27;Treinamento Redes&#x27;)])
+        self.assertEqual(self.aberturas, [(&#x27;conexão&#x27;, {&#x27;database&#x27;: &#x27;kits_teste&#x27;})])
+        self.assertEqual(self.repo.chamadas, [(&#x27;listar_kits&#x27;, &#x27;con-leitura&#x27;)])
+
+    def test_busca_passa_trecho_e_ordem_ao_repositorio(self):
+        self.dados.listar_itens(1, &#x27;cabo&#x27;, &#x27;quantidade&#x27;, True)
+        self.assertEqual(self.repo.chamadas, [(&#x27;consultar_itens&#x27;, &#x27;con-leitura&#x27;, 1, &#x27;cabo&#x27;, &#x27;quantidade&#x27;, True)])
+
+    # Complete: remover(7) abre só a transação, com a config, e o repositório recebe (&#x27;remover_item&#x27;, &#x27;con-transação&#x27;, 7).
+
+    def test_mysql_fora_do_ar_vira_connection_error(self):
+        self.repo.falhas[&#x27;listar_kits&#x27;] = mysql.connector.Error(errno=2003, msg=&quot;Can&#x27;t connect&quot;)
+        with self.assertRaisesRegex(ConnectionError, r&#x27;Sem conexão com o MySQL \(erro 2003\)&#x27;):
+            self.dados.listar_kits()
+
+    # Complete: com mysql.connector.Error(errno=1064, msg=&#x27;syntax&#x27;) no criar_kit, o mesmo erro sobe, com errno 1064.
+
+    # Complete: com KitComItens(&#x27;Kit 1 ainda tem itens: remova os itens antes&#x27;) no remover_kit, sobe ValueError com a mensagem.
+
+    def test_importacao_aceita_e_recusada_vao_para_o_log(self):
+        self.repo.respostas[&#x27;importar_linhas&#x27;] = 2
+        with self.assertLogs(&#x27;kits.importacao&#x27;, level=&#x27;INFO&#x27;) as log:
+            self.assertEqual(self.dados.importar([&#x27;l1&#x27;, &#x27;l2&#x27;], &#x27;itens.csv&#x27;, &#x27;a&#x27; * 64), 2)
+            self.repo.falhas[&#x27;importar_linhas&#x27;] = ValueError(&#x27;linha 3: o kit Almoxarifado não existe; nada foi importado&#x27;)
+            with self.assertRaises(ValueError):
+                self.dados.importar([&#x27;l1&#x27;], &#x27;outra.csv&#x27;, &#x27;b&#x27; * 64)
+        self.assertEqual(log.output, [&#x27;INFO:kits.importacao:importada itens.csv: 2 itens&#x27;,
+                                      &#x27;WARNING:kits.importacao:recusada outra.csv: linha 3: o kit Almoxarifado não existe; &#x27;
+                                      &#x27;nada foi importado&#x27;])
+
+    def test_defeito_na_importacao_sobe_sem_virar_recusa_no_log(self):
+        self.repo.falhas[&#x27;importar_linhas&#x27;] = KeyError(&#x27;kit&#x27;)
+        with self.assertNoLogs(&#x27;kits.importacao&#x27;, level=&#x27;WARNING&#x27;):
+            with self.assertRaises(KeyError):
+                self.dados.importar([&#x27;l1&#x27;], &#x27;itens.csv&#x27;, &#x27;c&#x27; * 64)
+</code></pre><div class="atelier" data-source="work-testes-dados" data-filename="test_dados.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_dados, na raiz do projeto. Não usam MySQL nem janela."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_dados, na raiz do projeto. Não usam MySQL nem janela.</p></div><div class="workbench"><h3>abrir_janela.py e kits/dialogos.py: só ligar</h3><p>Mova perguntar, pedir_nome e escolher_arquivo para kits/dialogos.py, do jeito que estão, e deixe o abrir_janela.py como no arquivo: o main com o log e a montagem. Entrega: abrir_janela.py e kits/dialogos.py.</p><p>Concluído quando: .\.venv\Scripts\python.exe abrir_janela.py abre a janela como antes, importa uma planilha e escreve no importacoes.log; abrir_janela.py não tem nenhum def além de main, nem import de mysql.</p><details><summary>Dica para realizar a atividade</summary><p>Quem ainda importa algo de abrir_janela? Procure no projeto antes de apagar.</p></details><pre><code id="work-ligacao">&quot;&quot;&quot;Abre a janela de itens ligada ao MySQL. Uso: python abrir_janela.py
+
+Só liga as peças (A21): o log, o serviço de dados, as caixas de diálogo e a janela. Nenhuma regra mora aqui.
+As caixas perguntar, pedir_nome e escolher_arquivo vão para kits/dialogos.py, do jeito que estão hoje.
+&quot;&quot;&quot;
+import logging
+from pathlib import Path
+
+from kits.dados import DadosMySQL
+from kits.dialogos import escolher_arquivo, pedir_nome, perguntar
+from kits.janela import JanelaItens
+
+
+def main():
+    # O basicConfig do log, como na A19, e a janela com DadosMySQL() e as três caixas.
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()
+</code></pre><div class="atelier" data-source="work-ligacao" data-filename="abrir_janela.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe abrir_janela.py, e depois todos os testes."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe abrir_janela.py, e depois todos os testes.</p></div><div class="workbench"><h3>dados_herdado.py: as responsabilidades trocadas</h3><p>Siga a instrução do começo do arquivo abaixo: o herdado entra por um momento no lugar do seu kits/dados.py, e você roda tests.test_dados, tests.test_fontes e tests.test_fluxo. Para cada relato da partida, registre a responsabilidade que sumiu ou mudou de lugar, a linha do herdado, os testes que falharam e a correção. Devolva o seu kits/dados.py. Entrega: a tabela no registro desta página.</p><p>Concluído quando: Os quatro relatos têm responsabilidade, linha, testes que falham e correção; a dupla diz qual relato só o teste sem banco pega.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 4, siga o _gravar do herdado: por onde a gravação passa, e o que ficou de fora?</p></details><pre><code id="work-dados-legado">&quot;&quot;&quot;Serviço de dados herdado, de outra equipe que também separou as camadas.
+
+Para examinar: guarde o seu kits/dados.py (copie para dados_bom.py, fora da pasta kits), ponha este arquivo no
+lugar dele, rode os testes e devolva o seu.
+&quot;&quot;&quot;
+import mysql.connector
+
+from kits import repositorio
+from kits.banco import conexao_banco, em_transacao
+
+
+def protegido(operacao):
+    try:
+        return operacao()
+    except mysql.connector.Error as erro:
+        raise ConnectionError(f&#x27;Sem conexão com o MySQL (erro {erro.errno}). &#x27;
+                              &#x27;Confira se o serviço está ligado e clique em Recarregar.&#x27;) from erro
+
+
+class DadosMySQL:
+    def __init__(self, config=None, repo=repositorio, conectar=conexao_banco, transacao=em_transacao):
+        self.config = config
+        self._repo = repo
+        self._conectar = conectar
+        self._transacao = transacao
+
+    def _consultar(self, funcao, *args):
+        def operacao():
+            with self._conectar(self.config) as con:
+                return funcao(con, *args)
+        return protegido(operacao)
+
+    def _gravar(self, funcao, *args):
+        return self._consultar(funcao, *args)
+
+    def listar_kits(self):
+        return self._consultar(self._repo.listar_kits)
+
+    def listar_itens(self, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+        return self._consultar(self._repo.consultar_itens, kit_id, trecho, ordem, descendente)
+
+    def resumo_kits(self):
+        return self._consultar(self._repo.resumo_kits)
+
+    def itens_abaixo(self, limite):
+        return self._consultar(self._repo.itens_abaixo, limite)
+
+    def criar_kit(self, nome):
+        return self._gravar(self._repo.criar_kit, nome)
+
+    def adicionar(self, kit_id, item):
+        return self._gravar(self._repo.adicionar_item, kit_id, item)
+
+    def editar(self, item_id, antes, depois):
+        return self._gravar(self._repo.editar_item, item_id, antes, depois)
+
+    def remover(self, item_id):
+        return self._gravar(self._repo.remover_item, item_id)
+
+    def remover_kit(self, kit_id):
+        return self._gravar(self._repo.remover_kit, kit_id)
+
+    def importar(self, linhas, arquivo, resumo):
+        try:
+            gravadas = self._gravar(self._repo.importar_linhas, linhas, arquivo, resumo)
+        except (ValueError, ConnectionError) as erro:
+            print(&#x27;recusada&#x27;, arquivo, erro)
+            raise
+        print(&#x27;importada&#x27;, arquivo, gravadas)
+        return gravadas
+</code></pre><div class="atelier" data-source="work-dados-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o herdado no lugar do kits/dados.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_dados tests.test_fontes tests.test_fluxo. Depois, devolva o seu."></div><p>Na raiz do projeto, com o herdado no lugar do kits/dados.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_dados tests.test_fontes tests.test_fluxo. Depois, devolva o seu.</p></div><div class="workbench"><h3>docs/arquitetura.md: as camadas depois da A21</h3><p>Atualize o docs/arquitetura.md da A20: os arquivos novos, a seta do serviço para o repositório, a raiz de composição e a tabela do que cada arquivo não pode importar. Entrega: docs/arquitetura.md.</p><p>Concluído quando: Outra dupla, só com o documento, diz em que arquivo mudaria a mensagem Sem conexão com o MySQL, o nome do arquivo de log e o título da caixa Novo kit.</p><details><summary>Dica para realizar a atividade</summary><p>A raiz de composição aparece no desenho? Ela é a única que conhece todas as peças.</p></details><pre><code id="work-arquitetura"># Arquitetura
+
+```
+(atualize o desenho da A20)
+```
+
+## Cada arquivo e o que ele não pode importar
+
+## O que ainda está misturado
+</code></pre><div class="atelier" data-source="work-arquitetura" data-filename="arquitetura.md" data-execution="Arquivo docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Arquivo docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: um teste que vigia os imports</h3><p>Escreva tests/test_camadas.py, que lê o texto de cada arquivo de kits/ e falha se algum import proibido pela tabela da seção de papéis aparecer. Entrega (opcional): o teste e o texto no registro desta página.</p><p>Concluído quando: O teste passa no projeto e falha se você acrescentar import mysql.connector em kits/janela.py.</p><details><summary>Dica para realizar a atividade</summary><p>O módulo ast lê os imports sem rodar o arquivo: ast.parse e ast.walk procurando ast.Import e ast.ImportFrom.</p></details><pre><code id="work-bonus-imports"># Teste das camadas
+
+## Regras
+
+## Código
+</code></pre><div class="atelier" data-source="work-bonus-imports" data-filename="imports.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_camadas."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_camadas.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Cada coisa está no seu lugar? <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#auditoria" aria-label="Versão para leitura: Cada coisa está no seu lugar?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Por que as funções do repositório recebem a conexão em vez de abrir uma?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Para várias delas caberem numa transação só, aberta por quem chama" autocomplete="off">Para várias delas caberem numa transação só, aberta por quem chama</label><label class="option"><input type="radio" name="q01" value="Para o SQL ficar mais curto" autocomplete="off">Para o SQL ficar mais curto</label><label class="option"><input type="radio" name="q01" value="Porque conexões não podem ser abertas dentro de funções" autocomplete="off">Porque conexões não podem ser abertas dentro de funções</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte à importação da A19.</p></details></fieldset><fieldset data-question="q02"><legend>DadosMySQL(config=None, repo=repositorio, conectar=conexao_banco, transacao=em_transacao). O que o abrir_janela.py precisa passar?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Nada: os padrões já são as peças de verdade" autocomplete="off">Nada: os padrões já são as peças de verdade</label><label class="option"><input type="radio" name="q02" value="As quatro peças, sempre" autocomplete="off">As quatro peças, sempre</label><label class="option"><input type="radio" name="q02" value="Só o repositório" autocomplete="off">Só o repositório</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Para quem os padrões existem?</p></details></fieldset><fieldset data-question="q03"><legend>Um erro 1064 (sintaxe do SQL) chega ao serviço. O que ele deve fazer?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Deixar subir: é defeito do programa, e não aviso para quem usa" autocomplete="off">Deixar subir: é defeito do programa, e não aviso para quem usa</label><label class="option"><input type="radio" name="q03" value="Trocar por ConnectionError" autocomplete="off">Trocar por ConnectionError</label><label class="option"><input type="radio" name="q03" value="Trocar por ValueError, para a janela mostrar" autocomplete="off">Trocar por ValueError, para a janela mostrar</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>O serviço traduz KitComItens em ValueError antes de devolver à janela.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Que erros a janela sabe explicar?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>Uma função do repositório faz con.commit() no fim.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E se ela for chamada no meio da importação?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>kits/dialogos.py importa tkinter.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que é uma caixa de diálogo?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O serviço escreve as importações com print, que aparece no terminal.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 2.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Os testes do serviço passam uma transação de mentira que só anota e chama a operação.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que esses testes querem provar?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>abrir_janela.py importa DadosMySQL, as caixas de diálogo e a janela.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem precisa conhecer todas as peças?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-servico"><p>Outra dupla entregou o trecho de serviço abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>from kits.repositorio import criar_kit
+from kits.banco import conexao_banco
+
+
+class DadosMySQL:
+    def criar_kit(self, nome):
+        with conexao_banco() as con:
+            try:
+                return criar_kit(con, nome)
+            except Exception as erro:
+                raise ValueError(str(erro))</code></pre><fieldset data-question="ac-teste" data-claim="ac-teste"><legend>Sem receber a conexão nem o repositório, este serviço só é testado com o MySQL ligado.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-teste" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-teste" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-engole" data-claim="ac-engole"><legend>except Exception transforma qualquer defeito, até um erro de digitação no código, numa recusa que a janela mostra como normal.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-engole" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-engole" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-commit" data-claim="ac-commit"><legend>conexao_banco não confirma nada: o kit criado nunca é gravado.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-commit" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-commit" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a separação <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#registro" aria-label="Versão para leitura: Entregue o que prova a separação">↗</a></h2><p>Entregue, no repositório do projeto: kits/dados.py, kits/dialogos.py, abrir_janela.py, tests/test_dados.py, os imports novos em tests/test_fontes.py e tests/test_fluxo.py e o docs/arquitetura.md atualizado. Os arquivos do tutorial e o dados_herdado.py ficam fora do commit.</p><p>No registro desta página, cole a saída de todos os testes, a tabela dos quatro relatos e o novo desenho das camadas. Se fez o bônus, cole o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini e o log não entraram.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Se amanhã os kits passassem a ser lidos de outro banco, que arquivos mudariam, e quais nem saberiam da troca?</p><p>A A22 consolida: reorganiza o que sobrou, roda todos os testes como uma suíte de regressão e registra o que cada um protege.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://martinfowler.com/eaaCatalog/repository.html">Martin Fowler: Repository</a></li><li><a href="https://martinfowler.com/eaaCatalog/serviceLayer.html">Martin Fowler: Service Layer</a></li><li><a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertNoLogs">Python 3: unittest assertLogs e assertNoLogs</a></li><li><a href="https://docs.python.org/3/library/sqlite3.html#sqlite3-connection-context-manager">Python 3: sqlite3, a conexão como gerenciador de contexto</a></li></ul><a data-idoc="source" href="leitura-0021-repository-dao-servicos-e-responsabilidades.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

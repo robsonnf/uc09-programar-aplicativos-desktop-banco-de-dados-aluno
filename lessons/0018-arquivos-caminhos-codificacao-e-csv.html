@@ -1,0 +1,325 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A18 · Antes de importar: arquivos, caminhos, codificação e CSV</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A18" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A18</span><span>Arquivos, caminhos, codificação e CSV<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">A primeira linha está errada, mas está certa</a></li><li><a href="#esteira">Do arquivo ao relatório</a></li><li><a href="#codificacao">Bytes, texto e o BOM do Excel</a></li><li><a href="#csv">CSV não é split</a></li><li><a href="#caminhos">Caminhos: a pasta do comando e a pasta do programa</a></li><li><a href="#linhas">Cada erro com a sua linha</a></li><li><a href="#tutorial">Tutorial: o mesmo texto, de três jeitos</a></li><li><a href="#pratica">A conferência da planilha</a></li><li><a href="#auditoria">Essa leitura é confiável?</a></li><li><a href="#registro">Entregue o que prova a conferência</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A18</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Antes de importar: arquivos, caminhos, codificação e CSV</h1><p class="thesis">A coordenação mandou o estoque dos kits numa planilha, e cadastrar item por item na janela levaria a tarde toda. Antes de gravar qualquer coisa, é preciso ler o arquivo direito e dizer, linha por linha, o que está certo e o que não está. Hoje você lê bytes e escolhe a codificação, entende o BOM do Excel, usa o módulo csv no lugar do split, acha arquivos pela pasta do programa e não pela pasta de onde ele foi chamado, e escreve um relatório que aponta a linha de cada erro. A gravação em lote é a A19.</p><p data-idoc="caveat">A aula não usa o banco nem a janela: só arquivos e o domínio da A04 e da A05. Os exemplos usam o Python 3.14 do Windows, em que a codificação padrão de open é a do sistema (cp1252). Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Explicar a diferença entre bytes e texto e ler um arquivo escolhendo a codificação, sem depender da do sistema</li><li>Reconhecer o BOM do Excel e lê-lo com utf-8-sig, e cair para Windows-1252 quando os bytes não são UTF-8</li><li>Ler CSV com o módulo csv, respeitando aspas e o separador, e numerar cada erro pela linha do arquivo</li><li>Montar caminhos com pathlib a partir da pasta do programa, para que ele funcione de qualquer pasta</li><li>Rastrear e corrigir uma conferência herdada a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A17 com os testes passando; nesta aula entram kits/planilha.py, conferir_planilha.py e dados/itens_exemplo.csv</li><li>ler_quantidade da A04 e ItemKit da A05 em kits/</li><li>Um editor que mostre a codificação e o número das linhas (o VS Code mostra os dois na barra de baixo)</li></ul><section id="partida" data-stop="partida"><h2>A primeira linha está errada, mas está certa <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#partida" aria-label="Versão para leitura: A primeira linha está errada, mas está certa">↗</a></h2><p>A coordenação exportou o estoque do Excel para itens.csv. Uma conferência herdada, conferir_legado.py, já existe, e vieram quatro relatos.</p><p>Com a planilha salva como CSV UTF-8 pelo Excel, a conferência diz A primeira linha está errada, mas a primeira linha é kit;item;quantidade. Salva por outro editor, a planilha passa, mas Cabeça de rede vira CabeÃ§a de rede. Um item escrito entre aspas, com ponto e vírgula no nome, derruba o programa. E o erro aparece como linha 2 quando, no editor, ele está na linha 3.</p><p>Em dupla, antes de abrir o código: o que um arquivo de texto guarda de verdade, letras ou bytes?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: kits/planilha.py, conferir_planilha.py, dados/itens_exemplo.csv, tests/test_planilha.py e a seção Planilha de itens no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam, e conferir_planilha.py aponta as linhas certas dos erros do exemplo, rodando da raiz e de outra pasta.</p></div></section><section id="esteira" data-stop="esteira"><h2>Do arquivo ao relatório <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#esteira" aria-label="Versão para leitura: Do arquivo ao relatório">↗</a></h2><ol class="pipeline"><li><strong>Achar</strong><p>O caminho do arquivo, montado com pathlib.</p></li><li><strong>Ler bytes</strong><p>read_bytes: o arquivo como ele é, sem interpretação.</p></li><li><strong>Decodificar</strong><p>UTF-8 com ou sem BOM; se os bytes não forem UTF-8, Windows-1252.</p></li><li><strong>Separar</strong><p>csv.reader com o separador da primeira linha e as aspas respeitadas.</p></li><li><strong>Conferir</strong><p>Cada linha pelo ItemKit e pelo ler_quantidade, com o número da linha.</p></li><li><strong>Relatar</strong><p>Quantas linhas certas, quais com erro, e um código de saída.</p></li></ol></section><section id="codificacao" data-stop="codificacao"><h2>Bytes, texto e o BOM do Excel <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#codificacao" aria-label="Versão para leitura: Bytes, texto e o BOM do Excel">↗</a></h2><p>Um arquivo guarda bytes. A codificação é a regra que liga bytes a letras: em UTF-8, ç é o par de bytes C3 A7; em Windows-1252 (cp1252), é o byte E7. Ler um arquivo UTF-8 como cp1252 não dá erro: cada byte vira uma letra, e ç vira Ã§. Ler cp1252 como UTF-8 dá UnicodeDecodeError, porque E7 sozinho não é UTF-8 válido.</p><p>No Python 3.14 do Windows, open e read_text sem encoding usam a codificação do sistema, cp1252, e não UTF-8. Por isso, nesta UC, todo arquivo de texto é aberto com encoding explícito. O Excel, ao salvar como CSV UTF-8, põe no começo três bytes, EF BB BF: o BOM, uma marca de que o arquivo é UTF-8. Lido com utf-8, ele vira o caractere \ufeff grudado no kit do cabeçalho; lido com utf-8-sig, ele é descartado se estiver lá.</p><p>A planilha da coordenação pode vir de qualquer um dos três jeitos. ler_texto lê os bytes, tenta utf-8-sig e, se der UnicodeDecodeError, decodifica como cp1252 e diz qual usou. Não use errors=&#x27;ignore&#x27;: ele apaga letras em silêncio.</p><div class="table-wrap"><table><caption>Como cada arquivo chega, lido de cada jeito</caption><thead><tr><th scope="col">Arquivo</th><th scope="col">utf-8</th><th scope="col">utf-8-sig</th><th scope="col">cp1252</th></tr></thead><tbody><tr><td>UTF-8 sem BOM</td><td>Certo</td><td>Certo</td><td>Ã§ no lugar de ç</td></tr><tr><td>UTF-8 do Excel, com BOM</td><td>\ufeff no começo</td><td>Certo</td><td>ï»¿ no começo e Ã§</td></tr><tr><td>Windows-1252</td><td>UnicodeDecodeError</td><td>UnicodeDecodeError</td><td>Certo</td></tr></tbody></table></div></section><section id="csv" data-stop="csv"><h2>CSV não é split <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#csv" aria-label="Versão para leitura: CSV não é split">↗</a></h2><p>CSV parece só texto separado por ponto e vírgula, mas tem regras: um campo entre aspas pode ter o separador e até quebra de linha dentro, e aspas dentro do campo são escritas dobradas. O split não conhece essas regras; o módulo csv conhece. O Excel em português usa ponto e vírgula, porque a vírgula é o separador decimal; outros programas usam vírgula. conferir escolhe pelo que aparece na primeira linha.</p><p>csv.reader recebe um arquivo, ou um io.StringIO com o texto, aberto com newline=&#x27;&#x27;, para que ele mesmo trate as quebras de linha dentro das aspas. leitor.line_num diz em que linha do arquivo o leitor está: é o número que vai para o relatório, porque é o que a pessoa vê no editor. Um campo com quebra de linha ocupa duas linhas do arquivo, e o line_num acompanha; um contador feito à mão, não.</p></section><section id="caminhos" data-stop="caminhos"><h2>Caminhos: a pasta do comando e a pasta do programa <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#caminhos" aria-label="Versão para leitura: Caminhos: a pasta do comando e a pasta do programa">↗</a></h2><p>Path(&#x27;dados/itens_exemplo.csv&#x27;) é relativo à pasta de onde o comando foi dado, Path.cwd(), e não à pasta do programa. Rodado da raiz do projeto, acha; rodado de outra pasta ou por um atalho, não acha. Path(__file__).resolve().parent é a pasta do arquivo .py que está rodando, onde quer que ele seja chamado; a partir dela, o operador / monta o resto do caminho.</p><p>Arquivo que não existe é dito com o caminho completo, resolve(), para a pessoa ver onde o programa procurou. E conferir_planilha.py sai com um código: 0 se tudo está certo, 1 se há erro na planilha e 2 se o arquivo não existe. Outros programas, e a A19, usam esse código para decidir se continuam.</p></section><section id="linhas" data-stop="linhas"><h2>Cada erro com a sua linha <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#linhas" aria-label="Versão para leitura: Cada erro com a sua linha">↗</a></h2><p>Uma linha errada não para a conferência: ela vira um erro, com o número da linha e a mensagem, e a próxima linha é conferida. As regras são as do domínio, as mesmas do formulário da janela: ItemKit recusa nome vazio, ler_quantidade recusa dez e zero. A planilha acrescenta duas: três colunas, e o mesmo item uma vez só em cada kit, sem diferenciar maiúsculas.</p><p>Só a falta do cabeçalho recusa a planilha inteira, com PlanilhaInvalida: sem ele, não dá para saber que coluna é o quê. Linhas em branco, comuns no fim do arquivo, são puladas sem mudar a numeração.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o mesmo texto, de três jeitos <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#tutorial" aria-label="Versão para leitura: Tutorial: o mesmo texto, de três jeitos">↗</a></h2><p>Cada passo é um arquivo separado na raiz do projeto: codificacao.py, aspas.py e, no passo 3, tutorial/caminhos.py com um tutorial/acervo.csv ao lado. Rode cada um com .\.venv\Scripts\python.exe e o nome do arquivo.</p><p>As telas são de execuções reais desse código, com Python 3.14 no Windows.</p><figure class="code-block"><figcaption>Passo 1 · codificacao.py</figcaption><pre><code>from pathlib import Path
+
+TEXTO = &#x27;título;exemplares\nCoração de Tinta;2\n&#x27;
+
+# O mesmo texto gravado de três jeitos. encoding diz como as letras viram bytes.
+for nome, codificacao in ((&#x27;utf8.csv&#x27;, &#x27;utf-8&#x27;), (&#x27;excel.csv&#x27;, &#x27;utf-8-sig&#x27;), (&#x27;antigo.csv&#x27;, &#x27;cp1252&#x27;)):
+    Path(nome).write_text(TEXTO, encoding=codificacao)
+    print(nome, Path(nome).read_bytes()[:14])
+
+print()
+# E lido de volta com cada codificação: só o par certo devolve o texto de antes.
+for nome in (&#x27;utf8.csv&#x27;, &#x27;excel.csv&#x27;, &#x27;antigo.csv&#x27;):
+    for codificacao in (&#x27;utf-8&#x27;, &#x27;utf-8-sig&#x27;, &#x27;cp1252&#x27;):
+        try:
+            primeira = Path(nome).read_text(encoding=codificacao).split(&#x27;\n&#x27;)[1]
+        except UnicodeDecodeError as erro:
+            primeira = f&#x27;UnicodeDecodeError no byte {erro.start}&#x27;
+        print(f&#x27;{nome:11} lido como {codificacao:9} -&gt; {primeira}&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 1 · Bytes e codificações</figcaption><p>Rode e compare os bytes do começo de cada arquivo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Bytes e codificações"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe codificacao.py</kbd>
+utf8.csv b&#x27;t\xc3\xadtulo;exempl&#x27;
+excel.csv b&#x27;\xef\xbb\xbft\xc3\xadtulo;exe&#x27;
+antigo.csv b&#x27;t\xedtulo;exempla&#x27;
+
+utf8.csv    lido como utf-8     -&gt; Coração de Tinta;2
+utf8.csv    lido como utf-8-sig -&gt; Coração de Tinta;2
+utf8.csv    lido como cp1252    -&gt; CoraÃ§Ã£o de Tinta;2
+excel.csv   lido como utf-8     -&gt; Coração de Tinta;2
+excel.csv   lido como utf-8-sig -&gt; Coração de Tinta;2
+excel.csv   lido como cp1252    -&gt; CoraÃ§Ã£o de Tinta;2
+antigo.csv  lido como utf-8     -&gt; UnicodeDecodeError no byte 1
+antigo.csv  lido como utf-8-sig -&gt; UnicodeDecodeError no byte 1
+antigo.csv  lido como cp1252    -&gt; Coração de Tinta;2</code></pre><p class="tela-nota"><strong>Repare:</strong> O BOM, EF BB BF, só aparece no excel.csv. Lido como cp1252, o UTF-8 vira Ã§; lido como UTF-8, o cp1252 nem chega a ser lido.</p></figure><figure class="code-block"><figcaption>Passo 2 · aspas.py</figcaption><pre><code>import csv
+import io
+
+PLANILHA = &#x27;título;exemplares\n&quot;Contos; Crônicas&quot;;3\n&quot;Ele disse &quot;&quot;oi&quot;&quot;&quot;;1\n&#x27;
+
+print(&#x27;Com split:&#x27;)
+for linha in PLANILHA.splitlines()[1:]:
+    print(&#x27;  &#x27;, linha.split(&#x27;;&#x27;))
+
+print(&#x27;Com csv.reader:&#x27;)
+leitor = csv.reader(io.StringIO(PLANILHA, newline=&#x27;&#x27;), delimiter=&#x27;;&#x27;)
+next(leitor)
+for campos in leitor:
+    print(f&#x27;   linha {leitor.line_num}:&#x27;, campos)
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · split e csv.reader</figcaption><p>Rode.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · split e csv.reader"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe aspas.py</kbd>
+Com split:
+   [&#x27;&quot;Contos&#x27;, &#x27; Crônicas&quot;&#x27;, &#x27;3&#x27;]
+   [&#x27;&quot;Ele disse &quot;&quot;oi&quot;&quot;&quot;&#x27;, &#x27;1&#x27;]
+Com csv.reader:
+   linha 2: [&#x27;Contos; Crônicas&#x27;, &#x27;3&#x27;]
+   linha 3: [&#x27;Ele disse &quot;oi&quot;&#x27;, &#x27;1&#x27;]</code></pre><p class="tela-nota"><strong>Repare:</strong> O split cortou Contos; Crônicas no meio e manteve as aspas; o csv.reader devolveu os campos como foram escritos, e as aspas dobradas viraram uma.</p></figure><figure class="code-block"><figcaption>Passo 3 · tutorial/caminhos.py</figcaption><pre><code>from pathlib import Path
+
+print(&#x27;Pasta do comando:   &#x27;, Path.cwd())
+print(&#x27;Pasta deste arquivo:&#x27;, Path(__file__).resolve().parent)
+
+# Relativo à pasta do comando: depende de onde a pessoa estava quando rodou.
+relativo = Path(&#x27;acervo.csv&#x27;)
+print(&#x27;acervo.csv:         &#x27;, relativo.is_file(), relativo.resolve())
+
+# Relativo a este arquivo: o mesmo de qualquer pasta.
+junto = Path(__file__).resolve().parent / &#x27;acervo.csv&#x27;
+print(&#x27;ao lado do arquivo: &#x27;, junto.is_file(), junto)
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · Da raiz e de dentro da pasta</figcaption><p>Crie tutorial/acervo.csv com qualquer conteúdo, rode da raiz e depois de dentro da pasta tutorial.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Da raiz e de dentro da pasta"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe tutorial\caminhos.py</kbd>
+Pasta do comando:    C:\projetos\kits
+Pasta deste arquivo: C:\projetos\kits\tutorial
+acervo.csv:          False C:\projetos\kits\acervo.csv
+ao lado do arquivo:  True C:\projetos\kits\tutorial\acervo.csv
+<span class="tela-prompt">PS C:\projetos\kits\tutorial&gt; </span><kbd>..\.venv\Scripts\python.exe caminhos.py</kbd>
+Pasta do comando:    C:\projetos\kits\tutorial
+Pasta deste arquivo: C:\projetos\kits\tutorial
+acervo.csv:          True C:\projetos\kits\tutorial\acervo.csv
+ao lado do arquivo:  True C:\projetos\kits\tutorial\acervo.csv</code></pre><p class="tela-nota"><strong>Repare:</strong> Da raiz, acervo.csv é procurado na raiz e não existe; o caminho montado a partir de __file__ acha o arquivo nas duas vezes.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A conferência da planilha <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#pratica" aria-label="Versão para leitura: A conferência da planilha">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>Salve o exemplo abaixo em dados/itens_exemplo.csv. Ele tem três linhas certas e três com erro, de propósito. Abra-o no Excel do Windows e salve uma cópia como CSV UTF-8 e outra como CSV (separado por vírgulas), e veja no editor em que codificação cada uma saiu: o seu conferir_planilha.py precisa ler as três. Não use CSV (MS-DOS): ele usa a codificação do antigo DOS, que esta aula não trata. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="code-block"><figcaption>dados/itens_exemplo.csv</figcaption><pre><code>kit;item;quantidade
+Treinamento Redes;Alicate de crimpagem;4
+Treinamento Redes;&quot;Conector RJ45; pacote&quot;;20
+Treinamento Suporte;Pasta térmica;2
+Almoxarifado;Fita isolante;dez
+Almoxarifado;;3
+Treinamento Redes;alicate de crimpagem;1
+</code></pre></figure><div class="workbench"><h3>kits/planilha.py: ler e conferir</h3><p>Crie kits/planilha.py a partir do arquivo, completando ler_texto, conferir e conferir_arquivo pelos comentários. Nada de split, de open sem encoding nem de errors=&#x27;ignore&#x27;. Entrega: kits/planilha.py.</p><p>Concluído quando: Os dezesseis testes de tests/test_planilha.py passam, inclusive os três que você vai completar.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela da seção de codificação: que codificação lê certo os dois tipos de UTF-8?</p></details><pre><code id="work-planilha">&quot;&quot;&quot;Planilha de itens (A18): lê um CSV de kit, item e quantidade e confere linha a linha, sem gravar nada.
+Salve como kits/planilha.py.
+&quot;&quot;&quot;
+import csv
+import io
+from pathlib import Path
+from typing import NamedTuple
+
+from kits.modelo import ItemKit
+from kits.regras import QuantidadeInvalida, ler_quantidade
+
+CABECALHO = [&#x27;kit&#x27;, &#x27;item&#x27;, &#x27;quantidade&#x27;]
+
+
+class Linha(NamedTuple):
+    numero: int  # a linha no arquivo, contando o cabeçalho como 1, como o editor de texto mostra
+    kit: str
+    item: ItemKit
+
+
+class Conferencia(NamedTuple):
+    codificacao: str
+    separador: str
+    linhas: list  # de Linha
+    erros: list   # de (número da linha, mensagem)
+
+
+class PlanilhaInvalida(ValueError):
+    &quot;&quot;&quot;O arquivo inteiro não serve: vazio ou sem o cabeçalho kit, item, quantidade.&quot;&quot;&quot;
+
+
+def ler_texto(caminho):
+    &quot;&quot;&quot;Devolve (texto, &#x27;UTF-8&#x27;) se os bytes do arquivo forem UTF-8, com ou sem BOM; senão, (texto, &#x27;Windows-1252&#x27;).
+    Leia os bytes com Path(caminho).read_bytes() e decodifique você mesmo: nunca a codificação padrão do sistema.&quot;&quot;&quot;
+    ...
+
+
+def conferir(texto):
+    &quot;&quot;&quot;Devolve (separador, linhas, erros).
+    - Separador: ; se a primeira linha tem ;, senão vírgula.
+    - Leia com csv.reader sobre io.StringIO(texto, newline=&#x27;&#x27;), nunca com split: aspas protegem o separador.
+    - Cabeçalho (sem espaços nas pontas, sem diferenciar maiúsculas) diferente de CABECALHO: PlanilhaInvalida
+      com &#x27;A primeira linha precisa ser kit;item;quantidade&#x27; (com o separador do arquivo).
+    - O número de cada linha é leitor.line_num. Linha em branco: pule.
+    - Erros, nesta ordem: colunas diferentes de 3 (&#x27;tem 4 colunas, e não 3 (confira o separador ; e as aspas)&#x27;),
+      kit vazio (&#x27;falta o kit&#x27;), item ou quantidade que o ItemKit e o ler_quantidade recusam (a mensagem deles),
+      e o mesmo item no mesmo kit, sem diferenciar maiúsculas (&#x27;repete Nome no kit Kit, da linha 2&#x27;).&quot;&quot;&quot;
+    ...
+
+
+def conferir_arquivo(caminho):
+    &quot;&quot;&quot;Junta as duas: Conferencia(codificação, separador, linhas, erros).&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-planilha" data-filename="planilha.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da planilha não usam banco nem janela."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da planilha não usam banco nem janela.</p></div><div class="workbench"><h3>tests/test_planilha.py: codificação, linhas e pastas</h3><p>Salve em tests/test_planilha.py. Cada teste cria os arquivos numa pasta temporária, nas codificações que precisa. Ele já tem treze testes. Escreva os três marcados com Complete. Entrega: tests/test_planilha.py.</p><p>Concluído quando: Os dezesseis testes passam com o seu código. Depois troque, em ler_texto, utf-8-sig por utf-8: o teste do Excel com BOM precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.arquivo(texto, codificacao) grava os bytes; os.chdir muda a pasta atual, e self.addCleanup(os.chdir, atual) a devolve no fim.</p></details><pre><code id="work-testes-planilha">&quot;&quot;&quot;A planilha de itens: codificação, separador, aspas, erros por linha e o relatório. Não usa banco nem janela.&quot;&quot;&quot;
+import contextlib
+import io
+import os
+import tempfile
+import unittest
+from pathlib import Path
+
+import conferir_planilha
+from kits.planilha import PlanilhaInvalida, conferir, conferir_arquivo
+
+BOA = &#x27;kit;item;quantidade\nTreinamento Redes;Cabeça de rede;2\nAlmoxarifado;&quot;Fita; preta&quot;;3\n&#x27;
+
+
+class TestPlanilha(unittest.TestCase):
+    def setUp(self):
+        pasta = tempfile.TemporaryDirectory()
+        self.addCleanup(pasta.cleanup)
+        self.pasta = Path(pasta.name)
+
+    def arquivo(self, texto, codificacao=&#x27;utf-8&#x27;, nome=&#x27;itens.csv&#x27;):
+        caminho = self.pasta / nome
+        caminho.write_bytes(texto.encode(codificacao))
+        return caminho
+
+    def nomes(self, resultado):
+        return [(l.numero, l.kit, l.item.nome, l.item.quantidade) for l in resultado.linhas]
+
+    # Codificação
+
+    def test_utf8_do_excel_com_bom_le_acentos_e_o_cabecalho(self):
+        resultado = conferir_arquivo(self.arquivo(BOA, &#x27;utf-8-sig&#x27;))
+        self.assertEqual(resultado.codificacao, &#x27;UTF-8&#x27;)
+        self.assertEqual(self.nomes(resultado)[0], (2, &#x27;Treinamento Redes&#x27;, &#x27;Cabeça de rede&#x27;, 2))
+
+    def test_utf8_sem_bom(self):
+        self.assertEqual(self.nomes(conferir_arquivo(self.arquivo(BOA)))[0][2], &#x27;Cabeça de rede&#x27;)
+
+    # Complete: a planilha BOA gravada em cp1252 é lida com codificacao &#x27;Windows-1252&#x27; e o primeiro item é Cabeça de rede.
+
+    # Separador e aspas
+
+    def test_aspas_protegem_o_separador_dentro_do_nome(self):
+        self.assertEqual(self.nomes(conferir_arquivo(self.arquivo(BOA)))[1], (3, &#x27;Almoxarifado&#x27;, &#x27;Fita; preta&#x27;, 3))
+
+    def test_virgula_tambem_serve_de_separador(self):
+        _, linhas, erros = conferir(&#x27;kit,item,quantidade\nAlmoxarifado,&quot;Cabo, 2 m&quot;,5\n&#x27;)
+        self.assertEqual(([(l.kit, l.item.nome) for l in linhas], erros), ([(&#x27;Almoxarifado&#x27;, &#x27;Cabo, 2 m&#x27;)], []))
+
+    def test_cabecalho_com_maiusculas_e_espacos_serve(self):
+        _, linhas, _ = conferir(&#x27; Kit ; ITEM ;Quantidade\nAlmoxarifado;Cabo;1\n&#x27;)
+        self.assertEqual(len(linhas), 1)
+
+    # Erros por linha
+
+    def test_cada_erro_vem_com_a_linha_do_arquivo(self):
+        texto = (&#x27;kit;item;quantidade\nAlmoxarifado;Fita;dez\nAlmoxarifado;;3\n;Cabo;1\n&#x27;
+                 &#x27;Almoxarifado;Cabo;1;sobra\nAlmoxarifado;Alicate;0\n&#x27;)
+        _, linhas, erros = conferir(texto)
+        self.assertEqual(linhas, [])
+        self.assertEqual(erros, [(2, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (3, &#x27;nome deve ser texto não vazio&#x27;),
+                                 (4, &#x27;falta o kit&#x27;), (5, &#x27;tem 4 colunas, e não 3 (confira o separador ; e as aspas)&#x27;),
+                                 (6, &#x27;0 não é maior que zero&#x27;)])
+
+    # Complete: com Cabo no Almoxarifado na linha 2, Cabo em outro kit na 3 e CABO no almoxarifado na 4, as linhas 2 e 3
+    # passam e a 4 vira o erro &#x27;repete CABO no kit almoxarifado, da linha 2&#x27;.
+
+    def test_linhas_em_branco_sao_puladas_sem_mudar_a_numeracao(self):
+        _, linhas, erros = conferir(&#x27;kit;item;quantidade\n\nAlmoxarifado;Cabo;1\n;;\n\n&#x27;)
+        self.assertEqual(([l.numero for l in linhas], erros), ([3], []))
+
+    def test_nome_com_quebra_de_linha_entre_aspas_conta_as_duas_linhas(self):
+        _, linhas, erros = conferir(&#x27;kit;item;quantidade\nAlmoxarifado;&quot;Cabo\nlongo&quot;;1\nAlmoxarifado;Fita;x\n&#x27;)
+        self.assertEqual(linhas[0].item.nome, &#x27;Cabo\nlongo&#x27;)
+        self.assertEqual(erros, [(4, &quot;&#x27;x&#x27; não é um número inteiro&quot;)])
+
+    # Planilha que não serve
+
+    def test_sem_cabecalho_a_planilha_inteira_e_recusada(self):
+        with self.assertRaisesRegex(PlanilhaInvalida, &#x27;A primeira linha precisa ser kit;item;quantidade&#x27;):
+            conferir(&#x27;Almoxarifado;Cabo;1\n&#x27;)
+
+    def test_arquivo_vazio_e_recusado(self):
+        with self.assertRaises(PlanilhaInvalida):
+            conferir_arquivo(self.arquivo(&#x27;&#x27;))
+
+    # O relatório
+
+    def relatorio(self, *argumentos):
+        saida = io.StringIO()
+        with contextlib.redirect_stdout(saida):
+            codigo = conferir_planilha.main(list(argumentos))
+        return codigo, saida.getvalue().splitlines()
+
+    def test_relatorio_conta_e_lista_os_erros(self):
+        caminho = self.arquivo(&#x27;kit;item;quantidade\nAlmoxarifado;Cabo;1\nAlmoxarifado;Fita;dez\n&#x27;, &#x27;utf-8-sig&#x27;)
+        self.assertEqual(self.relatorio(str(caminho)),
+                         (1, [&#x27;itens.csv: UTF-8, separador ;&#x27;, &#x27;1 linha certa, 1 com erro&#x27;, &quot;  linha 3: &#x27;dez&#x27; não é um número inteiro&quot;]))
+
+    def test_relatorio_sem_erros_sai_com_zero(self):
+        self.assertEqual(self.relatorio(str(self.arquivo(BOA)))[0], 0)
+
+    def test_arquivo_que_nao_existe_sai_com_dois_e_mostra_onde_procurou(self):
+        atual = os.getcwd()
+        self.addCleanup(os.chdir, atual)
+        os.chdir(self.pasta)
+        codigo, linhas = self.relatorio(&#x27;nao_existe.csv&#x27;)
+        self.assertEqual((codigo, linhas), (2, [f&#x27;Arquivo não encontrado: {(self.pasta / &quot;nao_existe.csv&quot;).resolve()}&#x27;]))
+
+    # Complete: mudando a pasta atual para self.pasta (e voltando no fim, com addCleanup), main() sem argumentos
+    # ainda confere o itens_exemplo.csv e devolve 1.
+</code></pre><div class="atelier" data-source="work-testes-planilha" data-filename="test_planilha.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da planilha não usam banco nem janela."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da planilha não usam banco nem janela.</p></div><div class="workbench"><h3>conferir_planilha.py: o relatório</h3><p>Crie conferir_planilha.py na raiz a partir do arquivo: PASTA e EXEMPLO a partir de __file__, e main imprimindo o relatório e devolvendo o código de saída. Entrega: conferir_planilha.py.</p><p>Concluído quando: Da raiz, .\.venv\Scripts\python.exe conferir_planilha.py mostra 3 linhas certas e 3 com erro, nas linhas 5, 6 e 7; de dentro de dados, ..\.venv\Scripts\python.exe ..\conferir_planilha.py mostra o mesmo. $LASTEXITCODE é 1.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 3 do tutorial. E o caminho que a pessoa digitou: ele é relativo a quê?</p></details><pre><code id="work-relatorio">&quot;&quot;&quot;Confere uma planilha de itens antes de importar, sem gravar nada.
+
+Uso: python conferir_planilha.py [caminho.csv]   (sem caminho, confere dados/itens_exemplo.csv)
+Sai com 0 se tudo está certo, 1 se alguma linha tem erro e 2 se o arquivo não existe.
+&quot;&quot;&quot;
+import sys
+from pathlib import Path
+
+from kits.planilha import PlanilhaInvalida, conferir_arquivo
+
+# PASTA: a pasta deste arquivo, de qualquer lugar de onde ele seja rodado. EXEMPLO: dados/itens_exemplo.csv nela.
+
+
+def contar(n, singular, plural):
+    return f&#x27;{n} {singular if n == 1 else plural}&#x27;
+
+
+def main(argumentos):
+    &quot;&quot;&quot;Imprime, por exemplo:
+        itens.csv: UTF-8, separador ;
+        1 linha certa, 1 com erro
+          linha 3: &#x27;dez&#x27; não é um número inteiro
+    Arquivo que não existe: &#x27;Arquivo não encontrado: &#x27; e o caminho completo, e devolve 2.
+    PlanilhaInvalida: &#x27;itens.csv: &#x27; e a mensagem, e devolve 1. Devolve 1 se houver erro, 0 se não.&quot;&quot;&quot;
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    sys.exit(main(sys.argv[1:]))
+</code></pre><div class="atelier" data-source="work-relatorio" data-filename="conferir_planilha.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe conferir_planilha.py e .\.venv\Scripts\python.exe conferir_planilha.py caminho\de\outra.csv."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe conferir_planilha.py e .\.venv\Scripts\python.exe conferir_planilha.py caminho\de\outra.csv.</p></div><div class="workbench"><h3>conferir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como conferir_legado.py na raiz e reproduza cada relato com uma planilha pequena: salva pelo Excel como CSV UTF-8; salva em UTF-8 sem BOM (no VS Code, Salvar com Codificação); com um item entre aspas e ponto e vírgula no nome; e com um erro na terceira linha. Para cada relato, registre a linha culpada, a evidência, a correção e o teste de tests/test_planilha.py que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O conferir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm linha, evidência observada, correção e teste; os relatos 1 e 2 explicam a mesma linha culpada de dois jeitos diferentes.</p><details><summary>Dica para realizar a atividade</summary><p>Nos relatos 1 e 2, que codificação o open usa quando ninguém diz qual?</p></details><pre><code id="work-planilha-legado">&quot;&quot;&quot;Conferência herdada de planilhas. Uso: python conferir_legado.py caminho.csv&quot;&quot;&quot;
+import sys
+
+from kits.modelo import ItemKit
+from kits.regras import QuantidadeInvalida, ler_quantidade
+
+
+def conferir_legado(caminho):
+    linhas, erros = [], []
+    with open(caminho) as arquivo:
+        cabecalho = arquivo.readline().strip().split(&#x27;;&#x27;)
+        if cabecalho != [&#x27;kit&#x27;, &#x27;item&#x27;, &#x27;quantidade&#x27;]:
+            raise ValueError(&#x27;A primeira linha está errada&#x27;)
+        for numero, texto in enumerate(arquivo, start=1):
+            if not texto.strip():
+                continue
+            kit, nome, quantidade = texto.strip().split(&#x27;;&#x27;)
+            try:
+                linhas.append((kit, ItemKit(nome, ler_quantidade(quantidade))))
+            except (QuantidadeInvalida, ValueError) as erro:
+                erros.append((numero, str(erro)))
+    return linhas, erros
+
+
+if __name__ == &#x27;__main__&#x27;:
+    linhas, erros = conferir_legado(sys.argv[1])
+    for kit, item in linhas:
+        print(f&#x27;{kit}: {item.nome} ({item.quantidade})&#x27;)
+    for numero, mensagem in erros:
+        print(f&#x27;linha {numero}: {mensagem}&#x27;)
+</code></pre><div class="atelier" data-source="work-planilha-legado" data-filename="legado.md" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe conferir_legado.py caminho\da\planilha.csv."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe conferir_legado.py caminho\da\planilha.csv.</p></div><div class="workbench"><h3>README.md: a seção Planilha de itens</h3><p>Acrescente ao README.md do projeto a seção Planilha de itens, para quem vai preencher e exportar a planilha: as colunas, o separador, as codificações aceitas, como salvar no Excel, o que cada mensagem do relatório quer dizer e o que significa cada código de saída. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra pessoa, só com o README, monta no Excel uma planilha de três itens que o conferir_planilha.py aceita na primeira tentativa.</p><details><summary>Dica para realizar a atividade</summary><p>Quem preenche a planilha não sabe o que é BOM. O que ela precisa clicar no Excel?</p></details><pre><code id="work-formato">## Planilha de itens
+
+### Colunas
+
+### Como salvar no Excel
+
+### O relatório
+</code></pre><div class="atelier" data-source="work-formato" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra pessoa montar a planilha sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra pessoa montar a planilha sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: as linhas com erro num arquivo</h3><p>Com a opção --erros, grave ao lado da planilha um itens_erros.csv com as linhas que deram erro, as colunas originais e uma coluna motivo, em UTF-8 com BOM e separador ;, para a coordenação abrir no Excel, corrigir e mandar de novo. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: O arquivo abre no Excel com os acentos certos e uma coluna por campo; o teste lê o arquivo gravado e confere as linhas.</p><details><summary>Dica para realizar a atividade</summary><p>csv.writer, com o arquivo aberto com encoding=&#x27;utf-8-sig&#x27; e newline=&#x27;&#x27;.</p></details><pre><code id="work-bonus-erros"># Linhas com erro num arquivo
+
+## Como gravar
+
+## O teste
+</code></pre><div class="atelier" data-source="work-bonus-erros" data-filename="erros.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Essa leitura é confiável? <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#auditoria" aria-label="Versão para leitura: Essa leitura é confiável?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira com um arquivo de verdade e rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Com que bytes começa um arquivo salvo pelo Excel como CSV UTF-8?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="EF BB BF, o BOM" autocomplete="off">EF BB BF, o BOM</label><label class="option"><input type="radio" name="q01" value="Os bytes da primeira letra, como qualquer UTF-8" autocomplete="off">Os bytes da primeira letra, como qualquer UTF-8</label><label class="option"><input type="radio" name="q01" value="FF FE" autocomplete="off">FF FE</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 1 do tutorial.</p></details></fieldset><fieldset data-question="q02"><legend>No Python 3.14 do Windows, que codificação open(&#x27;itens.csv&#x27;) usa, sem encoding?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="A do sistema, cp1252" autocomplete="off">A do sistema, cp1252</label><label class="option"><input type="radio" name="q02" value="UTF-8" autocomplete="off">UTF-8</label><label class="option"><input type="radio" name="q02" value="UTF-8 com BOM" autocomplete="off">UTF-8 com BOM</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Por que Cabeça vira CabeÃ§a no relato 2?</p></details></fieldset><fieldset data-question="q03"><legend>O que devolve &#x27;&quot;Fita; preta&quot;;3&#x27;.split(&#x27;;&#x27;)?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="[&#x27;&quot;Fita&#x27;, &#x27; preta&quot;&#x27;, &#x27;3&#x27;]" autocomplete="off">[&#x27;&quot;Fita&#x27;, &#x27; preta&quot;&#x27;, &#x27;3&#x27;]</label><label class="option"><input type="radio" name="q03" value="[&#x27;Fita; preta&#x27;, &#x27;3&#x27;]" autocomplete="off">[&#x27;Fita; preta&#x27;, &#x27;3&#x27;]</label><label class="option"><input type="radio" name="q03" value="[&#x27;&quot;Fita; preta&quot;&#x27;, &#x27;3&#x27;]" autocomplete="off">[&#x27;&quot;Fita; preta&quot;&#x27;, &#x27;3&#x27;]</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O split conhece aspas?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>ler_texto tenta utf-8-sig e, se der UnicodeDecodeError, lê como cp1252, dizendo qual usou.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Que tipo de arquivo chega a cada um dos dois?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O exemplo é aberto com Path(&#x27;dados/itens_exemplo.csv&#x27;).</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 3 do tutorial.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>O número da linha do erro vem de enumerate(leitor, start=2), depois de pular o cabeçalho.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E se um nome entre aspas tiver uma quebra de linha?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>A conferência para na primeira linha com erro e mostra só ela.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quantas vezes a coordenação teria de mandar a planilha?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>A conferência não grava nada no banco.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a A19 faz com o resultado?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Para não dar erro com acento, a planilha é lida com errors=&#x27;ignore&#x27;.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece com o ç que não for entendido?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-planilha"><p>Outra dupla entregou o conferir abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def conferir(texto):
+    linhas, erros = [], []
+    leitor = csv.reader(io.StringIO(texto, newline=&#x27;&#x27;), delimiter=&#x27;;&#x27;)
+    next(leitor)
+    for numero, campos in enumerate(leitor, start=2):
+        kit, nome, quantidade = campos
+        try:
+            linhas.append((numero, kit, ItemKit(nome, ler_quantidade(quantidade))))
+        except (QuantidadeInvalida, ValueError) as erro:
+            erros.append((numero, str(erro)))
+    return linhas, erros</code></pre><fieldset data-question="ac-numero" data-claim="ac-numero"><legend>Depois de um nome entre aspas com quebra de linha, os números dos erros ficam uma linha atrás do editor; leitor.line_num não erraria.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-numero" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-numero" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-cabecalho" data-claim="ac-cabecalho"><legend>next(leitor) pula a primeira linha sem conferir: numa planilha sem cabeçalho, o primeiro item some sem aviso.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-cabecalho" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-cabecalho" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-aspas" data-claim="ac-aspas"><legend>csv.reader com delimiter=&#x27;;&#x27; corta &#x27;Fita; preta&#x27; entre aspas em duas colunas, como o split faria.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-aspas" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-aspas" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a conferência <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#registro" aria-label="Versão para leitura: Entregue o que prova a conferência">↗</a></h2><p>Entregue, no repositório do projeto: kits/planilha.py, conferir_planilha.py, dados/itens_exemplo.csv, tests/test_planilha.py e a seção Planilha de itens no README.md. Os arquivos do tutorial e o conferir_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos, a saída dos testes e o relatório do itens_exemplo.csv rodado da raiz e de outra pasta. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Um arquivo que funciona no seu computador e quebra no da coordenação: que duas coisas desta aula você confere primeiro?</p><p>A A19 grava: as linhas certas vão para o MySQL numa transação só, com a decisão do que fazer quando a planilha tem erro ou o banco cai no meio.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/csv.html">Python 3: csv (e a nota sobre newline=&#x27;&#x27;)</a></li><li><a href="https://docs.python.org/3/library/pathlib.html">Python 3: pathlib</a></li><li><a href="https://docs.python.org/3/library/codecs.html#standard-encodings">Python 3: codecs (utf-8-sig e cp1252)</a></li><li><a href="https://docs.python.org/3/library/functions.html#open">Python 3: codificação padrão de open (locale.getencoding)</a></li><li><a href="https://peps.python.org/pep-0686/">PEP 686: UTF-8 como padrão, a partir do Python 3.15</a></li></ul><a data-idoc="source" href="leitura-0018-arquivos-caminhos-codificacao-e-csv.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

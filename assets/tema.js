@@ -17,6 +17,8 @@
     botao.setAttribute('aria-pressed', atual() === 'dark' ? 'true' : 'false');
   }
 
+  // Mostra os controles .js-only também nas páginas sem course.js (o guia de consultas).
+  raiz.classList.add('js');
   var inicial = salvo();
   if (inicial) raiz.setAttribute('data-theme', inicial);
 

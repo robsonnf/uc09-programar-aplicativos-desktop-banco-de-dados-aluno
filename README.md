@@ -44,18 +44,18 @@ Cada fase usa o que a anterior construiu. O projeto é contínuo: o repositório
 | A11 | 3 | Interface desktop: janela, organização e widgets | [Abrir aula](lessons/0011-interface-desktop-janela-organizacao-e-widgets.html) |
 | A12 | 3 | Eventos, callbacks e validação de entradas | [Abrir aula](lessons/0012-eventos-callbacks-e-validacao-de-entradas.html) |
 | A13 | 3 | Cadastro e listagem integrados ao banco | [Abrir aula](lessons/0013-cadastro-e-listagem-integrados-ao-banco.html) |
-| A14 | 3 | Edição, exclusão e sincronização da interface | Planejada |
-| A15 | 3 | Sprint CRUD, testes de fluxo e devolutiva | Planejada |
-| A16 | 4 | Filtros, ordenação e consulta vazia | Planejada |
-| A17 | 4 | JOIN, agregações e listagens estruturadas | Planejada |
-| A18 | 4 | Arquivos, caminhos, codificação e CSV | Planejada |
-| A19 | 4 | Carga massiva, inconsistências e transações em lote | Planejada |
-| A20 | 4 | MVC aplicado à refatoração do aplicativo | Planejada |
-| A21 | 5 | Repository/DAO, serviços e responsabilidades | Planejada |
-| A22 | 5 | Consolidação arquitetural e testes de regressão | Planejada |
-| A23 | 5 | ORM: ambiente, mapeamento, sessão e transação | Planejada |
-| A24 | 5 | ORM: relacionamentos, CRUD e consultas | Planejada |
-| A25 | 5 | SQL direto × ORM e decisão documentada | Planejada |
+| A14 | 3 | Edição, exclusão e sincronização da interface | [Abrir aula](lessons/0014-edicao-exclusao-e-sincronizacao-da-interface.html) |
+| A15 | 3 | Sprint CRUD, testes de fluxo e devolutiva | [Abrir aula](lessons/0015-sprint-crud-testes-de-fluxo-e-devolutiva.html) |
+| A16 | 4 | Filtros, ordenação e consulta vazia | [Abrir aula](lessons/0016-filtros-ordenacao-e-consulta-vazia.html) |
+| A17 | 4 | JOIN, agregações e listagens estruturadas | [Abrir aula](lessons/0017-join-agregacoes-e-listagens-estruturadas.html) |
+| A18 | 4 | Arquivos, caminhos, codificação e CSV | [Abrir aula](lessons/0018-arquivos-caminhos-codificacao-e-csv.html) |
+| A19 | 4 | Carga massiva, inconsistências e transações em lote | [Abrir aula](lessons/0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html) |
+| A20 | 4 | MVC aplicado à refatoração do aplicativo | [Abrir aula](lessons/0020-mvc-aplicado-a-refatoracao-do-aplicativo.html) |
+| A21 | 5 | Repository/DAO, serviços e responsabilidades | [Abrir aula](lessons/0021-repository-dao-servicos-e-responsabilidades.html) |
+| A22 | 5 | Consolidação arquitetural e testes de regressão | [Abrir aula](lessons/0022-consolidacao-arquitetural-e-testes-de-regressao.html) |
+| A23 | 5 | ORM: ambiente, mapeamento, sessão e transação | [Abrir aula](lessons/0023-orm-ambiente-mapeamento-sessao-e-transacao.html) |
+| A24 | 5 | ORM: relacionamentos, CRUD e consultas | [Abrir aula](lessons/0024-orm-relacionamentos-crud-e-consultas.html) |
+| A25 | 5 | SQL direto × ORM e decisão documentada | [Abrir aula](lessons/0025-sql-direto-orm-e-decisao-documentada.html) |
 | A26 | 6 | Depuração sistemática, testes e recuperação de falhas | Planejada |
 | A27 | 6 | Documentação e reprodução do ambiente | Planejada |
 | A28 | 6 | Executável, recursos e banco gravável | Planejada |

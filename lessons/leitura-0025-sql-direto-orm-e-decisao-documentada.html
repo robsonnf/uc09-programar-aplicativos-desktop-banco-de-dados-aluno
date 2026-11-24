@@ -1,0 +1,335 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A25 · SQL direto ou ORM: os mesmos relatórios, as mesmas provas e uma decisão registrada</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A25" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A25</span><span>SQL direto × ORM e decisão documentada<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Os dois contam histórias diferentes</a></li><li><a href="#esteira">Das duas versões à decisão</a></li><li><a href="#relatorios">Quatro relatórios, quatro ferramentas</a></li><li><a href="#contrato">Um contrato para as duas versões</a></li><li><a href="#desempenho">O plano da consulta, índices e visões</a></li><li><a href="#decisao">Registrar a decisão: o ADR</a></li><li><a href="#tutorial">Tutorial: o plano, o índice, a visão e a união</a></li><li><a href="#pratica">Os relatórios, o contrato e a decisão</a></li><li><a href="#auditoria">As duas versões dizem a mesma coisa?</a></li><li><a href="#registro">Entregue os relatórios, o contrato e a decisão</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A25</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>SQL direto ou ORM: os mesmos relatórios, as mesmas provas e uma decisão registrada</h1><p class="thesis">O projeto tem dois jeitos de falar com o mesmo banco. Hoje os dois fazem os mesmos relatórios: situação dos itens com CASE, itens acima da média com subconsulta, kits sem itens com NOT EXISTS e o histórico de um item com UNION ALL. Um teste de contrato só cobra as duas versões. Você mede o plano da busca com EXPLAIN, cria um índice e vê o que ele resolve e o que não resolve, conhece as visões e, com essas evidências, registra a decisão do projeto num ADR: SQL direto, ORM ou os dois.</p><p data-idoc="caveat">A aula continua no projeto da A24, com verificar.py terminando com código 0. O esquema ganha um índice, por uma migração. Use dados fictícios. O Guia de consultas SQL, no índice, mostra CASE, UNION, subconsultas, índices e visões no cliente mysql.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Escrever relatórios com CASE, subconsulta, NOT EXISTS e UNION ALL em SQL direto e no ORM</li><li>Cobrar as duas versões com um teste de contrato só, que vale para qualquer implementação</li><li>Ler o plano de uma consulta com EXPLAIN e decidir um índice pelo que ele resolve</li><li>Explicar o que é uma visão e quando ela ajuda</li><li>Registrar a decisão entre SQL direto e ORM num ADR com critérios e evidências do próprio projeto</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A24 com o repositório ORM completo e verificar.py terminando com código 0</li><li>A transferência e a tabela movimentacao da A10, e o resumo da A17</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Os dois contam histórias diferentes <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#partida" aria-label="Versão para leitura: Os dois contam histórias diferentes">↗</a></h2><p>A equipe do ORM entregou os relatórios na versão dela, e a coordenação abriu os dois lado a lado. Vieram quatro relatos sobre a versão ORM.</p><p>O Teclado e a Placa, com zero unidades, aparecem como baixo, e não como esgotado. No histórico do Cabo do Redes, as duas transferências de 2 unidades de 03/11 às 9h15 viraram uma só. O Cabo do Redes, com 3, aparece acima da média, mas a média de todos os itens é 4,4. E a Oficina Zerada, que tem a Placa, aparece como kit sem itens.</p><p>Em dupla, antes de abrir o código: se as duas versões precisam dar o mesmo resultado, onde se escreve o que é esse mesmo resultado, uma vez só?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: kits/relatorios.py e kits/relatorios_orm.py; tests/test_relatorios.py com o contrato e o teste do índice; a migração sql/mysql/migracoes/A25_indice.sql e o índice no esquema.sql; as regras novas no test_camadas.py e o tests.test_relatorios no grupo do MySQL do verificar.py; e o ADR docs/decisoes/0001-sql-direto-ou-orm.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: verificar.py termina com código 0.</p></div></section><section id="esteira" data-stop="esteira"><h2>Das duas versões à decisão <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#esteira" aria-label="Versão para leitura: Das duas versões à decisão">↗</a></h2><ol class="pipeline"><li><strong>Escrever o contrato</strong><p>Os testes do resultado, uma vez só.</p></li><li><strong>SQL direto</strong><p>CASE, subconsulta, NOT EXISTS e UNION ALL.</p></li><li><strong>ORM</strong><p>case, scalar_subquery, any e union_all.</p></li><li><strong>Medir</strong><p>EXPLAIN antes e depois do índice.</p></li><li><strong>Investigar</strong><p>Quatro relatos no herdado.</p></li><li><strong>Decidir</strong><p>O ADR com critérios e evidências.</p></li></ol></section><section id="relatorios" data-stop="relatorios"><h2>Quatro relatórios, quatro ferramentas <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#relatorios" aria-label="Versão para leitura: Quatro relatórios, quatro ferramentas">↗</a></h2><p>Situação dos itens: CASE WHEN ... THEN ... ELSE ... END calcula um valor para cada linha. Ele testa as condições na ordem e para na primeira verdadeira: o zero precisa vir antes do baixo, porque 0 também é menor que 3. No ORM, case((condição, valor), ..., else_=...).</p><p>Itens acima da média: a média de todos os itens vem de uma subconsulta no WHERE, (SELECT AVG(quantidade) FROM item), calculada pelo banco. Se a subconsulta tiver um WHERE que a liga à linha de fora (kit_id = k.id), ela passa a ser a média do kit, e o relatório muda de sentido sem erro nenhum. No ORM, select(func.avg(...)).scalar_subquery().</p><p>Kits sem itens: NOT EXISTS (SELECT 1 FROM item i WHERE i.kit_id = k.id) é verdadeiro quando a subconsulta, ligada ao kit de fora, não acha nada. A A24 fez o mesmo com LEFT JOIN e IS NULL; os dois dão o mesmo resultado. No ORM, ~KitBanco.itens.any(). Com uma condição dentro do any, o sentido muda: &quot;nenhum item com estoque&quot; não é &quot;nenhum item&quot;.</p><p>Histórico do item: as saídas (o item como origem) e as entradas (como destino) são duas consultas com as mesmas colunas, juntas com UNION ALL. UNION, sem ALL, tira as linhas repetidas, e duas transferências iguais no mesmo segundo são linhas repetidas. No ORM, union_all(...).subquery(), e um select dela para ordenar.</p></section><section id="contrato" data-stop="contrato"><h2>Um contrato para as duas versões <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#contrato" aria-label="Versão para leitura: Um contrato para as duas versões">↗</a></h2><p>Os testes dos relatórios ficam numa classe Contrato, que não herda de TestCase e só diz o resultado esperado. Duas classes de teste herdam dela e de TestCase: TestRelatoriosSql chama kits/relatorios.py com uma conexão, e TestRelatoriosOrm chama kits/relatorios_orm.py com em_sessao. O unittest roda os mesmos testes duas vezes, uma para cada versão.</p><p>O contrato é o que torna a comparação justa: as duas versões provam o mesmo, com os mesmos dados. Se uma terceira versão aparecer, ela ganha uma classe de três linhas e já está cobrada. Os dados do contrato foram escolhidos para separar os erros: um kit só com item zerado, duas transferências iguais e uma média geral diferente da média de cada kit.</p></section><section id="desempenho" data-stop="desempenho"><h2>O plano da consulta, índices e visões <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#desempenho" aria-label="Versão para leitura: O plano da consulta, índices e visões">↗</a></h2><p>EXPLAIN mostra como o MySQL vai buscar, sem rodar a consulta. As colunas que mais importam: key, o índice escolhido; key_len, quantos bytes do índice ele usa; rows, quantas linhas ele espera ler. ANALYZE TABLE atualiza as estatísticas que o EXPLAIN usa.</p><p>A busca do adicionar_item (WHERE kit_id = ? AND nome = ? FOR UPDATE) hoje usa o índice da chave estrangeira, só pelo kit, e lê os itens do kit para achar o nome. Um índice em (kit_id, nome) acha a linha direto, e o FOR UPDATE trava menos. Já a busca da janela, com LIKE &#x27;%abo%&#x27;, só aproveita o kit_id do índice: um % no começo impede usar a coluna nome. Índice serve à busca que você faz, e não a todas.</p><p>Cada índice ocupa espaço e deixa INSERT e UPDATE um pouco mais lentos, porque também precisa ser atualizado. Por isso ele entra por uma migração (A09), com o motivo escrito, e um teste confere o EXPLAIN.</p><p>Uma visão (CREATE VIEW) guarda uma consulta com nome e se consulta como uma tabela. Ela não guarda dados: cada SELECT nela roda a consulta de novo. Ajuda a dar nome a um relatório usado por várias ferramentas; no projeto, os relatórios ficam no código, onde os testes os alcançam.</p></section><section id="decisao" data-stop="decisao"><h2>Registrar a decisão: o ADR <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#decisao" aria-label="Versão para leitura: Registrar a decisão: o ADR">↗</a></h2><p>Um ADR (Architecture Decision Record) é um arquivo curto que registra uma decisão de arquitetura: o contexto, as opções, os critérios, a decisão e as consequências. Fica no repositório, em docs/decisoes/, numerado, e não é apagado quando a decisão muda: um ADR novo a substitui e diz qual.</p><p>A pergunta desta aula é do projeto, e não da ferramenta: o aplicativo dos kits continua no SQL direto, passa para o ORM ou usa os dois? Cada critério precisa de uma evidência que a turma produziu: as linhas de cada versão, o SQL gerado, as consultas por tela, os testes, a dependência nova no executável. Opinião sem evidência não entra na tabela.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o plano, o índice, a visão e a união <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#tutorial" aria-label="Versão para leitura: Tutorial: o plano, o índice, a visão e a união">↗</a></h2><p>O tutorial roda no cliente mysql, no kits_teste, com o esquema da A19, os dados da A06 e os dados do contrato (o Teclado e a Placa zerados, a Oficina Zerada e as três transferências). Carregue os dados com os comandos do preparar() do tests/test_relatorios.py. Nunca rode no banco kits. Os EXPLAIN terminam com \G no lugar do ponto e vírgula: o resultado sai com uma coluna por linha, porque a tabela dele é larga demais.</p><p>As telas são de execuções reais, com o MySQL 8.4.</p><figure class="tela"><figcaption>Passo 1 · O plano da busca do adicionar_item</figcaption><p>Atualize as estatísticas e peça o plano da busca com FOR UPDATE.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · O plano da busca do adicionar_item"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4826
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ANALYZE TABLE item;</kbd>
++-----------------+---------+----------+----------+
+| Table           | Op      | Msg_type | Msg_text |
++-----------------+---------+----------+----------+
+| kits_teste.item | analyze | status   | OK       |
++-----------------+---------+----------+----------+
+1 row in set (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXPLAIN SELECT id FROM item WHERE kit_id = 1 AND nome = &#x27;Cabo&#x27; FOR UPDATE\G</kbd>
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: item
+   partitions: NULL
+         type: ref
+possible_keys: item_kit
+          key: item_kit
+      key_len: 4
+          ref: const
+         rows: 3
+     filtered: 14.29
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> key item_kit é o índice da chave estrangeira: ele acha os itens do kit 1 (rows 3) e o WHERE filtra o nome entre eles.</p></figure><figure class="tela"><figcaption>Passo 2 · O índice em (kit_id, nome), e o que ele não resolve</figcaption><p>Crie o índice e peça os dois planos.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · O índice em (kit_id, nome), e o que ele não resolve"><code><span class="tela-prompt">mysql&gt; </span><kbd>CREATE INDEX item_kit_nome ON item (kit_id, nome);</kbd>
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXPLAIN SELECT id FROM item WHERE kit_id = 1 AND nome = &#x27;Cabo&#x27; FOR UPDATE\G</kbd>
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: item
+   partitions: NULL
+         type: ref
+possible_keys: item_kit_nome
+          key: item_kit_nome
+      key_len: 326
+          ref: const,const
+         rows: 1
+     filtered: 100.00
+        Extra: Using index
+1 row in set, 1 warning (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXPLAIN SELECT id, nome FROM item WHERE kit_id = 1 AND nome LIKE &#x27;%abo%&#x27;\G</kbd>
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: item
+   partitions: NULL
+         type: ref
+possible_keys: item_kit_nome
+          key: item_kit_nome
+      key_len: 4
+          ref: const
+         rows: 3
+     filtered: 14.29
+        Extra: Using where; Using index
+1 row in set, 1 warning (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> na busca exata, key_len 326 mostra as duas colunas em uso e rows 1. No LIKE com % no começo, key_len 4: só o kit_id do índice foi usado.</p></figure><figure class="tela"><figcaption>Passo 3 · Uma visão com o CASE</figcaption><p>Crie a visão, consulte como uma tabela e apague.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Uma visão com o CASE"><code><span class="tela-prompt">mysql&gt; </span><kbd>CREATE VIEW situacao_item AS</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  SELECT k.nome AS kit, i.nome AS item, i.quantidade,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>    CASE WHEN i.quantidade = 0 THEN &#x27;esgotado&#x27; WHEN i.quantidade &lt; 3 THEN &#x27;baixo&#x27; ELSE &#x27;ok&#x27; END AS situacao</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM item i JOIN kit k ON k.id = i.kit_id;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT * FROM situacao_item WHERE situacao &lt;&gt; &#x27;ok&#x27; ORDER BY kit, item;</kbd>
++---------------------+----------+------------+----------+
+| kit                 | item     | quantidade | situacao |
++---------------------+----------+------------+----------+
+| Oficina Zerada      | Placa    |          0 | esgotado |
+| Treinamento Redes   | Notebook |          2 | baixo    |
+| Treinamento Redes   | Switch   |          1 | baixo    |
+| Treinamento Suporte | Teclado  |          0 | esgotado |
++---------------------+----------+------------+----------+
+4 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP VIEW situacao_item;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> a visão não guardou nada: o SELECT nela rodou o JOIN e o CASE com os dados do momento.</p></figure><figure class="tela"><figcaption>Passo 4 · UNION e UNION ALL no histórico do Cabo do Redes</figcaption><p>Junte as entradas e as saídas do item 1 dos dois jeitos.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · UNION e UNION ALL no histórico do Cabo do Redes"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT momento, &#x27;entrada&#x27; AS tipo, quantidade FROM movimentacao WHERE destino_id = 1</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  UNION SELECT momento, &#x27;saída&#x27;, quantidade FROM movimentacao WHERE origem_id = 1;</kbd>
++---------------------+---------+------------+
+| momento             | tipo    | quantidade |
++---------------------+---------+------------+
+| 2026-11-03 09:15:00 | entrada |          2 |
+| 2026-11-04 10:00:00 | saída   |          1 |
++---------------------+---------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT momento, &#x27;entrada&#x27; AS tipo, quantidade FROM movimentacao WHERE destino_id = 1</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  UNION ALL SELECT momento, &#x27;saída&#x27;, quantidade FROM movimentacao WHERE origem_id = 1;</kbd>
++---------------------+---------+------------+
+| momento             | tipo    | quantidade |
++---------------------+---------+------------+
+| 2026-11-03 09:15:00 | entrada |          2 |
+| 2026-11-03 09:15:00 | entrada |          2 |
+| 2026-11-04 10:00:00 | saída   |          1 |
++---------------------+---------+------------+
+3 rows in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> as duas entradas de 03/11 às 9h15 são iguais em todas as colunas, e o UNION deixou uma só.</p></figure></section><section id="pratica" data-stop="pratica"><h2>Os relatórios, o contrato e a decisão <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#pratica" aria-label="Versão para leitura: Os relatórios, o contrato e a decisão">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini. Rode verificar.py antes de começar. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>Comece pelo contrato: os testes vêm antes das duas versões. Depois o SQL direto, o ORM, o índice, o herdado e o ADR. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando o contrato.</p><div class="workbench"><h3>tests/test_relatorios.py: o contrato</h3><p>Salve em tests/test_relatorios.py. O arquivo tem o Contrato com três testes, as duas classes que o rodam e a classe do índice. Escreva os três marcados com Complete. Ponha tests.test_relatorios no grupo do MySQL do verificar.py. Entrega: tests/test_relatorios.py e verificar.py.</p><p>Concluído quando: Com as duas versões prontas, os 11 testes passam (5 do contrato em cada versão e o do índice), e verificar.py termina com código 0.</p><details><summary>Dica para realizar a atividade</summary><p>O EXPLAIN volta como linhas; com cursor(dictionary=True), cada linha é um dicionário, e o índice está em linha[&#x27;key&#x27;].</p></details><pre><code id="work-contrato-testes">&quot;&quot;&quot;Os relatórios da A25 nas duas versões, SQL direto e ORM, cobrados pelos mesmos testes (o contrato).
+Também confere que a busca do adicionar_item usa o índice item_kit_nome.&quot;&quot;&quot;
+import datetime
+import unittest
+
+from kits import relatorios, relatorios_orm
+from kits.banco import conexao_banco
+from kits.orm import criar_motor, em_sessao
+from tests.test_repositorio import TESTE, comandos
+
+MAIS_DADOS = [
+    &quot;INSERT INTO kit (id, nome) VALUES (3, &#x27;Oficina Montagem&#x27;), (4, &#x27;Oficina Zerada&#x27;)&quot;,
+    &quot;INSERT INTO item (id, kit_id, nome, quantidade) VALUES (4, 2, &#x27;Teclado&#x27;, 0), (5, 1, &#x27;Switch&#x27;, 1), (6, 2, &#x27;Mouse&#x27;, 20), (7, 4, &#x27;Placa&#x27;, 0)&quot;,
+    &quot;INSERT INTO movimentacao (origem_id, destino_id, quantidade, momento) VALUES (3, 1, 2, &#x27;2026-11-03 09:15:00&#x27;), &quot;
+    &quot;(3, 1, 2, &#x27;2026-11-03 09:15:00&#x27;), (1, 3, 1, &#x27;2026-11-04 10:00:00&#x27;)&quot;,
+]
+
+
+def preparar():
+    with conexao_banco(TESTE) as con:
+        cur = con.cursor()
+        for comando in [*[c for s in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(s)], *MAIS_DADOS]:
+            cur.execute(comando)
+        con.commit()
+
+
+class Contrato:
+    &quot;&quot;&quot;Os testes valem para as duas versões; cada classe de baixo diz como chamar a sua.&quot;&quot;&quot;
+
+    def chamar(self, nome, *args):
+        raise NotImplementedError
+
+    def test_situacao_com_case_esgotado_antes_de_baixo(self):
+        self.assertEqual(self.chamar(&#x27;situacao_itens&#x27;), [
+            (&#x27;Oficina Zerada&#x27;, &#x27;Placa&#x27;, 0, &#x27;esgotado&#x27;),
+            (&#x27;Treinamento Redes&#x27;, &#x27;Cabo&#x27;, 3, &#x27;ok&#x27;), (&#x27;Treinamento Redes&#x27;, &#x27;Notebook&#x27;, 2, &#x27;baixo&#x27;),
+            (&#x27;Treinamento Redes&#x27;, &#x27;Switch&#x27;, 1, &#x27;baixo&#x27;),
+            (&#x27;Treinamento Suporte&#x27;, &#x27;Cabo&#x27;, 5, &#x27;ok&#x27;), (&#x27;Treinamento Suporte&#x27;, &#x27;Mouse&#x27;, 20, &#x27;ok&#x27;),
+            (&#x27;Treinamento Suporte&#x27;, &#x27;Teclado&#x27;, 0, &#x27;esgotado&#x27;)])
+
+    def test_acima_da_media_de_todos_os_itens(self):
+        # média de todos: (3 + 2 + 5 + 0 + 1 + 20 + 0) / 7 = 4,43. A média do kit daria outro resultado:
+        # o Cabo 3 passa da média do Redes (2) e o Cabo 5 não passa da do Suporte (8,33).
+        self.assertEqual(self.chamar(&#x27;itens_acima_da_media&#x27;), [(&#x27;Treinamento Suporte&#x27;, &#x27;Mouse&#x27;, 20), (&#x27;Treinamento Suporte&#x27;, &#x27;Cabo&#x27;, 5)])
+
+    # Complete: kits_sem_itens devolve só [(3, &#x27;Oficina Montagem&#x27;)]; a Oficina Zerada tem a Placa, mesmo zerada.
+
+    # Complete: movimentos_do_item do item 1 traz as duas entradas iguais de 03/11 às 9h15 (2 unidades, do item 3)
+    # e a saída de 04/11 às 10h (1 unidade, para o 3), com o momento como datetime.datetime.
+
+    def test_item_sem_movimento_devolve_lista_vazia(self):
+        self.assertEqual(self.chamar(&#x27;movimentos_do_item&#x27;, 2), [])
+
+
+class TestRelatoriosSql(Contrato, unittest.TestCase):
+    def setUp(self):
+        preparar()
+
+    def chamar(self, nome, *args):
+        with conexao_banco(TESTE) as con:
+            return [tuple(linha) for linha in getattr(relatorios, nome)(con, *args)]
+
+
+class TestRelatoriosOrm(Contrato, unittest.TestCase):
+    def setUp(self):
+        preparar()
+        self.motor = criar_motor(TESTE)
+        self.addCleanup(self.motor.dispose)
+
+    def chamar(self, nome, *args):
+        return em_sessao(lambda sessao: getattr(relatorios_orm, nome)(sessao, *args), self.motor)
+
+
+class TestIndice(unittest.TestCase):
+    pass
+
+    # Complete: depois do preparar() e de um ANALYZE TABLE item, o EXPLAIN do SELECT id FROM item WHERE kit_id = %s
+    # AND nome = %s FOR UPDATE usa a chave item_kit_nome (cursor(dictionary=True), coluna &#x27;key&#x27;).
+</code></pre><div class="atelier" data-source="work-contrato-testes" data-filename="test_relatorios.py" data-execution=".\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios, na raiz do projeto, com o MySQL ligado. Os testes recriam as tabelas no kits_teste."></div><p>.\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios, na raiz do projeto, com o MySQL ligado. Os testes recriam as tabelas no kits_teste.</p></div><div class="workbench"><h3>kits/relatorios.py: os relatórios em SQL direto</h3><p>Crie kits/relatorios.py a partir do arquivo. Antes de cada função, rode a consulta no cliente mysql, no kits_teste, com os dados do contrato. Acrescente ao tests/test_camadas.py a regra do arquivo novo (nem tkinter, nem a janela, nem o ORM). Entrega: kits/relatorios.py e tests/test_camadas.py.</p><p>Concluído quando: Os cinco testes de TestRelatoriosSql passam.</p><details><summary>Dica para realizar a atividade</summary><p>A ordem dos WHEN, o WHERE da subconsulta, a ligação do NOT EXISTS e o ALL do UNION: cada um é um relato da partida.</p></details><pre><code id="work-relatorios-sql">&quot;&quot;&quot;Relatórios dos kits (A25) em SQL direto. Salve como kits/relatorios.py.
+Situação com CASE, acima da média com subconsulta, kits sem itens com
+NOT EXISTS e o histórico de um item juntando saídas e entradas. Cada função recebe a conexão; nenhuma grava.
+
+kits/relatorios_orm.py faz os mesmos relatórios com o ORM, e tests/test_relatorios.py cobra os dois com os
+mesmos testes: o contrato é um só.
+&quot;&quot;&quot;
+LIMITE_BAIXO = 3  # abaixo disso, e acima de zero, o item está baixo
+
+
+def situacao_itens(con):
+    &quot;&quot;&quot;(kit, item, quantidade, situação) de todos os itens, em ordem de kit, item e id. CASE: 0 é &#x27;esgotado&#x27;,
+    abaixo de LIMITE_BAIXO (por parâmetro) é &#x27;baixo&#x27;, o resto &#x27;ok&#x27;. A ordem dos WHEN importa.&quot;&quot;&quot;
+    cur = con.cursor()
+    ...
+
+
+def itens_acima_da_media(con):
+    &quot;&quot;&quot;(kit, item, quantidade) com mais unidades que a média de TODOS os itens, os maiores primeiro, depois
+    kit e item. A média sai de uma subconsulta no WHERE.&quot;&quot;&quot;
+    cur = con.cursor()
+    ...
+
+
+def kits_sem_itens(con):
+    &quot;&quot;&quot;[(id, nome)] dos kits sem nenhum item, em ordem de nome e id, com NOT EXISTS. A subconsulta precisa
+    estar ligada ao kit de fora.&quot;&quot;&quot;
+    cur = con.cursor()
+    ...
+
+
+def movimentos_do_item(con, item_id):
+    &quot;&quot;&quot;(momento, tipo, quantidade, outro item) das transferências do item: as saídas (origem_id, tipo &#x27;saída&#x27;,
+    outro = destino_id) e as entradas (destino_id, tipo &#x27;entrada&#x27;, outro = origem_id) numa lista só, em ordem de
+    momento, tipo e outro. Duas transferências iguais no mesmo segundo são duas linhas.&quot;&quot;&quot;
+    cur = con.cursor()
+    ...
+</code></pre><div class="atelier" data-source="work-relatorios-sql" data-filename="relatorios.py" data-execution=".\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios.TestRelatoriosSql, na raiz do projeto."></div><p>.\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios.TestRelatoriosSql, na raiz do projeto.</p></div><div class="workbench"><h3>kits/relatorios_orm.py: os mesmos relatórios com o ORM</h3><p>Se não fez o bônus da A24, acrescente ao kits/orm.py a classe MovimentacaoBanco do começo do arquivo. Crie kits/relatorios_orm.py com as quatro funções e acrescente a regra dele ao tests/test_camadas.py (sem mysql). Olhe o SQL gerado de cada uma com o evento do tutorial da A23. Entrega: kits/orm.py, kits/relatorios_orm.py e tests/test_camadas.py.</p><p>Concluído quando: Os cinco testes de TestRelatoriosOrm passam, com o mesmo contrato do SQL direto.</p><details><summary>Dica para realizar a atividade</summary><p>O SQL gerado do ~KitBanco.itens.any() tem um NOT EXISTS? E a subconsulta da média tem FROM item?</p></details><pre><code id="work-relatorios-orm"># Se não fez o bônus da A24, acrescente ao kits/orm.py (com from datetime import datetime e func no import):
+#
+# class MovimentacaoBanco(Base):
+#     &quot;&quot;&quot;Uma linha da tabela movimentacao (A10). O momento quem põe é o banco (DEFAULT CURRENT_TIMESTAMP).&quot;&quot;&quot;
+#     __tablename__ = &#x27;movimentacao&#x27;
+#
+#     id: Mapped[int] = mapped_column(primary_key=True)
+#     origem_id: Mapped[int]
+#     destino_id: Mapped[int]
+#     quantidade: Mapped[int]
+#     momento: Mapped[datetime] = mapped_column(server_default=func.current_timestamp())
+
+&quot;&quot;&quot;Relatórios dos kits (A25) com o ORM. Salve como kits/relatorios_orm.py.
+Os mesmos de kits/relatorios.py, com case, scalar_subquery, any e
+union_all. Cada função recebe a sessão; nenhuma grava.
+&quot;&quot;&quot;
+from sqlalchemy import case, func, literal, select, union_all
+
+from kits.orm import ItemBanco, KitBanco, MovimentacaoBanco
+from kits.relatorios import LIMITE_BAIXO
+
+
+def situacao_itens(sessao):
+    &quot;&quot;&quot;O mesmo do SQL, com case((condição, valor), ..., else_=...) no select e join(ItemBanco.kit).&quot;&quot;&quot;
+    ...
+
+
+def itens_acima_da_media(sessao):
+    &quot;&quot;&quot;A média: select(func.avg(...)).scalar_subquery(), usada no where.&quot;&quot;&quot;
+    ...
+
+
+def kits_sem_itens(sessao):
+    &quot;&quot;&quot;~KitBanco.itens.any() vira NOT EXISTS ligado ao kit. Confira o SQL gerado.&quot;&quot;&quot;
+    ...
+
+
+def movimentos_do_item(sessao, item_id):
+    &quot;&quot;&quot;Dois select com literal(&#x27;saída&#x27;).label(&#x27;tipo&#x27;) e .label(&#x27;outro&#x27;), union_all(...).subquery() e um
+    select dela com order_by(sub.c.momento, sub.c.tipo, sub.c.outro).&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-relatorios-orm" data-filename="relatorios_orm.py" data-execution=".\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios.TestRelatoriosOrm, na raiz do projeto."></div><p>.\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios.TestRelatoriosOrm, na raiz do projeto.</p></div><div class="workbench"><h3>Migração: o índice da busca do adicionar_item</h3><p>Salve em sql/mysql/migracoes/A25_indice.sql e rode uma vez no banco kits, com o kits_app. Acrescente o mesmo CREATE INDEX ao fim do sql/mysql/esquema.sql, com o comentário do motivo, para o kits_teste e uma instalação nova já terem o índice. Antes e depois, rode o EXPLAIN do tutorial e cole os dois planos no registro. Entrega: a migração e o esquema.sql.</p><p>Concluído quando: O teste do índice passa, e o EXPLAIN no banco kits mostra key item_kit_nome com key_len 326.</p><details><summary>Dica para realizar a atividade</summary><p>O índice fica com as tabelas: DROP TABLE item (no começo do esquema) apaga o índice junto.</p></details><pre><code id="work-indice">-- sql/mysql/migracoes/A25_indice.sql: rode uma vez no kits (o kits_teste é recriado pelos testes).
+-- A busca do item de mesmo nome (adicionar_item, FOR UPDATE) passa a achar a linha direto e travar só ela.
+CREATE INDEX item_kit_nome ON item (kit_id, nome);
+</code></pre><div class="atelier" data-source="work-indice" data-filename="A25_indice.sql" data-execution="No cliente mysql: mysql -u kits_app -p kits, depois SOURCE sql/mysql/migracoes/A25_indice.sql. Testes: .\.venv\Scripts\python.exe verificar.py."></div><p>No cliente mysql: mysql -u kits_app -p kits, depois SOURCE sql/mysql/migracoes/A25_indice.sql. Testes: .\.venv\Scripts\python.exe verificar.py.</p></div><div class="workbench"><h3>relatorios_orm_herdado.py: quatro relatos</h3><p>Siga a instrução do começo do arquivo: o herdado entra por um momento no lugar do seu kits/relatorios_orm.py, e você roda tests.test_relatorios. Para cada relato da partida, registre a decisão que o herdado perdeu, a linha, o teste que falhou e a correção. Devolva o seu. Entrega: a tabela no registro desta página.</p><p>Concluído quando: Os quatro relatos têm decisão, linha, teste e correção; a dupla explica por que só os testes do ORM falharam.</p><details><summary>Dica para realizar a atividade</summary><p>Nenhum dos quatro dá erro: todos devolvem uma lista. É o contrato que mostra o que está errado.</p></details><pre><code id="work-relatorios-legado">&quot;&quot;&quot;Relatórios ORM herdados. Para examinar: guarde o seu kits/relatorios_orm.py (copie para fora da pasta kits),
+ponha este no lugar dele, rode tests.test_relatorios e devolva o seu.&quot;&quot;&quot;
+from sqlalchemy import case, func, literal, select, union
+
+from kits.orm import ItemBanco, KitBanco, MovimentacaoBanco
+from kits.relatorios import LIMITE_BAIXO
+
+
+def situacao_itens(sessao):
+    situacao = case((ItemBanco.quantidade &lt; LIMITE_BAIXO, &#x27;baixo&#x27;), (ItemBanco.quantidade == 0, &#x27;esgotado&#x27;), else_=&#x27;ok&#x27;)
+    consulta = (select(KitBanco.nome, ItemBanco.nome, ItemBanco.quantidade, situacao).join(ItemBanco.kit)
+                .order_by(KitBanco.nome, ItemBanco.nome, ItemBanco.id))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def itens_acima_da_media(sessao):
+    media = select(func.avg(ItemBanco.quantidade)).where(ItemBanco.kit_id == KitBanco.id).scalar_subquery()
+    consulta = (select(KitBanco.nome, ItemBanco.nome, ItemBanco.quantidade).join(ItemBanco.kit)
+                .where(ItemBanco.quantidade &gt; media).order_by(ItemBanco.quantidade.desc(), KitBanco.nome, ItemBanco.nome))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def kits_sem_itens(sessao):
+    consulta = select(KitBanco.id, KitBanco.nome).where(~KitBanco.itens.any(ItemBanco.quantidade &gt; 0)).order_by(KitBanco.nome, KitBanco.id)
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def movimentos_do_item(sessao, item_id):
+    saidas = select(MovimentacaoBanco.momento, literal(&#x27;saída&#x27;).label(&#x27;tipo&#x27;), MovimentacaoBanco.quantidade,
+                    MovimentacaoBanco.destino_id.label(&#x27;outro&#x27;)).where(MovimentacaoBanco.origem_id == item_id)
+    entradas = select(MovimentacaoBanco.momento, literal(&#x27;entrada&#x27;).label(&#x27;tipo&#x27;), MovimentacaoBanco.quantidade,
+                      MovimentacaoBanco.origem_id.label(&#x27;outro&#x27;)).where(MovimentacaoBanco.destino_id == item_id)
+    todos = union(saidas, entradas).subquery()
+    consulta = select(todos).order_by(todos.c.momento, todos.c.tipo, todos.c.outro)
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+</code></pre><div class="atelier" data-source="work-relatorios-legado" data-filename="relatorios_orm_herdado.py" data-execution="Troque por um momento o kits/relatorios_orm.py pelo herdado e rode .\.venv\Scripts\python.exe -m unittest tests.test_relatorios. Devolva o seu antes do commit."></div><p>Troque por um momento o kits/relatorios_orm.py pelo herdado e rode .\.venv\Scripts\python.exe -m unittest tests.test_relatorios. Devolva o seu antes do commit.</p></div><div class="workbench"><h3>docs/decisoes/0001-sql-direto-ou-orm.md: a decisão</h3><p>Escreva o ADR do projeto a partir do modelo: contexto, as três opções, a tabela de critérios com uma evidência sua em cada linha (use a seção ORM do docs/arquitetura.md, as telas do EXPLAIN e o contrato), a decisão e as consequências. Entrega: docs/decisoes/0001-sql-direto-ou-orm.md.</p><p>Concluído quando: Outra dupla, só com o ADR, diz qual é a decisão, qual evidência pesou mais e o que precisaria mudar no projeto para a decisão ser revista.</p><details><summary>Dica para realizar a atividade</summary><p>Toda linha da tabela de critérios aponta para um arquivo, um teste ou uma tela do projeto.</p></details><pre><code id="work-adr"># 0001 · SQL direto ou ORM no aplicativo dos kits
+
+Data: · Situação: proposta
+
+## Contexto
+
+## Opções
+
+1. Manter o SQL direto no aplicativo.
+2. Trocar o aplicativo inteiro para o ORM.
+3. Usar os dois.
+
+## Critérios e evidências
+
+| Critério | SQL direto | ORM | Evidência |
+|---|---|---|---|
+
+## Decisão
+
+## Consequências
+</code></pre><div class="atelier" data-source="work-adr" data-filename="0001-sql-direto-ou-orm.md" data-execution="Arquivo do repositório do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Arquivo do repositório do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: maior que todos os itens de um kit (ALL)</h3><p>Faça itens_maiores_que_o_kit(con, kit_id) nas duas versões: os itens de outros kits com mais unidades que todos os itens do kit pedido, com &gt; ALL (subconsulta) no SQL e all_() no ORM. Ponha os testes no Contrato. Entrega (opcional): o código e os testes no registro desta página.</p><p>Concluído quando: Com os dados do contrato, o kit 1 devolve o Mouse 20 e o Cabo 5; um kit sem itens é recusado com LookupError nas duas versões.</p><details><summary>Dica para realizar a atividade</summary><p>O que &gt; ALL de uma lista vazia devolve? Rode no cliente mysql antes de decidir.</p></details><pre><code id="work-bonus-all"># itens_maiores_que_o_kit
+
+## SQL direto
+
+## ORM
+
+## Testes
+</code></pre><div class="atelier" data-source="work-bonus-all" data-filename="all.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_relatorios.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>As duas versões dizem a mesma coisa? <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#auditoria" aria-label="Versão para leitura: As duas versões dizem a mesma coisa?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando o contrato, o cliente mysql ou o EXPLAIN antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Num CASE WHEN quantidade &lt; 3 THEN &#x27;baixo&#x27; WHEN quantidade = 0 THEN &#x27;esgotado&#x27; ELSE &#x27;ok&#x27; END, o que sai para quantidade 0?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="baixo" autocomplete="off">baixo</label><label class="option"><input type="radio" name="q01" value="esgotado" autocomplete="off">esgotado</label><label class="option"><input type="radio" name="q01" value="ok" autocomplete="off">ok</label><label class="option"><input type="radio" name="q01" value="Um erro" autocomplete="off">Um erro</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O CASE para na primeira condição verdadeira.</p></details></fieldset><fieldset data-question="q02"><legend>Qual é a diferença entre UNION e UNION ALL?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="UNION tira as linhas repetidas; UNION ALL mantém todas" autocomplete="off">UNION tira as linhas repetidas; UNION ALL mantém todas</label><label class="option"><input type="radio" name="q02" value="Nenhuma" autocomplete="off">Nenhuma</label><label class="option"><input type="radio" name="q02" value="UNION ALL ordena o resultado" autocomplete="off">UNION ALL ordena o resultado</label><label class="option"><input type="radio" name="q02" value="UNION ALL só funciona com tabelas iguais" autocomplete="off">UNION ALL só funciona com tabelas iguais</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 4 do tutorial.</p></details></fieldset><fieldset data-question="q03"><legend>Com um índice em (kit_id, nome), o que o MySQL usa dele numa busca WHERE kit_id = 1 AND nome LIKE &#x27;%abo%&#x27;?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Só o kit_id" autocomplete="off">Só o kit_id</label><label class="option"><input type="radio" name="q03" value="As duas colunas" autocomplete="off">As duas colunas</label><label class="option"><input type="radio" name="q03" value="Nada: o LIKE desliga o índice" autocomplete="off">Nada: o LIKE desliga o índice</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Olhe o key_len do passo 2.</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>Os testes do relatório ORM foram copiados dos do SQL e ajustados em separado, em outro arquivo.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece quando um dos dois for corrigido?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>kits_sem_itens usa NOT EXISTS com a subconsulta ligada ao kit (i.kit_id = k.id).</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare com o LEFT JOIN e IS NULL da A24.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>Para a busca da janela ficar rápida, a dupla criou um índice em nome e espera que o LIKE &#x27;%abo%&#x27; passe a usá-lo.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Onde está o % do LIKE?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O índice novo entra por uma migração e no esquema.sql, com o motivo num comentário e um teste do EXPLAIN.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Como foi a mudança do CHECK na A09?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>O ADR diz &quot;o ORM é melhor porque é mais moderno&quot;, sem nenhuma evidência do projeto.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que outra dupla consegue conferir?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>O relatório de itens acima da média calcula a média em Python, depois de trazer todos os itens.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quantas linhas viajam do banco, com 10 mil itens?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-historico"><p>Outra dupla entregou o histórico abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>cur.execute(&quot;SELECT momento, &#x27;saída&#x27;, quantidade FROM movimentacao WHERE origem_id = %s &quot;
+            &quot;UNION SELECT momento, &#x27;entrada&#x27;, quantidade FROM movimentacao WHERE destino_id = %s &quot;
+            &#x27;ORDER BY momento&#x27;, (item_id, item_id))</code></pre><fieldset data-question="ac-union" data-claim="ac-union"><legend>Duas transferências iguais no mesmo segundo aparecem como uma: falta o ALL.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-union" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-union" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-outro" data-claim="ac-outro"><legend>Não dá para saber de que item veio a entrada nem para onde foi a saída: falta a coluna do outro item.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-outro" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-outro" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-parametro" data-claim="ac-parametro"><legend>O mesmo item_id passado duas vezes na tupla é injeção de SQL.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-parametro" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-parametro" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue os relatórios, o contrato e a decisão <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#registro" aria-label="Versão para leitura: Entregue os relatórios, o contrato e a decisão">↗</a></h2><p>Entregue, no repositório do projeto: kits/relatorios.py, kits/relatorios_orm.py, a MovimentacaoBanco no kits/orm.py, tests/test_relatorios.py, a migração e o esquema.sql com o índice, o test_camadas.py e o verificar.py atualizados, e o ADR em docs/decisoes/. O herdado fica fora do commit.</p><p>No registro desta página, cole a saída do verificar.py, os dois planos do EXPLAIN no banco kits (antes e depois do índice) e a tabela dos quatro relatos. Se fez o bônus, cole o código e os testes.</p><p>Faça um commit revisado, como na A04, só depois de verificar.py terminar com código 0.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Que evidência do seu projeto mais pesou na decisão do ADR, e o que precisaria acontecer para você mudar de ideia?</p><p>A A26 volta à depuração: falhas que aparecem só às vezes, testes que mentem e a recuperação depois de um erro, com os testes que o projeto já tem.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/flow-control-functions.html#operator_case">MySQL 8.4: CASE operator</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/union.html">MySQL 8.4: UNION clause</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/explain-output.html">MySQL 8.4: EXPLAIN output format</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-view.html">MySQL 8.4: CREATE VIEW</a></li><li><a href="https://docs.sqlalchemy.org/en/21/core/sqlelement.html">SQLAlchemy 2.1: case, union_all e scalar_subquery (SQL Expression Language)</a></li><li><a href="https://adr.github.io/">Architecture Decision Records (ADR)</a></li></ul><a data-idoc="source" href="leitura-0025-sql-direto-orm-e-decisao-documentada.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-24</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

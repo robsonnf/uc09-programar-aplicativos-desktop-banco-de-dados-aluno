@@ -1,0 +1,853 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A15 · Sprint do CRUD: histórias, testes de fluxo e devolutiva</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A15" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A15</span><span>Sprint CRUD, testes de fluxo e devolutiva<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Tudo verde, e o Salvar não salvava</a></li><li><a href="#esteira">Uma sprint de uma aula</a></li><li><a href="#historias">Histórias que outra pessoa consegue conferir</a></li><li><a href="#kitnovo">Criar kit: a regra do domínio e a palavra do banco</a></li><li><a href="#atalhos">Atalhos: onde o bind fica decide quem ouve</a></li><li><a href="#fluxo">O teste de fluxo: a pessoa, a janela e o banco</a></li><li><a href="#mentiras">Quatro jeitos de um teste passar sem provar nada</a></li><li><a href="#tutorial">Tutorial: o teste que passou com o botão quebrado</a></li><li><a href="#devolutiva">Roteiro, troca e devolutiva</a></li><li><a href="#pratica">A sprint</a></li><li><a href="#auditoria">Esses testes provam alguma coisa?</a></li><li><a href="#registro">Entregue o que prova a sprint</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A15</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Sprint do CRUD: histórias, testes de fluxo e devolutiva</h1><p class="thesis">A janela já lista, cadastra, edita e remove itens, mas ainda não cria kits, e nenhum teste passa pelo caminho inteiro que uma pessoa faz. Hoje é sprint: três histórias com critérios de aceite, um teste de fluxo que usa a janela de verdade ligada ao kits_teste, um roteiro de teste manual que outra dupla executa, e a devolutiva. No meio, você descobre por que os testes de fluxo de outra equipe passavam com o Salvar quebrado.</p><p data-idoc="caveat">A aula continua na janela da A14, no DadosMySQL e no MySQL da A08. O teste de fluxo grava no kits_teste, nunca no kits. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Escrever histórias com critérios de aceite que outra pessoa consegue conferir, e priorizar o que cabe na sprint</li><li>Criar kits pela janela, com a regra do domínio e a recusa de nome repetido feita pelo banco</li><li>Escrever um teste de fluxo que opera a janela como a pessoa e confere a tela e o banco a cada passo</li><li>Reconhecer testes que passam sem provar nada: por fora da janela, no banco errado, dependentes da ordem e sem comparação</li><li>Executar o roteiro de outra dupla, registrar bugs reproduzíveis e dar e receber devolutiva</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A14: kits/janela.py com edição e sincronização, abrir_janela.py com DadosMySQL, tests/test_janela.py e tests/test_fontes.py passando</li><li>kits/modelo.py com o Kit da A05 e kits/repositorio.py da A14</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Tudo verde, e o Salvar não salvava <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#partida" aria-label="Versão para leitura: Tudo verde, e o Salvar não salvava">↗</a></h2><p>A coordenação quer usar a janela dos kits na semana que vem. Faltam duas coisas: criar kits sem abrir o cliente mysql e um jeito de garantir que o caminho inteiro funciona, do kit novo ao kit removido.</p><p>Outra equipe passou pelo mesmo e deixou um tests/test_fluxo_legado.py. Todos os testes dele passam. Mesmo assim, na homologação, vieram quatro relatos: o Salvar da edição não gravava nada; depois de rodar os testes, o banco kits perdeu os kits cadastrados; rodado sozinho, o teste de remover falha; e ele passa até quando a janela mostra Não removido.</p><p>Em dupla, antes de abrir o código: como um teste pode passar com o Salvar quebrado?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: criar_kit em kits/repositorio.py; DadosMySQL.criar_kit e pedir_nome em abrir_janela.py; Novo kit e atalhos em kits/janela.py; tests/test_janela.py, tests/test_fontes.py e o novo tests/test_fluxo.py; e docs/testes.md com as histórias, o roteiro e os bugs que a outra dupla registrou. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam, e a outra dupla executou o seu roteiro e registrou o resultado.</p></div></section><section id="esteira" data-stop="esteira"><h2>Uma sprint de uma aula <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#esteira" aria-label="Versão para leitura: Uma sprint de uma aula">↗</a></h2><ol class="pipeline"><li><strong>Combinar</strong><p>Três histórias, cada uma com critérios de aceite; a dupla decide a ordem.</p></li><li><strong>Construir</strong><p>Repositório, DadosMySQL e janela, cada camada com os seus testes.</p></li><li><strong>Provar o caminho</strong><p>Um teste de fluxo com a janela de verdade e o kits_teste.</p></li><li><strong>Roteirizar</strong><p>Os mesmos passos, escritos para uma pessoa executar sem perguntar nada.</p></li><li><strong>Trocar</strong><p>Outra dupla executa o seu roteiro e registra o que encontrar.</p></li><li><strong>Devolver</strong><p>Cada bug vira correção e teste, ou fica registrado como pendente.</p></li></ol></section><section id="historias" data-stop="historias"><h2>Histórias que outra pessoa consegue conferir <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#historias" aria-label="Versão para leitura: Histórias que outra pessoa consegue conferir">↗</a></h2><p>Uma história diz quem quer o quê e para quê: como técnica do almoxarifado, quero criar um kit pela janela, para não depender de quem sabe SQL. Ela não diz como fazer; isso é da dupla.</p><p>O que transforma a história em trabalho combinado são os critérios de aceite: situações concretas, com o resultado que qualquer pessoa confere olhando a tela ou o banco. Dado o kit Treinamento Redes cadastrado, quando eu criar um kit com o nome treinamento redes, então a janela avisa Kit não criado: Já existe o kit Treinamento Redes, e nenhum kit é gravado. Deve ser fácil de usar não é critério: ninguém consegue dizer se passou.</p><p>A sprint tem tempo fixo. Por isso a dupla ordena o backlog e começa pelo que mais vale para quem usa; o que não couber fica registrado, e não meio feito.</p><div class="table-wrap"><table><caption>Backlog da sprint</caption><thead><tr><th scope="col">História</th><th scope="col">Quem quer o quê</th><th scope="col">Prioridade</th></tr></thead><tbody><tr><td>H1 · Novo kit</td><td>A técnica cria um kit vazio pela janela e já pode cadastrar os itens dele</td><td>Obrigatória</td></tr><tr><td>H2 · Atalhos</td><td>Quem cadastra muito edita com duplo clique, cancela com Esc e remove com Delete</td><td>Obrigatória</td></tr><tr><td>H3 · Caminho provado</td><td>A coordenação quer saber que o caminho inteiro funciona antes de usar</td><td>Obrigatória</td></tr><tr><td>H4 · Renomear kit</td><td>A técnica corrige o nome de um kit sem apagar e criar de novo</td><td>Bônus</td></tr></tbody></table></div><div class="versus"><div class="bad"><h3>Critério que ninguém confere</h3><p>Cada pessoa entende uma coisa, e a discussão vira opinião.</p><pre><code>- Criar kit deve funcionar bem.
+- Nomes repetidos devem ser tratados.</code></pre></div><div class="good"><h3>Dado, quando, então</h3><p>A situação, a ação e o que se vê na tela ou no banco.</p><pre><code>- Dado o kit Treinamento Redes, quando crio treinamento redes,
+  então vejo Kit não criado: Já existe o kit Treinamento Redes
+  e o banco continua com dois kits.</code></pre></div></div></section><section id="kitnovo" data-stop="kitnovo"><h2>Criar kit: a regra do domínio e a palavra do banco <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#kitnovo" aria-label="Versão para leitura: Criar kit: a regra do domínio e a palavra do banco">↗</a></h2><p>criar_kit, no repositório, passa o nome pelo Kit da A05, que recusa nome vazio e tira os espaços das pontas, confere se outro kit já tem esse nome e só então insere. A conferência é um SELECT com WHERE nome = %s, e quem compara é o MySQL: com a collation do banco kits, Almoxarifado, almoxarifado e ALMOXARIFADO são o mesmo nome, como vimos na A13. A mensagem usa o nome como está no banco.</p><p>Como editar_item, criar_kit não faz commit: o DadosMySQL a chama dentro de em_transacao. Na janela, Novo kit pergunta o nome com pedir_nome, uma função recebida de fora, como perguntar. No aplicativo, ela abre uma CTkInputDialog e devolve o texto, ou None se a pessoa cancelar; nos testes, devolve o que o teste mandar.</p><p>Um limite fica registrado: duas pessoas criando o mesmo nome no mesmo instante podem passar as duas pela conferência, porque nenhuma linha é travada. Quem fecha essa porta é uma restrição UNIQUE no esquema; a dupla registra a pendência no docs/testes.md, e o esquema volta a ser assunto na carga em lote.</p></section><section id="atalhos" data-stop="atalhos"><h2>Atalhos: onde o bind fica decide quem ouve <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#atalhos" aria-label="Versão para leitura: Atalhos: onde o bind fica decide quem ouve">↗</a></h2><p>Delete só faz sentido com uma linha escolhida, então o bind fica na lista: self.lista.bind(&#x27;&lt;Delete&gt;&#x27;, ...). Esc cancela a edição de qualquer lugar da janela, então o bind fica na própria janela: todo widget tem, entre as suas etiquetas de evento, a janela onde está, e o evento chega a ela depois de passar pelo widget com o foco.</p><p>O duplo clique chega com as coordenadas do mouse. identify_row(evento.y) diz qual linha está ali, ou devolve vazio fora das linhas; só com uma linha a janela escolhe e edita. Nos testes, o Tk não aceita gerar &lt;Double-1&gt; pronto: dois cliques seguidos no mesmo ponto viram um duplo clique, como acontece com o mouse.</p></section><section id="fluxo" data-stop="fluxo"><h2>O teste de fluxo: a pessoa, a janela e o banco <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#fluxo" aria-label="Versão para leitura: O teste de fluxo: a pessoa, a janela e o banco">↗</a></h2><p>Até aqui, cada camada tem os seus testes: as regras sem banco, o repositório no kits_teste, a janela com o banco de mentira. Eles dizem onde está um defeito, mas nenhum passa pelo caminho que a pessoa faz. O teste de fluxo junta tudo de verdade, menos a pessoa: a JanelaItens com o DadosMySQL ligado ao kits_teste.</p><p>A pessoa vira código. invoke() é o clique, com o command de verdade; selection_set escolhe a linha; os campos recebem texto com insert. As perguntas e a caixa de nome são as funções recebidas no __init__: no teste, cada uma tira a próxima resposta de uma lista, e o fim do teste confere que nenhuma sobrou nem faltou.</p><p>Cada passo é conferido dos dois lados: o que a janela mostra e o que ficou no kits_teste. Só a tela engana quando a lista vem de uma leitura que falhou; só o banco engana quando a janela não mostrou o aviso. A jornada é um teste só, com passos em ordem, porque é um caminho só. Entre um teste e outro, nada é compartilhado: cada um recria as tabelas no setUp.</p><div class="callout alerta"><span class="callout-title">Nunca no kits</span><p>O teste de fluxo recria as tabelas. Se ele usar o banco.ini sem a configuração TESTE, apaga o banco kits, com o que a turma cadastrou. É o relato 2 da equipe anterior.</p></div></section><section id="mentiras" data-stop="mentiras"><h2>Quatro jeitos de um teste passar sem provar nada <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#mentiras" aria-label="Versão para leitura: Quatro jeitos de um teste passar sem provar nada">↗</a></h2><p>Um teste existe para falhar quando o programa estiver errado. Se ele não falha com o defeito, passar não quer dizer nada. A prova é a de sempre nesta UC: quebre o código de propósito e veja se o teste percebe.</p><p>Os quatro relatos da equipe anterior são quatro jeitos comuns de errar nisso.</p><div class="table-wrap"><table><caption>Testes que mentem</caption><thead><tr><th scope="col">Jeito</th><th scope="col">Como aparece</th><th scope="col">O que provar</th></tr></thead><tbody><tr><td>Por fora</td><td>Chama dados.editar ou a função do botão direto, sem passar pelo clique</td><td>Quebre o command ou o _salvar: o teste precisa falhar</td></tr><tr><td>Banco errado</td><td>Usa a configuração padrão, que é o banco kits</td><td>Cadastre algo no kits, rode os testes e confira se continua lá</td></tr><tr><td>Depende da ordem</td><td>Um teste usa o que outro criou, guardado na classe</td><td>Rode o teste sozinho: python -m unittest tests.arquivo.Classe.teste</td></tr><tr><td>Sem comparação</td><td>assertTrue(texto, &#x27;Removido: Alicate.&#x27;): o segundo argumento é só a mensagem de erro</td><td>Faça a operação ser recusada: o teste precisa falhar</td></tr></tbody></table></div></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o teste que passou com o botão quebrado <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#tutorial" aria-label="Versão para leitura: Tutorial: o teste que passou com o botão quebrado">↗</a></h2><p>O tutorial volta ao acervo da A14, sem a atualização. Crie acervo.py na raiz do projeto com o passo 1 e test_acervo.py ao lado, com o passo 2. Rode os testes com .\.venv\Scripts\python.exe -m unittest -v test_acervo.</p><p>As telas abaixo são de execuções reais desse código, no Windows 11 com Python 3.14 e CustomTkinter 6.0.0; só o tempo do Ran foi fixado, porque muda a cada vez.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo acervo.py inteiro</figcaption><pre><code>from tkinter import ttk
+
+import customtkinter as ctk
+
+ACERVO = {1: (&#x27;Guia de Redes&#x27;, 2), 2: (&#x27;Atlas&#x27;, 1), 3: (&#x27;Dicionário&#x27;, 4)}
+
+ctk.set_appearance_mode(&#x27;light&#x27;)
+janela = ctk.CTk()
+janela.title(&#x27;Acervo do Centro&#x27;)
+janela.geometry(&#x27;520x330&#x27;)
+janela.grid_columnconfigure(0, weight=1)
+janela.grid_rowconfigure(0, weight=1)
+
+lista = ttk.Treeview(janela, columns=(&#x27;titulo&#x27;, &#x27;exemplares&#x27;), show=&#x27;headings&#x27;, selectmode=&#x27;browse&#x27;)
+lista.heading(&#x27;titulo&#x27;, text=&#x27;Título&#x27;)
+lista.heading(&#x27;exemplares&#x27;, text=&#x27;Exemplares&#x27;)
+lista.grid(row=0, column=0, columnspan=2, sticky=&#x27;nsew&#x27;, padx=12, pady=(12, 6))
+exemplares = ctk.CTkEntry(janela, width=90, placeholder_text=&#x27;Exemplares&#x27;)
+exemplares.grid(row=1, column=0, padx=12, pady=6, sticky=&#x27;e&#x27;)
+salvar = ctk.CTkButton(janela, text=&#x27;Salvar&#x27;, width=90)
+salvar.grid(row=1, column=1, padx=(0, 12), pady=6)
+aviso = ctk.CTkLabel(janela, text=&#x27;&#x27;, anchor=&#x27;w&#x27;)
+aviso.grid(row=2, column=0, columnspan=2, padx=12, pady=(0, 12), sticky=&#x27;ew&#x27;)
+
+
+def mostrar():
+    lista.delete(*lista.get_children())
+    for livro_id, (titulo, quantos) in ACERVO.items():
+        lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(livro_id), values=(titulo, quantos))
+
+
+def gravar():
+    livro_id = int(lista.selection()[0])
+    titulo = ACERVO[livro_id][0]
+    ACERVO[livro_id] = (titulo, int(exemplares.get()))
+    aviso.configure(text=f&#x27;Salvo: {titulo} com {exemplares.get()}&#x27;)
+    mostrar()
+
+
+salvar.configure(command=gravar)
+mostrar()
+
+# Só abre a janela quando o arquivo é rodado; importado por um teste, não trava no mainloop.
+if __name__ == &#x27;__main__&#x27;:
+    janela.mainloop()
+</code></pre></figure><figure class="code-block"><figcaption>Passo 2 · test_acervo.py, testando por fora</figcaption><pre><code>import unittest
+
+import acervo
+
+
+class TestAcervo(unittest.TestCase):
+    def test_salvar_troca_os_exemplares(self):
+        acervo.lista.selection_set(&#x27;2&#x27;)
+        acervo.exemplares.insert(0, &#x27;3&#x27;)
+        acervo.gravar()
+        self.assertEqual(acervo.ACERVO[2], (&#x27;Atlas&#x27;, 3))
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · O teste passa</figcaption><p>Rode com o acervo do passo 1.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · O teste passa"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_acervo</kbd>
+test_salvar_troca_os_exemplares (test_acervo.TestAcervo.test_salvar_troca_os_exemplares) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK</code></pre></figure><figure class="tela"><figcaption>Passo 3 · Quebre o botão e rode de novo</figcaption><p>Apague a linha salvar.configure(command=gravar) do acervo.py e rode o mesmo teste. Abra a janela com .\.venv\Scripts\python.exe acervo.py: clicar em Salvar não faz nada.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Quebre o botão e rode de novo"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_acervo</kbd>
+test_salvar_troca_os_exemplares (test_acervo.TestAcervo.test_salvar_troca_os_exemplares) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK</code></pre><p class="tela-nota"><strong>Repare:</strong> O teste chama gravar() direto, então não percebe que o botão não chama ninguém. É o relato 1.</p></figure><figure class="code-block"><figcaption>Passo 4 · test_acervo.py, pelo botão</figcaption><pre><code>import unittest
+
+import acervo
+
+
+class TestAcervo(unittest.TestCase):
+    def test_salvar_troca_os_exemplares(self):
+        # Como a pessoa faz: escolhe a linha, digita e clica. invoke() é o clique, com o command de verdade.
+        acervo.lista.selection_set(&#x27;2&#x27;)
+        acervo.exemplares.delete(0, &#x27;end&#x27;)
+        acervo.exemplares.insert(0, &#x27;3&#x27;)
+        acervo.salvar.invoke()
+        # E confere o que a pessoa veria, além do dado.
+        self.assertEqual(acervo.lista.item(&#x27;2&#x27;, &#x27;values&#x27;), (&#x27;Atlas&#x27;, &#x27;3&#x27;))
+        self.assertEqual(acervo.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Atlas com 3&#x27;)
+        self.assertEqual(acervo.ACERVO[2], (&#x27;Atlas&#x27;, 3))
+</code></pre></figure><figure class="tela"><figcaption>Passo 4 · Pelo botão, o defeito aparece</figcaption><p>Troque o test_acervo.py pelo passo 4 e rode, ainda com o botão quebrado.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · Pelo botão, o defeito aparece"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_acervo</kbd>
+test_salvar_troca_os_exemplares (test_acervo.TestAcervo.test_salvar_troca_os_exemplares) ... FAIL
+
+======================================================================
+FAIL: test_salvar_troca_os_exemplares (test_acervo.TestAcervo.test_salvar_troca_os_exemplares)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &quot;C:\projetos\kits\test_acervo.py&quot;, line 14, in test_salvar_troca_os_exemplares
+    self.assertEqual(acervo.lista.item(&#x27;2&#x27;, &#x27;values&#x27;), (&#x27;Atlas&#x27;, &#x27;3&#x27;))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (&#x27;Atlas&#x27;, &#x27;1&#x27;) != (&#x27;Atlas&#x27;, &#x27;3&#x27;)
+
+First differing element 1:
+&#x27;1&#x27;
+&#x27;3&#x27;
+
+- (&#x27;Atlas&#x27;, &#x27;1&#x27;)
+?            ^
+
++ (&#x27;Atlas&#x27;, &#x27;3&#x27;)
+?            ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)</code></pre><p class="tela-nota"><strong>Repare:</strong> O clique de verdade não chamou gravar: a lista continua com 1 e o teste falha, dizendo o que a pessoa veria.</p></figure><figure class="tela"><figcaption>Passo 4 · E passa com o botão de volta</figcaption><p>Devolva a linha salvar.configure(command=gravar) e rode outra vez.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · E passa com o botão de volta"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_acervo</kbd>
+test_salvar_troca_os_exemplares (test_acervo.TestAcervo.test_salvar_troca_os_exemplares) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK</code></pre></figure></section><section id="devolutiva" data-stop="devolutiva"><h2>Roteiro, troca e devolutiva <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#devolutiva" aria-label="Versão para leitura: Roteiro, troca e devolutiva">↗</a></h2><p>O teste de fluxo roda em segundos, mas não vê o que só uma pessoa vê: o botão que some numa janela menor, a mensagem que ninguém entende, a caixa de nome que abre atrás da janela. Por isso a dupla também escreve um roteiro de teste manual: casos numerados, cada um com a situação de partida, os passos e o resultado esperado, com dados fictícios e sem pular nenhum clique.</p><p>Na troca, outra dupla executa o seu roteiro no seu computador, sem a sua ajuda, e anota o resultado de cada caso. O que não sair como esperado vira um bug registrado: os passos para reproduzir, o esperado, o obtido, a evidência (o aviso, a captura, a linha no banco) e a gravidade. Não funciona não é bug registrado: ninguém consegue reproduzir.</p><p>A devolutiva é sobre o programa e o roteiro, não sobre as pessoas. Quem recebe confere cada bug, reproduz e decide: corrige com um teste que reprova o defeito, ou registra como pendente, com o motivo. Um caso que a outra dupla não conseguiu executar sem perguntar também é um achado: é o roteiro que precisa melhorar.</p><div class="table-wrap"><table><caption>Um bug bem registrado</caption><thead><tr><th scope="col">Campo</th><th scope="col">Exemplo</th></tr></thead><tbody><tr><td>Id e título</td><td>B1 · Kit com espaços no fim aparece duplicado</td></tr><tr><td>Passos</td><td>1. Abrir abrir_janela.py. 2. Novo kit. 3. Digitar Almoxarifado com um espaço no fim. 4. OK. 5. Repetir com Almoxarifado sem espaço.</td></tr><tr><td>Esperado</td><td>Kit não criado: Já existe o kit Almoxarifado</td></tr><tr><td>Obtido</td><td>Dois kits Almoxarifado no seletor</td></tr><tr><td>Evidência</td><td>SELECT id, nome, LENGTH(nome) FROM kit mostra 12 e 13 caracteres</td></tr><tr><td>Gravidade e status</td><td>Média · corrigido com teste em tests/test_fontes.py</td></tr></tbody></table></div></section><section id="pratica" data-stop="pratica"><h2>A sprint <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#pratica" aria-label="Versão para leitura: A sprint">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo. Combinem com a dupla vizinha a troca de roteiros para os últimos 30 minutos antes do fechamento.</p><p>A ordem sugerida é a do backlog: histórias e critérios, criar_kit com os testes no kits_teste, DadosMySQL, janela e testes de mentira, teste de fluxo e, por fim, os testes herdados. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>A caixa do Novo kit</figcaption><p>Capturada com abrir_janela.py: Novo kit abre a CTkInputDialog do pedir_nome, com Almoxarifado digitado.</p><img src="../figuras/A15/kits-caixa-nome.png" width="342" height="196" alt="Caixa Novo kit com o texto Nome do kit novo:, um campo com Almoxarifado e os botões Ok e Cancel."><p class="tela-nota"><strong>Repare:</strong> Os botões Ok e Cancel são do CustomTkinter 6.0.0, que não traduz a caixa; para trocá-los, a CTkInputDialog teria de ser refeita.</p></figure><figure class="janela"><figcaption>O kit novo, pronto para receber itens</figcaption><p>Capturada com abrir_janela.py lendo o banco kits, depois de criar o Almoxarifado e adicionar um Alicate.</p><img src="../figuras/A15/kits-novo-kit.png" width="782" height="552" alt="Janela Kits de manutenção com o seletor em Almoxarifado (kit 3), os botões Novo kit, Remover kit e Recarregar no topo, a lista com Alicate 4 e o aviso verde Adicionado: Alicate (4)."></figure><div class="workbench"><h3>docs/testes.md: histórias e critérios de aceite</h3><p>Crie docs/testes.md com as histórias H1 a H3 do backlog, na ordem em que a dupla vai fazer. H1 já tem os critérios; escreva pelo menos três critérios para H2 e dois para H3, no formato dado, quando, então. Registre também a pendência do nome repetido criado ao mesmo tempo. O roteiro e os bugs entram no mesmo arquivo, na última atividade. Entrega: docs/testes.md.</p><p>Concluído quando: Outra pessoa lê cada critério e diz, olhando a tela ou o banco, se passou ou não; nenhum critério depende de opinião.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao versus da seção de histórias. Cada critério tem uma situação de partida?</p></details><pre><code id="work-backlog"># Testes do aplicativo de kits
+
+## Sprint do CRUD (A15)
+
+### H1 · Novo kit
+Como técnica do almoxarifado, quero criar um kit pela janela, para não depender de quem sabe SQL.
+
+- Dado o seletor em Treinamento Redes, quando crio o kit Almoxarifado, então o seletor mostra Almoxarifado (kit N), a lista está vazia e o aviso diz Kit criado.
+- Dado o kit Treinamento Redes, quando crio treinamento redes, então vejo Kit não criado: Já existe o kit Treinamento Redes, e o banco continua com os mesmos kits.
+- Dado o pedido do nome, quando clico em Cancel, então nada é gravado e o seletor continua no kit de antes.
+
+### H2 · Atalhos
+Como quem cadastra muitos itens, quero ...
+
+### H3 · Caminho provado
+Como coordenação, quero ...
+
+### Pendências
+
+## Roteiro de teste manual
+
+## Bugs recebidos na troca
+</code></pre><div class="atelier" data-source="work-backlog" data-filename="testes.md" data-execution="Arquivo docs/testes.md do projeto. A prova é a dupla vizinha conferir os critérios sem perguntar nada."></div><p>Arquivo docs/testes.md do projeto. A prova é a dupla vizinha conferir os critérios sem perguntar nada.</p></div><div class="workbench"><h3>kits/repositorio.py: criar_kit</h3><p>Acrescente criar_kit(con, nome) ao repositório, seguindo os comentários: a regra do Kit, a recusa de nome repetido com o nome do banco e o INSERT, devolvendo o id. Não faz commit nem rollback. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes de criar kit de tests/test_fontes.py passam, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Quem tira os espaços das pontas já existe desde a A05. E quem decide que almoxarifado e Almoxarifado são iguais?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+
+def criar_kit(con, nome):
+    &quot;&quot;&quot;Cadastra um kit vazio e devolve o id. Não grava nem desfaz: rode dentro de em_transacao.&quot;&quot;&quot;
+    # 1. Passe o nome pela regra do domínio: Kit(nome), da A05, recusa nome vazio e tira os espaços das pontas.
+    # 2. Se outro kit já tem esse nome: ValueError(&#x27;Já existe o kit Nome&#x27;), com o nome como está no banco.
+    #    Deixe a comparação para o MySQL: no kits, Almoxarifado e almoxarifado são o mesmo nome.
+    # 3. Insira o kit e devolva o id gerado.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: criar kit</h3><p>Acrescente à classe TestFontes o teste do arquivo e escreva os dois marcados com Complete: nome repetido com outras maiúsculas e nome só com espaços. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os dezessete testes passam com o seu código. Depois tire de criar_kit a linha do Kit(nome): o teste do nome só com espaços precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que nada foi gravado, conte os kits antes e depois.</p></details><pre><code id="work-testes-fontes">    # Acrescente à classe TestFontes do seu tests/test_fontes.py.
+
+    # A15: criar kit.
+
+    def test_criar_kit_devolve_o_id_e_o_kit_nasce_vazio(self):
+        kit_id = self.dados.criar_kit(&#x27;  Almoxarifado &#x27;)
+        self.assertIn((kit_id, &#x27;Almoxarifado&#x27;), self.dados.listar_kits())
+        self.assertEqual(self.dados.listar_itens(kit_id), [])
+
+    # Complete: criar_kit(&#x27;treinamento redes&#x27;) levanta ValueError com &#x27;Já existe o kit Treinamento Redes&#x27;,
+    # e o banco continua com dois kits.
+
+    # Complete: criar_kit(&#x27;   &#x27;) levanta ValueError com a mensagem do Kit da A05, e nada é gravado.
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: criar_kit e pedir_nome</h3><p>Acrescente ao DadosMySQL o método criar_kit, que grava com a função do repositório, e escreva pedir_nome com a CTkInputDialog. O if __name__ passa pedir_nome à janela. Entrega: abrir_janela.py.</p><p>Concluído quando: A janela aberta com .\.venv\Scripts\python.exe abrir_janela.py cria um kit no banco kits, e Cancel não grava nada.</p><details><summary>Dica para realizar a atividade</summary><p>É o mesmo formato do editar: uma linha com _gravar.</p></details><pre><code id="work-dados"># Mudanças no seu abrir_janela.py da A14. protegido e o resto do DadosMySQL continuam iguais.
+import customtkinter as ctk
+
+# No import do repositório, acrescente criar_kit.
+
+
+class DadosMySQL:
+    ...
+
+    def criar_kit(self, nome):
+        &quot;&quot;&quot;Grava com criar_kit do repositório e devolve o id do kit novo.&quot;&quot;&quot;
+        ...
+
+
+def pedir_nome(texto):
+    &quot;&quot;&quot;Mostra ctk.CTkInputDialog(title=&#x27;Novo kit&#x27;, text=texto) e devolve o que get_input() devolver:
+    o texto digitado, ou None se a pessoa cancelar ou fechar a caixa.&quot;&quot;&quot;
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaItens(DadosMySQL(), perguntar, pedir_nome=pedir_nome).mainloop()
+</code></pre><div class="atelier" data-source="work-dados" data-filename="abrir_janela.py" data-execution="Na raiz do projeto, com o MySQL ligado: .\.venv\Scripts\python.exe abrir_janela.py."></div><p>Na raiz do projeto, com o MySQL ligado: .\.venv\Scripts\python.exe abrir_janela.py.</p></div><div class="workbench"><h3>kits/janela.py: Novo kit e atalhos</h3><p>Faça na sua JanelaItens da A14 as mudanças descritas no arquivo: o pedir_nome no __init__, o botão Novo kit, criar_kit e escolher_kit, o duplo clique, o Delete na lista e o Esc na janela. A janela continua sem importar nada do banco. Entrega: kits/janela.py.</p><p>Concluído quando: Os trinta e oito testes de tests/test_janela.py passam, inclusive os três que você vai completar, e as duas imagens acima se repetem na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>Esc vale para a janela inteira; Delete, só para a lista. Onde fica cada bind?</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A14. O resto da JanelaItens continua igual.
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;dados ganha criar_kit(nome), que devolve o id do kit novo. pedir_nome(texto) devolve o texto digitado
+    ou None, se a pessoa desistir.&quot;&quot;&quot;
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000, pedir_nome=None):
+        # Guarde pedir_nome. A janela fica com minsize(720, 420), para os três botões do topo caberem.
+        # Esc em qualquer lugar da janela cancela a edição: self.bind(&#x27;&lt;Escape&gt;&#x27;, ...).
+        ...
+
+    def _montar_topo(self):
+        # Antes do Remover kit, self.novo_kit: Novo kit, chamando self.criar_kit,
+        # desligado se a janela não recebeu pedir_nome. Os três botões com width=100.
+        ...
+
+    def _montar_lista(self):
+        # Na lista: &lt;Double-1&gt; chama self._duplo_clique; &lt;Delete&gt; remove a linha escolhida, com a pergunta de sempre.
+        ...
+
+    def _duplo_clique(self, evento):
+        &quot;&quot;&quot;A linha sob o mouse (self.lista.identify_row(evento.y)) fica escolhida e vai para a edição.
+        Fora das linhas, não faz nada.&quot;&quot;&quot;
+        ...
+
+    def escolher_kit(self, kit_id):
+        &quot;&quot;&quot;Mostra o kit de id kit_id e devolve o rótulo dele, ou None se ele não estiver no seletor.&quot;&quot;&quot;
+        ...
+
+    def criar_kit(self):
+        &quot;&quot;&quot;Pede o nome (&#x27;Nome do kit novo:&#x27;); None: não faz nada. Recusa: Kit não criado: e a mensagem.
+        Sucesso: cancela a edição, recarrega, mostra o kit novo e avisa Kit criado: Rótulo., com o foco no Nome.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_janela.py: Novo kit e atalhos</h3><p>O arquivo substitui o da A14: o BancoDeMentira ganhou criar_kit e pedir_nome, e a janela recebe pedir_nome. Ele já tem trinta e cinco testes, inclusive o do duplo clique. Escreva os três marcados com Complete. Entrega: tests/test_janela.py.</p><p>Concluído quando: Os trinta e oito testes passam com o seu código. Depois apague o bind do &lt;Delete&gt;: o seu teste do Delete precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para uma tecla chegar, o widget precisa do foco: focus_set(), update() e só então event_generate.</p></details><pre><code id="work-testes-janela">&quot;&quot;&quot;A janela com um banco de mentira, um objeto com os mesmos métodos do DadosMySQL: roda sem MySQL, mas abre uma janela de verdade por alguns instantes.&quot;&quot;&quot;
+import copy
+import time
+import unittest
+
+from kits.janela import JanelaItens
+
+KITS = [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)]
+ITENS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+FORA = ConnectionError(&#x27;Sem conexão com o MySQL (erro 2003).&#x27;)
+
+
+def fechar(janela):
+    # O CustomTkinter agenda tarefas com after (o ícone da barra de título, por exemplo).
+    # Cancelar antes de destruir evita avisos de &quot;invalid command name&quot; no fim do teste.
+    for tarefa in janela.tk.call(&#x27;after&#x27;, &#x27;info&#x27;):
+        janela.after_cancel(tarefa)
+    janela.destroy()
+
+
+class BancoDeMentira:
+    &quot;&quot;&quot;Guarda kits e itens em listas e registra o que a janela pediu. falhas: {nome do método: exceção}.&quot;&quot;&quot;
+
+    def __init__(self, kits=KITS, itens=ITENS, resposta=True, nome_novo=None):
+        self.kits = list(kits)
+        self.itens = copy.deepcopy(itens)
+        self.resposta = resposta
+        self.nome_novo = nome_novo
+        self.pedidos_de_nome = []
+        self.kits_criados = []
+        self.falhas = {}
+        self.pedidos = []
+        self.entregues = []
+        self.removidos = []
+        self.perguntas = []
+        self.editados = []
+        self.kits_removidos = []
+
+    def _talvez_falhar(self, nome):
+        if nome in self.falhas:
+            raise self.falhas[nome]
+
+    def listar_kits(self):
+        self._talvez_falhar(&#x27;listar_kits&#x27;)
+        return list(self.kits)
+
+    def listar_itens(self, kit_id):
+        self._talvez_falhar(&#x27;listar_itens&#x27;)
+        self.pedidos.append(kit_id)
+        return list(self.itens.get(kit_id, []))
+
+    def criar_kit(self, nome):
+        self._talvez_falhar(&#x27;criar_kit&#x27;)
+        kit_id = max([k for k, _ in self.kits], default=0) + 1
+        self.kits.append((kit_id, nome.strip()))
+        self.kits_criados.append(nome)
+        return kit_id
+
+    def adicionar(self, kit_id, item):
+        self._talvez_falhar(&#x27;adicionar&#x27;)
+        self.entregues.append((kit_id, item.nome, item.quantidade))
+        self.itens.setdefault(kit_id, []).append((100 + len(self.entregues), item.nome, item.quantidade))
+
+    def remover(self, item_id):
+        self._talvez_falhar(&#x27;remover&#x27;)
+        self.removidos.append(item_id)
+        for kit_id, itens in self.itens.items():
+            self.itens[kit_id] = [i for i in itens if i[0] != item_id]
+
+    def editar(self, item_id, antes, depois):
+        self._talvez_falhar(&#x27;editar&#x27;)
+        for itens in self.itens.values():
+            for i, (atual_id, nome, quantidade) in enumerate(itens):
+                if atual_id == item_id:
+                    if (nome, quantidade) != (antes.nome, antes.quantidade):
+                        raise ValueError(f&#x27;{antes.nome} mudou depois que você leu: agora é {nome} com {quantidade}&#x27;)
+                    itens[i] = (item_id, depois.nome, depois.quantidade)
+                    self.editados.append((item_id, depois.nome, depois.quantidade))
+                    return
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+
+    def remover_kit(self, kit_id):
+        self._talvez_falhar(&#x27;remover_kit&#x27;)
+        if self.itens.get(kit_id):
+            raise ValueError(f&#x27;Kit {kit_id} ainda tem itens: remova os itens antes&#x27;)
+        self.kits = [k for k in self.kits if k[0] != kit_id]
+        self.kits_removidos.append(kit_id)
+
+    def perguntar(self, texto):
+        self.perguntas.append(texto)
+        return self.resposta
+
+    def pedir_nome(self, texto):
+        self.pedidos_de_nome.append(texto)
+        return self.nome_novo
+
+
+class TestJanela(unittest.TestCase):
+    def abrir(self, banco=None, intervalo_ms=60_000):
+        self.banco = banco or BancoDeMentira()
+        janela = JanelaItens(self.banco, self.banco.perguntar, intervalo_ms, pedir_nome=self.banco.pedir_nome)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def escolher(self, janela, kit_id):
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(f&#x27;(kit {kit_id})&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+
+    def preencher(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            if texto:
+                campo.insert(0, texto)
+
+    def selecionar(self, janela, item_id):
+        janela.lista.selection_set(str(item_id))
+        janela.update()
+
+    def erros(self, janela):
+        return janela.erro_nome.cget(&#x27;text&#x27;), janela.erro_quantidade.cget(&#x27;text&#x27;)
+
+    # A11: a lista e a grade.
+
+    def test_abre_no_primeiro_kit_com_os_itens_dele(self):
+        janela = self.abrir()
+        self.assertEqual(janela.kit_atual(), 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_cada_linha_guarda_o_id_do_item(self):
+        janela = self.abrir()
+        self.assertEqual(janela.lista.get_children(), (&#x27;1&#x27;, &#x27;2&#x27;))
+
+    def test_trocar_de_kit_troca_a_lista_sem_repetir(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.escolher(janela, 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.banco.pedidos, [1, 2, 1])
+
+    def test_status_conta_itens_e_unidades(self):
+        janela = self.abrir()
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens · 5 unidades&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;1 item · 5 unidades&#x27;)
+
+    def test_lista_cresce_com_a_janela(self):
+        janela = self.abrir()
+        janela.geometry(&#x27;640x420&#x27;)
+        janela.update()
+        largura, altura = janela.lista.winfo_width(), janela.lista.winfo_height()
+        janela.geometry(&#x27;1100x740&#x27;)
+        janela.update()
+        self.assertGreater(janela.lista.winfo_width(), largura + 300)
+        self.assertGreater(janela.lista.winfo_height(), altura + 200)
+
+    def test_sem_kits_avisa_e_nao_deixa_adicionar(self):
+        janela = self.abrir(BancoDeMentira(kits=[]))
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;Nenhum kit cadastrado.&#x27;)
+        self.assertEqual(self.banco.pedidos, [])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # A12: eventos e validação.
+
+    def test_abre_sem_erros_e_so_o_clique_valida(self):
+        janela = self.abrir()
+        self.assertEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        janela.adicionar.invoke()
+        self.assertNotEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_valido_entrega_e_a_lista_mostra_o_item_novo(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;  Alicate &#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+        self.assertEqual(self.linhas(janela)[-1], (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_quantidade_invalida_mostra_a_mensagem_do_dominio(self):
+        janela = self.abrir()
+        for texto, mensagem in ((&#x27;dez&#x27;, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (&#x27;0&#x27;, &#x27;0 não é maior que zero&#x27;),
+                                (&#x27;2.5&#x27;, &quot;&#x27;2.5&#x27; não é um número inteiro&quot;)):
+            with self.subTest(texto):
+                self.preencher(janela, &#x27;Alicate&#x27;, texto)
+                janela.adicionar.invoke()
+                self.assertEqual(self.erros(janela), (&#x27;&#x27;, mensagem))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_nome_em_branco_e_quantidade_errada_aparecem_juntos(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;   &#x27;, &#x27;-1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;-1 não é maior que zero&#x27;))
+
+    def test_enter_no_campo_confirma_como_o_botao(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Return&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+
+    def test_digitar_no_campo_apaga_o_erro_dele(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;&#x27;, &#x27;dez&#x27;)
+        janela.adicionar.invoke()
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=&#x27;BackSpace&#x27;)
+        janela.update()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;&#x27;))
+
+    def test_recusa_de_quem_grava_aparece_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = LookupError(&#x27;Kit 1 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não adicionado: Kit 1 não existe&#x27;)
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_defeito_de_quem_grava_nao_e_escondido(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&quot;&#x27;ItemKit&#x27; object has no attribute &#x27;nme&#x27;&quot;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        with self.assertRaises(AttributeError):
+            janela.confirmar()
+
+    # A13: remover e banco fora do ar.
+
+    def test_remover_so_liga_com_uma_linha_escolhida(self):
+        janela = self.abrir()
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.selecionar(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    def test_remover_pergunta_e_apaga_pelo_id_so_com_sim(self):
+        janela = self.abrir(BancoDeMentira(resposta=False))
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Notebook deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [])
+        self.banco.resposta = True
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.removidos, [2])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Notebook.&#x27;)
+
+    def test_remover_recusado_avisa_e_mostra_a_lista_de_agora(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;remover&#x27;] = LookupError(&#x27;Item 2 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não removido: Item 2 não existe&#x27;)
+        self.assertEqual(banco.pedidos, [1, 1])
+
+    def test_banco_fora_ao_abrir_avisa_e_recarregar_recupera(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;listar_kits&#x27;] = FORA
+        janela = self.abrir(banco)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        del banco.falhas[&#x27;listar_kits&#x27;]
+        janela.recarregar_botao.invoke()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_recarregar_mantem_o_kit_e_mostra_o_que_mudou(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.banco.itens[2].append((4, &#x27;Alicate&#x27;, 1))
+        janela.recarregar_botao.invoke()
+        self.assertEqual(janela.kit_atual(), 2)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;), (&#x27;Alicate&#x27;, &#x27;1&#x27;)])
+
+    def test_banco_fora_ao_adicionar_avisa_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;adicionar&#x27;] = FORA
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Não adicionado: {FORA}&#x27;)
+        self.assertEqual(janela.nome.get(), &#x27;Alicate&#x27;)
+
+    def test_banco_fora_ao_trocar_de_kit_avisa_no_status(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;listar_itens&#x27;] = FORA
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(self.linhas(janela), [])
+
+    # A14: editar, sincronizar e remover kit.
+
+    def editar_o(self, janela, item_id):
+        self.selecionar(janela, item_id)
+        janela.editar.invoke()
+
+    def test_editar_preenche_o_formulario_e_troca_o_botao(self):
+        janela = self.abrir()
+        self.assertEqual(janela.editar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.editar_o(janela, 2)
+        janela.update()
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Notebook&#x27;, &#x27;2&#x27;))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.adicionar.cget(&#x27;text&#x27;)), (&#x27;Editar item&#x27;, &#x27;Salvar&#x27;))
+        self.assertTrue(janela.cancelar.winfo_ismapped())
+
+    def test_salvar_grava_e_volta_ao_novo_item(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook i5&#x27;, &#x27;3&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.editados, [(2, &#x27;Notebook i5&#x27;, 3)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook i5&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Notebook i5 (3).&#x27;)
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_salvar_quando_outra_pessoa_mudou_avisa_e_mostra_o_banco(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 5)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;5&#x27;)])
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+
+    def test_cancelar_volta_sem_gravar(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.cancelar.invoke()
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertFalse(janela.cancelar.winfo_ismapped())
+        self.assertEqual(self.banco.editados, [])
+
+    def test_trocar_de_kit_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 2)&#x27;))
+        janela.kit.set(rotulo)
+        janela._trocou_kit(rotulo)
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;)])
+
+    def test_sincronizar_mostra_o_que_mudou_e_mantem_a_linha_escolhida(self):
+        janela = self.abrir()
+        self.selecionar(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 7)
+        janela.sincronizar()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;7&#x27;)])
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_sincronizar_nao_mexe_durante_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;9&#x27;)
+        pedidos = len(self.banco.pedidos)
+        janela.sincronizar()
+        self.assertEqual(len(self.banco.pedidos), pedidos)
+        self.assertEqual(janela.quantidade.get(), &#x27;9&#x27;)
+
+    def test_sincroniza_sozinha_a_cada_intervalo_sem_acumular(self):
+        # 200 ms durante 0,7 s: três leituras. Se os agendamentos se acumulassem, seriam 2 + 4 + 8.
+        janela = self.abrir(intervalo_ms=200)
+        pedidos = len(self.banco.pedidos)
+        fim = time.monotonic() + 0.7
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+        novos = len(self.banco.pedidos) - pedidos
+        self.assertGreaterEqual(novos, 2)
+        self.assertLessEqual(novos, 5)
+
+    def test_remover_kit_vazio_pergunta_e_recarrega(self):
+        banco = BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)])
+        janela = self.abrir(banco)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 3)&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+        janela.remover_kit.invoke()
+        self.assertEqual(banco.perguntas, [f&#x27;Remover o kit {rotulo}? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(banco.kits_removidos, [3])
+        self.assertNotIn(rotulo, janela.kit.cget(&#x27;values&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Kit removido: {rotulo}.&#x27;)
+
+    def test_remover_kit_com_itens_avisa_e_o_kit_fica(self):
+        janela = self.abrir()
+        janela.remover_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não removido: Kit 1 ainda tem itens: remova os itens antes&#x27;)
+        self.assertEqual(janela.kit_atual(), 1)
+
+    # A15: novo kit e atalhos.
+
+    def test_novo_kit_cadastra_e_ja_mostra_o_kit_vazio(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=&#x27;Almoxarifado&#x27;))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.pedidos_de_nome, [&#x27;Nome do kit novo:&#x27;])
+        self.assertEqual(self.banco.kits_criados, [&#x27;Almoxarifado&#x27;])
+        self.assertEqual((janela.kit.get(), janela.kit_atual()), (&#x27;Almoxarifado (kit 3)&#x27;, 3))
+        self.assertEqual(self.linhas(janela), [])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit criado: Almoxarifado (kit 3).&#x27;)
+
+    def test_novo_kit_cancelado_nao_grava_nada(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=None))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.kits_criados, [])
+        self.assertEqual(janela.kit_atual(), 1)
+
+    # Complete: com falhas[&#x27;criar_kit&#x27;] = ValueError(&#x27;Já existe o kit Treinamento Redes&#x27;), Novo kit avisa Kit não criado:
+    # e a mensagem, e o kit 1 continua escolhido.
+
+    def test_sem_kits_ainda_da_para_criar_o_primeiro(self):
+        janela = self.abrir(BancoDeMentira(kits=[], itens={}, nome_novo=&#x27;Almoxarifado&#x27;))
+        self.assertEqual(janela.novo_kit.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.kit.get(), &#x27;Almoxarifado (kit 1)&#x27;)
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_duplo_clique_na_linha_edita_o_item(self):
+        janela = self.abrir()
+        _, y, _, altura = janela.lista.bbox(&#x27;2&#x27;)
+        # O Tk não gera &lt;Double-1&gt; pronto: dois cliques seguidos no mesmo ponto viram um duplo clique.
+        for _ in range(2):
+            janela.lista.event_generate(&#x27;&lt;ButtonPress-1&gt;&#x27;, x=20, y=y + altura // 2)
+            janela.lista.event_generate(&#x27;&lt;ButtonRelease-1&gt;&#x27;, x=20, y=y + altura // 2)
+        janela.update()
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Editar item&#x27;, &#x27;Notebook&#x27;))
+
+    # Complete: em edição do Notebook, Esc num campo volta a Novo item com os campos vazios, sem editar nada.
+
+    # Complete: com o Cabo escolhido e o foco na lista, Delete pergunta e remove o item 1.
+</code></pre><div class="atelier" data-source="work-testes-janela" data-filename="test_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_fluxo.py: a jornada de um kit novo</h3><p>Salve o arquivo em tests/test_fluxo.py. Ele já opera a janela de verdade com o DadosMySQL no kits_teste e tem três testes, inclusive o das duas janelas. Complete a jornada a partir do passo 3, conferindo cada passo na janela e no banco, e escreva o teste do nome repetido. Entrega: tests/test_fluxo.py.</p><p>Concluído quando: Os quatro testes passam com o seu código. Depois troque, no _salvar da janela, a chamada a self._dados.editar por pass: a jornada precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Use os ajudantes do arquivo: preencher_e_confirmar, escolher_linha e itens_no_banco. Para cada pergunta, ponha a resposta em self.respostas antes do clique.</p></details><pre><code id="work-teste-fluxo">&quot;&quot;&quot;Testes de fluxo: a janela de verdade, ligada ao MySQL de testes pelo DadosMySQL.
+
+Cada passo é feito como a pessoa faria (botão, campo, lista) e conferido nos dois lados: no que a janela
+mostra e no que ficou gravado no kits_teste. Cada teste recria as tabelas; o kits fica intacto.
+&quot;&quot;&quot;
+import unittest
+
+from abrir_janela import DadosMySQL
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+from tests.test_janela import fechar
+from tests.test_repositorio import TESTE, comandos
+
+
+class TestFluxo(unittest.TestCase):
+    def setUp(self):
+        self.gravar(&#x27;SET SESSION lock_wait_timeout = 5&#x27;,
+                    *[c for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(script)])
+        self.respostas = []  # o que a pessoa responde às perguntas, na ordem
+        self.nomes = []      # o que a pessoa digita na caixa de nome, na ordem
+
+    def gravar(self, *sqls):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for sql in sqls:
+                cur.execute(sql)
+
+    def banco(self, sql, *valores):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(sql, valores)
+            return cur.fetchall()
+
+    def abrir(self):
+        janela = JanelaItens(DadosMySQL(TESTE), lambda texto: self.respostas.pop(0), intervalo_ms=60_000,
+                             pedir_nome=lambda texto: self.nomes.pop(0))
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    # O que a pessoa faz
+
+    def preencher_e_confirmar(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            campo.insert(0, texto)
+        janela.adicionar.invoke()
+        janela.update()
+
+    def escolher_linha(self, janela, nome):
+        iid = next(i for i in janela.lista.get_children() if janela.lista.item(i, &#x27;values&#x27;)[0] == nome)
+        janela.lista.selection_set(iid)
+        janela.update()
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def itens_no_banco(self, kit_id):
+        return self.banco(&#x27;SELECT nome, quantidade FROM item WHERE kit_id = %s ORDER BY id&#x27;, kit_id)
+
+    # Os fluxos
+
+    def test_jornada_de_um_kit_novo_do_cadastro_a_remocao(self):
+        janela = self.abrir()
+
+        # 1. Novo kit: o kit vazio aparece escolhido e está no banco.
+        self.nomes.append(&#x27;Almoxarifado&#x27;)
+        janela.novo_kit.invoke()
+        kit_id = janela.kit_atual()
+        self.assertEqual(janela.kit.get(), f&#x27;Almoxarifado (kit {kit_id})&#x27;)
+        self.assertEqual(self.banco(&#x27;SELECT nome FROM kit WHERE id = %s&#x27;, kit_id), [(&#x27;Almoxarifado&#x27;,)])
+
+        # 2. Dois itens pelo formulário.
+        self.preencher_e_confirmar(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        self.preencher_e_confirmar(janela, &#x27;Fita isolante&#x27;, &#x27;2&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Alicate&#x27;, &#x27;4&#x27;), (&#x27;Fita isolante&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.itens_no_banco(kit_id), [(&#x27;Alicate&#x27;, 4), (&#x27;Fita isolante&#x27;, 2)])
+
+        # Complete os passos, cada um conferido na janela e no banco:
+        # 3. Editar a fita para 3: escolher a linha, Editar item, preencher e confirmar; aviso Salvo: e banco com 3.
+        # 4. Remover o kit com itens, respondendo Sim: aviso Kit não removido: e os dois itens continuam no banco.
+        # 5. Remover os dois itens e depois o kit vazio, respondendo Sim a cada pergunta: o kit some do banco
+        #    e do seletor.
+        # No fim, os itens dos kits 1 e 2 continuam como estavam, e não sobrou resposta nem nome sem uso.
+
+
+    def test_responder_nao_deixa_tudo_como_estava(self):
+        janela = self.abrir()
+        self.escolher_linha(janela, &#x27;Cabo&#x27;)
+        self.respostas.append(False)
+        janela.remover.invoke()
+        self.assertEqual(self.itens_no_banco(1), [(&#x27;Cabo&#x27;, 3), (&#x27;Notebook&#x27;, 2)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_duas_janelas_a_segunda_a_salvar_e_avisada(self):
+        primeira, segunda = self.abrir(), self.abrir()
+        for janela in (primeira, segunda):
+            self.escolher_linha(janela, &#x27;Notebook&#x27;)
+            janela.editar.invoke()
+        self.preencher_e_confirmar(segunda, &#x27;Notebook&#x27;, &#x27;5&#x27;)
+        self.preencher_e_confirmar(primeira, &#x27;Notebook&#x27;, &#x27;1&#x27;)
+        self.assertEqual(primeira.aviso.cget(&#x27;text&#x27;),
+                         &#x27;Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5&#x27;)
+        self.assertIn((&#x27;Notebook&#x27;, &#x27;5&#x27;), self.linhas(primeira))
+        self.assertEqual(self.itens_no_banco(1), [(&#x27;Cabo&#x27;, 3), (&#x27;Notebook&#x27;, 5)])
+
+    # Complete: Novo kit com treinamento redes avisa Kit não criado: Já existe o kit Treinamento Redes,
+    # e o banco continua com dois kits.
+</code></pre><div class="atelier" data-source="work-teste-fluxo" data-filename="test_fluxo.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto. Os testes abrem janelas de verdade por alguns instantes."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto. Os testes abrem janelas de verdade por alguns instantes.</p></div><div class="workbench"><h3>tests/test_fluxo_legado.py: rastreie os quatro relatos</h3><p>Antes de rodar, cadastre no banco kits, pelo cliente mysql, um kit Kit da sala 3. Salve o arquivo abaixo como tests/test_fluxo_legado.py e reproduza cada relato: para o 1, troque o self._dados.editar do _salvar por pass e rode o legado e o seu test_fluxo.py; para o 2, confira o kit da sala 3 depois de rodar; para o 3, rode só o teste de remover; para o 4, faça o remover do DadosMySQL levantar ValueError. Para cada relato, registre a linha culpada, a evidência, o jeito de mentir da tabela e o teste do seu projeto que pega o mesmo defeito. Entrega: a tabela no registro desta página. O arquivo legado não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm linha, evidência observada, jeito de mentir e teste; o relato 2 mostra o kit da sala 3 sumindo e o relato 4 explica o segundo argumento do assertTrue.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 2, siga o DadosMySQL() sem argumentos até o ler_config: qual banco está no banco.ini?</p></details><pre><code id="work-fluxo-legado">&quot;&quot;&quot;Testes de fluxo herdados de outra equipe. Todos passam. Salve em tests/test_fluxo_legado.py.
+
+Relatos da homologação, depois que estes testes passaram:
+1. O Salvar da edição não gravava nada, e os testes continuavam verdes.
+2. Depois de rodar os testes, o banco kits perdeu os kits cadastrados.
+3. Rodado sozinho, o teste de remover falha; com todos, passa.
+4. O teste de remover passa até quando a janela mostra Não removido.
+&quot;&quot;&quot;
+import unittest
+
+from abrir_janela import DadosMySQL
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+from kits.modelo import ItemKit
+from tests.test_janela import fechar
+from tests.test_repositorio import comandos
+
+
+class TestFluxoLegado(unittest.TestCase):
+    criado = None
+
+    @classmethod
+    def setUpClass(cls):
+        with conexao_banco() as con:
+            cur = con.cursor()
+            for comando in [c for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(script)]:
+                cur.execute(comando)
+
+    def setUp(self):
+        self.dados = DadosMySQL()
+        self.janela = JanelaItens(self.dados, lambda texto: True, intervalo_ms=60_000,
+                                  pedir_nome=lambda texto: &#x27;Almoxarifado&#x27;)
+        self.addCleanup(fechar, self.janela)
+        self.janela.update()
+
+    def test_1_adicionar(self):
+        self.janela.nome.insert(0, &#x27;Alicate&#x27;)
+        self.janela.quantidade.insert(0, &#x27;4&#x27;)
+        self.janela.adicionar.invoke()
+        TestFluxoLegado.criado = self.janela.lista.get_children()[-1]
+        self.assertEqual(self.janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+
+    def test_2_remover(self):
+        self.janela.lista.selection_set(TestFluxoLegado.criado)
+        self.janela.update()
+        self.janela.remover.invoke()
+        self.assertTrue(self.janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Alicate.&#x27;)
+
+    def test_3_editar(self):
+        self.dados.editar(2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook&#x27;, 3))
+        self.janela.recarregar()
+        self.assertIn((&#x27;Notebook&#x27;, &#x27;3&#x27;), [tuple(self.janela.lista.item(i, &#x27;values&#x27;))
+                                          for i in self.janela.lista.get_children()])
+</code></pre><div class="atelier" data-source="work-fluxo-legado" data-filename="legado.md" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_fluxo_legado. Recrie o banco kits depois (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql)."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_fluxo_legado. Recrie o banco kits depois (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql).</p></div><div class="workbench"><h3>docs/testes.md: roteiro, troca e bugs recebidos</h3><p>Escreva no docs/testes.md o roteiro de teste manual: pelo menos seis casos, cobrindo as três histórias e o conflito com duas janelas, cada um com partida, passos e esperado. Na troca, entregue o roteiro à dupla vizinha e execute o dela, registrando o resultado de cada caso e cada bug no formato da tabela da seção de devolutiva. Depois, receba os bugs da outra dupla na seção Bugs recebidos na troca e dê a cada um um status: corrigido, com o teste que o reprova, ou pendente, com o motivo. Entrega: as duas seções no docs/testes.md.</p><p>Concluído quando: A dupla vizinha executou todos os casos sem perguntar nada, ou o que ela precisou perguntar virou correção no roteiro; cada bug recebido tem passos, esperado, obtido, evidência e status.</p><details><summary>Dica para realizar a atividade</summary><p>Escreva cada passo como se a outra dupla nunca tivesse visto a janela: qual botão, qual campo, qual texto.</p></details><pre><code id="work-roteiro">## Roteiro de teste manual
+
+| Caso | Partida | Passos | Esperado | Resultado na troca |
+|---|---|---|---|---|
+| C1 | Banco kits recriado; janela aberta em Treinamento Redes | 1. Novo kit. 2. Digitar Almoxarifado. 3. Ok. | Seletor em Almoxarifado (kit 3), lista vazia, aviso Kit criado | |
+
+## Bugs recebidos na troca
+
+| Bug | Passos | Esperado | Obtido | Evidência | Gravidade | Status |
+|---|---|---|---|---|---|---|
+</code></pre><div class="atelier" data-source="work-roteiro" data-filename="roteiro.md" data-execution="Seções do docs/testes.md do projeto. A prova é a troca com a dupla vizinha."></div><p>Seções do docs/testes.md do projeto. A prova é a troca com a dupla vizinha.</p></div><div class="workbench"><h3>Bônus: H4, renomear kit</h3><p>Escreva os critérios de aceite de H4 e faça renomear_kit no repositório, no DadosMySQL e na janela, com pedir_nome e a mesma recusa de nome repetido, mas sem recusar o próprio kit com outras maiúsculas. Cubra com um teste de mentira e um passo novo no teste de fluxo. Entrega (opcional): os critérios, o código e os testes no registro desta página.</p><p>Concluído quando: Renomear Treinamento Redes para treinamento REDES é aceito; renomear para Treinamento Suporte é recusado; o seletor mostra o nome novo e continua no mesmo kit.</p><details><summary>Dica para realizar a atividade</summary><p>É o mesmo cuidado do editar_item: na conferência, exclua o próprio id.</p></details><pre><code id="work-bonus-renomear"># H4 · Renomear kit
+
+## Critérios de aceite
+
+## Código
+
+## Testes
+</code></pre><div class="atelier" data-source="work-bonus-renomear" data-filename="renomear.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Esses testes provam alguma coisa? <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#auditoria" aria-label="Versão para leitura: Esses testes provam alguma coisa?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, quebre o código de propósito e rode os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Com a janela mostrando Não removido: recusado, o que faz self.assertTrue(janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Alicate.&#x27;)?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Passa: o texto não está vazio, e o segundo argumento é só a mensagem para o caso de falha" autocomplete="off">Passa: o texto não está vazio, e o segundo argumento é só a mensagem para o caso de falha</label><label class="option"><input type="radio" name="q01" value="Falha: os textos são diferentes" autocomplete="off">Falha: os textos são diferentes</label><label class="option"><input type="radio" name="q01" value="Dá erro: assertTrue recebe um argumento só" autocomplete="off">Dá erro: assertTrue recebe um argumento só</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Qual é a assinatura de assertTrue?</p></details></fieldset><fieldset data-question="q02"><legend>test_2_remover usa o id guardado em TestFluxoLegado.criado por test_1_adicionar. O que acontece com python -m unittest tests.test_fluxo_legado.TestFluxoLegado.test_2_remover?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Falha: test_1 não rodou, e criado continua None" autocomplete="off">Falha: test_1 não rodou, e criado continua None</label><label class="option"><input type="radio" name="q02" value="Passa: o unittest roda test_1 antes, pela ordem do nome" autocomplete="off">Passa: o unittest roda test_1 antes, pela ordem do nome</label><label class="option"><input type="radio" name="q02" value="Passa: o id fica guardado de uma execução para a outra" autocomplete="off">Passa: o id fica guardado de uma execução para a outra</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><fieldset data-question="q03"><legend>No teste de fluxo, depois de Remover item com Sim, o que conferir?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="A lista da janela e o item no kits_teste" autocomplete="off">A lista da janela e o item no kits_teste</label><label class="option"><input type="radio" name="q03" value="Só a lista da janela, que vem do banco" autocomplete="off">Só a lista da janela, que vem do banco</label><label class="option"><input type="radio" name="q03" value="Só o aviso Removido:, que já diz que deu certo" autocomplete="off">Só o aviso Removido:, que já diz que deu certo</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Qual dos dois lados engana sozinho, e quando?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>Para testar o Salvar, o teste chama janela._dados.editar(...) e confere o banco.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 3 do tutorial.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O setUp do teste de fluxo recria as tabelas no kits_teste antes de cada teste.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que cada teste encontra no começo?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>A jornada é um teste só, com cinco passos que dependem uns dos outros.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Compare com o relato 3: a dependência está dentro de um teste ou entre testes?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O teste de fluxo abre a janela com DadosMySQL(), sem passar a configuração.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Qual banco está no banco.ini?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Critério de aceite de H2: os atalhos devem ser intuitivos.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem decide se passou?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Bug registrado na troca: B3 · Remover kit não funciona.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>A outra dupla consegue reproduzir com isso?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-kit"><p>Outra dupla entregou o criar_kit abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def criar_kit(con, nome):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT id FROM kit WHERE nome = %s&#x27;, (nome,))
+    if cur.fetchall():
+        raise ValueError(f&#x27;Já existe o kit {nome}&#x27;)
+    cur.execute(&#x27;INSERT INTO kit (nome) VALUES (%s)&#x27;, (nome,))
+    con.commit()
+    return cur.lastrowid</code></pre><fieldset data-question="ac-espacos" data-claim="ac-espacos"><legend>Um nome só com espaços é cadastrado, e um nome com espaço no fim vira um segundo Almoxarifado: falta a regra do Kit.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-espacos" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-espacos" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-commit" data-claim="ac-commit"><legend>O commit dentro da função grava o kit mesmo quando quem a chamou numa transação maior desiste depois.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-commit" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-commit" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-maiusculas" data-claim="ac-maiusculas"><legend>almoxarifado passa pela conferência quando já existe Almoxarifado, porque o WHERE nome = %s diferencia maiúsculas.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-maiusculas" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-maiusculas" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a sprint <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#registro" aria-label="Versão para leitura: Entregue o que prova a sprint">↗</a></h2><p>Entregue, no repositório do projeto: kits/repositorio.py com criar_kit; abrir_janela.py com criar_kit e pedir_nome; kits/janela.py; tests/test_janela.py, tests/test_fontes.py e tests/test_fluxo.py; e docs/testes.md com histórias, roteiro e bugs recebidos. O acervo.py, o test_acervo.py e o tests/test_fluxo_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos dos testes herdados, a saída dos testes e um bug que a outra dupla encontrou no seu projeto, com o que vocês fizeram com ele. Se fez o bônus, cole os critérios e o código.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Quebre de propósito uma linha do seu programa que o teste de fluxo deveria pegar. Ele pegou? Se não, o que faltava conferir?</p><p>A A16 abre a fase de consultas: a lista ganha busca e ordenação, e a janela passa a dizer, sem confundir ninguém, quando uma busca não encontra nada.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertTrue">Python 3: unittest (assertTrue e a mensagem msg)</a></li><li><a href="https://docs.python.org/3/library/unittest.html#command-line-interface">Python 3: unittest na linha de comando, rodando um teste só</a></li><li><a href="https://www.tcl-lang.org/man/tcl9.0/TkCmd/bindtags.html">Tk: bind e bindtags</a></li><li><a href="https://www.tcl-lang.org/man/tcl9.0/TkCmd/ttk_treeview.html">Tk: ttk::treeview identify row</a></li><li><a href="https://customtkinter.tomschimansky.com/documentation/windows/inputdialog">CustomTkinter: CTkInputDialog</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/charset-collation-effect.html">MySQL 8.4: collations e comparação de texto</a></li></ul><a data-idoc="source" href="leitura-0015-sprint-crud-testes-de-fluxo-e-devolutiva.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

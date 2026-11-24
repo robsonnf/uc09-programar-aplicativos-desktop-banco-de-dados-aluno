@@ -1,0 +1,558 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A19 · Carga em lote: a planilha inteira ou nada</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A19" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A19</span><span>Carga massiva, inconsistências e transações em lote<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Metade ficou, e depois dobrou</a></li><li><a href="#esteira">Da planilha conferida ao banco</a></li><li><a href="#lote">Um commit por linha ou um para a planilha</a></li><li><a href="#integridade">Kit desconhecido e a mesma planilha duas vezes</a></li><li><a href="#log">O log: o que aconteceu, depois que a janela fechou</a></li><li><a href="#tutorial">Tutorial: a planilha do acervo no SQLite</a></li><li><a href="#pratica">A importação dos kits</a></li><li><a href="#auditoria">Essa carga é confiável?</a></li><li><a href="#registro">Entregue o que prova a importação</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A19</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Carga em lote: a planilha inteira ou nada</h1><p class="thesis">A planilha conferida na A18 agora vai para o banco. Gravar centenas de linhas pede uma decisão: o que acontece quando a linha 40 dá erro, quando um kit da planilha não existe ou quando a mesma planilha é importada duas vezes? Hoje a importação entra inteira numa transação só ou não entra, recusa kits desconhecidos, lembra cada arquivo pelo resumo SHA-256 dos bytes e registra tudo num log. A janela ganha Importar planilha, que mostra a conferência e só deixa gravar uma planilha sem erros.</p><p data-idoc="caveat">A aula continua na janela da A17, no DadosMySQL e na conferência da A18. O esquema ganha a tabela importacao: recrie o banco kits e o kits_teste com o esquema novo. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Gravar uma planilha inteira numa transação só e explicar por que um commit por linha deixa o banco pela metade</li><li>Recusar a planilha inteira quando um kit não existe ou é ambíguo, em vez de criar ou adivinhar</li><li>Impedir a mesma importação duas vezes com o resumo SHA-256 dos bytes e uma restrição UNIQUE</li><li>Registrar importações aceitas e recusadas num log com o módulo logging</li><li>Rastrear e corrigir uma importação herdada a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A17 com os testes passando, e kits/planilha.py, conferir_planilha.py e tests/test_planilha.py da A18</li><li>em_transacao da A10 e adicionar_item da A13 em kits/</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Metade ficou, e depois dobrou <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#partida" aria-label="Versão para leitura: Metade ficou, e depois dobrou">↗</a></h2><p>A coordenação mandou a planilha do estoque, e outra equipe já tinha um importador, abrir_legado.py. Vieram quatro relatos.</p><p>A importação parou com um erro na linha 40, e as 38 linhas de antes ficaram no banco; corrigida a planilha e importada de novo, essas 38 dobraram. Um kit Treinamento Rede, sem o s, apareceu do nada. Uma planilha com três linhas erradas foi importada sem as três, e ninguém soube quais faltaram. E, numa sexta-feira, a mesma planilha foi importada duas vezes, e todas as quantidades dobraram.</p><p>Em dupla, antes de abrir o código: o que a A10 ensinou que resolve o primeiro relato?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: a tabela importacao em sql/mysql/esquema.sql; importar_linhas em kits/repositorio.py; resumo_do_arquivo em kits/planilha.py; kits/importacao.py; DadosMySQL.importar com log em abrir_janela.py; o botão Importar planilha em kits/janela.py; tests/test_importacao.py, tests/test_fontes.py e tests/test_fluxo.py; e a seção Importação no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam, e importar duas vezes o mesmo arquivo grava uma vez só.</p></div></section><section id="esteira" data-stop="esteira"><h2>Da planilha conferida ao banco <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#esteira" aria-label="Versão para leitura: Da planilha conferida ao banco">↗</a></h2><ol class="pipeline"><li><strong>Conferir</strong><p>A conferência da A18: com qualquer erro, o Importar nem liga.</p></li><li><strong>Registrar</strong><p>Uma linha em importacao com o resumo do arquivo; repetido, o UNIQUE recusa.</p></li><li><strong>Achar os kits</strong><p>Cada kit pelo nome; nenhum ou dois cadastros recusam tudo.</p></li><li><strong>Somar</strong><p>Cada item com o adicionar_item da A13.</p></li><li><strong>Confirmar</strong><p>Um commit só, no fim; qualquer erro desfaz a planilha inteira.</p></li><li><strong>Registrar no log</strong><p>importada ou recusada, com o arquivo e o motivo.</p></li></ol></section><section id="lote" data-stop="lote"><h2>Um commit por linha ou um para a planilha <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#lote" aria-label="Versão para leitura: Um commit por linha ou um para a planilha">↗</a></h2><p>Com um commit por linha, cada linha gravada fica, aconteça o que acontecer depois. Se a linha 40 falhar, as 39 de antes já estão no banco, e a planilha corrigida, importada de novo, soma essas 39 outra vez: o relato 1. Com tudo dentro de um em_transacao, a planilha é uma unidade: ou entram todas as linhas, ou nenhuma, e quem corrige a planilha pode importar de novo sem medo.</p><p>O erro do meio não vem só da planilha: o banco pode cair, uma soma pode passar do maior INT (o MySQL recusa com o erro 1264), outra pessoa pode estar editando o mesmo item. Por isso a conferência da A18 não basta: ela é a primeira barreira, e a transação é a segunda.</p><p>Uma transação grande trava as linhas que já gravou até o commit. Para planilhas de centenas de linhas, como as dos kits, isso dura menos de um segundo; com milhões, a conversa seria outra, com lotes menores e um registro do que já entrou.</p></section><section id="integridade" data-stop="integridade"><h2>Kit desconhecido e a mesma planilha duas vezes <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#integridade" aria-label="Versão para leitura: Kit desconhecido e a mesma planilha duas vezes">↗</a></h2><p>Um kit da planilha que não está no banco pode ser um kit novo ou um erro de digitação, como Treinamento Rede. O importador não tem como saber, então recusa a planilha inteira e diz a linha: quem sabe cria o kit pela janela (A15) ou corrige a planilha. Se dois kits têm o mesmo nome, a pendência da A15, também recusa: adivinhar um dos dois seria pior.</p><p>Para não importar a mesma planilha duas vezes, cada importação deixa uma linha na tabela importacao com o resumo SHA-256 dos bytes do arquivo. É uma impressão digital: o mesmo arquivo dá sempre os mesmos 64 caracteres; um espaço a mais, outros. A coluna é UNIQUE, então quem recusa a repetição é o banco, mesmo que duas pessoas importem ao mesmo tempo. O registro é a primeira coisa que importar_linhas faz: se a planilha falhar depois, a transação desfaz o registro junto, e ela pode ser importada de novo.</p><figure class="code-block"><figcaption>kits/planilha.py: acrescente (e import hashlib no começo)</figcaption><pre><code>def resumo_do_arquivo(caminho):
+    &quot;&quot;&quot;SHA-256 dos bytes do arquivo (A19): o mesmo arquivo dá sempre o mesmo resumo; um byte diferente, outro.&quot;&quot;&quot;
+    return hashlib.sha256(Path(caminho).read_bytes()).hexdigest()
+</code></pre></figure></section><section id="log" data-stop="log"><h2>O log: o que aconteceu, depois que a janela fechou <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#log" aria-label="Versão para leitura: O log: o que aconteceu, depois que a janela fechou">↗</a></h2><p>O aviso da janela some quando ela fecha. Para saber depois quem importou o quê, e por que uma planilha foi recusada, o DadosMySQL registra cada importação com o módulo logging: logging.getLogger(&#x27;kits.importacao&#x27;) dá um registrador com nome, e info e warning escrevem uma linha com o nível.</p><p>Para onde as linhas vão é decidido uma vez, por quem abre o programa: o if __name__ do abrir_janela.py chama logging.basicConfig com o arquivo importacoes.log ao lado do programa, em UTF-8. Nos testes, nenhum arquivo é escrito: assertLogs captura as linhas e confere.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: a planilha do acervo no SQLite <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#tutorial" aria-label="Versão para leitura: Tutorial: a planilha do acervo no SQLite">↗</a></h2><p>O tutorial grava um acervo num SQLite em memória, com uma linha que o banco recusa no meio. Crie lote.py na raiz do projeto com o passo 1; os passos 2 e 3 entram no fim do arquivo. Rode com .\.venv\Scripts\python.exe lote.py depois de cada passo.</p><p>As telas são de execuções reais desse código, com Python 3.14.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo lote.py, com um commit por linha</figcaption><pre><code>import sqlite3
+
+# A planilha já conferida... quase: a terceira linha passou com texto no lugar do número.
+LINHAS = [(&#x27;Atlas&#x27;, 2), (&#x27;Gramática&#x27;, 1), (&#x27;Dicionário&#x27;, &#x27;três&#x27;), (&#x27;Poesias&#x27;, 4)]
+
+
+def preparar():
+    con = sqlite3.connect(&#x27;:memory:&#x27;, autocommit=False)
+    con.execute(&quot;CREATE TABLE livro (titulo TEXT PRIMARY KEY, &quot;
+                &quot;exemplares INTEGER NOT NULL CHECK (typeof(exemplares) = &#x27;integer&#x27;))&quot;)
+    con.commit()
+    return con
+
+
+def no_banco(con):
+    return [titulo for (titulo,) in con.execute(&#x27;SELECT titulo FROM livro ORDER BY rowid&#x27;)]
+
+
+con = preparar()
+print(&#x27;-- commit a cada linha&#x27;)
+for numero, (titulo, exemplares) in enumerate(LINHAS, start=2):
+    try:
+        con.execute(&#x27;INSERT INTO livro VALUES (?, ?)&#x27;, (titulo, exemplares))
+        con.commit()
+    except sqlite3.IntegrityError as erro:
+        con.rollback()
+        print(f&#x27;linha {numero}: {erro}&#x27;)
+        break
+print(&#x27;no banco:&#x27;, no_banco(con))
+</code></pre></figure><figure class="tela"><figcaption>Passo 1 · Commit por linha</figcaption><p>Rode.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Commit por linha"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe lote.py</kbd>
+-- commit a cada linha
+linha 4: CHECK constraint failed: typeof(exemplares) = &#x27;integer&#x27;
+no banco: [&#x27;Atlas&#x27;, &#x27;Gramática&#x27;]</code></pre><p class="tela-nota"><strong>Repare:</strong> O banco recusou a linha 4, e as duas de antes ficaram.</p></figure><figure class="code-block"><figcaption>Passo 2 · Acrescente ao fim: uma transação para tudo</figcaption><pre><code>con = preparar()
+print(&#x27;-- uma transação para a planilha inteira&#x27;)
+try:
+    for numero, (titulo, exemplares) in enumerate(LINHAS, start=2):
+        con.execute(&#x27;INSERT INTO livro VALUES (?, ?)&#x27;, (titulo, exemplares))
+    con.commit()
+except sqlite3.IntegrityError as erro:
+    con.rollback()
+    print(f&#x27;linha {numero}: {erro}; nada foi gravado&#x27;)
+print(&#x27;no banco:&#x27;, no_banco(con))
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · Uma transação</figcaption><p>Rode de novo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · Uma transação"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe lote.py</kbd>
+-- commit a cada linha
+linha 4: CHECK constraint failed: typeof(exemplares) = &#x27;integer&#x27;
+no banco: [&#x27;Atlas&#x27;, &#x27;Gramática&#x27;]
+-- uma transação para a planilha inteira
+linha 4: CHECK constraint failed: typeof(exemplares) = &#x27;integer&#x27;; nada foi gravado
+no banco: []</code></pre><p class="tela-nota"><strong>Repare:</strong> O mesmo erro, na mesma linha; desta vez, nada ficou.</p></figure><figure class="code-block"><figcaption>Passo 3 · Acrescente ao fim: o resumo e o UNIQUE</figcaption><pre><code>import hashlib
+
+con.execute(&#x27;CREATE TABLE importacao (resumo TEXT NOT NULL UNIQUE)&#x27;)
+planilha = &#x27;título;exemplares\nAtlas;2\n&#x27;.encode(&#x27;utf-8&#x27;)
+print(&#x27;-- a mesma planilha, duas vezes&#x27;)
+for vez in (1, 2):
+    resumo = hashlib.sha256(planilha).hexdigest()
+    try:
+        con.execute(&#x27;INSERT INTO importacao VALUES (?)&#x27;, (resumo,))
+        con.commit()
+        print(f&#x27;{vez}ª vez: registrada, resumo {resumo[:16]}...&#x27;)
+    except sqlite3.IntegrityError as erro:
+        con.rollback()
+        print(f&#x27;{vez}ª vez: recusada ({erro})&#x27;)
+print(&#x27;com um espaço a mais:&#x27;, hashlib.sha256(planilha + b&#x27; &#x27;).hexdigest()[:16] + &#x27;...&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · A mesma planilha duas vezes</figcaption><p>Rode mais uma vez.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · A mesma planilha duas vezes"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe lote.py</kbd>
+-- commit a cada linha
+linha 4: CHECK constraint failed: typeof(exemplares) = &#x27;integer&#x27;
+no banco: [&#x27;Atlas&#x27;, &#x27;Gramática&#x27;]
+-- uma transação para a planilha inteira
+linha 4: CHECK constraint failed: typeof(exemplares) = &#x27;integer&#x27;; nada foi gravado
+no banco: []
+-- a mesma planilha, duas vezes
+1ª vez: registrada, resumo ddba0b7e46cb062e...
+2ª vez: recusada (UNIQUE constraint failed: importacao.resumo)
+com um espaço a mais: 2f5ef5cb043bd361...</code></pre><p class="tela-nota"><strong>Repare:</strong> A segunda vez foi recusada pelo banco. Com um espaço a mais, o resumo é outro.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A importação dos kits <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#pratica" aria-label="Versão para leitura: A importação dos kits">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Recrie o banco kits e o kits_teste com o esquema novo. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: esquema, repositório com os testes no kits_teste, DadosMySQL com o log, a JanelaImportacao com os testes de mentira, o botão, o teste de fluxo e, por fim, a importação herdada. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>A planilha de exemplo, com erros</figcaption><p>Capturada com abrir_janela.py, escolhendo o dados/itens_exemplo.csv da A18 em Importar planilha.</p><img src="../figuras/A19/kits-importacao-erros.png" width="562" height="452" alt="Janela Importar planilha com itens_exemplo.csv: UTF-8, separador ;, 3 linhas certas, 3 com erro, a tabela com as linhas 5, 6 e 7 e os motivos, o botão Importar desligado e o aviso vermelho Nada é importado enquanto houver erro."></figure><figure class="janela"><figcaption>Uma planilha sem erros</figcaption><p>Capturada do mesmo jeito, com uma planilha de dois itens nos kits do banco.</p><img src="../figuras/A19/kits-importacao-pronta.png" width="562" height="452" alt="Janela Importar planilha com entrada.csv: UTF-8, separador ;, 2 linhas certas, 0 com erro, a tabela vazia, o botão Importar ligado e o aviso Pronta: 2 itens em 2 kits."></figure><figure class="code-block"><figcaption>tests/test_janela.py: acrescente ao BancoDeMentira</figcaption><pre><code>    def importar(self, linhas, arquivo, resumo):
+        &quot;&quot;&quot;Soma cada linha no kit de mesmo nome, como o importar_linhas; kit que não existe recusa tudo.&quot;&quot;&quot;
+        self._talvez_falhar(&#x27;importar&#x27;)
+        nomes = {nome: kit_id for kit_id, nome in self.kits}
+        for linha in linhas:
+            if linha.kit not in nomes:
+                raise ValueError(f&#x27;linha {linha.numero}: o kit {linha.kit} não existe; nada foi importado&#x27;)
+        for linha in linhas:
+            self.adicionar(nomes[linha.kit], linha.item)
+        self.importacoes.append((arquivo, resumo, len(linhas)))
+        return len(linhas)
+</code></pre></figure><div class="workbench"><h3>sql/mysql/esquema.sql: a tabela importacao</h3><p>Faça no esquema as duas mudanças do arquivo: o DROP no começo e a tabela no fim, com o resumo único. Recrie o kits e o kits_teste. Entrega: sql/mysql/esquema.sql.</p><p>Concluído quando: No cliente mysql, inserir duas vezes o mesmo resumo em importacao dá o erro 1062.</p><details><summary>Dica para realizar a atividade</summary><p>É a mesma ideia do CONSTRAINT que deu nome às restrições da A09, agora com UNIQUE.</p></details><pre><code id="work-esquema">-- Mudanças no sql/mysql/esquema.sql.
+
+-- 1. No começo, antes dos outros DROP: a importação não depende de ninguém, então pode sair primeiro.
+DROP TABLE IF EXISTS importacao;
+
+-- 2. No fim: uma linha por planilha importada.
+--    id, arquivo (o nome, até 255 caracteres), resumo (os 64 caracteres do SHA-256), itens (quantas linhas)
+--    e momento (quando, preenchido pelo banco). O resumo não pode se repetir: que restrição faz isso?
+CREATE TABLE importacao (
+);
+</code></pre><div class="atelier" data-source="work-esquema" data-filename="esquema.sql" data-execution="No cliente mysql: USE kits_teste; SOURCE sql/mysql/esquema.sql; SOURCE sql/mysql/dados.sql; e o mesmo no kits."></div><p>No cliente mysql: USE kits_teste; SOURCE sql/mysql/esquema.sql; SOURCE sql/mysql/dados.sql; e o mesmo no kits.</p></div><div class="workbench"><h3>kits/repositorio.py: importar_linhas</h3><p>Acrescente ao repositório KitInexistente, PlanilhaJaImportada e importar_linhas, seguindo os comentários. Nada de commit dentro da função. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes de importação de tests/test_fontes.py passam, inclusive o do banco que cai no meio, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 2 do tutorial. Quem faz o papel do commit no fim, no projeto?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+
+class KitInexistente(ValueError):
+    &quot;&quot;&quot;A planilha cita um kit que não está cadastrado, ou cujo nome está repetido no banco.&quot;&quot;&quot;
+
+
+class PlanilhaJaImportada(ValueError):
+    &quot;&quot;&quot;O mesmo arquivo, byte a byte, já foi importado.&quot;&quot;&quot;
+
+
+DUPLICADA = 1062  # erro do MySQL para valor repetido numa coluna UNIQUE
+
+
+def importar_linhas(con, linhas, arquivo, resumo):
+    &quot;&quot;&quot;Grava as linhas conferidas da planilha (A18); cada item soma no item de mesmo nome do kit, como o Adicionar.
+    Não grava nem desfaz: rode dentro de em_transacao. Devolve quantas linhas foram gravadas.&quot;&quot;&quot;
+    # 1. Registre a importação primeiro (arquivo, resumo, quantas linhas). Se o MySQL recusar com o erro
+    #    DUPLICADA, procure quando e com que nome ela foi importada e levante PlanilhaJaImportada:
+    #    &#x27;esta planilha já foi importada em 21/11/2026 14:30, como itens.csv&#x27;. Outros erros seguem como vieram.
+    # 2. Para cada linha, ache o id do kit pelo nome (guarde num dicionário para não perguntar de novo).
+    #    Nenhum ou mais de um: KitInexistente(&#x27;linha 3: o kit Almoxarifado não existe; nada foi importado&#x27;)
+    #    ou &#x27;... tem 2 cadastros com esse nome; nada foi importado&#x27;.
+    # 3. Grave cada item com adicionar_item, da A13, que soma no item de mesmo nome.
+    # Nada de commit aqui: se qualquer passo falhar, em_transacao desfaz a planilha inteira.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: a importação no MySQL</h3><p>Acrescente à classe TestFontes os testes do arquivo e escreva os dois marcados com Complete: o kit que não existe e o banco que cai no meio. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os trinta e quatro testes passam com o seu código. Depois faça importar_linhas abrir uma conexao_banco própria para cada linha: o seu teste do banco que cai no meio precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.linhas(...) monta as Linha como a conferência da A18 entrega; self.contar(&#x27;importacao&#x27;) conta os registros.</p></details><pre><code id="work-testes-fontes">    # Acrescente à classe TestFontes do seu tests/test_fontes.py
+    # (e, no começo do arquivo, import mysql.connector e from kits.planilha import Linha).
+
+    # A19: importar a planilha numa transação só.
+
+    def linhas(self, *itens):
+        &quot;&quot;&quot;Linhas como as que conferir devolve: (número, kit, ItemKit), a partir da linha 2.&quot;&quot;&quot;
+        return [Linha(numero, kit, ItemKit(nome, quantidade)) for numero, (kit, nome, quantidade) in enumerate(itens, start=2)]
+
+    def test_importar_soma_no_item_que_existe_e_cria_o_que_falta(self):
+        gravadas = self.dados.importar(self.linhas((&#x27;Treinamento Redes&#x27;, &#x27;cabo&#x27;, 2), (&#x27;Treinamento Suporte&#x27;, &#x27;Alicate&#x27;, 4)),
+                                       &#x27;itens.csv&#x27;, &#x27;a&#x27; * 64)
+        self.assertEqual(gravadas, 2)
+        self.assertEqual(self.estoque(), [(1, 1, &#x27;Cabo&#x27;, 5), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5), (4, 2, &#x27;Alicate&#x27;, 4)])
+
+    # Complete: Alicate no Treinamento Redes e Fita no Almoxarifado, que não existe: ValueError com a linha 3, o estoque
+    # continua o ESTOQUE_INICIAL e a tabela importacao continua vazia (self.contar(&#x27;importacao&#x27;)).
+
+    def test_o_mesmo_arquivo_nao_entra_duas_vezes(self):
+        linhas = self.linhas((&#x27;Treinamento Redes&#x27;, &#x27;Alicate&#x27;, 4))
+        self.dados.importar(linhas, &#x27;itens.csv&#x27;, &#x27;c&#x27; * 64)
+        with self.assertRaisesRegex(ValueError, r&#x27;esta planilha já foi importada em \d\d/\d\d/\d{4} \d\d:\d\d, como itens.csv&#x27;):
+            self.dados.importar(linhas, &#x27;copia.csv&#x27;, &#x27;c&#x27; * 64)
+        self.assertEqual(self.estoque()[-1], (4, 1, &#x27;Alicate&#x27;, 4))
+
+    def test_kit_com_nome_repetido_no_banco_recusa(self):
+        self.gravar(&quot;INSERT INTO kit (id, nome) VALUES (3, &#x27;Treinamento Redes&#x27;)&quot;)
+        with self.assertRaisesRegex(ValueError, &#x27;o kit Treinamento Redes tem 2 cadastros com esse nome&#x27;):
+            self.dados.importar(self.linhas((&#x27;Treinamento Redes&#x27;, &#x27;Alicate&#x27;, 4)), &#x27;itens.csv&#x27;, &#x27;d&#x27; * 64)
+
+    # Complete: com a segunda linha somando 2147483647 no Cabo, o MySQL recusa com o erro 1264 (mysql.connector.Error);
+    # o Alicate da primeira linha também não fica, e nenhuma importação é registrada.
+
+    def test_log_registra_a_importacao_e_a_recusa(self):
+        with self.assertLogs(&#x27;kits.importacao&#x27;, level=&#x27;INFO&#x27;) as log:
+            self.dados.importar(self.linhas((&#x27;Treinamento Redes&#x27;, &#x27;Alicate&#x27;, 4)), &#x27;itens.csv&#x27;, &#x27;f&#x27; * 64)
+            with self.assertRaises(ValueError):
+                self.dados.importar(self.linhas((&#x27;Almoxarifado&#x27;, &#x27;Fita&#x27;, 1)), &#x27;outra.csv&#x27;, &#x27;0&#x27; * 64)
+        self.assertEqual(log.output, [&#x27;INFO:kits.importacao:importada itens.csv: 1 itens&#x27;,
+                                      &#x27;WARNING:kits.importacao:recusada outra.csv: linha 2: o kit Almoxarifado não existe; &#x27;
+                                      &#x27;nada foi importado&#x27;])
+
+    def contar(self, tabela):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(f&#x27;SELECT COUNT(*) FROM {tabela}&#x27;)
+            return cur.fetchone()[0]
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: importar, log e escolher_arquivo</h3><p>Acrescente ao abrir_janela.py o registrador, o DadosMySQL.importar com as duas linhas de log, escolher_arquivo e a configuração do log no if __name__. Acrescente também resumo_do_arquivo ao kits/planilha.py, como no bloco da seção sobre integridade. Entrega: abrir_janela.py e kits/planilha.py.</p><p>Concluído quando: O teste do log de tests/test_fontes.py passa, e, depois de importar pela janela, importacoes.log tem a linha da importação.</p><details><summary>Dica para realizar a atividade</summary><p>warning antes do raise, info depois do sucesso. E o arquivo do log fica ao lado de quê?</p></details><pre><code id="work-dados"># Mudanças no seu abrir_janela.py da A17. O resto continua igual.
+import logging
+from pathlib import Path
+from tkinter import filedialog, messagebox
+
+# No import do repositório, acrescente importar_linhas.
+
+registro = logging.getLogger(&#x27;kits.importacao&#x27;)
+
+
+class DadosMySQL:
+    ...
+
+    def importar(self, linhas, arquivo, resumo):
+        &quot;&quot;&quot;Grava com importar_linhas por _gravar e devolve quantas linhas gravou.
+        Recusa (ValueError ou ConnectionError): registro.warning(&#x27;recusada %s: %s&#x27;, arquivo, erro) e deixe subir.
+        Sucesso: registro.info(&#x27;importada %s: %d itens&#x27;, arquivo, gravadas).&quot;&quot;&quot;
+        ...
+
+
+def escolher_arquivo():
+    &quot;&quot;&quot;filedialog.askopenfilename com o título Importar planilha e os tipos Planilha CSV (*.csv) e Todos (*.*).&quot;&quot;&quot;
+    ...
+
+
+if __name__ == &#x27;__main__&#x27;:
+    # logging.basicConfig: o arquivo importacoes.log ao lado deste .py (A18), encoding=&#x27;utf-8&#x27;, nível INFO,
+    # formato &#x27;%(asctime)s %(levelname)s %(message)s&#x27;. Depois, a janela com escolher_arquivo=escolher_arquivo.
+    ...
+</code></pre><div class="atelier" data-source="work-dados" data-filename="abrir_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/importacao.py: a JanelaImportacao</h3><p>Crie kits/importacao.py a partir do arquivo, completando os métodos pelos comentários. A janela confere com a A18 e só deixa importar sem erros; quem grava é o dados. Entrega: kits/importacao.py.</p><p>Concluído quando: Os oito testes de tests/test_importacao.py passam, inclusive os três que você vai completar, e as duas imagens acima se repetem na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>A tabela de erros é um Treeview como os do resumo. Que iid cada linha recebe?</p></details><pre><code id="work-importacao">&quot;&quot;&quot;Importar planilha (A19): mostra a conferência da A18 e só deixa importar uma planilha sem nenhum erro.
+Salve como kits/importacao.py.
+&quot;&quot;&quot;
+from pathlib import Path
+from tkinter import ttk
+
+import customtkinter as ctk
+
+from kits.planilha import PlanilhaInvalida, conferir_arquivo, resumo_do_arquivo
+from kits.resumo import contar
+
+VERMELHO = &#x27;#c62828&#x27;
+RECUSAS = (LookupError, ValueError, ConnectionError)
+
+
+class JanelaImportacao(ctk.CTkToplevel):
+    &quot;&quot;&quot;dados tem importar(linhas, arquivo, resumo), que devolve quantas linhas gravou ou recusa com ValueError
+    ou ConnectionError. ao_importar(mensagem) é chamada depois de importar, e a janela fecha.&quot;&quot;&quot;
+
+    def __init__(self, master, dados, caminho, ao_importar):
+        super().__init__(master)
+        # Guarde dados, ao_importar e o nome do arquivo (Path(caminho).name); self._linhas = [].
+        # Título &#x27;Importar planilha&#x27;, 560x420. Coluna 0 cresce; a linha 2 (a tabela de erros) também.
+        # Linha 0: self.situacao. Linha 1: self.contagem, em negrito.
+        # Linha 2: self.erros, um Treeview com as colunas Linha (60, à direita, sem esticar) e Motivo, num quadro.
+        # Linha 3: self.importar, &#x27;Importar&#x27;, desligado, chamando self.importar_linhas, à direita.
+        # Linha 4: self.aviso. No fim, self._conferir(caminho).
+        ...
+
+    def _conferir(self, caminho):
+        &quot;&quot;&quot;conferir_arquivo e resumo_do_arquivo; PlanilhaInvalida ou OSError: &#x27;itens.csv: &#x27; e o erro em
+        self.situacao, e &#x27;Corrija a planilha e escolha de novo.&#x27; em vermelho no aviso.
+        Sem erro: situação &#x27;itens.csv: UTF-8, separador ;&#x27;, contagem &#x27;2 linhas certas, 0 com erro&#x27;, uma linha
+        da tabela por erro (iid = número da linha). Com erros, aviso vermelho
+        &#x27;Nada é importado enquanto houver erro: corrija as linhas e escolha a planilha de novo.&#x27;;
+        sem linhas, &#x27;A planilha não tem nenhum item.&#x27;; senão, &#x27;Pronta: 2 itens em 2 kits. Cada quantidade soma
+        no item de mesmo nome.&#x27; e o Importar ligado.&quot;&quot;&quot;
+        ...
+
+    def importar_linhas(self):
+        &quot;&quot;&quot;self._dados.importar(linhas, arquivo, resumo). Recusa: &#x27;Não importada: &#x27; e o motivo, em vermelho,
+        e o Importar desligado. Sucesso: ao_importar(&#x27;Importados: 2 itens de itens.csv.&#x27;) e destroy().&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-importacao" data-filename="importacao.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_importacao.py: a importação com o banco de mentira</h3><p>Salve em tests/test_importacao.py. Antes, acrescente ao BancoDeMentira do seu tests/test_janela.py o método importar do bloco acima, e self.importacoes = [] no __init__. Cada teste grava a planilha numa pasta temporária. Escreva os três marcados com Complete. Entrega: tests/test_importacao.py.</p><p>Concluído quando: Os oito testes passam com o seu código. Depois faça o _conferir ligar o Importar mesmo com erros: o seu teste da planilha com erro precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.escolher(janela, caminho) faz a pessoa escolher o arquivo e devolve a JanelaImportacao aberta, ou None.</p></details><pre><code id="work-testes-importacao">&quot;&quot;&quot;Importar planilha pela janela, com o banco de mentira: roda sem MySQL, mas abre janelas de verdade.&quot;&quot;&quot;
+import tempfile
+import unittest
+from pathlib import Path
+
+from kits.importacao import JanelaImportacao
+from kits.janela import JanelaItens
+from tests.test_janela import FORA, BancoDeMentira, fechar
+
+CERTA = &#x27;kit;item;quantidade\nTreinamento Redes;Alicate;4\nTreinamento Suporte;Cabo;2\n&#x27;
+
+
+class TestImportacao(unittest.TestCase):
+    def setUp(self):
+        pasta = tempfile.TemporaryDirectory()
+        self.addCleanup(pasta.cleanup)
+        self.pasta = Path(pasta.name)
+        self.escolhido = &#x27;&#x27;
+
+    def planilha(self, texto, nome=&#x27;itens.csv&#x27;):
+        caminho = self.pasta / nome
+        caminho.write_text(texto, encoding=&#x27;utf-8-sig&#x27;)
+        return str(caminho)
+
+    def abrir(self, banco=None):
+        self.banco = banco or BancoDeMentira()
+        janela = JanelaItens(self.banco, self.banco.perguntar, 60_000, escolher_arquivo=lambda: self.escolhido)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def importacao(self, janela):
+        abertas = [w for w in janela.winfo_children() if isinstance(w, JanelaImportacao) and w.winfo_exists()]
+        return abertas[0] if abertas else None
+
+    def escolher(self, janela, caminho):
+        self.escolhido = caminho
+        janela.importar_botao.invoke()
+        janela.update()
+        return self.importacao(janela)
+
+    def test_planilha_certa_mostra_a_conferencia_e_liga_o_importar(self):
+        janela = self.abrir()
+        tela = self.escolher(janela, self.planilha(CERTA))
+        self.assertEqual(tela.situacao.cget(&#x27;text&#x27;), &#x27;itens.csv: UTF-8, separador ;&#x27;)
+        self.assertEqual(tela.contagem.cget(&#x27;text&#x27;), &#x27;2 linhas certas, 0 com erro&#x27;)
+        self.assertEqual(tela.importar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.assertIn(&#x27;2 itens em 2 kits&#x27;, tela.aviso.cget(&#x27;text&#x27;))
+
+    def test_importar_grava_tudo_fecha_e_a_principal_mostra(self):
+        janela = self.abrir()
+        tela = self.escolher(janela, self.planilha(CERTA))
+        tela.importar.invoke()
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4), (2, &#x27;Cabo&#x27;, 2)])
+        self.assertEqual(self.banco.importacoes[0][0], &#x27;itens.csv&#x27;)
+        self.assertEqual(len(self.banco.importacoes[0][1]), 64)
+        self.assertIsNone(self.importacao(janela))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Importados: 2 itens de itens.csv.&#x27;)
+        self.assertIn((&#x27;Alicate&#x27;, &#x27;4&#x27;), [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()])
+
+    # Complete: com a linha Treinamento Redes;Fita;dez a mais na CERTA, a contagem é &#x27;2 linhas certas, 1 com erro&#x27;, a linha 4
+    # da tabela traz o motivo do ler_quantidade, o Importar fica desligado e nada chega ao banco de mentira.
+
+    def test_planilha_sem_cabecalho_explica(self):
+        janela = self.abrir()
+        tela = self.escolher(janela, self.planilha(&#x27;Treinamento Redes;Alicate;4\n&#x27;))
+        self.assertEqual(tela.situacao.cget(&#x27;text&#x27;), &#x27;itens.csv: A primeira linha precisa ser kit;item;quantidade&#x27;)
+        self.assertEqual(tela.importar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # Complete: escolher_arquivo devolvendo vazio não abre nenhuma JanelaImportacao.
+
+    # Complete: uma planilha com o kit Almoxarifado, que o banco de mentira não tem: Importar mostra Não importada: e o motivo
+    # na janela de importação, desliga o Importar, e a janela principal não muda.
+
+    def test_banco_fora_tambem_fica_na_janela_de_importacao(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;importar&#x27;] = FORA
+        janela = self.abrir(banco)
+        tela = self.escolher(janela, self.planilha(CERTA))
+        tela.importar.invoke()
+        self.assertEqual(tela.aviso.cget(&#x27;text&#x27;), f&#x27;Não importada: {FORA}&#x27;)
+
+    def test_sem_escolher_arquivo_o_botao_fica_desligado(self):
+        banco = BancoDeMentira()
+        janela = JanelaItens(banco, banco.perguntar, 60_000)
+        self.addCleanup(fechar, janela)
+        self.assertEqual(janela.importar_botao.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+</code></pre><div class="atelier" data-source="work-testes-importacao" data-filename="test_importacao.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>kits/janela.py: o botão Importar planilha</h3><p>Faça na sua JanelaItens da A17 as mudanças descritas no arquivo: escolher_arquivo no __init__, o rodapé com dois botões, importar_planilha e _importou. Entrega: kits/janela.py.</p><p>Concluído quando: Os testes de tests/test_janela.py e tests/test_importacao.py passam.</p><details><summary>Dica para realizar a atividade</summary><p>Quem chama _importou é a JanelaImportacao, depois de gravar.</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A17. O resto da JanelaItens continua igual.
+from kits.importacao import JanelaImportacao
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;dados ganha importar(linhas, arquivo, resumo).&quot;&quot;&quot;
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000, pedir_nome=None, escolher_arquivo=None):
+        # Guarde escolher_arquivo: devolve um caminho, ou vazio se a pessoa cancelar.
+        # O rodapé à direita vira um quadro transparente com dois botões de largura 130:
+        # self.importar_botao, &#x27;Importar planilha&#x27;, desligado se não houver escolher_arquivo, e o Resumo dos kits.
+        ...
+
+    def importar_planilha(self):
+        &quot;&quot;&quot;Pede o caminho; vazio, não faz nada. Senão, abre JanelaImportacao(self, self._dados, caminho, self._importou).&quot;&quot;&quot;
+        ...
+
+    def _importou(self, mensagem):
+        &quot;&quot;&quot;Cancela a edição, recarrega e mostra a mensagem em verde no aviso.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_fluxo.py: importar pela janela, duas vezes</h3><p>O arquivo substitui o da A16: a janela do fluxo recebe escolher_arquivo, que tira o próximo caminho de self.arquivos. Escreva o teste marcado com Complete, com o banco de verdade. Entrega: tests/test_fluxo.py.</p><p>Concluído quando: Os cinco testes de tests/test_fluxo.py passam. Depois tire o INSERT INTO importacao do importar_linhas: o seu teste precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Depois de clicar em Importar planilha, a JanelaImportacao aberta é a filha da janela principal que ainda existe.</p></details><pre><code id="work-teste-fluxo">&quot;&quot;&quot;Testes de fluxo: a janela de verdade, ligada ao MySQL de testes pelo DadosMySQL.
+
+Cada passo é feito como a pessoa faria (botão, campo, lista) e conferido nos dois lados: no que a janela
+mostra e no que ficou gravado no kits_teste. Cada teste recria as tabelas; o kits fica intacto.
+&quot;&quot;&quot;
+import tempfile
+import unittest
+from pathlib import Path
+
+from abrir_janela import DadosMySQL
+from kits.banco import conexao_banco
+from kits.importacao import JanelaImportacao
+from kits.janela import JanelaItens
+from tests.test_janela import fechar
+from tests.test_repositorio import TESTE, comandos
+
+
+class TestFluxo(unittest.TestCase):
+    def setUp(self):
+        self.gravar(&#x27;SET SESSION lock_wait_timeout = 5&#x27;,
+                    *[c for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(script)])
+        self.respostas = []  # o que a pessoa responde às perguntas, na ordem
+        self.nomes = []      # o que a pessoa digita na caixa de nome, na ordem
+        self.arquivos = []   # o que a pessoa escolhe na caixa de abrir arquivo, na ordem (A19)
+
+    def gravar(self, *sqls):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for sql in sqls:
+                cur.execute(sql)
+
+    def banco(self, sql, *valores):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(sql, valores)
+            return cur.fetchall()
+
+    def abrir(self):
+        janela = JanelaItens(DadosMySQL(TESTE), lambda texto: self.respostas.pop(0), intervalo_ms=60_000,
+                             pedir_nome=lambda texto: self.nomes.pop(0), escolher_arquivo=lambda: self.arquivos.pop(0))
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    # O que a pessoa faz
+
+    def preencher_e_confirmar(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            campo.insert(0, texto)
+        janela.adicionar.invoke()
+        janela.update()
+
+    def escolher_linha(self, janela, nome):
+        iid = next(i for i in janela.lista.get_children() if janela.lista.item(i, &#x27;values&#x27;)[0] == nome)
+        janela.lista.selection_set(iid)
+        janela.update()
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def itens_no_banco(self, kit_id):
+        return self.banco(&#x27;SELECT nome, quantidade FROM item WHERE kit_id = %s ORDER BY id&#x27;, kit_id)
+
+    # Os fluxos
+
+    def test_jornada_de_um_kit_novo_do_cadastro_a_remocao(self):
+        janela = self.abrir()
+
+        # 1. Novo kit: o kit vazio aparece escolhido e está no banco.
+        self.nomes.append(&#x27;Almoxarifado&#x27;)
+        janela.novo_kit.invoke()
+        kit_id = janela.kit_atual()
+        self.assertEqual(janela.kit.get(), f&#x27;Almoxarifado (kit {kit_id})&#x27;)
+        self.assertEqual(self.banco(&#x27;SELECT nome FROM kit WHERE id = %s&#x27;, kit_id), [(&#x27;Almoxarifado&#x27;,)])
+
+        # 2. Dois itens pelo formulário.
+        self.preencher_e_confirmar(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        self.preencher_e_confirmar(janela, &#x27;Fita isolante&#x27;, &#x27;2&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Alicate&#x27;, &#x27;4&#x27;), (&#x27;Fita isolante&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.itens_no_banco(kit_id), [(&#x27;Alicate&#x27;, 4), (&#x27;Fita isolante&#x27;, 2)])
+
+        # 3. Editar a fita para 3.
+        self.escolher_linha(janela, &#x27;Fita isolante&#x27;)
+        janela.editar.invoke()
+        self.preencher_e_confirmar(janela, &#x27;Fita isolante&#x27;, &#x27;3&#x27;)
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Fita isolante (3).&#x27;)
+        self.assertEqual(self.itens_no_banco(kit_id), [(&#x27;Alicate&#x27;, 4), (&#x27;Fita isolante&#x27;, 3)])
+
+        # 4. Remover o kit com itens: a pessoa confirma, o banco recusa, nada some.
+        self.respostas.append(True)
+        janela.remover_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Kit não removido: Kit {kit_id} ainda tem itens: remova os itens antes&#x27;)
+        self.assertEqual(len(self.itens_no_banco(kit_id)), 2)
+
+        # 5. Remover os dois itens, respondendo Sim, e então o kit, que agora está vazio.
+        for nome in (&#x27;Alicate&#x27;, &#x27;Fita isolante&#x27;):
+            self.escolher_linha(janela, nome)
+            self.respostas.append(True)
+            janela.remover.invoke()
+        self.assertEqual(self.itens_no_banco(kit_id), [])
+        self.respostas.append(True)
+        janela.remover_kit.invoke()
+        self.assertEqual(self.banco(&#x27;SELECT id FROM kit WHERE id = %s&#x27;, kit_id), [])
+        self.assertNotIn(kit_id, janela._kits.values())
+
+        # Nada além do que a pessoa pediu: os kits do começo continuam como estavam.
+        self.assertEqual(self.banco(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;),
+                         [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)])
+        self.assertEqual((self.respostas, self.nomes), ([], []))
+
+    def test_responder_nao_deixa_tudo_como_estava(self):
+        janela = self.abrir()
+        self.escolher_linha(janela, &#x27;Cabo&#x27;)
+        self.respostas.append(False)
+        janela.remover.invoke()
+        self.assertEqual(self.itens_no_banco(1), [(&#x27;Cabo&#x27;, 3), (&#x27;Notebook&#x27;, 2)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_duas_janelas_a_segunda_a_salvar_e_avisada(self):
+        primeira, segunda = self.abrir(), self.abrir()
+        for janela in (primeira, segunda):
+            self.escolher_linha(janela, &#x27;Notebook&#x27;)
+            janela.editar.invoke()
+        self.preencher_e_confirmar(segunda, &#x27;Notebook&#x27;, &#x27;5&#x27;)
+        self.preencher_e_confirmar(primeira, &#x27;Notebook&#x27;, &#x27;1&#x27;)
+        self.assertEqual(primeira.aviso.cget(&#x27;text&#x27;),
+                         &#x27;Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5&#x27;)
+        self.assertIn((&#x27;Notebook&#x27;, &#x27;5&#x27;), self.linhas(primeira))
+        self.assertEqual(self.itens_no_banco(1), [(&#x27;Cabo&#x27;, 3), (&#x27;Notebook&#x27;, 5)])
+
+    def test_kit_com_nome_repetido_e_recusado_na_janela(self):
+        janela = self.abrir()
+        self.nomes.append(&#x27;treinamento redes&#x27;)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não criado: Já existe o kit Treinamento Redes&#x27;)
+        self.assertEqual(len(self.banco(&#x27;SELECT id FROM kit&#x27;)), 2)
+
+    # Complete: grave numa pasta temporária um entrada.csv (utf-8-sig) com cabo 2 no Treinamento Redes e Alicate 4 no
+    # Treinamento Suporte; importe pela janela duas vezes (self.arquivos.append, Importar planilha, Importar na
+    # JanelaImportacao). A primeira avisa &#x27;Importados: 2 itens de entrada.csv.&#x27; na janela principal; a segunda,
+    # &#x27;Não importada: esta planilha já foi importada em ...&#x27; na de importação. No banco: Cabo 5 no kit 1,
+    # Alicate 4 no kit 2 e uma linha só em importacao.
+</code></pre><div class="atelier" data-source="work-teste-fluxo" data-filename="test_fluxo.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto. Os testes abrem janelas de verdade por alguns instantes."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto. Os testes abrem janelas de verdade por alguns instantes.</p></div><div class="workbench"><h3>abrir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como abrir_legado.py na raiz: ele herda da sua JanelaItens, da sua JanelaImportacao e do seu DadosMySQL. No banco kits recriado, reproduza cada relato com uma planilha pequena: uma com 2147483647 na segunda linha; uma com o kit Treinamento Rede; a itens_exemplo.csv da A18; e a mesma planilha certa duas vezes. Para cada relato, registre a linha culpada, a evidência, a correção e o teste do seu projeto que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O abrir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm linha, evidência observada, correção e teste; o relato 1 explica por que reimportar depois de corrigir dobrou as primeiras linhas.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 1, quantas vezes o with conexao_banco abre e fecha a transação?</p></details><pre><code id="work-importacao-legado">&quot;&quot;&quot;Importação herdada, por cima da sua janela e do seu DadosMySQL. Uso: python abrir_legado.py&quot;&quot;&quot;
+from abrir_janela import DadosMySQL, escolher_arquivo, perguntar, pedir_nome
+from kits.banco import conexao_banco
+from kits.importacao import JanelaImportacao
+from kits.janela import JanelaItens
+from kits.repositorio import adicionar_item
+
+
+class DadosLegados(DadosMySQL):
+    def importar(self, linhas, arquivo, resumo):
+        gravadas = 0
+        for linha in linhas:
+            with conexao_banco(self.config) as con:
+                cur = con.cursor()
+                cur.execute(&#x27;SELECT id FROM kit WHERE nome = %s&#x27;, (linha.kit,))
+                achados = cur.fetchall()
+                if achados:
+                    kit_id = achados[0][0]
+                else:
+                    cur.execute(&#x27;INSERT INTO kit (nome) VALUES (%s)&#x27;, (linha.kit,))
+                    kit_id = cur.lastrowid
+                adicionar_item(con, kit_id, linha.item)
+            gravadas += 1
+        return gravadas
+
+
+class ImportacaoLegada(JanelaImportacao):
+    def _conferir(self, caminho):
+        super()._conferir(caminho)
+        if self._linhas:
+            self.importar.configure(state=&#x27;normal&#x27;)
+
+
+class JanelaLegada(JanelaItens):
+    def importar_planilha(self):
+        caminho = self._escolher_arquivo()
+        if caminho:
+            ImportacaoLegada(self, self._dados, caminho, self._importou)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaLegada(DadosLegados(), perguntar, pedir_nome=pedir_nome, escolher_arquivo=escolher_arquivo).mainloop()
+</code></pre><div class="atelier" data-source="work-importacao-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o banco kits recriado: .\.venv\Scripts\python.exe abrir_legado.py."></div><p>Na raiz do projeto, com o banco kits recriado: .\.venv\Scripts\python.exe abrir_legado.py.</p></div><div class="workbench"><h3>README.md: a seção Importação</h3><p>Acrescente ao README.md do projeto a seção Importação: como importar pela janela, quando a planilha é recusada inteira e por quê, o que acontece ao importar a mesma planilha de novo, onde fica o log e como ler. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra pessoa, só com o README, importa uma planilha, entende uma recusa e acha a linha dela no log.</p><details><summary>Dica para realizar a atividade</summary><p>Quem importa vai perguntar: e se eu corrigir a planilha e importar de novo, soma duas vezes? Está respondido?</p></details><pre><code id="work-readme">## Importação
+
+### Como importar
+
+### Quando a planilha é recusada
+
+### O log
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra pessoa seguir sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra pessoa seguir sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: o histórico de importações</h3><p>Mostre no Resumo dos kits as cinco últimas importações (quando, arquivo, quantos itens), lidas da tabela importacao com ORDER BY e LIMIT. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: O resumo mostra as importações da mais nova para a mais velha; o teste no kits_teste importa três planilhas e confere a ordem.</p><details><summary>Dica para realizar a atividade</summary><p>Duas importações no mesmo segundo têm o mesmo momento. O que desempata?</p></details><pre><code id="work-bonus-historico"># Histórico de importações
+
+## A consulta
+
+## Na janela
+
+## O teste
+</code></pre><div class="atelier" data-source="work-bonus-historico" data-filename="historico.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Essa carga é confiável? <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#auditoria" aria-label="Versão para leitura: Essa carga é confiável?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Uma planilha de 50 linhas, com commit por linha, falha na linha 40. Corrigida e importada de novo, quantas linhas foram somadas duas vezes?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="38: as linhas 2 a 39, gravadas antes da falha" autocomplete="off">38: as linhas 2 a 39, gravadas antes da falha</label><label class="option"><input type="radio" name="q01" value="Nenhuma: o erro desfaz tudo" autocomplete="off">Nenhuma: o erro desfaz tudo</label><label class="option"><input type="radio" name="q01" value="50: a planilha inteira" autocomplete="off">50: a planilha inteira</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O cabeçalho é a linha 1. Quais linhas já tinham commit?</p></details></fieldset><fieldset data-question="q02"><legend>Duas pessoas importam a mesma planilha no mesmo segundo. Com o resumo UNIQUE, o que acontece?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Uma grava; a outra recebe o erro 1062, vira PlanilhaJaImportada e nada dela fica" autocomplete="off">Uma grava; a outra recebe o erro 1062, vira PlanilhaJaImportada e nada dela fica</label><label class="option"><input type="radio" name="q02" value="As duas gravam, porque nenhuma viu a outra" autocomplete="off">As duas gravam, porque nenhuma viu a outra</label><label class="option"><input type="radio" name="q02" value="As duas são recusadas" autocomplete="off">As duas são recusadas</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem confere a repetição: o Python ou o banco?</p></details></fieldset><fieldset data-question="q03"><legend>A mesma planilha é salva de novo no Excel, sem mudar nenhuma célula, e importada. O resumo é o mesmo?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Não necessariamente: o resumo é dos bytes, e salvar de novo pode mudar a codificação, o separador ou as aspas" autocomplete="off">Não necessariamente: o resumo é dos bytes, e salvar de novo pode mudar a codificação, o separador ou as aspas</label><label class="option"><input type="radio" name="q03" value="Sim: as células são as mesmas" autocomplete="off">Sim: as células são as mesmas</label><label class="option"><input type="radio" name="q03" value="Sim, se o nome do arquivo for o mesmo" autocomplete="off">Sim, se o nome do arquivo for o mesmo</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o SHA-256 recebe?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>importar_linhas não faz commit: quem confirma é o em_transacao do DadosMySQL, no fim.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 2 do tutorial.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>Um kit da planilha que não existe é criado na hora, para a importação não parar.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 2.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>Com erros na conferência, a janela importa só as linhas certas e mostra quantas foram.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Depois, como a coordenação manda só as que faltaram?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>Para saber se a planilha já foi importada, o código faz um SELECT pelo resumo e, se não achar, um INSERT, sem UNIQUE na coluna.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E duas importações no mesmo instante?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>A recusa de uma planilha é registrada no log com o nível warning, e a importação aceita, com info.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem lê o log procura o quê primeiro?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>O registro em importacao é a primeira coisa que importar_linhas grava.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Se a planilha falhar depois, o que acontece com o registro?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-importar"><p>Outra dupla entregou o importar_linhas abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def importar_linhas(con, linhas, arquivo, resumo):
+    cur = con.cursor()
+    for linha in linhas:
+        cur.execute(&#x27;SELECT id FROM kit WHERE nome = %s&#x27;, (linha.kit,))
+        kit_id = cur.fetchall()[0][0]
+        adicionar_item(con, kit_id, linha.item)
+    cur.execute(&#x27;INSERT INTO importacao (arquivo, resumo, itens) VALUES (%s, %s, %s)&#x27;,
+                (arquivo, resumo, len(linhas)))
+    return len(linhas)</code></pre><fieldset data-question="ac-indice" data-claim="ac-indice"><legend>Um kit que não existe vira IndexError, que a janela não sabe explicar, em vez de uma recusa com a linha.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-indice" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-indice" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-ambiguo" data-claim="ac-ambiguo"><legend>Com dois kits de mesmo nome, os itens vão para o primeiro que o banco devolver, sem aviso.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-ambiguo" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-ambiguo" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-ordem" data-claim="ac-ordem"><legend>Registrar a importação no fim deixa as linhas gravadas se o resumo já existir, porque o INSERT duplicado vem depois delas.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-ordem" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-ordem" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a importação <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#registro" aria-label="Versão para leitura: Entregue o que prova a importação">↗</a></h2><p>Entregue, no repositório do projeto: sql/mysql/esquema.sql com importacao; kits/repositorio.py com importar_linhas; kits/planilha.py com resumo_do_arquivo; kits/importacao.py; abrir_janela.py com importar e o log; kits/janela.py com o botão; tests/test_importacao.py, tests/test_janela.py, tests/test_fontes.py e tests/test_fluxo.py; e a seção Importação no README.md. O lote.py, o abrir_legado.py e o importacoes.log ficam fora do commit: acrescente importacoes.log ao .gitignore.</p><p>No registro desta página, cole a tabela dos quatro relatos, a saída dos testes e as linhas do importacoes.log depois de importar uma planilha e tentar de novo. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini e o log não entraram. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Por que o registro da importação vem antes das linhas, e não depois, se os dois estão na mesma transação?</p><p>A A20 olha para o código que cresceu: janela, dados, planilha e importação começam a se misturar, e a refatoração para MVC separa quem mostra, quem decide e quem guarda.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/hashlib.html">Python 3: hashlib (sha256)</a></li><li><a href="https://docs.python.org/3/library/logging.html">Python 3: logging (getLogger, basicConfig)</a></li><li><a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertLogs">Python 3: unittest assertLogs</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-table.html">MySQL 8.4: restrições UNIQUE e o erro 1062</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/commit.html">MySQL 8.4: transações (START TRANSACTION, COMMIT, ROLLBACK)</a></li><li><a href="https://docs.python.org/3/library/sqlite3.html#sqlite3-transaction-control">Python 3: sqlite3 e o autocommit</a></li></ul><a data-idoc="source" href="leitura-0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

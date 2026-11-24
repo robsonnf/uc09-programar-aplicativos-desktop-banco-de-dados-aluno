@@ -1,0 +1,901 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A17 · Juntar e contar: JOIN, agregações e o resumo dos kits</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A17" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A17</span><span>JOIN, agregações e listagens estruturadas<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">O kit vazio que tinha um item</a></li><li><a href="#esteira">De duas tabelas a uma linha por kit</a></li><li><a href="#juncao">JOIN: quem fica quando o outro lado não tem par</a></li><li><a href="#agregar">Contar e somar sem enganar</a></li><li><a href="#resumo">Uma segunda janela com o mesmo objeto de dados</a></li><li><a href="#tutorial">Tutorial: gêneros e livros no SQLite</a></li><li><a href="#pratica">O resumo dos kits</a></li><li><a href="#auditoria">Os números do resumo batem?</a></li><li><a href="#registro">Entregue o que prova o resumo</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A17</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Juntar e contar: JOIN, agregações e o resumo dos kits</h1><p class="thesis">Até aqui, cada consulta lia uma tabela por vez. Hoje a coordenação pede um resumo: quantos itens e unidades cada kit tem, inclusive os vazios, e quais itens de todos os kits estão acabando. Você junta kit e item com JOIN, conta e soma com COUNT e SUM, agrupa com GROUP BY e mostra tudo numa janela de resumo. No fim, depura um resumo herdado que contava um item no kit vazio, juntava kits de mesmo nome e repetia cada item com todos os kits.</p><p data-idoc="caveat">A aula continua na janela da A16, no DadosMySQL e no MySQL da A08. O tutorial usa o SQLite da A06, em memória, porque o que se vê é o mesmo; as diferenças do MySQL estão no texto. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Escolher entre INNER JOIN e LEFT JOIN pelo que a listagem precisa mostrar, e escrever a condição do ON</li><li>Contar e somar por grupo com COUNT, SUM e GROUP BY, sem contar linhas vazias e sem deixar soma nula</li><li>Agrupar pela chave, e não pelo nome, para que registros diferentes com o mesmo nome continuem separados</li><li>Mostrar o resumo numa segunda janela que recebe o mesmo objeto de dados</li><li>Rastrear e corrigir um resumo herdado a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A16: kits/janela.py com busca e ordem, abrir_janela.py com DadosMySQL, tests/test_janela.py, tests/test_fontes.py e tests/test_fluxo.py passando</li><li>Chaves estrangeiras da A06 (item.kit_id aponta para kit.id) e o SQLite da A06 e da A07</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>O kit vazio que tinha um item <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#partida" aria-label="Versão para leitura: O kit vazio que tinha um item">↗</a></h2><p>A coordenação quer, numa tela só, quantos itens e unidades cada kit tem e quais itens estão acabando. Outra equipe fez um resumo, abrir_legado.py, e vieram quatro relatos.</p><p>O kit Almoxarifado, recém-criado e vazio, aparece com 1 item. Os dois kits Treinamento Redes, criados ao mesmo tempo (a pendência da A15), viraram uma linha só, com a soma dos dois. Na lista de itens acabando, cada item aparece uma vez para cada kit, com o nome do kit trocado. E pedir os itens com menos de 3 unidades mostra também os que têm exatamente 3.</p><p>Em dupla, antes de abrir o código: como uma consulta pode contar 1 item num kit que não tem nenhum?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: resumo_kits e itens_abaixo em kits/repositorio.py; os dois métodos no DadosMySQL; kits/resumo.py com a JanelaResumo; o botão Resumo dos kits em kits/janela.py; tests/test_resumo.py, tests/test_janela.py e tests/test_fontes.py; e a seção Resumo no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam, e o resumo mostra o kit vazio com 0 itens e 0 unidades.</p></div></section><section id="esteira" data-stop="esteira"><h2>De duas tabelas a uma linha por kit <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#esteira" aria-label="Versão para leitura: De duas tabelas a uma linha por kit">↗</a></h2><ol class="pipeline"><li><strong>Juntar</strong><p>Cada kit com os seus itens, pela condição do ON.</p></li><li><strong>Manter</strong><p>LEFT JOIN, para o kit sem itens não sumir.</p></li><li><strong>Agrupar</strong><p>GROUP BY pelo id do kit: uma linha por kit.</p></li><li><strong>Contar e somar</strong><p>COUNT da coluna do item e SUM com COALESCE.</p></li><li><strong>Converter</strong><p>A soma volta do MySQL como Decimal; a janela recebe int.</p></li><li><strong>Mostrar</strong><p>Uma janela de resumo com o mesmo objeto de dados.</p></li></ol></section><section id="juncao" data-stop="juncao"><h2>JOIN: quem fica quando o outro lado não tem par <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#juncao" aria-label="Versão para leitura: JOIN: quem fica quando o outro lado não tem par">↗</a></h2><p>Um JOIN junta cada linha de uma tabela com as linhas da outra que satisfazem a condição do ON: item.kit_id = kit.id liga cada item ao seu kit. Sem condição, o banco junta tudo com tudo, e cada item aparece uma vez para cada kit; é o relato 3.</p><p>No INNER JOIN, que é o JOIN sem adjetivo, só ficam as linhas que têm par dos dois lados: um kit sem itens não aparece. Para a lista de itens acabando, é o certo: o que interessa são itens, e todo item tem kit. Para o resumo, não: o kit vazio precisa estar lá, com zero. É o LEFT JOIN: todas as linhas da tabela da esquerda ficam, e, quando não há par, as colunas da direita vêm NULL.</p><div class="table-wrap"><table><caption>Qual JOIN para cada listagem</caption><thead><tr><th scope="col">Listagem</th><th scope="col">Pergunta</th><th scope="col">JOIN</th><th scope="col">Por quê</th></tr></thead><tbody><tr><td>Resumo dos kits</td><td>Quantos itens cada kit tem?</td><td>kit LEFT JOIN item</td><td>O kit vazio tem resposta: zero</td></tr><tr><td>Itens acabando</td><td>Que itens têm menos de N?</td><td>item JOIN kit</td><td>Só interessam itens; todo item tem kit</td></tr></tbody></table></div></section><section id="agregar" data-stop="agregar"><h2>Contar e somar sem enganar <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#agregar" aria-label="Versão para leitura: Contar e somar sem enganar">↗</a></h2><p>GROUP BY junta as linhas do JOIN em grupos, e cada grupo vira uma linha do resultado; COUNT e SUM calculam por grupo. O detalhe está no kit vazio: o LEFT JOIN devolve para ele uma linha, com o lado do item todo NULL. COUNT(*) conta linhas, então conta essa também: o kit vazio fica com 1, o relato 1. COUNT(i.id) conta só os valores que não são NULL: zero.</p><p>Com SUM é parecido: a soma de nenhum valor é NULL, e não 0. COALESCE(SUM(i.quantidade), 0) devolve o primeiro valor que não for NULL: a soma, ou 0. No MySQL, SUM de uma coluna INT volta como DECIMAL, e o conector entrega um Decimal do Python; resumo_kits converte com int(), para a janela e os testes receberem números inteiros. No SQLite do tutorial, a soma já volta int.</p><p>Agrupe pela chave. Com GROUP BY k.nome, dois kits com o mesmo nome viram um grupo só, e a soma junta os estoques: o relato 2. Com GROUP BY k.id, k.nome, cada kit é um grupo, mesmo com nomes iguais. O MySQL 8.4, com o ONLY_FULL_GROUP_BY ligado de fábrica, recusa um SELECT com coluna que não está no GROUP BY nem dentro de uma agregação; por isso o resumo herdado precisou de MIN(k.id).</p></section><section id="resumo" data-stop="resumo"><h2>Uma segunda janela com o mesmo objeto de dados <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#resumo" aria-label="Versão para leitura: Uma segunda janela com o mesmo objeto de dados">↗</a></h2><p>O resumo é uma CTkToplevel: uma janela a mais, que pertence à janela principal e fecha com ela. Ela recebe o mesmo objeto dados, que ganha resumo_kits e itens_abaixo; nos testes, o BancoDeMentira conta e soma em Python com os mesmos dados. O botão Resumo dos kits fica no rodapé da janela principal, porque o topo já está cheio na largura mínima.</p><p>Clicar de novo no botão não abre outra janela: se o resumo está aberto, ele relê os números e vem para a frente. O limite dos itens acabando passa pela mesma regra de quantidade do formulário (A04); um limite inválido é explicado, e a consulta nem é feita.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: gêneros e livros no SQLite <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#tutorial" aria-label="Versão para leitura: Tutorial: gêneros e livros no SQLite">↗</a></h2><p>O tutorial usa um acervo com gêneros e livros num SQLite em memória, com um gênero sem livros (Poesia) e dois gêneros com o mesmo nome (Didáticos). Crie relatorio.py na raiz do projeto com o passo 1 e rode com .\.venv\Scripts\python.exe relatorio.py. Nos passos 2 e 3, troque as duas chamadas a mostrar do fim do arquivo pelas do passo.</p><p>As telas são de execuções reais desse código, com Python 3.14.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo relatorio.py inteiro</figcaption><pre><code>import sqlite3
+
+con = sqlite3.connect(&#x27;:memory:&#x27;)
+con.executescript(&#x27;&#x27;&#x27;
+CREATE TABLE genero (id INTEGER PRIMARY KEY, nome TEXT NOT NULL);
+CREATE TABLE livro (id INTEGER PRIMARY KEY, genero_id INTEGER NOT NULL REFERENCES genero(id),
+                    titulo TEXT NOT NULL, exemplares INTEGER NOT NULL);
+INSERT INTO genero VALUES (1, &#x27;Didáticos&#x27;), (2, &#x27;Referência&#x27;), (3, &#x27;Poesia&#x27;), (4, &#x27;Didáticos&#x27;);
+INSERT INTO livro VALUES (1, 1, &#x27;Atlas&#x27;, 1), (2, 1, &#x27;Gramática&#x27;, 3), (3, 2, &#x27;Dicionário&#x27;, 4), (4, 4, &#x27;Guia de Redes&#x27;, 2);
+&#x27;&#x27;&#x27;)
+
+
+def mostrar(titulo, sql):
+    print(f&#x27;-- {titulo}&#x27;)
+    for linha in con.execute(sql):
+        print(linha)
+    print()
+
+
+mostrar(&#x27;INNER JOIN: só os gêneros que têm livro&#x27;,
+        &#x27;SELECT g.nome, l.titulo FROM genero g JOIN livro l ON l.genero_id = g.id ORDER BY g.id, l.id&#x27;)
+mostrar(&#x27;LEFT JOIN: todos os gêneros; sem livro, o lado do livro vem vazio&#x27;,
+        &#x27;SELECT g.nome, l.titulo FROM genero g LEFT JOIN livro l ON l.genero_id = g.id ORDER BY g.id, l.id&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 1 · INNER JOIN e LEFT JOIN</figcaption><p>Rode o arquivo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · INNER JOIN e LEFT JOIN"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe relatorio.py</kbd>
+-- INNER JOIN: só os gêneros que têm livro
+(&#x27;Didáticos&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Gramática&#x27;)
+(&#x27;Referência&#x27;, &#x27;Dicionário&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Guia de Redes&#x27;)
+
+-- LEFT JOIN: todos os gêneros; sem livro, o lado do livro vem vazio
+(&#x27;Didáticos&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Gramática&#x27;)
+(&#x27;Referência&#x27;, &#x27;Dicionário&#x27;)
+(&#x27;Poesia&#x27;, None)
+(&#x27;Didáticos&#x27;, &#x27;Guia de Redes&#x27;)</code></pre><p class="tela-nota"><strong>Repare:</strong> Poesia só aparece no LEFT JOIN, com None no lugar do título: é o NULL do lado sem par.</p></figure><figure class="code-block"><figcaption>Passo 2 · Troque as duas chamadas a mostrar do fim</figcaption><pre><code>mostrar(&#x27;COUNT(*) conta a linha do LEFT JOIN, até a vazia&#x27;,
+        &#x27;SELECT g.id, g.nome, COUNT(*), SUM(l.exemplares) FROM genero g LEFT JOIN livro l ON l.genero_id = g.id &#x27;
+        &#x27;GROUP BY g.id, g.nome ORDER BY g.id&#x27;)
+mostrar(&#x27;COUNT(l.id) conta só livros; COALESCE troca o vazio da soma por 0&#x27;,
+        &#x27;SELECT g.id, g.nome, COUNT(l.id), COALESCE(SUM(l.exemplares), 0) FROM genero g &#x27;
+        &#x27;LEFT JOIN livro l ON l.genero_id = g.id GROUP BY g.id, g.nome ORDER BY g.id&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · COUNT(*), COUNT da coluna e COALESCE</figcaption><p>Rode de novo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · COUNT(*), COUNT da coluna e COALESCE"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe relatorio.py</kbd>
+-- COUNT(*) conta a linha do LEFT JOIN, até a vazia
+(1, &#x27;Didáticos&#x27;, 2, 4)
+(2, &#x27;Referência&#x27;, 1, 4)
+(3, &#x27;Poesia&#x27;, 1, None)
+(4, &#x27;Didáticos&#x27;, 1, 2)
+
+-- COUNT(l.id) conta só livros; COALESCE troca o vazio da soma por 0
+(1, &#x27;Didáticos&#x27;, 2, 4)
+(2, &#x27;Referência&#x27;, 1, 4)
+(3, &#x27;Poesia&#x27;, 0, 0)
+(4, &#x27;Didáticos&#x27;, 1, 2)</code></pre><p class="tela-nota"><strong>Repare:</strong> Com COUNT(*), Poesia tem 1 livro; com COUNT(l.id), 0. A soma de nenhum livro é None até o COALESCE.</p></figure><figure class="code-block"><figcaption>Passo 3 · Troque de novo as duas chamadas</figcaption><pre><code>mostrar(&#x27;GROUP BY pelo nome junta os dois gêneros Didáticos numa linha só&#x27;,
+        &#x27;SELECT g.nome, COUNT(l.id), COALESCE(SUM(l.exemplares), 0) FROM genero g &#x27;
+        &#x27;LEFT JOIN livro l ON l.genero_id = g.id GROUP BY g.nome ORDER BY g.nome&#x27;)
+mostrar(&#x27;Sem o ON, cada livro aparece com cada gênero&#x27;,
+        &#x27;SELECT g.nome, l.titulo FROM genero g, livro l WHERE l.exemplares &lt; 3 ORDER BY l.id, g.id&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · Agrupar pelo nome e esquecer o ON</figcaption><p>Rode mais uma vez.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Agrupar pelo nome e esquecer o ON"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe relatorio.py</kbd>
+-- GROUP BY pelo nome junta os dois gêneros Didáticos numa linha só
+(&#x27;Didáticos&#x27;, 3, 6)
+(&#x27;Poesia&#x27;, 0, 0)
+(&#x27;Referência&#x27;, 1, 4)
+
+-- Sem o ON, cada livro aparece com cada gênero
+(&#x27;Didáticos&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Referência&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Poesia&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Atlas&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Guia de Redes&#x27;)
+(&#x27;Referência&#x27;, &#x27;Guia de Redes&#x27;)
+(&#x27;Poesia&#x27;, &#x27;Guia de Redes&#x27;)
+(&#x27;Didáticos&#x27;, &#x27;Guia de Redes&#x27;)</code></pre><p class="tela-nota"><strong>Repare:</strong> Os dois Didáticos viraram uma linha com 3 livros. E, sem o ON, Atlas e Guia de Redes aparecem uma vez com cada um dos quatro gêneros.</p></figure></section><section id="pratica" data-stop="pratica"><h2>O resumo dos kits <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#pratica" aria-label="Versão para leitura: O resumo dos kits">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: repositório com os testes no kits_teste, DadosMySQL, a JanelaResumo com os testes de mentira, o botão na janela principal e só então o resumo herdado. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>O resumo com um kit vazio</figcaption><p>Capturada com abrir_janela.py lendo o banco kits, com o kit Almoxarifado criado vazio, depois de clicar em Resumo dos kits.</p><img src="../figuras/A17/kits-resumo.png" width="562" height="572" alt="Janela Resumo dos kits com a tabela Kits mostrando Almoxarifado 0 0, Treinamento Redes 2 5 e Treinamento Suporte 1 5, o total 3 kits · 3 itens · 10 unidades, o campo Itens com menos de 3 unidades e a tabela com Treinamento Redes, Notebook, 2."></figure><div class="workbench"><h3>kits/repositorio.py: resumo_kits e itens_abaixo</h3><p>Acrescente ao repositório resumo_kits e itens_abaixo, seguindo os comentários. Cada uma é uma consulta só: nada de uma consulta por kit. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes do resumo de tests/test_fontes.py passam, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 2 do tutorial. O que COUNT conta quando recebe uma coluna?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+
+def resumo_kits(con):
+    &quot;&quot;&quot;(id, nome, itens, unidades) de cada kit, inclusive os vazios, em ordem de nome (e de id, no empate).&quot;&quot;&quot;
+    # 1. Uma consulta só, de kit para item: o kit sem itens precisa continuar na lista. Que JOIN faz isso?
+    # 2. Conte itens, e não linhas: no kit vazio, o JOIN devolve uma linha com o lado do item todo NULL.
+    # 3. A soma de nenhum item é NULL; troque por 0 no próprio SQL.
+    # 4. Agrupe de um jeito que dois kits com o mesmo nome continuem sendo dois.
+    # 5. O MySQL devolve a soma como Decimal: entregue as unidades como int.
+    ...
+
+
+def itens_abaixo(con, limite):
+    &quot;&quot;&quot;(kit, item, quantidade) dos itens com MENOS de limite unidades, de todos os kits, os menores primeiro
+    (empate: pelo nome do kit e depois do item).&quot;&quot;&quot;
+    # Aqui só interessam itens, e todo item tem kit. Ligue cada item ao seu kit pela condição do JOIN;
+    # sem ela, cada item aparece uma vez com cada kit. O limite vai por parâmetro.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: o resumo no MySQL</h3><p>Acrescente à classe TestFontes os testes do arquivo e escreva os dois marcados com Complete: dois kits com o mesmo nome e os itens abaixo do limite sem repetir. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os vinte e oito testes passam com o seu código. Depois troque o GROUP BY k.id, k.nome por GROUP BY k.nome (com MIN(k.id) no SELECT): o seu teste dos nomes iguais precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.gravar aceita vários comandos: o kit 3 primeiro, depois o item dele.</p></details><pre><code id="work-testes-fontes">    # Acrescente à classe TestFontes do seu tests/test_fontes.py.
+
+    # A17: resumo e itens abaixo do limite.
+
+    def test_resumo_tem_o_kit_vazio_com_zero_itens_e_zero_unidades(self):
+        self.gravar(&quot;INSERT INTO kit (id, nome) VALUES (3, &#x27;Almoxarifado&#x27;)&quot;)
+        self.assertEqual(self.dados.resumo_kits(), [(3, &#x27;Almoxarifado&#x27;, 0, 0), (1, &#x27;Treinamento Redes&#x27;, 2, 5),
+                                                    (2, &#x27;Treinamento Suporte&#x27;, 1, 5)])
+
+    def test_unidades_do_resumo_sao_int(self):
+        # SUM de uma coluna INT volta do MySQL como Decimal; a janela e os testes esperam int.
+        self.assertEqual({type(linha[3]) for linha in self.dados.resumo_kits()}, {int})
+
+    # Complete: com um kit 3 também chamado Treinamento Redes e um Alicate 4 nele, o resumo tem duas linhas
+    # Treinamento Redes: (1, ..., 2, 5) e (3, ..., 1, 4).
+
+    # Complete: itens_abaixo(4) devolve só o Notebook 2 e o Cabo 3 do Treinamento Redes, nessa ordem;
+    # itens_abaixo(3), só o Notebook (o Cabo tem exatamente 3); itens_abaixo(1), nada.
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: resumo_kits e itens_abaixo</h3><p>Acrescente ao DadosMySQL os dois métodos, lendo com _consultar e as funções do repositório. Entrega: abrir_janela.py.</p><p>Concluído quando: Os testes do resumo de tests/test_fontes.py passam com o DadosMySQL.</p><details><summary>Dica para realizar a atividade</summary><p>Uma linha cada, como o listar_kits.</p></details><pre><code id="work-dados"># Mudanças no seu abrir_janela.py da A16. O resto continua igual.
+
+# No import do repositório, acrescente itens_abaixo e resumo_kits.
+
+
+class DadosMySQL:
+    ...
+
+    def resumo_kits(self):
+        &quot;&quot;&quot;Lê com resumo_kits do repositório.&quot;&quot;&quot;
+        ...
+
+    def itens_abaixo(self, limite):
+        &quot;&quot;&quot;Lê com itens_abaixo do repositório.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-dados" data-filename="abrir_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/resumo.py: a JanelaResumo</h3><p>Crie kits/resumo.py a partir do arquivo, completando os métodos pelos comentários: as duas tabelas, o total, o limite com a regra do domínio e as mensagens. A janela não conta nem soma nada além do total do rodapé: recebe do dados. Entrega: kits/resumo.py.</p><p>Concluído quando: Os seis testes de tests/test_resumo.py passam, inclusive os dois que você vai completar, e a imagem acima se repete na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>_tabela é a mesma lista da JanelaItens, só que com as colunas recebidas. Quais colunas são números?</p></details><pre><code id="work-janela-resumo">&quot;&quot;&quot;Resumo dos kits (A17): itens e unidades de cada kit, e os itens com pouco estoque de todos os kits.
+
+Como a JanelaItens, não sabe SQL: pede ao objeto de dados, que já entrega tudo contado e somado pelo banco.
+Salve como kits/resumo.py.
+&quot;&quot;&quot;
+from tkinter import ttk
+
+import customtkinter as ctk
+
+from kits.regras import QuantidadeInvalida, ler_quantidade
+
+VERMELHO = &#x27;#c62828&#x27;
+
+
+class JanelaResumo(ctk.CTkToplevel):
+    &quot;&quot;&quot;dados tem resumo_kits(), que devolve [(id, nome, itens, unidades)], e itens_abaixo(limite), que devolve
+    [(kit, item, quantidade)]; os dois podem recusar com ConnectionError.&quot;&quot;&quot;
+
+    def __init__(self, master, dados, limite=3):
+        super().__init__(master)
+        self._dados = dados
+        self.title(&#x27;Resumo dos kits&#x27;)
+        self.geometry(&#x27;560x540&#x27;)
+        # Coluna 0 cresce; as linhas 1 (kits) e 4 (itens abaixo) também.
+        # Linha 0: rótulo Kits, em negrito.
+        # Linha 1: self.kits = self._tabela(1, colunas Kit, Itens e Unidades).
+        # Linha 2: self.total, um CTkLabel.
+        # Linha 3: Itens com menos de [self.limite] unidades [self.mostrar_botao: Mostrar].
+        #          O campo começa com o limite recebido; Enter nele faz o mesmo que o botão.
+        # Linha 4: self.abaixo = self._tabela(4, colunas Kit, Item e Quantidade).
+        # Linha 5: self.aviso, um CTkLabel.
+        # No fim, self.atualizar().
+        ...
+
+    def _tabela(self, linha, colunas):
+        &quot;&quot;&quot;Um Treeview com rolagem num quadro na linha pedida. Colunas de número alinhadas à direita.&quot;&quot;&quot;
+        ...
+
+    def atualizar(self):
+        self.mostrar_kits()
+        self.mostrar_abaixo()
+
+    def mostrar_kits(self):
+        &quot;&quot;&quot;Uma linha por kit, com o id como iid, e o total: &#x27;3 kits · 3 itens · 10 unidades&#x27;.
+        ConnectionError: a mensagem no self.total.&quot;&quot;&quot;
+        ...
+
+    def mostrar_abaixo(self):
+        &quot;&quot;&quot;Lê o limite com ler_quantidade; inválido: &#x27;Limite inválido: &#x27; e a mensagem, em vermelho, sem consultar.
+        ConnectionError: a mensagem, em vermelho. Nenhum item: &#x27;Nenhum item com menos de 3 unidades.&#x27;
+        (com contar, para 1 unidade).&quot;&quot;&quot;
+        ...
+
+
+def contar(n, singular, plural):
+    return f&#x27;{n} {singular if n == 1 else plural}&#x27;
+</code></pre><div class="atelier" data-source="work-janela-resumo" data-filename="resumo.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_resumo.py: o resumo com o banco de mentira</h3><p>Salve em tests/test_resumo.py. O arquivo usa o BancoDeMentira do tests/test_janela.py, que ganhou resumo_kits e itens_abaixo no arquivo da atividade seguinte. Ele já tem quatro testes. Escreva os dois marcados com Complete. Entrega: tests/test_resumo.py.</p><p>Concluído quando: Os seis testes passam com o seu código. Depois faça o mostrar_abaixo consultar mesmo com o limite inválido: o seu teste do limite precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.banco.limites guarda cada limite que chegou ao banco de mentira.</p></details><pre><code id="work-testes-resumo">&quot;&quot;&quot;O resumo dos kits com o banco de mentira da janela: roda sem MySQL, numa janela de verdade.&quot;&quot;&quot;
+import unittest
+
+import customtkinter as ctk
+
+from kits.resumo import JanelaResumo
+from tests.test_janela import FORA, KITS, BancoDeMentira, fechar
+
+
+class TestResumo(unittest.TestCase):
+    def abrir(self, banco=None):
+        ctk.set_appearance_mode(&#x27;light&#x27;)
+        self.raiz = ctk.CTk()
+        self.raiz.withdraw()
+        self.addCleanup(fechar, self.raiz)
+        self.banco = banco or BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)])
+        resumo = JanelaResumo(self.raiz, self.banco)
+        resumo.update()
+        return resumo
+
+    def linhas(self, tabela):
+        return [tuple(tabela.item(i, &#x27;values&#x27;)) for i in tabela.get_children()]
+
+    def test_cada_kit_com_itens_e_unidades_inclusive_o_vazio(self):
+        resumo = self.abrir()
+        self.assertEqual(self.linhas(resumo.kits), [(&#x27;Almoxarifado&#x27;, &#x27;0&#x27;, &#x27;0&#x27;), (&#x27;Treinamento Redes&#x27;, &#x27;2&#x27;, &#x27;5&#x27;),
+                                                    (&#x27;Treinamento Suporte&#x27;, &#x27;1&#x27;, &#x27;5&#x27;)])
+        self.assertEqual(resumo.total.cget(&#x27;text&#x27;), &#x27;3 kits · 3 itens · 10 unidades&#x27;)
+
+    def test_itens_abaixo_de_3_por_padrao(self):
+        resumo = self.abrir()
+        self.assertEqual(self.banco.limites, [3])
+        self.assertEqual(self.linhas(resumo.abaixo), [(&#x27;Treinamento Redes&#x27;, &#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(resumo.aviso.cget(&#x27;text&#x27;), &#x27;&#x27;)
+
+    def test_novo_limite_com_o_botao(self):
+        resumo = self.abrir()
+        resumo.limite.delete(0, &#x27;end&#x27;)
+        resumo.limite.insert(0, &#x27;6&#x27;)
+        resumo.mostrar_botao.invoke()
+        self.assertEqual(self.linhas(resumo.abaixo), [(&#x27;Treinamento Redes&#x27;, &#x27;Notebook&#x27;, &#x27;2&#x27;), (&#x27;Treinamento Redes&#x27;, &#x27;Cabo&#x27;, &#x27;3&#x27;),
+                                                      (&#x27;Treinamento Suporte&#x27;, &#x27;Cabo&#x27;, &#x27;5&#x27;)])
+
+    # Complete: com dez no limite, Mostrar avisa Limite inválido: e a mensagem do domínio, não pede nada ao banco
+    # (self.banco.limites continua [3]) e a tabela de baixo fica vazia.
+
+    def test_nenhum_item_abaixo_explica(self):
+        resumo = self.abrir()
+        resumo.limite.delete(0, &#x27;end&#x27;)
+        resumo.limite.insert(0, &#x27;1&#x27;)
+        resumo.mostrar_botao.invoke()
+        self.assertEqual(resumo.aviso.cget(&#x27;text&#x27;), &#x27;Nenhum item com menos de 1 unidade.&#x27;)
+
+    # Complete: com FORA em resumo_kits e itens_abaixo, a mensagem aparece no total e no aviso.
+</code></pre><div class="atelier" data-source="work-testes-resumo" data-filename="test_resumo.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>kits/janela.py: o botão Resumo dos kits</h3><p>Faça na sua JanelaItens da A16 as mudanças descritas no arquivo: o botão no rodapé e abrir_resumo, sem abrir duas janelas. Entrega: kits/janela.py.</p><p>Concluído quando: Os testes de tests/test_janela.py passam, inclusive o que você vai completar na atividade seguinte.</p><details><summary>Dica para realizar a atividade</summary><p>winfo_exists() diz se a janela ainda existe: depois de fechada pelo X, ela não existe mais.</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A16. O resto da JanelaItens continua igual.
+
+# contar sai daqui e vai para kits/resumo.py; importe de lá, junto com a JanelaResumo.
+from kits.resumo import JanelaResumo, contar
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;dados ganha resumo_kits() e itens_abaixo(limite).&quot;&quot;&quot;
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000, pedir_nome=None):
+        # self._resumo = None: a janela de resumo, quando aberta.
+        # O status deixa de ocupar as duas colunas: na coluna 1 da mesma linha, self.resumo_botao,
+        # &#x27;Resumo dos kits&#x27;, chamando self.abrir_resumo. O topo já está cheio na largura mínima.
+        ...
+
+    def abrir_resumo(self):
+        &quot;&quot;&quot;Abre JanelaResumo(self, self._dados). Se ela já está aberta (winfo_exists), não abre outra:
+        atualiza e traz para a frente com lift().&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_janela.py: resumo e banco de mentira</h3><p>O arquivo substitui o da A16: o BancoDeMentira ganhou resumo_kits e itens_abaixo, que contam e somam com os mesmos dados, e há o teste de abrir uma janela só. Escreva o teste marcado com Complete. Entrega: tests/test_janela.py.</p><p>Concluído quando: Os cinquenta testes passam com o seu código. Depois faça o abrir_resumo sempre criar uma JanelaResumo nova: o teste de abrir uma janela só precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>resumos_abertos(janela) devolve as janelas de resumo que existem; a linha do kit 2 tem iid &#x27;2&#x27;.</p></details><pre><code id="work-testes-janela">&quot;&quot;&quot;A janela com um banco de mentira, um objeto com os mesmos métodos do DadosMySQL: roda sem MySQL, mas abre uma janela de verdade por alguns instantes.&quot;&quot;&quot;
+import copy
+import time
+import tkinter
+import unittest
+
+from kits.janela import JanelaItens
+from kits.resumo import JanelaResumo
+
+KITS = [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)]
+VARIOS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2), (4, &#x27;Cabo USB&#x27;, 10), (5, &#x27;Alicate&#x27;, 9)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+ITENS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+FORA = ConnectionError(&#x27;Sem conexão com o MySQL (erro 2003).&#x27;)
+
+
+def fechar(janela):
+    # A17: as janelas filhas (o resumo) primeiro. Cada uma leva junto o que agendou; se a tarefa dela fosse
+    # cancelada pela janela principal, o destroy da filha tentaria apagar um comando que já não existe.
+    for filha in [w for w in janela.winfo_children() if isinstance(w, tkinter.Toplevel)]:
+        filha.destroy()
+    # O CustomTkinter agenda tarefas com after (o ícone da barra de título, por exemplo).
+    # Cancelar antes de destruir evita avisos de &quot;invalid command name&quot; no fim do teste.
+    for tarefa in janela.tk.call(&#x27;after&#x27;, &#x27;info&#x27;):
+        janela.after_cancel(tarefa)
+    janela.destroy()
+
+
+class BancoDeMentira:
+    &quot;&quot;&quot;Guarda kits e itens em listas e registra o que a janela pediu. falhas: {nome do método: exceção}.&quot;&quot;&quot;
+
+    def __init__(self, kits=KITS, itens=ITENS, resposta=True, nome_novo=None):
+        self.kits = list(kits)
+        self.itens = copy.deepcopy(itens)
+        self.resposta = resposta
+        self.nome_novo = nome_novo
+        self.pedidos_de_nome = []
+        self.kits_criados = []
+        self.falhas = {}
+        self.pedidos = []
+        self.limites = []
+        self.consultas = []
+        self.entregues = []
+        self.removidos = []
+        self.perguntas = []
+        self.editados = []
+        self.kits_removidos = []
+
+    def _talvez_falhar(self, nome):
+        if nome in self.falhas:
+            raise self.falhas[nome]
+
+    def listar_kits(self):
+        self._talvez_falhar(&#x27;listar_kits&#x27;)
+        return list(self.kits)
+
+    def listar_itens(self, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+        &quot;&quot;&quot;Busca e ordena como o MySQL faria com estes dados: trecho em qualquer parte do nome, sem
+        diferenciar maiúsculas; empate pelo id. Guarda cada pedido em consultas.&quot;&quot;&quot;
+        self._talvez_falhar(&#x27;listar_itens&#x27;)
+        self.pedidos.append(kit_id)
+        self.consultas.append((kit_id, trecho, ordem, descendente))
+        itens = [i for i in self.itens.get(kit_id, []) if trecho.casefold() in i[1].casefold()]
+        coluna = {&#x27;nome&#x27;: 1, &#x27;quantidade&#x27;: 2}[ordem]
+        itens.sort(key=lambda i: i[0])
+        itens.sort(key=lambda i: i[coluna].casefold() if coluna == 1 else i[coluna], reverse=descendente)
+        return itens
+
+    def resumo_kits(self):
+        &quot;&quot;&quot;Conta e soma como o resumo_kits do repositório: todos os kits, em ordem de nome e id.&quot;&quot;&quot;
+        self._talvez_falhar(&#x27;resumo_kits&#x27;)
+        resumo = [(k, nome, len(self.itens.get(k, [])), sum(q for _, _, q in self.itens.get(k, [])))
+                  for k, nome in self.kits]
+        return sorted(resumo, key=lambda linha: (linha[1].casefold(), linha[0]))
+
+    def itens_abaixo(self, limite):
+        self._talvez_falhar(&#x27;itens_abaixo&#x27;)
+        self.limites.append(limite)
+        nomes = dict(self.kits)
+        itens = [(nomes[k], nome, q) for k, lista in self.itens.items() for _, nome, q in lista if q &lt; limite]
+        return sorted(itens, key=lambda linha: (linha[2], linha[0].casefold(), linha[1].casefold()))
+
+    def criar_kit(self, nome):
+        self._talvez_falhar(&#x27;criar_kit&#x27;)
+        kit_id = max([k for k, _ in self.kits], default=0) + 1
+        self.kits.append((kit_id, nome.strip()))
+        self.kits_criados.append(nome)
+        return kit_id
+
+    def adicionar(self, kit_id, item):
+        self._talvez_falhar(&#x27;adicionar&#x27;)
+        self.entregues.append((kit_id, item.nome, item.quantidade))
+        self.itens.setdefault(kit_id, []).append((100 + len(self.entregues), item.nome, item.quantidade))
+
+    def remover(self, item_id):
+        self._talvez_falhar(&#x27;remover&#x27;)
+        self.removidos.append(item_id)
+        for kit_id, itens in self.itens.items():
+            self.itens[kit_id] = [i for i in itens if i[0] != item_id]
+
+    def editar(self, item_id, antes, depois):
+        self._talvez_falhar(&#x27;editar&#x27;)
+        for itens in self.itens.values():
+            for i, (atual_id, nome, quantidade) in enumerate(itens):
+                if atual_id == item_id:
+                    if (nome, quantidade) != (antes.nome, antes.quantidade):
+                        raise ValueError(f&#x27;{antes.nome} mudou depois que você leu: agora é {nome} com {quantidade}&#x27;)
+                    itens[i] = (item_id, depois.nome, depois.quantidade)
+                    self.editados.append((item_id, depois.nome, depois.quantidade))
+                    return
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+
+    def remover_kit(self, kit_id):
+        self._talvez_falhar(&#x27;remover_kit&#x27;)
+        if self.itens.get(kit_id):
+            raise ValueError(f&#x27;Kit {kit_id} ainda tem itens: remova os itens antes&#x27;)
+        self.kits = [k for k in self.kits if k[0] != kit_id]
+        self.kits_removidos.append(kit_id)
+
+    def perguntar(self, texto):
+        self.perguntas.append(texto)
+        return self.resposta
+
+    def pedir_nome(self, texto):
+        self.pedidos_de_nome.append(texto)
+        return self.nome_novo
+
+
+class TestJanela(unittest.TestCase):
+    def abrir(self, banco=None, intervalo_ms=60_000):
+        self.banco = banco or BancoDeMentira()
+        janela = JanelaItens(self.banco, self.banco.perguntar, intervalo_ms, pedir_nome=self.banco.pedir_nome)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def escolher(self, janela, kit_id):
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(f&#x27;(kit {kit_id})&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+
+    def preencher(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            if texto:
+                campo.insert(0, texto)
+
+    def selecionar(self, janela, item_id):
+        janela.lista.selection_set(str(item_id))
+        janela.update()
+
+    def erros(self, janela):
+        return janela.erro_nome.cget(&#x27;text&#x27;), janela.erro_quantidade.cget(&#x27;text&#x27;)
+
+    # A11: a lista e a grade.
+
+    def test_abre_no_primeiro_kit_com_os_itens_dele(self):
+        janela = self.abrir()
+        self.assertEqual(janela.kit_atual(), 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_cada_linha_guarda_o_id_do_item(self):
+        janela = self.abrir()
+        self.assertEqual(janela.lista.get_children(), (&#x27;1&#x27;, &#x27;2&#x27;))
+
+    def test_trocar_de_kit_troca_a_lista_sem_repetir(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.escolher(janela, 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.banco.pedidos, [1, 2, 1])
+
+    def test_status_conta_itens_e_unidades(self):
+        janela = self.abrir()
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens · 5 unidades&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;1 item · 5 unidades&#x27;)
+
+    def test_lista_cresce_com_a_janela(self):
+        janela = self.abrir()
+        janela.geometry(&#x27;640x420&#x27;)
+        janela.update()
+        largura, altura = janela.lista.winfo_width(), janela.lista.winfo_height()
+        janela.geometry(&#x27;1100x740&#x27;)
+        janela.update()
+        self.assertGreater(janela.lista.winfo_width(), largura + 300)
+        self.assertGreater(janela.lista.winfo_height(), altura + 200)
+
+    def test_sem_kits_avisa_e_nao_deixa_adicionar(self):
+        janela = self.abrir(BancoDeMentira(kits=[]))
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;Nenhum kit cadastrado.&#x27;)
+        self.assertEqual(self.banco.pedidos, [])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # A12: eventos e validação.
+
+    def test_abre_sem_erros_e_so_o_clique_valida(self):
+        janela = self.abrir()
+        self.assertEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        janela.adicionar.invoke()
+        self.assertNotEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_valido_entrega_e_a_lista_mostra_o_item_novo(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;  Alicate &#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+        self.assertIn((&#x27;Alicate&#x27;, &#x27;4&#x27;), self.linhas(janela))
+
+    def test_quantidade_invalida_mostra_a_mensagem_do_dominio(self):
+        janela = self.abrir()
+        for texto, mensagem in ((&#x27;dez&#x27;, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (&#x27;0&#x27;, &#x27;0 não é maior que zero&#x27;),
+                                (&#x27;2.5&#x27;, &quot;&#x27;2.5&#x27; não é um número inteiro&quot;)):
+            with self.subTest(texto):
+                self.preencher(janela, &#x27;Alicate&#x27;, texto)
+                janela.adicionar.invoke()
+                self.assertEqual(self.erros(janela), (&#x27;&#x27;, mensagem))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_nome_em_branco_e_quantidade_errada_aparecem_juntos(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;   &#x27;, &#x27;-1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;-1 não é maior que zero&#x27;))
+
+    def test_enter_no_campo_confirma_como_o_botao(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Return&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+
+    def test_digitar_no_campo_apaga_o_erro_dele(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;&#x27;, &#x27;dez&#x27;)
+        janela.adicionar.invoke()
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=&#x27;BackSpace&#x27;)
+        janela.update()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;&#x27;))
+
+    def test_recusa_de_quem_grava_aparece_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = LookupError(&#x27;Kit 1 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não adicionado: Kit 1 não existe&#x27;)
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_defeito_de_quem_grava_nao_e_escondido(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&quot;&#x27;ItemKit&#x27; object has no attribute &#x27;nme&#x27;&quot;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        with self.assertRaises(AttributeError):
+            janela.confirmar()
+
+    # A13: remover e banco fora do ar.
+
+    def test_remover_so_liga_com_uma_linha_escolhida(self):
+        janela = self.abrir()
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.selecionar(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    def test_remover_pergunta_e_apaga_pelo_id_so_com_sim(self):
+        janela = self.abrir(BancoDeMentira(resposta=False))
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Notebook deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [])
+        self.banco.resposta = True
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.removidos, [2])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Notebook.&#x27;)
+
+    def test_remover_recusado_avisa_e_mostra_a_lista_de_agora(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;remover&#x27;] = LookupError(&#x27;Item 2 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não removido: Item 2 não existe&#x27;)
+        self.assertEqual(banco.pedidos, [1, 1])
+
+    def test_banco_fora_ao_abrir_avisa_e_recarregar_recupera(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;listar_kits&#x27;] = FORA
+        janela = self.abrir(banco)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        del banco.falhas[&#x27;listar_kits&#x27;]
+        janela.recarregar_botao.invoke()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_recarregar_mantem_o_kit_e_mostra_o_que_mudou(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.banco.itens[2].append((4, &#x27;Alicate&#x27;, 1))
+        janela.recarregar_botao.invoke()
+        self.assertEqual(janela.kit_atual(), 2)
+        self.assertEqual(self.linhas(janela), [(&#x27;Alicate&#x27;, &#x27;1&#x27;), (&#x27;Cabo&#x27;, &#x27;5&#x27;)])  # A16: em ordem de nome
+
+    def test_banco_fora_ao_adicionar_avisa_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;adicionar&#x27;] = FORA
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Não adicionado: {FORA}&#x27;)
+        self.assertEqual(janela.nome.get(), &#x27;Alicate&#x27;)
+
+    def test_banco_fora_ao_trocar_de_kit_avisa_no_status(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;listar_itens&#x27;] = FORA
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(self.linhas(janela), [])
+
+    # A14: editar, sincronizar e remover kit.
+
+    def editar_o(self, janela, item_id):
+        self.selecionar(janela, item_id)
+        janela.editar.invoke()
+
+    def test_editar_preenche_o_formulario_e_troca_o_botao(self):
+        janela = self.abrir()
+        self.assertEqual(janela.editar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.editar_o(janela, 2)
+        janela.update()
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Notebook&#x27;, &#x27;2&#x27;))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.adicionar.cget(&#x27;text&#x27;)), (&#x27;Editar item&#x27;, &#x27;Salvar&#x27;))
+        self.assertTrue(janela.cancelar.winfo_ismapped())
+
+    def test_salvar_grava_e_volta_ao_novo_item(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook i5&#x27;, &#x27;3&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.editados, [(2, &#x27;Notebook i5&#x27;, 3)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook i5&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Notebook i5 (3).&#x27;)
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_salvar_quando_outra_pessoa_mudou_avisa_e_mostra_o_banco(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 5)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;5&#x27;)])
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+
+    def test_cancelar_volta_sem_gravar(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.cancelar.invoke()
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertFalse(janela.cancelar.winfo_ismapped())
+        self.assertEqual(self.banco.editados, [])
+
+    def test_trocar_de_kit_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 2)&#x27;))
+        janela.kit.set(rotulo)
+        janela._trocou_kit(rotulo)
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;)])
+
+    def test_sincronizar_mostra_o_que_mudou_e_mantem_a_linha_escolhida(self):
+        janela = self.abrir()
+        self.selecionar(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 7)
+        janela.sincronizar()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;7&#x27;)])
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_sincronizar_nao_mexe_durante_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;9&#x27;)
+        pedidos = len(self.banco.pedidos)
+        janela.sincronizar()
+        self.assertEqual(len(self.banco.pedidos), pedidos)
+        self.assertEqual(janela.quantidade.get(), &#x27;9&#x27;)
+
+    def test_sincroniza_sozinha_a_cada_intervalo_sem_acumular(self):
+        # 200 ms durante 0,7 s: três leituras. Se os agendamentos se acumulassem, seriam 2 + 4 + 8.
+        janela = self.abrir(intervalo_ms=200)
+        pedidos = len(self.banco.pedidos)
+        fim = time.monotonic() + 0.7
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+        novos = len(self.banco.pedidos) - pedidos
+        self.assertGreaterEqual(novos, 2)
+        self.assertLessEqual(novos, 5)
+
+    def test_remover_kit_vazio_pergunta_e_recarrega(self):
+        banco = BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)])
+        janela = self.abrir(banco)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 3)&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+        janela.remover_kit.invoke()
+        self.assertEqual(banco.perguntas, [f&#x27;Remover o kit {rotulo}? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(banco.kits_removidos, [3])
+        self.assertNotIn(rotulo, janela.kit.cget(&#x27;values&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Kit removido: {rotulo}.&#x27;)
+
+    def test_remover_kit_com_itens_avisa_e_o_kit_fica(self):
+        janela = self.abrir()
+        janela.remover_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não removido: Kit 1 ainda tem itens: remova os itens antes&#x27;)
+        self.assertEqual(janela.kit_atual(), 1)
+
+    # A15: novo kit e atalhos.
+
+    def test_novo_kit_cadastra_e_ja_mostra_o_kit_vazio(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=&#x27;Almoxarifado&#x27;))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.pedidos_de_nome, [&#x27;Nome do kit novo:&#x27;])
+        self.assertEqual(self.banco.kits_criados, [&#x27;Almoxarifado&#x27;])
+        self.assertEqual((janela.kit.get(), janela.kit_atual()), (&#x27;Almoxarifado (kit 3)&#x27;, 3))
+        self.assertEqual(self.linhas(janela), [])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit criado: Almoxarifado (kit 3).&#x27;)
+
+    def test_novo_kit_cancelado_nao_grava_nada(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=None))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.kits_criados, [])
+        self.assertEqual(janela.kit_atual(), 1)
+
+    def test_novo_kit_recusado_avisa_e_fica_no_kit_de_antes(self):
+        banco = BancoDeMentira(nome_novo=&#x27;treinamento redes&#x27;)
+        banco.falhas[&#x27;criar_kit&#x27;] = ValueError(&#x27;Já existe o kit Treinamento Redes&#x27;)
+        janela = self.abrir(banco)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não criado: Já existe o kit Treinamento Redes&#x27;)
+        self.assertEqual(janela.kit_atual(), 1)
+
+    def test_sem_kits_ainda_da_para_criar_o_primeiro(self):
+        janela = self.abrir(BancoDeMentira(kits=[], itens={}, nome_novo=&#x27;Almoxarifado&#x27;))
+        self.assertEqual(janela.novo_kit.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.kit.get(), &#x27;Almoxarifado (kit 1)&#x27;)
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_duplo_clique_na_linha_edita_o_item(self):
+        janela = self.abrir()
+        _, y, _, altura = janela.lista.bbox(&#x27;2&#x27;)
+        # O Tk não gera &lt;Double-1&gt; pronto: dois cliques seguidos no mesmo ponto viram um duplo clique.
+        for _ in range(2):
+            janela.lista.event_generate(&#x27;&lt;ButtonPress-1&gt;&#x27;, x=20, y=y + altura // 2)
+            janela.lista.event_generate(&#x27;&lt;ButtonRelease-1&gt;&#x27;, x=20, y=y + altura // 2)
+        janela.update()
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Editar item&#x27;, &#x27;Notebook&#x27;))
+
+    def test_esc_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Escape&gt;&#x27;)
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.editados, [])
+
+    def test_delete_na_lista_remove_com_pergunta(self):
+        janela = self.abrir()
+        self.selecionar(janela, 1)
+        janela.lista.focus_set()
+        janela.update()
+        janela.lista.event_generate(&#x27;&lt;Delete&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Cabo deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [1])
+
+    # A16: buscar, ordenar e explicar a lista vazia.
+
+    def buscar(self, janela, texto):
+        &quot;&quot;&quot;Digita no campo como a pessoa (uma tecla de cada vez) e espera a busca adiada acontecer.&quot;&quot;&quot;
+        janela.busca.focus_set()
+        janela.update()
+        for letra in texto:
+            janela.busca.insert(&#x27;end&#x27;, letra)
+            janela.busca.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=letra)
+        fim = time.monotonic() + 0.6
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+
+    def clicar_no_cabecalho(self, janela, coluna):
+        # O cabeçalho guarda o command como um comando do Tcl; chamá-lo é o clique, com o command de verdade.
+        janela.tk.call(janela.lista.heading(coluna, &#x27;command&#x27;))
+        janela.update()
+
+    def test_abre_em_ordem_de_nome_com_a_seta_no_cabecalho(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.assertEqual([n for n, _ in self.linhas(janela)], [&#x27;Alicate&#x27;, &#x27;Cabo&#x27;, &#x27;Cabo USB&#x27;, &#x27;Notebook&#x27;])
+        self.assertEqual((janela.lista.heading(&#x27;nome&#x27;, &#x27;text&#x27;), janela.lista.heading(&#x27;quantidade&#x27;, &#x27;text&#x27;)), (&#x27;Item ▲&#x27;, &#x27;Quantidade&#x27;))
+
+    def test_busca_mostra_so_os_itens_com_o_trecho(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.buscar(janela, &#x27;cabo&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Cabo USB&#x27;, &#x27;10&#x27;)])
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens com “cabo” · 13 unidades&#x27;)
+
+    def test_digitar_rapido_faz_uma_busca_so(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        antes = len(self.banco.consultas)
+        self.buscar(janela, &#x27;alicate&#x27;)
+        self.assertEqual(self.banco.consultas[antes:], [(1, &#x27;alicate&#x27;, &#x27;nome&#x27;, False)])
+
+    def test_busca_sem_resultado_explica_e_nao_e_erro(self):
+        janela = self.abrir()
+        self.buscar(janela, &#x27;martelo&#x27;)
+        self.assertTrue(janela.vazio.winfo_ismapped())
+        self.assertEqual(janela.vazio.cget(&#x27;text&#x27;), &#x27;Nenhum item com “martelo” neste kit. Apague a busca (Esc) para ver todos.&#x27;)
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;&#x27;)
+
+    def test_kit_sem_itens_explica_diferente_da_busca(self):
+        janela = self.abrir(BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)]))
+        self.escolher(janela, 3)
+        janela.update()
+        self.assertEqual(janela.vazio.cget(&#x27;text&#x27;), &#x27;Este kit ainda não tem itens. Cadastre o primeiro no formulário ao lado.&#x27;)
+        self.escolher(janela, 1)
+        janela.update()
+        self.assertFalse(janela.vazio.winfo_ismapped())
+
+    def test_cabecalho_ordena_e_o_segundo_clique_inverte(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.assertEqual([q for _, q in self.linhas(janela)], [&#x27;2&#x27;, &#x27;3&#x27;, &#x27;9&#x27;, &#x27;10&#x27;])
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.assertEqual([q for _, q in self.linhas(janela)], [&#x27;10&#x27;, &#x27;9&#x27;, &#x27;3&#x27;, &#x27;2&#x27;])
+        self.assertEqual((janela.lista.heading(&#x27;nome&#x27;, &#x27;text&#x27;), janela.lista.heading(&#x27;quantidade&#x27;, &#x27;text&#x27;)), (&#x27;Item&#x27;, &#x27;Quantidade ▼&#x27;))
+        self.assertEqual(self.banco.consultas[-1], (1, &#x27;&#x27;, &#x27;quantidade&#x27;, True))
+
+    def test_trocar_de_coluna_volta_a_ordem_crescente(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.clicar_no_cabecalho(janela, &#x27;nome&#x27;)
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.assertEqual(self.banco.consultas[-1], (1, &#x27;&#x27;, &#x27;quantidade&#x27;, False))
+
+    def test_sincronizar_mantem_a_busca_e_a_ordem(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.buscar(janela, &#x27;cabo&#x27;)
+        self.banco.itens[1].append((6, &#x27;Cabo HDMI&#x27;, 1))
+        janela.sincronizar()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo HDMI&#x27;, &#x27;1&#x27;), (&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Cabo USB&#x27;, &#x27;10&#x27;)])
+        self.assertEqual(janela.busca.get(), &#x27;cabo&#x27;)
+
+    def test_esc_na_busca_apaga_e_mostra_todos(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.buscar(janela, &#x27;cabo&#x27;)
+        janela.busca.event_generate(&#x27;&lt;Escape&gt;&#x27;)
+        janela.update()
+        self.assertEqual((janela.busca.get(), len(self.linhas(janela))), (&#x27;&#x27;, 4))
+
+    def test_adicionar_apaga_a_busca_para_o_item_novo_aparecer(self):
+        janela = self.abrir()
+        self.buscar(janela, &#x27;cabo&#x27;)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.busca.get(), &#x27;&#x27;)
+        self.assertIn((&#x27;Alicate&#x27;, &#x27;4&#x27;), self.linhas(janela))
+
+    # A17: o botão Resumo.
+
+    def resumos_abertos(self, janela):
+        return [w for w in janela.winfo_children() if isinstance(w, JanelaResumo) and w.winfo_exists()]
+
+    def test_resumo_abre_uma_janela_so(self):
+        janela = self.abrir()
+        janela.resumo_botao.invoke()
+        janela.update()
+        janela.resumo_botao.invoke()
+        janela.update()
+        self.assertEqual(len(self.resumos_abertos(janela)), 1)
+
+    # Complete: com o resumo aberto, um Alicate 4 novo no kit 2 do banco de mentira aparece no resumo depois de
+    # clicar de novo em Resumo dos kits: a linha do kit 2 fica (&#x27;Treinamento Suporte&#x27;, &#x27;2&#x27;, &#x27;9&#x27;).
+</code></pre><div class="atelier" data-source="work-testes-janela" data-filename="test_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>abrir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como abrir_legado.py na raiz: ele herda do seu DadosMySQL e troca só os dois métodos do resumo. Pelo cliente mysql, crie no banco kits o kit Almoxarifado vazio e um segundo kit Treinamento Redes com um Alicate 4, e reproduza cada relato abrindo o resumo. Para cada relato, registre a linha culpada, a evidência, a correção e o teste do seu projeto que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O abrir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm linha, evidência observada, correção e teste; o relato 1 explica o que COUNT(*) conta no kit vazio.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 3, procure a condição que liga o item ao kit. Onde ela deveria estar?</p></details><pre><code id="work-resumo-legado">&quot;&quot;&quot;Resumo herdado, por cima da sua janela e do seu DadosMySQL. Uso: python abrir_legado.py&quot;&quot;&quot;
+from abrir_janela import DadosMySQL, perguntar, pedir_nome
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+
+
+class DadosLegados(DadosMySQL):
+    def resumo_kits(self):
+        with conexao_banco(self.config) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT MIN(k.id), k.nome, COUNT(*), SUM(IFNULL(i.quantidade, 0)) &#x27;
+                        &#x27;FROM kit k LEFT JOIN item i ON i.kit_id = k.id GROUP BY k.nome ORDER BY k.nome&#x27;)
+            return [(kit_id, nome, itens, int(unidades)) for kit_id, nome, itens, unidades in cur.fetchall()]
+
+    def itens_abaixo(self, limite):
+        with conexao_banco(self.config) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT k.nome, i.nome, i.quantidade FROM item i, kit k &#x27;
+                        &#x27;WHERE i.quantidade &lt;= %s ORDER BY i.quantidade, k.nome&#x27;, (limite,))
+            return cur.fetchall()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaItens(DadosLegados(), perguntar, pedir_nome=pedir_nome).mainloop()
+</code></pre><div class="atelier" data-source="work-resumo-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o banco kits recriado e os dois kits a mais: .\.venv\Scripts\python.exe abrir_legado.py."></div><p>Na raiz do projeto, com o banco kits recriado e os dois kits a mais: .\.venv\Scripts\python.exe abrir_legado.py.</p></div><div class="workbench"><h3>README.md: a seção Resumo</h3><p>Acrescente ao README.md do projeto a seção Resumo: o que a janela de resumo mostra, de onde vem cada número (que JOIN, que agregação, por que pelo id) e como conferir com o cliente mysql. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, confere no cliente mysql os números de um kit do resumo.</p><details><summary>Dica para realizar a atividade</summary><p>Quem ler vai perguntar por que o kit vazio aparece com zero, e não some. Está explicado?</p></details><pre><code id="work-readme">## Resumo
+
+### O que a janela mostra
+
+### De onde vem cada número
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla conferir sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla conferir sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: só os kits com pouco estoque</h3><p>Acrescente ao resumo uma caixa de seleção Só kits com menos de N unidades, filtrando no banco com HAVING. Explique por que o filtro não pode ir no WHERE. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: Com a caixa marcada, só aparecem os kits cujo total está abaixo do limite, inclusive os vazios; o teste no kits_teste confere.</p><details><summary>Dica para realizar a atividade</summary><p>O WHERE filtra linhas antes de agrupar; o total do kit só existe depois.</p></details><pre><code id="work-bonus-having"># HAVING no resumo
+
+## A consulta
+
+## Por que não WHERE
+
+## O teste
+</code></pre><div class="atelier" data-source="work-bonus-having" data-filename="having.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Os números do resumo batem? <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#auditoria" aria-label="Versão para leitura: Os números do resumo batem?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>kit LEFT JOIN item, GROUP BY k.id. Para um kit sem itens, quanto dão COUNT(*) e COUNT(i.id)?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="1 e 0" autocomplete="off">1 e 0</label><label class="option"><input type="radio" name="q01" value="0 e 0" autocomplete="off">0 e 0</label><label class="option"><input type="radio" name="q01" value="1 e 1" autocomplete="off">1 e 1</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quantas linhas o LEFT JOIN devolve para o kit vazio, e o que há em i.id nessa linha?</p></details></fieldset><fieldset data-question="q02"><legend>SELECT k.nome, i.nome FROM item i, kit k, com 3 itens e 2 kits e sem condição ligando os dois. Quantas linhas?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="6" autocomplete="off">6</label><label class="option"><input type="radio" name="q02" value="3" autocomplete="off">3</label><label class="option"><input type="radio" name="q02" value="2" autocomplete="off">2</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 3 do tutorial.</p></details></fieldset><fieldset data-question="q03"><legend>No MySQL, com o mysql-connector-python, SUM(quantidade) de uma coluna INT volta como que tipo do Python?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Decimal" autocomplete="off">Decimal</label><label class="option"><input type="radio" name="q03" value="int" autocomplete="off">int</label><label class="option"><input type="radio" name="q03" value="float" autocomplete="off">float</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Por que resumo_kits tem um int()?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>A lista de itens acabando usa item JOIN kit, e não LEFT JOIN.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Pode haver item sem kit?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O resumo agrupa por k.nome, porque o nome é o que aparece na tela.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 2.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>O resumo usa SUM(i.quantidade) sem COALESCE, e a janela mostra o que vier.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a soma do kit vazio devolve, e o que a soma do total faz com isso?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>Para montar o resumo, a janela lista os kits e faz uma consulta de itens para cada um.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Com 50 kits, quantas consultas e conexões?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Clicar de novo em Resumo dos kits relê os números e traz a janela aberta para a frente, em vez de abrir outra.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Duas janelas de resumo com números diferentes ajudariam alguém?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Um limite inválido no resumo é explicado, e a consulta não é feita.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Que regra decide se o limite é válido?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-resumo"><p>Outra dupla entregou o resumo_kits abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def resumo_kits(con):
+    cur = con.cursor()
+    cur.execute(&#x27;SELECT k.id, k.nome, COUNT(i.id), SUM(i.quantidade) &#x27;
+                &#x27;FROM kit k LEFT JOIN item i ON i.kit_id = k.id &#x27;
+                &#x27;GROUP BY k.id, k.nome ORDER BY k.nome&#x27;)
+    return cur.fetchall()</code></pre><fieldset data-question="ac-nulo" data-claim="ac-nulo"><legend>O kit vazio vem com None nas unidades, e o total da janela quebra ao somar.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-nulo" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-nulo" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-decimal" data-claim="ac-decimal"><legend>As unidades voltam como Decimal, e quem compara com int ou espera um int recebe outro tipo.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-decimal" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-decimal" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-count" data-claim="ac-count"><legend>COUNT(i.id) conta 1 para o kit vazio, por causa da linha que o LEFT JOIN devolve.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-count" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-count" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova o resumo <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#registro" aria-label="Versão para leitura: Entregue o que prova o resumo">↗</a></h2><p>Entregue, no repositório do projeto: kits/repositorio.py com resumo_kits e itens_abaixo; abrir_janela.py com os dois métodos; kits/resumo.py; kits/janela.py com o botão; tests/test_resumo.py, tests/test_janela.py e tests/test_fontes.py; e a seção Resumo no README.md. O relatorio.py e o abrir_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos do resumo herdado, a saída dos testes e a consulta que você usou no cliente mysql para conferir um kit do resumo. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Por que o resumo usa LEFT JOIN e a lista de itens acabando usa JOIN? O que cada listagem perderia ou ganharia com o outro?</p><p>A A18 sai do banco por um momento: arquivos, caminhos e codificação, para ler uma planilha CSV de itens e dizer, linha a linha, o que está certo antes de gravar qualquer coisa.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/join.html">MySQL 8.4: JOIN</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/aggregate-functions.html">MySQL 8.4: funções de agregação (COUNT, SUM)</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/group-by-handling.html">MySQL 8.4: GROUP BY e ONLY_FULL_GROUP_BY</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html#function_coalesce">MySQL 8.4: COALESCE</a></li><li><a href="https://customtkinter.tomschimansky.com/documentation/windows/toplevel">CustomTkinter: CTkToplevel</a></li><li><a href="https://docs.python.org/3/library/sqlite3.html">Python 3: sqlite3</a></li></ul><a data-idoc="source" href="leitura-0017-join-agregacoes-e-listagens-estruturadas.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

@@ -1,0 +1,386 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A20 · MVC na prática: tirar as decisões da janela sem quebrar nada</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A20" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A20</span><span>MVC aplicado à refatoração do aplicativo<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Refatorei, e ninguém percebeu o que quebrou</a></li><li><a href="#esteira">Refatorar com rede</a></li><li><a href="#camadas">Modelo, visão e controle nos kits</a></li><li><a href="#conversa">A conversa entre controle e visão</a></li><li><a href="#rede">Os testes como rede de segurança</a></li><li><a href="#tutorial">Tutorial: o mesmo controle, três visões</a></li><li><a href="#pratica">A refatoração do formulário</a></li><li><a href="#auditoria">A separação se sustenta?</a></li><li><a href="#registro">Entregue o que prova a refatoração</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A20</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>MVC na prática: tirar as decisões da janela sem quebrar nada</h1><p class="thesis">A JanelaItens passou de quatrocentas linhas: monta widgets, guarda o item em edição, valida, decide o que dizer em cada recusa e ainda mostra tudo. Hoje o formulário é refatorado no padrão MVC: as decisões vão para um ControleFormulario que não conhece Tk, a janela vira a visão que só mostra, e o objeto de dados continua sendo o caminho para o modelo. Os cinquenta testes da janela, que já passam, são a rede de segurança: a refatoração está certa quando eles continuam verdes sem mudar uma linha. No fim, você descobre quatro coisas que uma refatoração herdada quebrou, rodando os mesmos testes.</p><p data-idoc="caveat">A aula continua no projeto da A19. Só o formulário (Adicionar, Editar item, Salvar e Cancelar) muda de lugar; remover, buscar, importar e o resto ficam na janela por enquanto. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Explicar os papéis de modelo, visão e controle no aplicativo dos kits, apontando cada um no código</li><li>Mover as decisões do formulário para um controle que não importa Tk e conversa com a visão por métodos</li><li>Refatorar com os testes existentes como rede de segurança, sem mudar o comportamento que eles descrevem</li><li>Testar o controle sem janela, com uma visão de mentira que anota os pedidos</li><li>Achar, rodando a rede de testes, o que uma refatoração herdada quebrou</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A19 com todos os testes passando: é a rede de segurança desta aula</li><li>O BancoDeMentira de tests/test_janela.py e a ideia de objeto recebido de fora, da A14</li><li>Classes e composição da A05</li></ul><section id="partida" data-stop="partida"><h2>Refatorei, e ninguém percebeu o que quebrou <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#partida" aria-label="Versão para leitura: Refatorei, e ninguém percebeu o que quebrou">↗</a></h2><p>Outra equipe começou essa mesma refatoração, num controle_herdado.py, e entregou dizendo que nada mudou para quem usa. Na semana seguinte, vieram quatro relatos.</p><p>O erro vermelho do campo quantidade continua aparecendo depois de um Adicionar que deu certo. Com o nome vazio e a quantidade errada, só aparece o erro da quantidade. Quando o banco recusa um Adicionar, o que a pessoa digitou some. E, depois de um Salvar recusado porque outra pessoa mudou o item, a janela continua em Editar item, e o Salvar seguinte grava por cima.</p><p>Em dupla, antes de abrir o código: se os testes da A11 à A19 tivessem sido rodados, quais desses relatos teriam aparecido antes de chegar a quem usa?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: kits/controle.py; kits/janela.py com o formulário entregue ao controle; tests/test_controle.py; e docs/arquitetura.md com o desenho das camadas. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: todos os testes da A19 passam sem nenhuma mudança neles, e os testes do controle rodam sem abrir janela.</p></div></section><section id="esteira" data-stop="esteira"><h2>Refatorar com rede <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#esteira" aria-label="Versão para leitura: Refatorar com rede">↗</a></h2><ol class="pipeline"><li><strong>Rodar</strong><p>Todos os testes passam antes de mexer: é o ponto de partida.</p></li><li><strong>Separar</strong><p>As decisões do formulário saem da janela para o controle.</p></li><li><strong>Ligar</strong><p>A janela cria o controle, entrega os pedidos e mostra o que ele mandar.</p></li><li><strong>Rodar de novo</strong><p>Os mesmos testes, sem mudar nenhum, continuam passando.</p></li><li><strong>Testar o controle</strong><p>Testes novos, sem janela, com uma visão que anota.</p></li><li><strong>Desenhar</strong><p>Quem conversa com quem, num documento que outra dupla entende.</p></li></ol></section><section id="camadas" data-stop="camadas"><h2>Modelo, visão e controle nos kits <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#camadas" aria-label="Versão para leitura: Modelo, visão e controle nos kits">↗</a></h2><p>O modelo é o que o programa sabe e guarda: ItemKit e as regras de quantidade (A04, A05), o repositório e o MySQL. A visão é o que a pessoa vê e toca: widgets, cores, foco. O controle fica entre os dois: recebe um pedido da visão (estes textos, este kit), pergunta ao modelo e diz à visão o que mostrar.</p><p>Na janela da A19, as três coisas estão na mesma classe. Funciona, mas cada mudança mexe em tudo, e testar uma regra do formulário exige abrir uma janela. Separar não muda o que a pessoa vê; muda onde cada decisão mora. O DadosMySQL, desde a A14, já é a porta do modelo; hoje o formulário ganha o controle.</p><p>A regra que garante a separação é simples: kits/controle.py não importa customtkinter nem tkinter. Tudo o que ele sabe da janela são os nomes dos métodos da visão.</p><div class="table-wrap"><table><caption>Quem faz o quê no formulário depois da aula</caption><thead><tr><th scope="col">Pedido</th><th scope="col">Visão (janela)</th><th scope="col">Controle</th><th scope="col">Modelo (dados)</th></tr></thead><tbody><tr><td>Adicionar</td><td>Entrega o kit e os dois textos</td><td>Valida, decide, diz o que mostrar</td><td>adicionar soma ou cria</td></tr><tr><td>Editar item</td><td>Entrega a linha escolhida</td><td>Guarda o item como foi lido</td><td>—</td></tr><tr><td>Salvar</td><td>Entrega o kit e os dois textos</td><td>Manda o antes e o depois, decide o aviso</td><td>editar confere e grava</td></tr><tr><td>Cancelar e Esc</td><td>Repassa</td><td>Esquece a edição, pede o modo novo</td><td>—</td></tr></tbody></table></div></section><section id="conversa" data-stop="conversa"><h2>A conversa entre controle e visão <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#conversa" aria-label="Versão para leitura: A conversa entre controle e visão">↗</a></h2><p>O controle recebe a visão no __init__, como a janela recebe o objeto de dados desde a A14, e chama métodos dela: mostrar_erros, modo_edicao, modo_novo, avisar, item_adicionado e mostrar_lista. Nenhum desses métodos decide nada: mostrar_erros marca os campos que o controle mandou, avisar pinta de verde ou vermelho o texto que o controle escreveu.</p><p>A janela é a visão de verdade: ela cria o controle passando a si mesma, ControleFormulario(dados, self), e os botões chamam métodos curtos que só entregam o pedido. Nos testes do controle, a visão é de mentira: um objeto que anota cada pedido numa lista. O teste confere a conversa inteira, na ordem, sem nenhuma janela, em milissegundos.</p><p>Alguns detalhes que os testes da janela já cobravam viram detalhes da conversa: mostrar_erros é chamado sempre, mesmo sem erro, para apagar os erros antigos; item_adicionado só depois que o banco aceitou; e o Salvar volta ao modo novo com sucesso ou recusa.</p></section><section id="rede" data-stop="rede"><h2>Os testes como rede de segurança <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#rede" aria-label="Versão para leitura: Os testes como rede de segurança">↗</a></h2><p>Uma refatoração muda o código sem mudar o comportamento. Quem diz qual é o comportamento são os testes que já passam: os cinquenta da janela, os do banco e os de fluxo. Por isso eles não mudam nesta aula. Se um deles falhar depois da refatoração, o defeito é da refatoração, e não do teste.</p><p>Rode tudo antes de começar, para saber que o ponto de partida está verde. Mova uma parte, rode, mova a próxima. Quando algo falhar, você sabe que foi o último passo. É o que a equipe do código herdado não fez: os quatro relatos estavam cobertos por testes que ninguém rodou.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o mesmo controle, três visões <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#tutorial" aria-label="Versão para leitura: Tutorial: o mesmo controle, três visões">↗</a></h2><p>O tutorial separa um acervo pequeno em modelo e controle, num arquivo acervo_mvc.py, e liga o mesmo controle a três visões: uma que escreve no terminal, uma de mentira nos testes e uma janela. O controle não muda nenhuma vez.</p><p>As telas e a captura são de execuções reais desse código, no Windows 11 com Python 3.14 e CustomTkinter 6.0.0; o tempo do Ran foi fixado.</p><figure class="code-block"><figcaption>Passo 1 · acervo_mvc.py: o modelo e o controle</figcaption><pre><code>class Acervo:
+    &quot;&quot;&quot;O modelo: guarda os livros e não deixa um número inválido entrar.&quot;&quot;&quot;
+
+    def __init__(self):
+        self._livros = {1: [&#x27;Guia de Redes&#x27;, 2], 2: [&#x27;Atlas&#x27;, 1]}
+
+    def livros(self):
+        return [(livro_id, titulo, quantos) for livro_id, (titulo, quantos) in self._livros.items()]
+
+    def mudar(self, livro_id, exemplares):
+        if exemplares &lt; 0:
+            raise ValueError(&#x27;exemplares não pode ser negativo&#x27;)
+        self._livros[livro_id][1] = exemplares
+
+
+class ControleAcervo:
+    &quot;&quot;&quot;O controle: recebe o pedido como texto, pede ao modelo e diz à visão o que mostrar. Não sabe de janela.&quot;&quot;&quot;
+
+    def __init__(self, acervo, visao):
+        self._acervo = acervo
+        self._visao = visao
+
+    def salvar(self, livro_id, texto):
+        try:
+            self._acervo.mudar(livro_id, int(texto))
+        except ValueError as erro:
+            self._visao.erro(f&#x27;Não salvo: {erro}&#x27;)
+            return
+        self._visao.mostrar(self._acervo.livros())
+</code></pre></figure><figure class="code-block"><figcaption>Passo 2 · texto.py: uma visão de texto</figcaption><pre><code>from acervo_mvc import Acervo, ControleAcervo
+
+
+class VisaoTexto:
+    &quot;&quot;&quot;Uma visão que escreve no terminal: o controle não percebe a diferença.&quot;&quot;&quot;
+
+    def mostrar(self, livros):
+        for livro_id, titulo, quantos in livros:
+            print(f&#x27;  {livro_id} {titulo}: {quantos}&#x27;)
+
+    def erro(self, mensagem):
+        print(f&#x27;  ! {mensagem}&#x27;)
+
+
+controle = ControleAcervo(Acervo(), VisaoTexto())
+for pedido in (&#x27;3&#x27;, &#x27;dez&#x27;, &#x27;-1&#x27;):
+    print(f&#x27;salvar Atlas com {pedido!r}:&#x27;)
+    controle.salvar(2, pedido)
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · O controle falando com o terminal</figcaption><p>Rode com .\.venv\Scripts\python.exe texto.py.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · O controle falando com o terminal"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe texto.py</kbd>
+salvar Atlas com &#x27;3&#x27;:
+  1 Guia de Redes: 2
+  2 Atlas: 3
+salvar Atlas com &#x27;dez&#x27;:
+  ! Não salvo: invalid literal for int() with base 10: &#x27;dez&#x27;
+salvar Atlas com &#x27;-1&#x27;:
+  ! Não salvo: exemplares não pode ser negativo</code></pre><p class="tela-nota"><strong>Repare:</strong> O texto dez foi recusado pelo controle, e o -1, pelo modelo; nos dois casos, quem escolheu as palavras foi o controle, e quem mostrou foi a visão.</p></figure><figure class="code-block"><figcaption>Passo 3 · test_acervo_mvc.py: uma visão que anota</figcaption><pre><code>import unittest
+
+from acervo_mvc import Acervo, ControleAcervo
+
+
+class VisaoQueAnota:
+    def __init__(self):
+        self.pedidos = []
+
+    def mostrar(self, livros):
+        self.pedidos.append((&#x27;mostrar&#x27;, livros))
+
+    def erro(self, mensagem):
+        self.pedidos.append((&#x27;erro&#x27;, mensagem))
+
+
+class TestControleAcervo(unittest.TestCase):
+    def setUp(self):
+        self.visao = VisaoQueAnota()
+        self.controle = ControleAcervo(Acervo(), self.visao)
+
+    def test_numero_valido_muda_e_mostra(self):
+        self.controle.salvar(2, &#x27;3&#x27;)
+        self.assertEqual(self.visao.pedidos, [(&#x27;mostrar&#x27;, [(1, &#x27;Guia de Redes&#x27;, 2), (2, &#x27;Atlas&#x27;, 3)])])
+
+    def test_texto_que_nao_e_numero_vira_erro(self):
+        self.controle.salvar(2, &#x27;dez&#x27;)
+        self.assertEqual(self.visao.pedidos[0][0], &#x27;erro&#x27;)
+
+    def test_negativo_e_recusado_pelo_modelo(self):
+        self.controle.salvar(2, &#x27;-1&#x27;)
+        self.assertEqual(self.visao.pedidos, [(&#x27;erro&#x27;, &#x27;Não salvo: exemplares não pode ser negativo&#x27;)])
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · O controle testado sem janela</figcaption><p>Rode com .\.venv\Scripts\python.exe -m unittest -v test_acervo_mvc.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · O controle testado sem janela"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe -m unittest -v test_acervo_mvc</kbd>
+test_negativo_e_recusado_pelo_modelo (test_acervo_mvc.TestControleAcervo.test_negativo_e_recusado_pelo_modelo) ... ok
+test_numero_valido_muda_e_mostra (test_acervo_mvc.TestControleAcervo.test_numero_valido_muda_e_mostra) ... ok
+test_texto_que_nao_e_numero_vira_erro (test_acervo_mvc.TestControleAcervo.test_texto_que_nao_e_numero_vira_erro) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK</code></pre></figure><figure class="code-block"><figcaption>Passo 4 · janela_mvc.py: uma visão com janela</figcaption><pre><code>import customtkinter as ctk
+
+from acervo_mvc import Acervo, ControleAcervo
+
+
+class VisaoJanela:
+    &quot;&quot;&quot;A mesma conversa com o controle, agora numa janela: mostrar e erro mudam o rótulo.&quot;&quot;&quot;
+
+    def __init__(self, rotulo):
+        self._rotulo = rotulo
+
+    def mostrar(self, livros):
+        self._rotulo.configure(text=&#x27;\n&#x27;.join(f&#x27;{titulo}: {quantos}&#x27; for _, titulo, quantos in livros), text_color=&#x27;gray10&#x27;)
+
+    def erro(self, mensagem):
+        self._rotulo.configure(text=mensagem, text_color=&#x27;#c62828&#x27;)
+
+
+ctk.set_appearance_mode(&#x27;light&#x27;)
+janela = ctk.CTk()
+janela.title(&#x27;Acervo (MVC)&#x27;)
+janela.geometry(&#x27;360x200&#x27;)
+exemplares = ctk.CTkEntry(janela, placeholder_text=&#x27;Exemplares do Atlas&#x27;)
+exemplares.pack(padx=16, pady=(16, 6), fill=&#x27;x&#x27;)
+resposta = ctk.CTkLabel(janela, text=&#x27;&#x27;, justify=&#x27;left&#x27;)
+controle = ControleAcervo(Acervo(), VisaoJanela(resposta))
+salvar = ctk.CTkButton(janela, text=&#x27;Salvar&#x27;, command=lambda: controle.salvar(2, exemplares.get()))
+salvar.pack(padx=16, pady=6)
+resposta.pack(padx=16, pady=6)
+janela.mainloop()
+</code></pre></figure><figure class="janela"><figcaption>Passo 4 · O mesmo controle numa janela</figcaption><p>Rode, digite dez e clique em Salvar.</p><img src="../figuras/A20/passo4.png" width="362" height="232" alt="Janela Acervo (MVC) com dez no campo, o botão Salvar e, em vermelho, Não salvo: invalid literal for int() with base 10: &#x27;dez&#x27;."><p class="tela-nota"><strong>Repare:</strong> A mensagem é a do int(), que o controle repassou sem traduzir: no projeto, a validação do domínio escreve mensagens melhores. Trocar a visão não mudou nada no controle.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A refatoração do formulário <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#pratica" aria-label="Versão para leitura: A refatoração do formulário">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv. Antes de tudo, rode todos os testes e confirme que passam. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: o controle com os testes dele, a janela ligada ao controle, todos os testes de novo, a refatoração herdada e o desenho. Não mude nenhum teste da A19 para fazê-lo passar. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>kits/controle.py: o ControleFormulario</h3><p>Crie kits/controle.py a partir do arquivo, completando validar e o ControleFormulario pelos comentários. Traga o validar da sua janela para cá. Nenhum import de customtkinter ou tkinter. Entrega: kits/controle.py.</p><p>Concluído quando: Os oito testes de tests/test_controle.py passam, inclusive os três que você vai completar.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela da seção de camadas. Que linha do seu confirmar antigo vira cada pedido à visão?</p></details><pre><code id="work-controle">&quot;&quot;&quot;Controle do formulário de itens (A20): decide o que Adicionar, Salvar, Editar item e Cancelar fazem.
+Salve como kits/controle.py. Não importe customtkinter nem tkinter aqui.
+&quot;&quot;&quot;
+from kits.modelo import ItemKit
+from kits.regras import QuantidadeInvalida, ler_quantidade
+
+# Recusas que a visão sabe explicar. Qualquer outro erro é defeito e sobe.
+RECUSAS = (LookupError, ValueError, ConnectionError)
+
+
+def validar(nome, quantidade):
+    &quot;&quot;&quot;(ItemKit, {}) se os textos servem; (None, erros) se não, com as mensagens do domínio por campo.
+    Traga para cá o validar da sua janela: os dois erros aparecem juntos, como na A12.&quot;&quot;&quot;
+    ...
+
+
+class ControleFormulario:
+    &quot;&quot;&quot;dados tem adicionar(kit_id, item) e editar(item_id, antes, depois).
+
+    visao tem mostrar_erros(erros), modo_edicao(nome, quantidade), modo_novo(), avisar(texto, deu_certo),
+    item_adicionado() (limpa o formulário e mostra a lista com o item novo) e mostrar_lista().
+    &quot;&quot;&quot;
+
+    def __init__(self, dados, visao):
+        ...
+
+    @property
+    def editando(self):
+        &quot;&quot;&quot;True enquanto o formulário edita um item.&quot;&quot;&quot;
+        ...
+
+    def editar(self, item_id, nome, quantidade):
+        &quot;&quot;&quot;Guarda (item_id, ItemKit como foi lido) e pede à visão o modo de edição.&quot;&quot;&quot;
+        ...
+
+    def cancelar(self):
+        &quot;&quot;&quot;Sem edição, não faz nada. Com edição, esquece o item e pede o modo novo.&quot;&quot;&quot;
+        ...
+
+    def confirmar(self, kit_id, nome, quantidade):
+        &quot;&quot;&quot;Nesta ordem: avisar(&#x27;&#x27;, True); validar e mostrar_erros (sempre, até vazio, para apagar erros antigos);
+        sem item, para. Em edição, _salvar. Senão, adicionar; recusa: avisar(&#x27;Não adicionado: ...&#x27;, False) e os
+        campos ficam; sucesso: item_adicionado() e avisar(&#x27;Adicionado: Alicate (4).&#x27;, True).&quot;&quot;&quot;
+        ...
+
+    def _salvar(self, depois):
+        &quot;&quot;&quot;editar(item_id, antes, depois). Com sucesso ou recusa, volta ao modo novo (cancelar), avisa
+        (&#x27;Salvo: ...&#x27; ou &#x27;Não salvo: ...&#x27;) e pede mostrar_lista().&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-controle" data-filename="controle.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_controle, na raiz do projeto. Não abrem janela nem usam banco."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_controle, na raiz do projeto. Não abrem janela nem usam banco.</p></div><div class="workbench"><h3>tests/test_controle.py: o controle sem janela</h3><p>Salve em tests/test_controle.py. A VisaoDeMentira anota cada pedido como uma tupla com o nome do método e os argumentos; o BancoDeMentira é o da janela. Ele já tem cinco testes. Escreva os três marcados com Complete. Entrega: tests/test_controle.py.</p><p>Concluído quando: Os oito testes passam com o seu código e rodam sem abrir nenhuma janela. Depois mova o item_adicionado para antes do try do adicionar: o seu teste da recusa precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.visao.pedidos[-1] é o último pedido; self.visao.pedidos[-3:], os três últimos.</p></details><pre><code id="work-testes-controle">&quot;&quot;&quot;O ControleFormulario sem janela: uma visão de mentira anota o que o controle mandou mostrar.&quot;&quot;&quot;
+import unittest
+
+from kits.controle import ControleFormulario, validar
+from tests.test_janela import FORA, BancoDeMentira
+
+
+class VisaoDeMentira:
+    &quot;&quot;&quot;Anota cada pedido do controle, na ordem, como (nome do método, argumentos).&quot;&quot;&quot;
+
+    def __init__(self):
+        self.pedidos = []
+
+    def __getattr__(self, nome):
+        if nome not in (&#x27;mostrar_erros&#x27;, &#x27;modo_edicao&#x27;, &#x27;modo_novo&#x27;, &#x27;avisar&#x27;, &#x27;item_adicionado&#x27;, &#x27;mostrar_lista&#x27;):
+            raise AttributeError(nome)
+        return lambda *args: self.pedidos.append((nome, *args))
+
+
+class TestControle(unittest.TestCase):
+    def setUp(self):
+        self.banco = BancoDeMentira()
+        self.visao = VisaoDeMentira()
+        self.controle = ControleFormulario(self.banco, self.visao)
+
+    def test_validar_devolve_o_item_ou_as_mensagens_do_dominio(self):
+        self.assertEqual((repr(validar(&#x27;  Alicate &#x27;, &#x27;4&#x27;)[0]), validar(&#x27;  Alicate &#x27;, &#x27;4&#x27;)[1]), (&quot;ItemKit(&#x27;Alicate&#x27;, 4)&quot;, {}))
+        self.assertEqual(validar(&#x27;&#x27;, &#x27;dez&#x27;), (None, {&#x27;nome&#x27;: &#x27;nome deve ser texto não vazio&#x27;,
+                                                    &#x27;quantidade&#x27;: &quot;&#x27;dez&#x27; não é um número inteiro&quot;}))
+
+    def test_adicionar_valido_grava_limpa_e_avisa(self):
+        self.controle.confirmar(1, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual(self.visao.pedidos, [(&#x27;avisar&#x27;, &#x27;&#x27;, True), (&#x27;mostrar_erros&#x27;, {}), (&#x27;item_adicionado&#x27;,),
+                                              (&#x27;avisar&#x27;, &#x27;Adicionado: Alicate (4).&#x27;, True)])
+
+    def test_invalido_mostra_os_erros_e_nao_grava(self):
+        self.controle.confirmar(1, &#x27;Alicate&#x27;, &#x27;0&#x27;)
+        self.assertEqual(self.banco.entregues, [])
+        self.assertEqual(self.visao.pedidos[1:], [(&#x27;mostrar_erros&#x27;, {&#x27;quantidade&#x27;: &#x27;0 não é maior que zero&#x27;})])
+
+    # Complete: com FORA em falhas[&#x27;adicionar&#x27;], o último pedido à visão é avisar(&#x27;Não adicionado: ...&#x27;, False) e
+    # item_adicionado não é pedido.
+
+    def test_defeito_de_quem_grava_sobe(self):
+        self.banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&#x27;nme&#x27;)
+        with self.assertRaises(AttributeError):
+            self.controle.confirmar(1, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+
+    def test_editar_e_salvar_manda_o_antes_e_o_depois(self):
+        self.controle.editar(2, &#x27;Notebook&#x27;, 2)
+        self.assertTrue(self.controle.editando)
+        self.controle.confirmar(1, &#x27;Notebook i5&#x27;, &#x27;3&#x27;)
+        self.assertEqual(self.banco.editados, [(2, &#x27;Notebook i5&#x27;, 3)])
+        self.assertFalse(self.controle.editando)
+        self.assertEqual(self.visao.pedidos, [(&#x27;modo_edicao&#x27;, &#x27;Notebook&#x27;, 2), (&#x27;avisar&#x27;, &#x27;&#x27;, True), (&#x27;mostrar_erros&#x27;, {}),
+                                              (&#x27;modo_novo&#x27;,), (&#x27;avisar&#x27;, &#x27;Salvo: Notebook i5 (3).&#x27;, True), (&#x27;mostrar_lista&#x27;,)])
+
+    # Complete: editando o Notebook com 2, outra pessoa muda para 5 no banco de mentira; confirmar com 1 termina com
+    # modo_novo, avisar(&#x27;Não salvo: ...&#x27;, False) e mostrar_lista, nessa ordem.
+
+    # Complete: cancelar sem edição não pede nada à visão.
+</code></pre><div class="atelier" data-source="work-testes-controle" data-filename="test_controle.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_controle, na raiz do projeto. Não abrem janela nem usam banco."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_controle, na raiz do projeto. Não abrem janela nem usam banco.</p></div><div class="workbench"><h3>kits/janela.py: a janela vira a visão do formulário</h3><p>Faça na sua JanelaItens da A19 as mudanças descritas no arquivo: o controle no lugar de self._editando, os três métodos que entregam pedidos e os seis métodos da visão. Não mude nenhum arquivo de teste. Entrega: kits/janela.py.</p><p>Concluído quando: Todos os testes da A19 passam sem mudança, inclusive os cinquenta de tests/test_janela.py, e kits/controle.py não importa nada de tkinter nem de customtkinter.</p><details><summary>Dica para realizar a atividade</summary><p>Se um teste da janela falhar, compare a ordem dos pedidos no seu controle com a ordem das linhas do confirmar antigo.</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A19. O resto da JanelaItens continua igual.
+# Saem daqui: validar, _salvar, self._editando e os imports de ItemKit, QuantidadeInvalida e ler_quantidade.
+from kits.controle import ControleFormulario
+
+
+class JanelaItens(ctk.CTk):
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000, pedir_nome=None, escolher_arquivo=None):
+        # No lugar de self._editando: self._controle = ControleFormulario(dados, self). A janela é a visão.
+        ...
+
+    def sincronizar(self):
+        # Durante uma edição não mexe em nada: pergunte ao controle (self._controle.editando).
+        ...
+
+    # O formulário: a janela recebe o pedido e entrega ao controle
+
+    def editar_selecionado(self):
+        &quot;&quot;&quot;Com uma linha escolhida, self._controle.editar(item_id, nome, quantidade).&quot;&quot;&quot;
+        ...
+
+    def cancelar_edicao(self):
+        ...
+
+    def confirmar(self):
+        &quot;&quot;&quot;self._controle.confirmar(kit atual, texto do nome, texto da quantidade).&quot;&quot;&quot;
+        ...
+
+    # A visão do formulário: só mostra o que o controle mandar
+
+    def mostrar_erros(self, erros):
+        &quot;&quot;&quot;Marca ou desmarca os dois campos; com erro, o foco vai para o primeiro campo errado (nome antes).&quot;&quot;&quot;
+        ...
+
+    def modo_edicao(self, nome, quantidade):
+        &quot;&quot;&quot;Campos com o item, título Editar item, botão Salvar, Cancelar visível, aviso vazio.&quot;&quot;&quot;
+        ...
+
+    def modo_novo(self):
+        &quot;&quot;&quot;Campos vazios e sem erro, título Novo item, botão Adicionar, Cancelar escondido.&quot;&quot;&quot;
+        ...
+
+    def avisar(self, texto, deu_certo):
+        &quot;&quot;&quot;Verde se deu certo; vermelho se não.&quot;&quot;&quot;
+        ...
+
+    def item_adicionado(self):
+        &quot;&quot;&quot;Limpa os campos e a busca, foco no nome, e mostra a lista.&quot;&quot;&quot;
+        ...
+
+    def mostrar_lista(self):
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>controle_herdado.py: o que a refatoração quebrou</h3><p>Siga a instrução do começo do arquivo abaixo: o herdado entra por um momento no lugar do seu kits/controle.py, e você roda os testes da janela e do controle. Para cada relato da partida, registre o teste que falhou, a linha do controle herdado que causa a falha e a correção. Desfaça a troca. Entrega: a tabela no registro desta página. O controle_herdado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm teste que falha, linha culpada e correção, e a dupla diz qual relato só o teste do controle pegaria.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 2, o que o ItemKit(nome, ler_quantidade(quantidade)) faz primeiro?</p></details><pre><code id="work-refatoracao-legado">&quot;&quot;&quot;Refatoração herdada do formulário, feita por outra equipe sem rodar os testes.
+
+Para examinar: guarde o seu kits/controle.py (copie para controle_bom.py, fora da pasta kits), ponha este
+arquivo no lugar dele, rode os testes da janela e do controle e devolva o seu.
+&quot;&quot;&quot;
+from kits.modelo import ItemKit
+from kits.regras import QuantidadeInvalida, ler_quantidade
+
+RECUSAS = (LookupError, ValueError, ConnectionError)
+
+
+def validar(nome, quantidade):
+    try:
+        return ItemKit(nome, ler_quantidade(quantidade)), {}
+    except QuantidadeInvalida as erro:
+        return None, {&#x27;quantidade&#x27;: str(erro)}
+    except ValueError as erro:
+        return None, {&#x27;nome&#x27;: str(erro)}
+
+
+class ControleFormulario:
+    def __init__(self, dados, visao):
+        self._dados = dados
+        self._visao = visao
+        self._editando = None
+
+    @property
+    def editando(self):
+        return self._editando is not None
+
+    def editar(self, item_id, nome, quantidade):
+        self._editando = (item_id, ItemKit(nome, quantidade))
+        self._visao.modo_edicao(nome, quantidade)
+
+    def cancelar(self):
+        if self._editando is None:
+            return
+        self._editando = None
+        self._visao.modo_novo()
+
+    def confirmar(self, kit_id, nome, quantidade):
+        self._visao.avisar(&#x27;&#x27;, True)
+        item, erros = validar(nome, quantidade)
+        if erros:
+            self._visao.mostrar_erros(erros)
+            return
+        if self._editando is not None:
+            self._salvar(item)
+            return
+        self._visao.item_adicionado()
+        try:
+            self._dados.adicionar(kit_id, item)
+        except RECUSAS as erro:
+            self._visao.avisar(f&#x27;Não adicionado: {erro}&#x27;, False)
+            return
+        self._visao.avisar(f&#x27;Adicionado: {item.nome} ({item.quantidade}).&#x27;, True)
+
+    def _salvar(self, depois):
+        item_id, antes = self._editando
+        try:
+            self._dados.editar(item_id, antes, depois)
+        except RECUSAS as erro:
+            self._visao.avisar(f&#x27;Não salvo: {erro}&#x27;, False)
+            return
+        self.cancelar()
+        self._visao.avisar(f&#x27;Salvo: {depois.nome} ({depois.quantidade}).&#x27;, True)
+        self._visao.mostrar_lista()
+</code></pre><div class="atelier" data-source="work-refatoracao-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o herdado no lugar do kits/controle.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_janela tests.test_controle. Depois, devolva o seu."></div><p>Na raiz do projeto, com o herdado no lugar do kits/controle.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_janela tests.test_controle. Depois, devolva o seu.</p></div><div class="workbench"><h3>docs/arquitetura.md: as camadas do aplicativo</h3><p>Crie docs/arquitetura.md com o desenho das camadas: os arquivos de cada uma, quem chama quem (setas), o que cada uma não pode importar e o que ainda está misturado na janela. Pode ser um desenho em texto, como o do modelo abaixo. Entrega: docs/arquitetura.md.</p><p>Concluído quando: Outra dupla, só com o documento, diz em que arquivo mudaria a mensagem Adicionado e em que arquivo mudaria a cor do aviso.</p><details><summary>Dica para realizar a atividade</summary><p>Diga também o que a A21 vai separar: o que ainda está misturado?</p></details><pre><code id="work-arquitetura"># Arquitetura
+
+```
+janela.py (visão) ──pedidos──▶ controle.py (controle) ──▶ dados (DadosMySQL) ──▶ repositorio.py ──▶ MySQL
+      ▲                              │
+      └──────── o que mostrar ───────┘
+```
+
+## Camadas e arquivos
+
+## O que cada camada não pode importar
+
+## O que ainda está misturado
+</code></pre><div class="atelier" data-source="work-arquitetura" data-filename="arquitetura.md" data-execution="Arquivo docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Arquivo docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: o Remover item no controle</h3><p>Leve também o Remover item para o controle: a pergunta, a recusa e o aviso. A pergunta é decisão ou visão? Justifique. Entrega (opcional): o código, os testes do controle e o texto no registro desta página.</p><p>Concluído quando: Os testes da janela continuam passando sem mudança, e há testes do controle para Sim, Não e recusa.</p><details><summary>Dica para realizar a atividade</summary><p>perguntar já é uma função recebida de fora desde a A13. Quem deveria recebê-la agora?</p></details><pre><code id="work-bonus-remover"># Remover item no controle
+
+## A pergunta: decisão ou visão?
+
+## Código
+
+## Testes
+</code></pre><div class="atelier" data-source="work-bonus-remover" data-filename="remover.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A separação se sustenta? <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#auditoria" aria-label="Versão para leitura: A separação se sustenta?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Em que camada fica a regra a quantidade precisa ser maior que zero?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="No modelo: regras e ItemKit, usados pelo controle" autocomplete="off">No modelo: regras e ItemKit, usados pelo controle</label><label class="option"><input type="radio" name="q01" value="Na visão: é ela que mostra o erro" autocomplete="off">Na visão: é ela que mostra o erro</label><label class="option"><input type="radio" name="q01" value="No controle: é ele que decide" autocomplete="off">No controle: é ele que decide</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem mais usa essa regra, além do formulário?</p></details></fieldset><fieldset data-question="q02"><legend>Depois de refatorar, um teste da janela falha. O que fazer primeiro?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Procurar o defeito na refatoração: o teste descreve o comportamento que não podia mudar" autocomplete="off">Procurar o defeito na refatoração: o teste descreve o comportamento que não podia mudar</label><label class="option"><input type="radio" name="q02" value="Ajustar o teste ao código novo" autocomplete="off">Ajustar o teste ao código novo</label><label class="option"><input type="radio" name="q02" value="Apagar o teste, que ficou velho" autocomplete="off">Apagar o teste, que ficou velho</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte à seção sobre a rede de segurança.</p></details></fieldset><fieldset data-question="q03"><legend>Por que os testes do controle rodam sem abrir janela?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="O controle só conhece os nomes dos métodos da visão, e no teste a visão é de mentira" autocomplete="off">O controle só conhece os nomes dos métodos da visão, e no teste a visão é de mentira</label><label class="option"><input type="radio" name="q03" value="Porque o unittest esconde as janelas" autocomplete="off">Porque o unittest esconde as janelas</label><label class="option"><input type="radio" name="q03" value="Porque o controle não chama a visão" autocomplete="off">Porque o controle não chama a visão</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o controle importa?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>kits/controle.py importa customtkinter para mostrar uma caixa de erro.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Os testes do controle rodariam sem janela?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O método avisar da janela recebe o texto pronto e só escolhe a cor.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem decide a palavra, e quem decide a cor?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>Para a refatoração passar, a dupla trocou uma mensagem esperada num teste da janela.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o teste descrevia?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>O controle chama mostrar_erros mesmo quando não há erro nenhum.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 1.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Remover, buscar e importar ainda estão na janela depois da aula.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>A refatoração precisa ser feita de uma vez?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>A visão de mentira dos testes anota os pedidos numa lista, e o teste compara a lista inteira.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a ordem dos pedidos diz?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-controle"><p>Outra dupla entregou o confirmar abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def confirmar(self, kit_id, nome, quantidade):
+    item, erros = validar(nome, quantidade)
+    if erros:
+        self._visao.mostrar_erros(erros)
+        return
+    try:
+        self._dados.adicionar(kit_id, item)
+    except RECUSAS as erro:
+        self._visao.avisar(f&#x27;Não adicionado: {erro}&#x27;, False)
+        return
+    self._visao.item_adicionado()
+    self._visao.avisar(f&#x27;Adicionado: {item.nome} ({item.quantidade}).&#x27;, True)</code></pre><fieldset data-question="ac-erros-velhos" data-claim="ac-erros-velhos"><legend>Depois de um Adicionar certo, os erros vermelhos da tentativa anterior continuam nos campos.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-erros-velhos" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-erros-velhos" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-edicao" data-claim="ac-edicao"><legend>Em edição, o Salvar adiciona um item novo em vez de editar o escolhido.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-edicao" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-edicao" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-recusa" data-claim="ac-recusa"><legend>Quando o banco recusa, o item_adicionado limpa os campos antes do aviso.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-recusa" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-recusa" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a refatoração <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#registro" aria-label="Versão para leitura: Entregue o que prova a refatoração">↗</a></h2><p>Entregue, no repositório do projeto: kits/controle.py; kits/janela.py com o formulário entregue ao controle; tests/test_controle.py; e docs/arquitetura.md. Os arquivos do tutorial e o controle_herdado.py ficam fora do commit.</p><p>No registro desta página, cole a saída de todos os testes antes e depois da refatoração, a tabela dos quatro relatos da refatoração herdada e o desenho das camadas. Se fez o bônus, cole o código e os testes.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que nenhum arquivo de teste da A19 mudou e que banco.ini não entrou.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Que pergunta o teste do controle responde em milissegundos que o teste da janela só respondia abrindo uma janela?</p><p>A A21 continua a separação pelo lado do modelo: repositório, serviços e as regras que envolvem mais de uma operação.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/unittest.html">Python 3: unittest</a></li><li><a href="https://martinfowler.com/eaaDev/uiArchs.html">Martin Fowler: GUI Architectures (MVC e variações)</a></li><li><a href="https://martinfowler.com/bliki/DefinitionOfRefactoring.html">Martin Fowler: Refactoring (definição de refatoração)</a></li></ul><a data-idoc="source" href="leitura-0020-mvc-aplicado-a-refatoracao-do-aplicativo.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

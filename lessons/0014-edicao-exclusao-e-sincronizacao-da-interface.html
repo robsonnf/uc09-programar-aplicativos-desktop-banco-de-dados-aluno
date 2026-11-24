@@ -1,0 +1,783 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A14 · Edite sem atropelar ninguém: edição, exclusão e sincronização</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A14" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A14</span><span>Edição, exclusão e sincronização da interface<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Salvei, mas valeu o do outro</a></li><li><a href="#esteira">Da linha escolhida à gravação conferida</a></li><li><a href="#edicao">Um formulário, dois modos</a></li><li><a href="#conflito">A atualização perdida</a></li><li><a href="#sincronizacao">Uma lista que se atualiza sozinha</a></li><li><a href="#objeto">Um objeto no lugar de cinco funções</a></li><li><a href="#exclusao">Remover um kit</a></li><li><a href="#tutorial">Tutorial: editar o acervo sem atropelar ninguém</a></li><li><a href="#pratica">A janela que edita</a></li><li><a href="#auditoria">A edição se sustenta?</a></li><li><a href="#registro">Entregue o que prova a edição</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A14</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Edite sem atropelar ninguém: edição, exclusão e sincronização</h1><p class="thesis">A janela da A13 grava e apaga, mas não edita, e só mostra o que outras pessoas gravaram quando alguém clica em Recarregar. Hoje o item escolhido vai para o formulário e volta ao banco com Salvar, sem sobrescrever o que outra pessoa mudou nesse meio-tempo; a lista se atualiza sozinha a cada 10 segundos sem atrapalhar quem está editando; e kits vazios podem ser removidos. No fim, você depura uma edição herdada que perdia alterações e deixava a janela cada vez mais lenta.</p><p data-idoc="caveat">A aula continua na janela da A13, no MySQL da A08 e com o em_transacao da A10. A janela passa a receber um objeto com os métodos de dados, no lugar das funções soltas. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Editar um item pela janela, com modo de edição, Salvar e Cancelar, reaproveitando a validação do domínio</li><li>Explicar a atualização perdida e evitá-la conferindo, numa transação com FOR UPDATE, se o item ainda está como foi lido</li><li>Manter a janela em dia com after, sem perder a seleção, sem atrapalhar uma edição e sem acumular agendamentos</li><li>Juntar as operações de dados num objeto e trocá-lo por um banco de mentira nos testes</li><li>Rastrear e corrigir uma edição herdada a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A13: kits/janela.py com Remover, Recarregar e banco fora; abrir_janela.py com protegido; tests/test_janela.py e tests/test_fontes.py</li><li>remover_kit e KitComItens da A09 e em_transacao da A10 em kits/</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Salvei, mas valeu o do outro <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#partida" aria-label="Versão para leitura: Salvei, mas valeu o do outro">↗</a></h2><p>Uma versão herdada da edição, abrir_legado.py, foi usada por duas técnicas ao mesmo tempo, e vieram quatro relatos. A primeira leu o Notebook com 2, a segunda salvou 5 e a primeira, sem saber, salvou 1: ficou 1, e o 5 sumiu sem aviso. Outra pessoa removeu o kit Treinamento Redes, e os itens dele foram embora junto.</p><p>Os outros dois são da atualização automática. No meio de uma edição, o formulário volta para Novo item e o que foi digitado some. E, depois de alguns minutos aberta, a janela fica lenta, enquanto o MySQL mostra cada vez mais consultas.</p><p>Em dupla, antes de abrir o código: qual dos relatos não seria resolvido nem que cada técnica clicasse em Recarregar antes de salvar?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: editar_item e ItemMudou em kits/repositorio.py; abrir_janela.py com a classe DadosMySQL; kits/janela.py com edição, sincronização e Remover kit; tests/test_janela.py e tests/test_fontes.py; e a seção Edição e sincronização no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam e, com duas janelas abertas, a segunda a salvar o mesmo item recebe Não salvo:.</p></div></section><section id="esteira" data-stop="esteira"><h2>Da linha escolhida à gravação conferida <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#esteira" aria-label="Versão para leitura: Da linha escolhida à gravação conferida">↗</a></h2><ol class="pipeline"><li><strong>Ler</strong><p>Escolher a linha e pôr no formulário, guardando como o item estava.</p></li><li><strong>Editar</strong><p>A pessoa muda os campos; a validação é a do domínio, como no Adicionar.</p></li><li><strong>Conferir</strong><p>Numa transação: travar o item, comparar com o que foi lido, recusar se mudou.</p></li><li><strong>Gravar</strong><p>Só então o UPDATE pelo id, com commit.</p></li><li><strong>Sincronizar</strong><p>A cada 10 segundos, ler de novo, a menos que haja uma edição em andamento.</p></li><li><strong>Provar</strong><p>Duas edições ao mesmo tempo, a janela de mentira sincronizando, a herdada acumulando.</p></li></ol></section><section id="edicao" data-stop="edicao"><h2>Um formulário, dois modos <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#edicao" aria-label="Versão para leitura: Um formulário, dois modos">↗</a></h2><p>O formulário da A12 serve para os dois casos. Editar item põe o nome e a quantidade da linha escolhida nos campos, troca o título para Editar item e o botão para Salvar, e mostra Cancelar. Enter e Salvar passam pela mesma validação do domínio; o que muda é quem recebe o item: editar, em vez de adicionar. Cancelar, trocar de kit ou terminar o Salvar, com sucesso ou recusa, voltam ao modo Novo item.</p><p>Ao entrar em edição, a janela guarda o item como ele estava naquela hora: o id e um ItemKit com o nome e a quantidade lidos. Esse antes vai junto para editar(item_id, antes, depois). É ele que permite descobrir se alguém mexeu no item enquanto a pessoa editava.</p><p>Esconder e mostrar um widget sem destruí-lo é com grid_remove e grid: o Cancelar volta ao mesmo lugar da grade, com as mesmas opções.</p></section><section id="conflito" data-stop="conflito"><h2>A atualização perdida <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#conflito" aria-label="Versão para leitura: A atualização perdida">↗</a></h2><p>O relato 1 tem nome: atualização perdida. Duas pessoas leem o mesmo valor, as duas mudam e a segunda a gravar apaga a mudança da primeira, sem que ninguém perceba. O banco não errou: cada UPDATE foi correto sozinho. O que faltou foi conferir, na hora de gravar, se o item ainda era o que a pessoa tinha visto.</p><p>editar_item faz isso numa transação. Primeiro, lê o item com SELECT ... FOR UPDATE, que trava a linha até o commit. Depois, compara com o antes: se o nome ou a quantidade mudaram, recusa com ItemMudou, uma ValueError com a situação de agora. Só então grava. Duas edições ao mesmo tempo não passam juntas pela conferência: a segunda espera a trava e encontra o valor novo. Os testes do projeto provam isso com duas técnicas; sem o FOR UPDATE, as duas salvam.</p><p>Um atalho tentador é fazer o UPDATE com WHERE id = %s AND quantidade = %s e conferir o rowcount. No MySQL, o rowcount de um UPDATE conta as linhas que mudaram de fato: salvar sem mudar nada também dá 0, e a janela acusaria um conflito que não houve. Por isso a conferência é feita pela leitura.</p><div class="table-wrap"><table><caption>As duas técnicas, com e sem conferência</caption><thead><tr><th scope="col">Tempo</th><th scope="col">Técnica 1</th><th scope="col">Técnica 2</th><th scope="col">Sem conferência</th><th scope="col">Com conferência</th></tr></thead><tbody><tr><td>1</td><td>Lê Notebook 2</td><td>Lê Notebook 2</td><td></td><td></td></tr><tr><td>2</td><td></td><td>Salva 5</td><td>Banco: 5</td><td>Banco: 5</td></tr><tr><td>3</td><td>Salva 1</td><td></td><td>Banco: 1; o 5 se perdeu</td><td>Recusado: agora é Notebook com 5</td></tr></tbody></table></div><div class="versus"><div class="bad"><h3>Gravar pelo id e pronto</h3><p>O último a salvar vence, e ninguém fica sabendo do que se perdeu.</p><pre><code>cur.execute(&#x27;UPDATE item SET nome = %s, quantidade = %s WHERE id = %s&#x27;,
+            (depois.nome, depois.quantidade, item_id))</code></pre></div><div class="good"><h3>Travar, conferir, gravar</h3><p>Na mesma transação; o FOR UPDATE faz a segunda edição esperar e ver o valor novo.</p><pre><code>cur.execute(&#x27;SELECT kit_id, nome, quantidade FROM item WHERE id = %s FOR UPDATE&#x27;, (item_id,))
+...
+if (nome, quantidade) != (antes.nome, antes.quantidade):
+    raise ItemMudou(...)</code></pre></div></div></section><section id="sincronizacao" data-stop="sincronizacao"><h2>Uma lista que se atualiza sozinha <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#sincronizacao" aria-label="Versão para leitura: Uma lista que se atualiza sozinha">↗</a></h2><p>Sem sincronizar, a janela mostra o banco como estava no último clique. O after da A11 agenda uma função para daqui a tantos milissegundos, sem parar o mainloop: self.after(10_000, self.sincronizar). Para repetir, a própria função agenda a próxima no fim. Cada after devolve um identificador; guardado, ele permite cancelar o agendamento com after_cancel, como faz o destroy da janela.</p><p>Ler de novo apaga e recria as linhas, e com elas a seleção. A sincronização guarda o iid escolhido e o devolve com selection_set, se o item ainda existir. Durante uma edição, ela não mexe em nada: apagar os campos seria o relato 3, e a conferência do Salvar já descobre se o item mudou.</p><p>O agendamento acontece num lugar só. No relato 4, recarregar também agendava uma sincronização, e a sincronização chamava recarregar: cada ciclo criava dois, que criavam quatro, depois oito. Em poucos minutos, a janela passa o tempo todo consultando. O teste do projeto conta as leituras num intervalo curto e falha se elas se acumulam.</p><div class="callout alerta"><span class="callout-title">Dez segundos por janela aberta</span><p>Cada janela aberta faz uma leitura a cada 10 segundos. Com 30 janelas, são 3 leituras por segundo: pouco para o MySQL. Com um intervalo de 100 milissegundos, seriam 300, e cada uma abre uma conexão. Escolha o intervalo pelo tempo que alguém aceita ver um dado velho.</p></div></section><section id="objeto" data-stop="objeto"><h2>Um objeto no lugar de cinco funções <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#objeto" aria-label="Versão para leitura: Um objeto no lugar de cinco funções">↗</a></h2><p>Com editar e remover_kit, a janela precisaria de sete funções soltas, na ordem certa. Fica mais simples receber um objeto, dados, e chamar métodos dele: self._dados.listar_itens(kit_id), self._dados.editar(...). A janela não pergunta de que classe ele é. Basta ter os métodos com esses nomes, como a função que ela recebia antes só precisava aceitar os argumentos certos.</p><p>No aplicativo, dados é um DadosMySQL, em abrir_janela.py: cada método é uma consulta ou uma em_transacao, passando por protegido. Nos testes, é o BancoDeMentira, que já existia na A13 e só ganhou editar e remover_kit. perguntar continua separado: não é dado, é conversa com quem usa.</p></section><section id="exclusao" data-stop="exclusao"><h2>Remover um kit <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#exclusao" aria-label="Versão para leitura: Remover um kit">↗</a></h2><p>Remover kit usa o remover_kit da A09: só remove kit vazio, e o MySQL recusa um kit com itens (erro 1451), traduzido em KitComItens. O DadosMySQL troca KitComItens por ValueError, que a janela sabe mostrar, sem a janela precisar conhecer o repositório. O relato 2 apagava os itens antes do kit: a A09 decidiu recusar, porque um kit com itens removido por engano leva junto um estoque que ninguém conferiu.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: editar o acervo sem atropelar ninguém <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#tutorial" aria-label="Versão para leitura: Tutorial: editar o acervo sem atropelar ninguém">↗</a></h2><p>O tutorial usa o acervo em memória da A13. Crie acervo.py na raiz do projeto com o código do passo 1. O passo 2 entra antes do janela.mainloop(); os passos 3 e 4 trocam funções, como diz cada legenda. Rode com .\.venv\Scripts\python.exe acervo.py. O botão Outra pessoa faz o papel de alguém que muda o Atlas para 5 em outra janela.</p><p>As imagens são capturas reais das janelas geradas por esse código, depois das ações de cada legenda, no Windows 11 com CustomTkinter 6.0.0. Nos passos 2 e 3, a captura chama atualizar na hora, em vez de esperar os 2 segundos: o código que roda é o mesmo.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo acervo.py inteiro</figcaption><pre><code>from tkinter import ttk
+
+import customtkinter as ctk
+
+ACERVO = {1: (&#x27;Guia de Redes&#x27;, 2), 2: (&#x27;Atlas&#x27;, 1), 3: (&#x27;Dicionário&#x27;, 4)}
+
+ctk.set_appearance_mode(&#x27;light&#x27;)
+janela = ctk.CTk()
+janela.title(&#x27;Acervo do Centro&#x27;)
+janela.geometry(&#x27;520x330&#x27;)
+janela.grid_columnconfigure(0, weight=1)
+janela.grid_rowconfigure(0, weight=1)
+
+lista = ttk.Treeview(janela, columns=(&#x27;titulo&#x27;, &#x27;exemplares&#x27;), show=&#x27;headings&#x27;, selectmode=&#x27;browse&#x27;)
+lista.heading(&#x27;titulo&#x27;, text=&#x27;Título&#x27;)
+lista.heading(&#x27;exemplares&#x27;, text=&#x27;Exemplares&#x27;)
+lista.grid(row=0, column=0, columnspan=3, sticky=&#x27;nsew&#x27;, padx=12, pady=(12, 6))
+exemplares = ctk.CTkEntry(janela, width=90, placeholder_text=&#x27;Exemplares&#x27;)
+exemplares.grid(row=1, column=0, padx=12, pady=6, sticky=&#x27;e&#x27;)
+salvar = ctk.CTkButton(janela, text=&#x27;Salvar&#x27;, width=90)
+salvar.grid(row=1, column=1, pady=6)
+outra = ctk.CTkButton(janela, text=&#x27;Outra pessoa&#x27;, width=110, fg_color=&#x27;gray55&#x27;, hover_color=&#x27;gray45&#x27;)
+outra.grid(row=1, column=2, padx=12, pady=6)
+aviso = ctk.CTkLabel(janela, text=&#x27;&#x27;, anchor=&#x27;w&#x27;, wraplength=490, justify=&#x27;left&#x27;)
+aviso.grid(row=2, column=0, columnspan=3, padx=12, pady=(0, 12), sticky=&#x27;ew&#x27;)
+
+
+def mostrar():
+    lista.delete(*lista.get_children())
+    for livro_id, (titulo, quantos) in ACERVO.items():
+        lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(livro_id), values=(titulo, quantos))
+
+
+def selecionou(_evento):
+    exemplares.delete(0, &#x27;end&#x27;)
+    if lista.selection():
+        exemplares.insert(0, str(ACERVO[int(lista.selection()[0])][1]))
+
+
+def gravar():
+    livro_id = int(lista.selection()[0])
+    titulo = ACERVO[livro_id][0]
+    ACERVO[livro_id] = (titulo, int(exemplares.get()))
+    aviso.configure(text=f&#x27;Salvo: {titulo} com {exemplares.get()}&#x27;)
+    mostrar()
+
+
+def outra_pessoa():
+    ACERVO[2] = (&#x27;Atlas&#x27;, 5)
+
+
+lista.bind(&#x27;&lt;&lt;TreeviewSelect&gt;&gt;&#x27;, selecionou)
+salvar.configure(command=gravar)
+outra.configure(command=outra_pessoa)
+mostrar()
+janela.mainloop()
+</code></pre></figure><figure class="janela"><figcaption>Passo 1 · Escolher põe no campo</figcaption><p>Rode e clique na linha do Atlas.</p><img src="../figuras/A14/passo1.png" width="522" height="362" alt="Janela Acervo do Centro com a linha Atlas destacada e o campo Exemplares com 1, ao lado dos botões Salvar e Outra pessoa."></figure><figure class="code-block"><figcaption>Passo 2 · Antes do janela.mainloop(): ler de novo a cada 2 segundos</figcaption><pre><code>def atualizar():
+    mostrar()
+    janela.after(2000, atualizar)
+
+
+janela.after(2000, atualizar)
+</code></pre></figure><figure class="janela"><figcaption>Passo 2 · A atualização que atropela</figcaption><p>Escolha o Atlas, troque o 1 por 3 no campo e espere 2 segundos sem salvar.</p><img src="../figuras/A14/passo2.png" width="522" height="362" alt="A mesma janela sem nenhuma linha destacada e com o campo Exemplares vazio."><p class="tela-nota"><strong>Repare:</strong> A atualização apagou e recriou as linhas; a seleção sumiu, o &lt;&lt;TreeviewSelect&gt;&gt; limpou o campo, e o 3 foi embora.</p></figure><figure class="code-block"><figcaption>Passo 3 · Troque a função atualizar</figcaption><pre><code>def atualizar():
+    escolhido = lista.selection()
+    editando = escolhido and exemplares.get() != str(ACERVO[int(escolhido[0])][1])
+    if not editando:
+        mostrar()
+        if escolhido and lista.exists(escolhido[0]):
+            lista.selection_set(escolhido)
+    janela.after(2000, atualizar)
+</code></pre></figure><figure class="janela"><figcaption>Passo 3 · Atualizar sem atrapalhar</figcaption><p>Repita: escolha o Atlas, digite 3 e espere.</p><img src="../figuras/A14/passo3.png" width="522" height="362" alt="A mesma janela com a linha Atlas destacada e o 3 no campo Exemplares."><p class="tela-nota"><strong>Repare:</strong> Com o campo diferente do valor lido, a atualização espera; sem edição, ela relê e devolve a seleção.</p></figure><figure class="code-block"><figcaption>Passo 4 · Troque as funções selecionou e gravar</figcaption><pre><code>lido = {}
+
+
+def selecionou(_evento):
+    exemplares.delete(0, &#x27;end&#x27;)
+    if lista.selection():
+        livro_id = int(lista.selection()[0])
+        lido[&#x27;livro&#x27;] = ACERVO[livro_id]
+        exemplares.insert(0, str(ACERVO[livro_id][1]))
+
+
+def gravar():
+    livro_id = int(lista.selection()[0])
+    titulo, agora = ACERVO[livro_id]
+    if (titulo, agora) != lido[&#x27;livro&#x27;]:
+        aviso.configure(text=f&#x27;{titulo} mudou para {agora} enquanto você editava: confira e salve de novo.&#x27;,
+                        text_color=&#x27;#c62828&#x27;)
+        mostrar()
+        return
+    ACERVO[livro_id] = (titulo, int(exemplares.get()))
+    aviso.configure(text=f&#x27;Salvo: {titulo} com {exemplares.get()}&#x27;, text_color=(&#x27;gray10&#x27;, &#x27;#DCE4EE&#x27;))
+    mostrar()
+</code></pre></figure><figure class="janela"><figcaption>Passo 4 · Outra pessoa mudou antes</figcaption><p>Escolha o Atlas, clique em Outra pessoa, digite 3 e clique em Salvar.</p><img src="../figuras/A14/passo4.png" width="522" height="362" alt="A janela com o Atlas com 5 na lista e, em vermelho, Atlas mudou para 5 enquanto você editava: confira e salve de novo."><p class="tela-nota"><strong>Repare:</strong> selecionou guardou o Atlas como estava (1). Na hora de salvar, ele já era 5: a gravação foi recusada, e a lista mostra o valor de agora.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A janela que edita <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#pratica" aria-label="Versão para leitura: A janela que edita">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: repositório, DadosMySQL com os testes no kits_teste, janela com os testes de mentira e só então a edição herdada. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>Editando o Notebook</figcaption><p>Capturada com abrir_janela.py lendo o banco kits, depois de escolher o Notebook e clicar em Editar item.</p><img src="../figuras/A14/kits-edicao.png" width="782" height="552" alt="Janela Kits de manutenção com Remover kit e Recarregar no topo, a lista com o Notebook destacado, os botões Editar item e Remover item, e à direita o formulário Editar item com Notebook e 2, o botão Salvar e o botão Cancelar."></figure><figure class="janela"><figcaption>Quando outra pessoa salvou antes</figcaption><p>Capturada com abrir_janela.py: o Notebook foi para 5 por outra conexão enquanto a janela editava, e a janela tentou salvar 1.</p><img src="../figuras/A14/kits-conflito.png" width="782" height="552" alt="Janela Kits de manutenção com a lista Cabo 3 e Notebook 5, o formulário de volta a Novo item e o aviso vermelho Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5."></figure><div class="workbench"><h3>kits/repositorio.py: editar_item e ItemMudou</h3><p>Acrescente ItemMudou e editar_item(con, item_id, antes, depois) ao repositório, seguindo os comentários: trava e lê, recusa item sumido com LookupError, item mudado com ItemMudou e nome repetido no kit com ValueError, e só então grava pelo id. Não faz commit nem rollback e não confia no rowcount. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes de edição de tests/test_fontes.py passam, inclusive o das duas edições ao mesmo tempo e o de salvar sem mudar nada, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela das duas técnicas. Em que linha da sua função a técnica 1 descobre o 5?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+
+class ItemMudou(ValueError):
+    &quot;&quot;&quot;O item não está mais como foi lido: outra pessoa o mudou depois da leitura.&quot;&quot;&quot;
+
+
+def editar_item(con, item_id, antes, depois):
+    &quot;&quot;&quot;Troca nome e quantidade do item, se ele ainda estiver como antes (o ItemKit que a janela leu).
+    Não grava nem desfaz: rode dentro de em_transacao.&quot;&quot;&quot;
+    # 1. Leia kit, nome e quantidade do item TRAVANDO a linha. Item que não existe: LookupError.
+    # 2. Se nome e quantidade não são mais os de antes: ItemMudou, dizendo como o item está agora.
+    # 3. Se outro item do mesmo kit já tem o nome novo: ValueError(&#x27;O kit já tem um item Nome&#x27;),
+    #    com o nome como está no banco.
+    # 4. Troque nome e quantidade pelo id.
+    # Não use o rowcount do UPDATE para descobrir se o item mudou: ele dá 0 também quando
+    # os valores novos são iguais aos que já estavam.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: a classe DadosMySQL</h3><p>Troque fontes e gravacoes da A13 pela classe DadosMySQL do arquivo, completando os métodos que faltam e o remover_kit, que traduz KitComItens em ValueError. protegido é o mesmo da A13. O if __name__ entrega DadosMySQL() e perguntar à janela. Entrega: abrir_janela.py.</p><p>Concluído quando: Os catorze testes de tests/test_fontes.py passam, inclusive os três que você vai completar, e a janela abre com os itens do banco kits.</p><details><summary>Dica para realizar a atividade</summary><p>_consultar e _gravar já fazem a parte repetida. Quantas linhas sobram para cada método?</p></details><pre><code id="work-dados">&quot;&quot;&quot;Abre a janela de itens ligada ao MySQL. Uso: python abrir_janela.py&quot;&quot;&quot;
+from tkinter import messagebox
+
+import mysql.connector
+
+from kits.banco import conexao_banco, em_transacao
+from kits.janela import JanelaItens
+from kits.repositorio import (KitComItens, adicionar_item, editar_item, listar_itens, listar_kits, remover_item,
+                              remover_kit)
+
+# Erros do conector que querem dizer &quot;o MySQL não está respondendo&quot;: recusado, perdido no meio, fechado.
+SEM_CONEXAO = {2003, 2005, 2013, 2055}
+
+
+def protegido(operacao):
+    &quot;&quot;&quot;O mesmo da A13.&quot;&quot;&quot;
+    ...
+
+
+class DadosMySQL:
+    &quot;&quot;&quot;Tudo o que a janela pede, lido e gravado no MySQL. Cada consulta é uma conexão própria;
+    cada gravação, uma em_transacao. A janela só conhece os nomes dos métodos.&quot;&quot;&quot;
+
+    def __init__(self, config=None):
+        self.config = config
+
+    def _consultar(self, funcao, *args):
+        def operacao():
+            with conexao_banco(self.config) as con:
+                return funcao(con, *args)
+        return protegido(operacao)
+
+    def _gravar(self, funcao, *args):
+        return protegido(lambda: em_transacao(lambda con: funcao(con, *args), self.config))
+
+    def listar_kits(self):
+        return self._consultar(listar_kits)
+
+    # Escreva listar_itens(kit_id), adicionar(kit_id, item), editar(item_id, antes, depois) e
+    # remover(item_id), cada um com _consultar ou _gravar e a função do repositório.
+
+    def remover_kit(self, kit_id):
+        &quot;&quot;&quot;Grava com remover_kit da A09. KitComItens vira ValueError com a mesma mensagem.&quot;&quot;&quot;
+        ...
+
+
+def perguntar(texto):
+    return messagebox.askyesno(&#x27;Confirmar&#x27;, texto)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaItens(DadosMySQL(), perguntar).mainloop()
+</code></pre><div class="atelier" data-source="work-dados" data-filename="abrir_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: editar e remover kit</h3><p>O arquivo substitui o da A13 e testa o DadosMySQL. Ele já tem onze testes, inclusive o das duas edições ao mesmo tempo e o da janela editando no banco. Escreva os três marcados com Complete: salvar sem mudar nada não é conflito; renomear para um nome que o kit já tem é recusado; e o kit com itens não é removido. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os catorze testes passam com o seu código. Depois troque, em editar_item, a conferência pela leitura por um UPDATE com WHERE id AND nome AND quantidade e um if cur.rowcount == 0: raise ItemMudou: o teste de salvar sem mudar nada precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que nada mudou, compare o estoque inteiro com o ESTOQUE_INICIAL.</p></details><pre><code id="work-testes-fontes">&quot;&quot;&quot;A janela ligada ao MySQL pelo DadosMySQL: cada teste recria as tabelas no kits_teste.&quot;&quot;&quot;
+import threading
+import unittest
+
+from abrir_janela import DadosMySQL
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+from kits.modelo import ItemKit
+from kits.repositorio import ItemMudou
+from tests.test_janela import fechar
+from tests.test_repositorio import TESTE, comandos
+
+ESTOQUE_INICIAL = [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)]
+
+
+class TestFontes(unittest.TestCase):
+    def setUp(self):
+        # Uma conexão esquecida com a transação aberta segura as tabelas e faria o DROP TABLE do esquema
+        # esperar para sempre. Com 5 segundos, o teste falha com o erro 1205 em vez de travar.
+        self.gravar(&#x27;SET SESSION lock_wait_timeout = 5&#x27;,
+                    *[c for script in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(script)])
+        self.dados = DadosMySQL(TESTE)
+
+    def gravar(self, *sqls):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for sql in sqls:
+                cur.execute(sql)
+
+    def estoque(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;)
+            return cur.fetchall()
+
+    # A11 e A13: ler, adicionar, remover.
+
+    def test_kits_em_ordem_alfabetica(self):
+        self.gravar(&quot;INSERT INTO kit (nome) VALUES (&#x27;Almoxarifado&#x27;)&quot;)
+        self.assertEqual([nome for _, nome in self.dados.listar_kits()],
+                         [&#x27;Almoxarifado&#x27;, &#x27;Treinamento Redes&#x27;, &#x27;Treinamento Suporte&#x27;])
+
+    def test_consulta_seguinte_ve_o_que_outra_conexao_gravou(self):
+        self.assertEqual(len(self.dados.listar_itens(1)), 2)
+        self.gravar(&quot;INSERT INTO item (kit_id, nome, quantidade) VALUES (1, &#x27;Alicate&#x27;, 4)&quot;)
+        self.assertIn(&#x27;Alicate&#x27;, [nome for _, nome, _ in self.dados.listar_itens(1)])
+
+    def test_adicionar_soma_no_item_de_mesmo_nome_do_kit(self):
+        self.assertEqual(self.dados.adicionar(1, ItemKit(&#x27;Cabo&#x27;, 2)), 1)
+        self.assertEqual(self.estoque()[0], (1, 1, &#x27;Cabo&#x27;, 5))
+
+    def test_remover_apaga_so_o_item_pedido(self):
+        self.dados.remover(1)
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL[1:])
+
+    def test_banco_fora_do_ar_vira_connection_error(self):
+        fora = DadosMySQL({**TESTE, &#x27;port&#x27;: 1, &#x27;connection_timeout&#x27;: 3})
+        for nome, chamada in ((&#x27;listar_kits&#x27;, fora.listar_kits), (&#x27;editar&#x27;, lambda: fora.editar(1, ItemKit(&#x27;Cabo&#x27;, 3), ItemKit(&#x27;Cabo&#x27;, 4))),
+                              (&#x27;remover_kit&#x27;, lambda: fora.remover_kit(1))):
+            with self.subTest(nome):
+                with self.assertRaisesRegex(ConnectionError, &#x27;erro 2003&#x27;):
+                    chamada()
+
+    # A14: editar.
+
+    def test_editar_troca_nome_e_quantidade(self):
+        self.dados.editar(2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook i5&#x27;, 3))
+        self.assertEqual(self.estoque()[1], (2, 1, &#x27;Notebook i5&#x27;, 3))
+
+
+    def test_editar_o_que_outra_pessoa_mudou_e_recusado_e_nada_muda(self):
+        self.gravar(&#x27;UPDATE item SET quantidade = 5 WHERE id = 2&#x27;)
+        with self.assertRaises(ItemMudou):
+            self.dados.editar(2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook&#x27;, 1))
+        self.assertEqual(self.estoque()[1], (2, 1, &#x27;Notebook&#x27;, 5))
+
+    def test_editar_item_removido_vira_lookup_error(self):
+        self.gravar(&#x27;DELETE FROM item WHERE id = 2&#x27;)
+        with self.assertRaises(LookupError):
+            self.dados.editar(2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook&#x27;, 1))
+
+
+    def test_duas_edicoes_do_mesmo_item_ao_mesmo_tempo_uma_vence_e_a_outra_e_avisada(self):
+        largada = threading.Barrier(2)
+        resultados = []
+
+        def tecnico(quantidade):
+            largada.wait()
+            try:
+                self.dados.editar(2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook&#x27;, quantidade))
+                resultados.append(&#x27;salvou&#x27;)
+            except ItemMudou:
+                resultados.append(&#x27;avisado&#x27;)
+
+        tecnicos = [threading.Thread(target=tecnico, args=(q,)) for q in (7, 8)]
+        for t in tecnicos:
+            t.start()
+        for t in tecnicos:
+            t.join()
+        self.assertEqual(sorted(resultados), [&#x27;avisado&#x27;, &#x27;salvou&#x27;])
+        self.assertIn(self.estoque()[1][3], (7, 8))
+
+    # A14: remover kit.
+
+    def test_remover_kit_vazio(self):
+        self.gravar(&quot;INSERT INTO kit (id, nome) VALUES (3, &#x27;Almoxarifado&#x27;)&quot;)
+        self.dados.remover_kit(3)
+        self.assertEqual([k for k, _ in self.dados.listar_kits()], [1, 2])
+
+
+    def test_janela_com_o_banco_edita(self):
+        janela = JanelaItens(self.dados, lambda texto: True, intervalo_ms=60_000)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        janela.lista.selection_set(&#x27;2&#x27;)
+        janela.update()
+        janela.editar.invoke()
+        janela.quantidade.delete(0, &#x27;end&#x27;)
+        janela.quantidade.insert(0, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.estoque()[1], (2, 1, &#x27;Notebook&#x27;, 4))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Notebook (4).&#x27;)
+
+    # Complete: editar o Notebook com os mesmos nome e quantidade não levanta nada e não muda o estoque.
+
+    # Complete: renomear o Notebook para cabo levanta ValueError com &#x27;O kit já tem um item Cabo&#x27;, e nada muda.
+
+    # Complete: remover_kit(1) levanta ValueError com &#x27;Kit 1 ainda tem itens&#x27;, e nada some.
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/janela.py: editar, sincronizar e remover kit</h3><p>Faça na sua JanelaItens da A13 as mudanças descritas no arquivo: o objeto dados no lugar das funções; Editar item, Cancelar e o modo de edição; sincronizar, que relê a cada intervalo_ms mantendo kit e seleção e que espera durante a edição; destroy cancelando a leitura agendada; e Remover kit com pergunta. Ajuste o tests/test_janela.py pelo arquivo do campo seguinte. A janela continua sem importar nada do banco. Entrega: kits/janela.py.</p><p>Concluído quando: Os trinta e um testes de tests/test_janela.py passam, inclusive os três que você vai completar, e as duas imagens acima se repetem na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>Volte aos passos 2 e 3 do tutorial. E onde fica o único self.after que agenda a próxima leitura?</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A13. O resto da JanelaItens continua igual.
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;dados tem listar_kits(), listar_itens(kit_id), adicionar(kit_id, item), editar(item_id, antes, depois),
+    remover(item_id) e remover_kit(kit_id); qualquer um pode recusar com LookupError, ValueError ou
+    ConnectionError. perguntar(texto) devolve True ou False. A lista é lida de novo a cada intervalo_ms.&quot;&quot;&quot;
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000):
+        # As funções da A13 viram métodos de dados: self._dados.listar_kits() e os outros.
+        # self._editando = None: (item_id, ItemKit como foi lido) enquanto o formulário edita.
+        # No fim, depois do recarregar, agende a primeira sincronização com self.after.
+        ...
+
+    def _montar_topo(self):
+        # Ao lado do Recarregar, self.remover_kit: Remover kit, chamando self.remover_kit_atual.
+        # O seletor passa a chamar self._trocou_kit, que cancela a edição e mostra o kit.
+        ...
+
+    def _montar_lista(self):
+        # Ao lado do Remover item, self.editar: Editar item, desligado, chamando self.editar_selecionado.
+        # O &lt;&lt;TreeviewSelect&gt;&gt; liga e desliga os dois.
+        ...
+
+    def _montar_formulario(self):
+        # self.titulo_form: o rótulo Novo item, que vira Editar item.
+        # self.cancelar: Cancelar, chamando self.cancelar_edicao, escondido com grid_remove até editar.
+        ...
+
+    def item_selecionado(self):
+        &quot;&quot;&quot;(id, nome, quantidade) da linha escolhida, com a quantidade como int, ou None.&quot;&quot;&quot;
+        ...
+
+    def sincronizar(self):
+        &quot;&quot;&quot;Lê de novo, mantendo o kit e a linha escolhida. Durante uma edição, não mexe em nada.
+        Agenda a próxima leitura uma vez só, aqui no fim: recarregar não agenda nada.&quot;&quot;&quot;
+        ...
+
+    def destroy(self):
+        # Cancele a leitura agendada antes de chamar super().destroy().
+        ...
+
+    def editar_selecionado(self):
+        &quot;&quot;&quot;Põe o item escolhido no formulário, guarda como foi lido e troca Adicionar por Salvar.&quot;&quot;&quot;
+        ...
+
+    def cancelar_edicao(self):
+        &quot;&quot;&quot;Volta para Novo item, com os campos vazios. Sem edição em andamento, não faz nada.&quot;&quot;&quot;
+        ...
+
+    def confirmar(self):
+        # Como na A13; em edição, chama self._dados.editar(item_id, antes, depois). Depois de salvar,
+        # com sucesso (Salvo: Nome (q).) ou recusa (Não salvo: ...), volta para Novo item e mostra a lista.
+        ...
+
+    def remover_kit_atual(self):
+        &quot;&quot;&quot;Pergunta (&#x27;Remover o kit Rótulo? A remoção não pode ser desfeita.&#x27;) e remove o kit escolhido.
+        Recusa: Kit não removido: e a mensagem. Sucesso: Kit removido: Rótulo. e recarregar.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_janela.py: edição e sincronização</h3><p>O arquivo substitui o da A13: a janela recebe o BancoDeMentira inteiro, que ganhou editar e remover_kit, e um intervalo de 60 segundos, para nenhuma sincronização acontecer sozinha no meio de um teste. Ele já tem vinte e oito testes, inclusive o que conta as leituras com um intervalo de 200 milissegundos. Escreva os três marcados com Complete. Entrega: tests/test_janela.py.</p><p>Concluído quando: Os trinta e um testes passam com o seu código. Depois faça o recarregar agendar também um self.after(self._intervalo, self.sincronizar): o teste das leituras precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para mudar o banco de mentira como outra pessoa mudaria, troque a tupla do item na lista do kit: self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 5).</p></details><pre><code id="work-testes-janela">&quot;&quot;&quot;A janela com um banco de mentira, um objeto com os mesmos métodos do DadosMySQL: roda sem MySQL, mas abre uma janela de verdade por alguns instantes.&quot;&quot;&quot;
+import copy
+import time
+import unittest
+
+from kits.janela import JanelaItens
+
+KITS = [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)]
+ITENS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+FORA = ConnectionError(&#x27;Sem conexão com o MySQL (erro 2003).&#x27;)
+
+
+def fechar(janela):
+    # O CustomTkinter agenda tarefas com after (o ícone da barra de título, por exemplo).
+    # Cancelar antes de destruir evita avisos de &quot;invalid command name&quot; no fim do teste.
+    for tarefa in janela.tk.call(&#x27;after&#x27;, &#x27;info&#x27;):
+        janela.after_cancel(tarefa)
+    janela.destroy()
+
+
+class BancoDeMentira:
+    &quot;&quot;&quot;Guarda kits e itens em listas e registra o que a janela pediu. falhas: {nome do método: exceção}.&quot;&quot;&quot;
+
+    def __init__(self, kits=KITS, itens=ITENS, resposta=True):
+        self.kits = list(kits)
+        self.itens = copy.deepcopy(itens)
+        self.resposta = resposta
+        self.falhas = {}
+        self.pedidos = []
+        self.entregues = []
+        self.removidos = []
+        self.perguntas = []
+        self.editados = []
+        self.kits_removidos = []
+
+    def _talvez_falhar(self, nome):
+        if nome in self.falhas:
+            raise self.falhas[nome]
+
+    def listar_kits(self):
+        self._talvez_falhar(&#x27;listar_kits&#x27;)
+        return list(self.kits)
+
+    def listar_itens(self, kit_id):
+        self._talvez_falhar(&#x27;listar_itens&#x27;)
+        self.pedidos.append(kit_id)
+        return list(self.itens.get(kit_id, []))
+
+    def adicionar(self, kit_id, item):
+        self._talvez_falhar(&#x27;adicionar&#x27;)
+        self.entregues.append((kit_id, item.nome, item.quantidade))
+        self.itens.setdefault(kit_id, []).append((100 + len(self.entregues), item.nome, item.quantidade))
+
+    def remover(self, item_id):
+        self._talvez_falhar(&#x27;remover&#x27;)
+        self.removidos.append(item_id)
+        for kit_id, itens in self.itens.items():
+            self.itens[kit_id] = [i for i in itens if i[0] != item_id]
+
+    def editar(self, item_id, antes, depois):
+        self._talvez_falhar(&#x27;editar&#x27;)
+        for itens in self.itens.values():
+            for i, (atual_id, nome, quantidade) in enumerate(itens):
+                if atual_id == item_id:
+                    if (nome, quantidade) != (antes.nome, antes.quantidade):
+                        raise ValueError(f&#x27;{antes.nome} mudou depois que você leu: agora é {nome} com {quantidade}&#x27;)
+                    itens[i] = (item_id, depois.nome, depois.quantidade)
+                    self.editados.append((item_id, depois.nome, depois.quantidade))
+                    return
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+
+    def remover_kit(self, kit_id):
+        self._talvez_falhar(&#x27;remover_kit&#x27;)
+        if self.itens.get(kit_id):
+            raise ValueError(f&#x27;Kit {kit_id} ainda tem itens: remova os itens antes&#x27;)
+        self.kits = [k for k in self.kits if k[0] != kit_id]
+        self.kits_removidos.append(kit_id)
+
+    def perguntar(self, texto):
+        self.perguntas.append(texto)
+        return self.resposta
+
+
+class TestJanela(unittest.TestCase):
+    def abrir(self, banco=None, intervalo_ms=60_000):
+        self.banco = banco or BancoDeMentira()
+        janela = JanelaItens(self.banco, self.banco.perguntar, intervalo_ms)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def escolher(self, janela, kit_id):
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(f&#x27;(kit {kit_id})&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+
+    def preencher(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            if texto:
+                campo.insert(0, texto)
+
+    def selecionar(self, janela, item_id):
+        janela.lista.selection_set(str(item_id))
+        janela.update()
+
+    def erros(self, janela):
+        return janela.erro_nome.cget(&#x27;text&#x27;), janela.erro_quantidade.cget(&#x27;text&#x27;)
+
+    # A11: a lista e a grade.
+
+    def test_abre_no_primeiro_kit_com_os_itens_dele(self):
+        janela = self.abrir()
+        self.assertEqual(janela.kit_atual(), 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_cada_linha_guarda_o_id_do_item(self):
+        janela = self.abrir()
+        self.assertEqual(janela.lista.get_children(), (&#x27;1&#x27;, &#x27;2&#x27;))
+
+    def test_trocar_de_kit_troca_a_lista_sem_repetir(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.escolher(janela, 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.banco.pedidos, [1, 2, 1])
+
+    def test_status_conta_itens_e_unidades(self):
+        janela = self.abrir()
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens · 5 unidades&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;1 item · 5 unidades&#x27;)
+
+    def test_lista_cresce_com_a_janela(self):
+        janela = self.abrir()
+        janela.geometry(&#x27;640x420&#x27;)
+        janela.update()
+        largura, altura = janela.lista.winfo_width(), janela.lista.winfo_height()
+        janela.geometry(&#x27;1100x740&#x27;)
+        janela.update()
+        self.assertGreater(janela.lista.winfo_width(), largura + 300)
+        self.assertGreater(janela.lista.winfo_height(), altura + 200)
+
+    def test_sem_kits_avisa_e_nao_deixa_adicionar(self):
+        janela = self.abrir(BancoDeMentira(kits=[]))
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;Nenhum kit cadastrado.&#x27;)
+        self.assertEqual(self.banco.pedidos, [])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # A12: eventos e validação.
+
+    def test_abre_sem_erros_e_so_o_clique_valida(self):
+        janela = self.abrir()
+        self.assertEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        janela.adicionar.invoke()
+        self.assertNotEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_valido_entrega_e_a_lista_mostra_o_item_novo(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;  Alicate &#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+        self.assertEqual(self.linhas(janela)[-1], (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_quantidade_invalida_mostra_a_mensagem_do_dominio(self):
+        janela = self.abrir()
+        for texto, mensagem in ((&#x27;dez&#x27;, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (&#x27;0&#x27;, &#x27;0 não é maior que zero&#x27;),
+                                (&#x27;2.5&#x27;, &quot;&#x27;2.5&#x27; não é um número inteiro&quot;)):
+            with self.subTest(texto):
+                self.preencher(janela, &#x27;Alicate&#x27;, texto)
+                janela.adicionar.invoke()
+                self.assertEqual(self.erros(janela), (&#x27;&#x27;, mensagem))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_nome_em_branco_e_quantidade_errada_aparecem_juntos(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;   &#x27;, &#x27;-1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;-1 não é maior que zero&#x27;))
+
+    def test_enter_no_campo_confirma_como_o_botao(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Return&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+
+    def test_digitar_no_campo_apaga_o_erro_dele(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;&#x27;, &#x27;dez&#x27;)
+        janela.adicionar.invoke()
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=&#x27;BackSpace&#x27;)
+        janela.update()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;&#x27;))
+
+    def test_recusa_de_quem_grava_aparece_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = LookupError(&#x27;Kit 1 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não adicionado: Kit 1 não existe&#x27;)
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_defeito_de_quem_grava_nao_e_escondido(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&quot;&#x27;ItemKit&#x27; object has no attribute &#x27;nme&#x27;&quot;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        with self.assertRaises(AttributeError):
+            janela.confirmar()
+
+    # A13: remover e banco fora do ar.
+
+    def test_remover_so_liga_com_uma_linha_escolhida(self):
+        janela = self.abrir()
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.selecionar(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    def test_remover_pergunta_e_apaga_pelo_id_so_com_sim(self):
+        janela = self.abrir(BancoDeMentira(resposta=False))
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Notebook deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [])
+        self.banco.resposta = True
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.removidos, [2])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Notebook.&#x27;)
+
+    def test_remover_recusado_avisa_e_mostra_a_lista_de_agora(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;remover&#x27;] = LookupError(&#x27;Item 2 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não removido: Item 2 não existe&#x27;)
+        self.assertEqual(banco.pedidos, [1, 1])
+
+    def test_banco_fora_ao_abrir_avisa_e_recarregar_recupera(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;listar_kits&#x27;] = FORA
+        janela = self.abrir(banco)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        del banco.falhas[&#x27;listar_kits&#x27;]
+        janela.recarregar_botao.invoke()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_recarregar_mantem_o_kit_e_mostra_o_que_mudou(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.banco.itens[2].append((4, &#x27;Alicate&#x27;, 1))
+        janela.recarregar_botao.invoke()
+        self.assertEqual(janela.kit_atual(), 2)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;), (&#x27;Alicate&#x27;, &#x27;1&#x27;)])
+
+    def test_banco_fora_ao_adicionar_avisa_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;adicionar&#x27;] = FORA
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Não adicionado: {FORA}&#x27;)
+        self.assertEqual(janela.nome.get(), &#x27;Alicate&#x27;)
+
+    def test_banco_fora_ao_trocar_de_kit_avisa_no_status(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;listar_itens&#x27;] = FORA
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(self.linhas(janela), [])
+
+    # A14: editar, sincronizar e remover kit.
+
+    def editar_o(self, janela, item_id):
+        self.selecionar(janela, item_id)
+        janela.editar.invoke()
+
+    def test_editar_preenche_o_formulario_e_troca_o_botao(self):
+        janela = self.abrir()
+        self.assertEqual(janela.editar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.editar_o(janela, 2)
+        janela.update()
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Notebook&#x27;, &#x27;2&#x27;))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.adicionar.cget(&#x27;text&#x27;)), (&#x27;Editar item&#x27;, &#x27;Salvar&#x27;))
+        self.assertTrue(janela.cancelar.winfo_ismapped())
+
+    def test_salvar_grava_e_volta_ao_novo_item(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook i5&#x27;, &#x27;3&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.editados, [(2, &#x27;Notebook i5&#x27;, 3)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook i5&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Notebook i5 (3).&#x27;)
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+
+    def test_cancelar_volta_sem_gravar(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.cancelar.invoke()
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertFalse(janela.cancelar.winfo_ismapped())
+        self.assertEqual(self.banco.editados, [])
+
+    def test_trocar_de_kit_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 2)&#x27;))
+        janela.kit.set(rotulo)
+        janela._trocou_kit(rotulo)
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;)])
+
+    def test_sincronizar_mostra_o_que_mudou_e_mantem_a_linha_escolhida(self):
+        janela = self.abrir()
+        self.selecionar(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 7)
+        janela.sincronizar()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;7&#x27;)])
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+
+    def test_sincroniza_sozinha_a_cada_intervalo_sem_acumular(self):
+        # 200 ms durante 0,7 s: três leituras. Se os agendamentos se acumulassem, seriam 2 + 4 + 8.
+        janela = self.abrir(intervalo_ms=200)
+        pedidos = len(self.banco.pedidos)
+        fim = time.monotonic() + 0.7
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+        novos = len(self.banco.pedidos) - pedidos
+        self.assertGreaterEqual(novos, 2)
+        self.assertLessEqual(novos, 5)
+
+    def test_remover_kit_vazio_pergunta_e_recarrega(self):
+        banco = BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)])
+        janela = self.abrir(banco)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 3)&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+        janela.remover_kit.invoke()
+        self.assertEqual(banco.perguntas, [f&#x27;Remover o kit {rotulo}? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(banco.kits_removidos, [3])
+        self.assertNotIn(rotulo, janela.kit.cget(&#x27;values&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Kit removido: {rotulo}.&#x27;)
+
+    # Complete: em edição do Notebook, outra pessoa muda o Notebook para 5 (self.banco.itens[1][1] = ...);
+    # Salvar avisa Não salvo: e a mensagem de quem grava, a lista mostra o 5 e o formulário volta a Novo item.
+
+    # Complete: em edição, com 9 digitado, sincronizar() não pede itens ao banco e o 9 continua no campo.
+
+    # Complete: Remover kit no kit 1, que tem itens, avisa Kit não removido: e a mensagem, e o kit 1 continua escolhido.
+</code></pre><div class="atelier" data-source="work-testes-janela" data-filename="test_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>abrir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como abrir_legado.py na raiz: ele herda da sua JanelaItens e do seu DadosMySQL e troca só quatro métodos. Reproduza cada relato no banco kits recriado: para o 1, edite o Notebook na janela e, antes de salvar, mude a quantidade pelo cliente mysql; para o 4, troque INTERVALO_MS por 1000 e conte as consultas com SHOW PROCESSLIST ou com um print no listar_itens. Para cada relato, registre a linha culpada, a evidência, a correção e o teste do seu projeto que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O abrir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm causa com a linha, evidência observada, correção e teste; o relato 1 é explicado como atualização perdida e o relato 4 mostra a contagem dobrando.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 4, conte quantos self.after são chamados a cada sincronização da JanelaLegada, somando os que vêm do recarregar.</p></details><pre><code id="work-edicao-legado">&quot;&quot;&quot;Edição e sincronização herdadas, por cima da sua janela e do seu DadosMySQL. Uso: python abrir_legado.py&quot;&quot;&quot;
+from abrir_janela import DadosMySQL, perguntar
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+
+INTERVALO_MS = 10_000
+
+
+class DadosLegados(DadosMySQL):
+    def editar(self, item_id, antes, depois):
+        with conexao_banco(self.config) as con:
+            con.cursor().execute(&#x27;UPDATE item SET nome = %s, quantidade = %s WHERE id = %s&#x27;,
+                                 (depois.nome, depois.quantidade, item_id))
+
+    def remover_kit(self, kit_id):
+        with conexao_banco(self.config) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;DELETE FROM item WHERE kit_id = %s&#x27;, (kit_id,))
+            cur.execute(&#x27;DELETE FROM kit WHERE id = %s&#x27;, (kit_id,))
+
+
+class JanelaLegada(JanelaItens):
+    def sincronizar(self):
+        self.cancelar_edicao()
+        self.recarregar()
+        self.after(INTERVALO_MS, self.sincronizar)
+
+    def recarregar(self):
+        super().recarregar()
+        self.after(INTERVALO_MS, self.sincronizar)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaLegada(DadosLegados(), perguntar).mainloop()
+</code></pre><div class="atelier" data-source="work-edicao-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o banco kits recriado (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql): .\.venv\Scripts\python.exe abrir_legado.py."></div><p>Na raiz do projeto, com o banco kits recriado (SOURCE sql/mysql/esquema.sql e SOURCE sql/mysql/dados.sql): .\.venv\Scripts\python.exe abrir_legado.py.</p></div><div class="workbench"><h3>README.md: a seção Edição e sincronização</h3><p>Acrescente ao README.md do projeto a seção Edição e sincronização: o que a janela faz ao editar, ao encontrar uma mudança de outra pessoa, a cada 10 segundos e ao remover um kit; como o código garante cada coisa; e como conferir com duas janelas abertas. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, abre duas janelas, provoca o Não salvo: e vê a sincronização acontecer.</p><details><summary>Dica para realizar a atividade</summary><p>Quem ler vai perguntar por que não usar o rowcount do UPDATE. Está explicado?</p></details><pre><code id="work-readme">## Edição e sincronização
+
+### O que a janela faz
+
+### Como o código garante
+
+### Como conferir
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir os passos sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: a hora da última leitura</h3><p>Mostre no rodapé a hora da última leitura que deu certo (Lido às 09:30:00), recebendo a função que dá a hora no __init__ para poder testar sem depender do relógio. Diga por que a hora antiga continua quando o banco cai. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: O rodapé muda a cada leitura que deu certo e não muda com ConnectionError; o teste passa uma hora fixa e confere o texto.</p><details><summary>Dica para realizar a atividade</summary><p>É a mesma ideia de receber dados e perguntar de fora: o que a janela não controla, ela recebe.</p></details><pre><code id="work-bonus-lido"># Mostrar quando foi a última leitura
+
+## A ideia
+
+## Como
+
+## Como testar sem depender do relógio
+</code></pre><div class="atelier" data-source="work-bonus-lido" data-filename="lido.md" data-execution="Teste na sua JanelaItens e rode .\.venv\Scripts\python.exe -m unittest -v."></div><p>Teste na sua JanelaItens e rode .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A edição se sustenta? <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#auditoria" aria-label="Versão para leitura: A edição se sustenta?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira com duas janelas, no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>No MySQL, UPDATE item SET quantidade = 2 WHERE id = 2, com o item já com 2. Quanto vale o rowcount?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="0: o rowcount conta as linhas que mudaram de fato" autocomplete="off">0: o rowcount conta as linhas que mudaram de fato</label><label class="option"><input type="radio" name="q01" value="1: a linha foi encontrada" autocomplete="off">1: a linha foi encontrada</label><label class="option"><input type="radio" name="q01" value="Dá erro: não há o que mudar" autocomplete="off">Dá erro: não há o que mudar</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Por que editar_item confere pela leitura?</p></details></fieldset><fieldset data-question="q02"><legend>sincronizar agenda a próxima com self.after no fim, e recarregar também agenda uma. Começando com uma sincronização agendada, depois de três ciclos, quantas estão agendadas?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="8: cada uma agenda duas" autocomplete="off">8: cada uma agenda duas</label><label class="option"><input type="radio" name="q02" value="1: o after substitui o agendamento anterior" autocomplete="off">1: o after substitui o agendamento anterior</label><label class="option"><input type="radio" name="q02" value="3: uma por ciclo" autocomplete="off">3: uma por ciclo</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 4.</p></details></fieldset><fieldset data-question="q03"><legend>Duas técnicas editam o Notebook ao mesmo tempo, com o editar_item da aula. O que acontece?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Uma salva; a outra espera a trava, encontra o valor novo e é avisada" autocomplete="off">Uma salva; a outra espera a trava, encontra o valor novo e é avisada</label><label class="option"><input type="radio" name="q03" value="As duas salvam, e vale a última" autocomplete="off">As duas salvam, e vale a última</label><label class="option"><input type="radio" name="q03" value="As duas são recusadas" autocomplete="off">As duas são recusadas</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o FOR UPDATE faz com a segunda leitura?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>editar faz UPDATE item SET ... WHERE id = %s, sem conferir nada antes.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte à tabela das duas técnicas.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>sincronizar não faz nada enquanto há uma edição em andamento, a não ser agendar a próxima.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem descobre, então, que o item mudou?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>O intervalo da sincronização é de 200 milissegundos, para a lista ficar sempre em dia.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Faça a conta do aviso da seção de sincronização para 30 janelas.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>A janela recebe um objeto dados e chama os métodos dele, sem saber se é um DadosMySQL ou um BancoDeMentira.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Como os testes da janela rodariam sem MySQL de outro jeito?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Em caso de ItemMudou, a janela mostra o aviso, volta para Novo item e lê a lista de novo.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a pessoa precisa ver para decidir se edita de novo?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>A janela não cancela a sincronização agendada quando é fechada.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E se o programa continuar aberto com outra janela, como nos testes?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-edicao"><p>Outra dupla entregou a edição abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def editar_item(con, item_id, antes, depois):
+    cur = con.cursor()
+    cur.execute(&#x27;UPDATE item SET nome = %s, quantidade = %s &#x27;
+                &#x27;WHERE id = %s AND nome = %s AND quantidade = %s&#x27;,
+                (depois.nome, depois.quantidade, item_id, antes.nome, antes.quantidade))
+    if cur.rowcount == 0:
+        raise ItemMudou(f&#x27;{antes.nome} mudou depois que você leu&#x27;)</code></pre><fieldset data-question="ac-rowcount" data-claim="ac-rowcount"><legend>Salvar sem mudar nada dá rowcount 0 no MySQL, e a função acusa um conflito que não houve.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-rowcount" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-rowcount" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-sumiu" data-claim="ac-sumiu"><legend>Um item removido por outra pessoa também vira ItemMudou, e a mensagem diz que ele mudou, quando ele não existe mais.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-sumiu" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-sumiu" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-trava" data-claim="ac-trava"><legend>Sem SELECT ... FOR UPDATE antes, duas edições ao mesmo tempo passam juntas e uma se perde.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-trava" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-trava" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a edição <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#registro" aria-label="Versão para leitura: Entregue o que prova a edição">↗</a></h2><p>Entregue, no repositório do projeto: kits/repositorio.py com editar_item e ItemMudou; abrir_janela.py com DadosMySQL; kits/janela.py; tests/test_janela.py e tests/test_fontes.py; e a seção Edição e sincronização no README.md. O acervo.py e o abrir_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos da edição herdada, a saída dos testes e o aviso que apareceu na janela no teste com duas janelas. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>No relato 1, cada UPDATE estava certo sozinho, e mesmo assim um valor se perdeu. O que faltava, e em que momento da transação a sua editar_item faz isso?</p><p>A A15 é a sprint do CRUD: com cadastro, listagem, edição e exclusão prontos, vocês testam o fluxo inteiro, de ponta a ponta, e recebem a devolutiva.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/tkinter.html">Python 3: tkinter (after e after_cancel estão em Misc, herdados por todo widget)</a></li><li><a href="https://www.tcl-lang.org/man/tcl9.0/TkCmd/grid.html">Tk: grid remove</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-locking-reads.html">MySQL 8.4: leituras com trava (FOR UPDATE)</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/information-functions.html#function_row-count">MySQL 8.4: ROW_COUNT e as linhas afetadas de um UPDATE</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html">MySQL 8.4: chaves estrangeiras e o erro 1451</a></li></ul><a data-idoc="source" href="leitura-0014-edicao-exclusao-e-sincronizacao-da-interface.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

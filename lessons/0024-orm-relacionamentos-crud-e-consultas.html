@@ -1,0 +1,536 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A24 · Relacionamentos no ORM: o kit, os seus itens e as consultas da janela</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A24" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A24</span><span>ORM: relacionamentos, CRUD e consultas<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Mais devagar, e apagando</a></li><li><a href="#esteira">Do relacionamento às consultas</a></li><li><a href="#relacionamentos">Um kit e os seus itens</a></li><li><a href="#apagar">Quem decide o que acontece com os itens</a></li><li><a href="#consultas">As consultas da janela com o ORM</a></li><li><a href="#carregamento">Uma consulta por kit: o problema N+1</a></li><li><a href="#tutorial">Tutorial: o SQL dos relacionamentos</a></li><li><a href="#pratica">O repositório ORM inteiro</a></li><li><a href="#auditoria">O ORM está decidindo por você?</a></li><li><a href="#registro">Entregue o repositório ORM inteiro</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A24</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Relacionamentos no ORM: o kit, os seus itens e as consultas da janela</h1><p class="thesis">Na A23 o ORM fez quatro operações. Hoje ele ganha o relacionamento entre kit e item, faz o resto do que a janela usa (busca, edição, remoção de kit, resumo e itens abaixo do limite) e as consultas que faltavam: kits vazios, faixa de quantidades, nomes cadastrados e estatísticas com média. Você vê o SQL que cada relacionamento gera, acha o problema N+1 (uma consulta por kit) e decide quem manda quando um kit com itens é apagado: o ORM ou a chave estrangeira.</p><p data-idoc="caveat">A aula continua no projeto da A23, com o SQLAlchemy 2.1.9 instalado e verificar.py terminando com código 0. O esquema não muda. Use dados fictícios. O Guia de consultas SQL, no índice, mostra cada comando no cliente mysql.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Ligar kit e item com relationship e back_populates, e ler os itens de um kit pelo atributo</li><li>Decidir o que acontece com os itens ao apagar um kit, deixando a chave estrangeira decidir (passive_deletes)</li><li>Escrever com o ORM as consultas da janela e as que faltavam: LEFT JOIN, IS NULL, BETWEEN, IN, DISTINCT, MIN, MAX e AVG</li><li>Achar o problema N+1 contando o SQL gerado e resolvê-lo com selectinload</li><li>Achar, rodando os testes, as decisões que um repositório ORM herdado perdeu</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A23 com kits/orm.py, kits/repositorio_orm.py e verificar.py terminando com código 0</li><li>A busca da A16, a edição e a remoção de kit da A14 e o resumo da A17, no SQL direto</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Mais devagar, e apagando <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#partida" aria-label="Versão para leitura: Mais devagar, e apagando">↗</a></h2><p>A mesma equipe da A23 terminou o repositorio_orm.py e passou a usar os relacionamentos. Vieram quatro relatos.</p><p>Alguém removeu por engano o kit Oficina Arduino, que tinha três itens, e os itens sumiram junto, sem aviso. A busca por _ mostra todos os itens do kit. O relatório dos kits ficou lento: com 40 kits, a tela faz 41 consultas. E o kit novo, ainda vazio, não aparece no resumo.</p><p>Em dupla, antes de abrir o código: quando um kit com itens é apagado, o ORM faz alguma coisa com os itens por conta própria? Quem deveria decidir?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: kits/orm.py com os relacionamentos; kits/repositorio_orm.py com o resto das operações da janela e as consultas novas; tests/test_orm.py com os 23 testes; e a seção ORM (A24) no docs/arquitetura.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: verificar.py termina com código 0, com os 23 testes do ORM no grupo do MySQL.</p></div></section><section id="esteira" data-stop="esteira"><h2>Do relacionamento às consultas <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#esteira" aria-label="Versão para leitura: Do relacionamento às consultas">↗</a></h2><ol class="pipeline"><li><strong>Relacionar</strong><p>kit.itens e item.kit, os dois lados da mesma chave estrangeira.</p></li><li><strong>Decidir o apagar</strong><p>passive_deletes: quem recusa o kit com itens é o banco.</p></li><li><strong>Completar</strong><p>Busca, edição, remoção de kit, resumo e itens abaixo.</p></li><li><strong>Consultar</strong><p>Kits vazios, faixa, nomes e estatísticas.</p></li><li><strong>Carregar junto</strong><p>selectinload: duas consultas, sejam quantos forem os kits.</p></li><li><strong>Provar</strong><p>23 testes, com a contagem de SQL e o herdado.</p></li></ol></section><section id="relacionamentos" data-stop="relacionamentos"><h2>Um kit e os seus itens <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#relacionamentos" aria-label="Versão para leitura: Um kit e os seus itens">↗</a></h2><p>A chave estrangeira item.kit_id já liga cada item ao seu kit no banco. O relationship leva essa ligação para as classes: KitBanco ganha itens, a lista dos ItemBanco do kit, e ItemBanco ganha kit, o KitBanco do item. O tipo diz o formato: Mapped[list[&#x27;ItemBanco&#x27;]] é uma lista; Mapped[KitBanco], um objeto só. back_populates diz que os dois atributos são a mesma ligação vista de cada lado, e a sessão mantém os dois de acordo.</p><p>O relacionamento não cria coluna nenhuma: o teste do mapeamento da A23 continua passando sem mudar. O que muda é o que o ORM escreve por você: o join pelo relacionamento (select(...).join(ItemBanco.kit)) já leva a condição do ON, e ler kit.itens manda um SELECT dos itens daquele kit.</p><p>Esse SELECT sai na hora em que você lê o atributo, e não antes: é o carregamento preguiçoso (lazy loading). Por isso a sessão precisa estar aberta. Fora do with, ler kit.itens de um objeto que ainda não carregou os itens dá DetachedInstanceError. É um dos motivos de o repositório devolver tuplas para a janela, e não objetos do ORM.</p></section><section id="apagar" data-stop="apagar"><h2>Quem decide o que acontece com os itens <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#apagar" aria-label="Versão para leitura: Quem decide o que acontece com os itens">↗</a></h2><p>Sem nenhuma opção, ao apagar um kit, o SQLAlchemy carrega os itens dele e troca o kit_id de cada um por NULL antes do DELETE. O passo 3 do tutorial mostra esse UPDATE. Como kit_id é NOT NULL, o banco recusa, mas com o erro 1048 (coluna não pode ser nula), e não com o 1451 que a A14 traduz em KitComItens.</p><p>Com cascade=&#x27;all, delete-orphan&#x27;, o ORM vai além: apaga os itens e depois o kit, e o banco não tem nada a recusar. É o relato 1 da partida. Serve para dados que só existem dentro do pai; nos kits, apagar o estoque sem perguntar é perder registro.</p><p>O projeto usa passive_deletes=&#x27;all&#x27;: o ORM não toca nos itens, e quem decide é a chave estrangeira do esquema.sql, como no SQL direto. O remover_kit chama sessao.flush() dentro do try, para o erro 1451 aparecer ali e virar KitComItens. Sem o flush, o DELETE só sairia no fim do em_sessao, fora do repositório, e a janela receberia um erro que não sabe mostrar.</p></section><section id="consultas" data-stop="consultas"><h2>As consultas da janela com o ORM <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#consultas" aria-label="Versão para leitura: As consultas da janela com o ORM">↗</a></h2><p>Cada consulta do SQL direto tem a sua forma no ORM, e o Guia de consultas mostra cada comando no cliente mysql. outerjoin(KitBanco.itens) é o LEFT JOIN; func.count(ItemBanco.id), func.sum, func.min, func.max, func.avg e func.coalesce são as funções do SQL; group_by e order_by são as cláusulas. ItemBanco.id.is_(None) vira IS NULL; quantidade.between(2, 5), BETWEEN com as duas pontas; nome.in_(nomes), IN; .distinct(), DISTINCT.</p><p>As regras da A16 continuam: o trecho da busca vai com escapar_like e escape=&#x27;\\&#x27;, senão _ e % viram curingas. A coluna da ordem sai de um dicionário com as colunas permitidas (COLUNAS, com as mesmas chaves do ORDENS do SQL), nunca de getattr(ItemBanco, ordem) com o texto que veio da janela: assim, ordem=&#x27;kit_id&#x27; é recusada.</p><p>Os números chegam como no SQL direto: SUM e AVG voltam como Decimal pelo conector. O resumo devolve int(unidades), e as estatísticas arredondam a média a uma casa, como float. As exceções (KitComItens, ItemMudou) e o escape do LIKE vêm do kits/repositorio.py: o serviço de dados recebe os mesmos erros dos dois repositórios.</p></section><section id="carregamento" data-stop="carregamento"><h2>Uma consulta por kit: o problema N+1 <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#carregamento" aria-label="Versão para leitura: Uma consulta por kit: o problema N+1">↗</a></h2><p>Um relatório que percorre os kits e lê kit.itens de cada um faz 1 SELECT para os kits e mais 1 por kit, na hora em que cada lista é lida. Com 3 kits são 4 consultas; com 40, 41. Cada uma é rápida, mas todas juntas deixam a tela lenta, e o código não mostra isso: só o SQL gerado mostra.</p><p>selectinload(KitBanco.itens), nas options da consulta, traz os itens de todos os kits numa segunda consulta só, com WHERE kit_id IN (...). São 2 consultas, sejam quantos forem os kits. joinedload faz o mesmo com um JOIN numa consulta só, repetindo os dados do kit em cada linha. Nas listas de um para muitos, a documentação recomenda o selectinload.</p><p>Para provar, o teste conta os SELECT com o mesmo evento before_cursor_execute do tutorial e cria mais kits: se a contagem crescer com o número de kits, é N+1.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o SQL dos relacionamentos <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#tutorial" aria-label="Versão para leitura: Tutorial: o SQL dos relacionamentos">↗</a></h2><p>O tutorial liga autor e livro num SQLite em memória e mostra cada comando que o SQLAlchemy manda ao banco. Crie acervo_relacoes.py na raiz com o passo 1; os passos 2 e 3 entram no fim, um de cada vez. Rode com .\.venv\Scripts\python.exe acervo_relacoes.py.</p><p>As telas são de execuções reais desse código, com Python 3.14 e SQLAlchemy 2.1.9.</p><figure class="code-block"><figcaption>Passo 1 · acervo_relacoes.py: relacionar e ler</figcaption><pre><code>from sqlalchemy import ForeignKey, String, create_engine, event, select
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, relationship, selectinload
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Autor(Base):
+    __tablename__ = &#x27;autor&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str] = mapped_column(String(80))
+    livros: Mapped[list[&#x27;Livro&#x27;]] = relationship(back_populates=&#x27;autor&#x27;, order_by=&#x27;Livro.id&#x27;)
+
+
+class Livro(Base):
+    __tablename__ = &#x27;livro&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    autor_id: Mapped[int] = mapped_column(ForeignKey(&#x27;autor.id&#x27;))
+    titulo: Mapped[str] = mapped_column(String(80))
+    autor: Mapped[Autor] = relationship(back_populates=&#x27;livros&#x27;)
+
+
+motor = create_engine(&#x27;sqlite://&#x27;)  # SQLite em memória, só para o tutorial
+Base.metadata.create_all(motor)      # no projeto, quem cria as tabelas é o esquema.sql
+
+with Session(motor) as sessao, sessao.begin():
+    sessao.add_all([Autor(nome=&#x27;Ana&#x27;, livros=[Livro(titulo=&#x27;Atlas&#x27;), Livro(titulo=&#x27;Bússola&#x27;)]),
+                    Autor(nome=&#x27;Bia&#x27;, livros=[Livro(titulo=&#x27;Gramática&#x27;)]),
+                    Autor(nome=&#x27;Caio&#x27;)])
+
+
+@event.listens_for(motor, &#x27;before_cursor_execute&#x27;)
+def mostrar_sql(conexao, cursor, sql, parametros, contexto, varios):
+    print(&#x27;  SQL:&#x27;, &#x27; &#x27;.join(sql.split()), parametros)
+
+
+print(&#x27;-- cada autor e os seus livros&#x27;)
+with Session(motor) as sessao:
+    for autor in sessao.scalars(select(Autor).order_by(Autor.nome)):
+        print(f&#x27;{autor.nome}: {[livro.titulo for livro in autor.livros]}&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 1 · Um SELECT para os autores e um para cada autor</figcaption><p>Rode.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · Um SELECT para os autores e um para cada autor"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo_relacoes.py</kbd>
+-- cada autor e os seus livros
+  SQL: SELECT autor.id, autor.nome FROM autor ORDER BY autor.nome ()
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (1,)
+Ana: [&#x27;Atlas&#x27;, &#x27;Bússola&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (2,)
+Bia: [&#x27;Gramática&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (3,)
+Caio: []</code></pre><p class="tela-nota"><strong>Repare:</strong> o SELECT dos livros de cada autor sai na hora do autor.livros, dentro do laço: 1 consulta para os autores e mais 3. Até o Caio, que não tem livro nenhum, custou uma consulta.</p></figure><figure class="code-block"><figcaption>Passo 2 · Acrescente ao fim: carregar junto</figcaption><pre><code>print(&#x27;-- o mesmo, com selectinload&#x27;)
+with Session(motor) as sessao:
+    consulta = select(Autor).options(selectinload(Autor.livros)).order_by(Autor.nome)
+    for autor in sessao.scalars(consulta):
+        print(f&#x27;{autor.nome}: {[livro.titulo for livro in autor.livros]}&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · Com selectinload, duas consultas</figcaption><p>Rode de novo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · Com selectinload, duas consultas"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo_relacoes.py</kbd>
+-- cada autor e os seus livros
+  SQL: SELECT autor.id, autor.nome FROM autor ORDER BY autor.nome ()
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (1,)
+Ana: [&#x27;Atlas&#x27;, &#x27;Bússola&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (2,)
+Bia: [&#x27;Gramática&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (3,)
+Caio: []
+-- o mesmo, com selectinload
+  SQL: SELECT autor.id, autor.nome FROM autor ORDER BY autor.nome ()
+  SQL: SELECT livro.autor_id, livro.id, livro.titulo FROM livro WHERE livro.autor_id IN (?, ?, ?) ORDER BY livro.id (1, 2, 3)
+Ana: [&#x27;Atlas&#x27;, &#x27;Bússola&#x27;]
+Bia: [&#x27;Gramática&#x27;]
+Caio: []</code></pre><p class="tela-nota"><strong>Repare:</strong> a segunda consulta traz os livros dos três autores de uma vez, com IN (?, ?, ?). Com 300 autores, continuariam sendo 2.</p></figure><figure class="code-block"><figcaption>Passo 3 · Acrescente ao fim: apagar quem ainda tem livros</figcaption><pre><code>print(&#x27;-- apagar quem ainda tem livros&#x27;)
+try:
+    with Session(motor) as sessao, sessao.begin():
+        sessao.delete(sessao.get(Autor, 1))
+except IntegrityError as erro:
+    print(&#x27;  recusado:&#x27;, erro.orig)
+</code></pre></figure><figure class="tela"><figcaption>Passo 3 · O ORM tenta soltar os livros antes de apagar o autor</figcaption><p>Rode mais uma vez.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · O ORM tenta soltar os livros antes de apagar o autor"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo_relacoes.py</kbd>
+-- cada autor e os seus livros
+  SQL: SELECT autor.id, autor.nome FROM autor ORDER BY autor.nome ()
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (1,)
+Ana: [&#x27;Atlas&#x27;, &#x27;Bússola&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (2,)
+Bia: [&#x27;Gramática&#x27;]
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (3,)
+Caio: []
+-- o mesmo, com selectinload
+  SQL: SELECT autor.id, autor.nome FROM autor ORDER BY autor.nome ()
+  SQL: SELECT livro.autor_id, livro.id, livro.titulo FROM livro WHERE livro.autor_id IN (?, ?, ?) ORDER BY livro.id (1, 2, 3)
+Ana: [&#x27;Atlas&#x27;, &#x27;Bússola&#x27;]
+Bia: [&#x27;Gramática&#x27;]
+Caio: []
+-- apagar quem ainda tem livros
+  SQL: SELECT autor.id, autor.nome FROM autor WHERE autor.id = ? (1,)
+  SQL: SELECT livro.id, livro.autor_id, livro.titulo FROM livro WHERE ? = livro.autor_id ORDER BY livro.id (1,)
+  SQL: UPDATE livro SET autor_id=? WHERE livro.id = ? [(None, 1), (None, 2)]
+  recusado: NOT NULL constraint failed: livro.autor_id</code></pre><p class="tela-nota"><strong>Repare:</strong> ninguém escreveu esse UPDATE: o relacionamento sem opções troca o autor_id por NULL antes do DELETE. Quem recusou foi o NOT NULL, e não a chave estrangeira. No projeto, passive_deletes=&#x27;all&#x27; tira esse UPDATE, e quem decide é a chave estrangeira do MySQL.</p></figure></section><section id="pratica" data-stop="pratica"><h2>O repositório ORM inteiro <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#pratica" aria-label="Versão para leitura: O repositório ORM inteiro">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Rode verificar.py antes de começar. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: os relacionamentos no kits/orm.py, as operações da janela, as consultas novas, os testes, o herdado e a comparação. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes e olhando o SQL gerado.</p><div class="workbench"><h3>kits/orm.py: o kit e os seus itens</h3><p>Troque o seu kits/orm.py por este arquivo e complete os dois relacionamentos: itens no KitBanco e kit no ItemBanco, com back_populates e a opção que deixa a chave estrangeira decidir ao apagar um kit. Entrega: kits/orm.py.</p><p>Concluído quando: O teste do mapeamento continua passando e o test_relacionamento_liga_o_kit_aos_itens_e_o_item_ao_kit passa: kit.itens traz Cabo e Notebook, e o item traz o kit.</p><details><summary>Dica para realizar a atividade</summary><p>O tipo de itens é Mapped[list[&#x27;ItemBanco&#x27;]], entre aspas porque a classe ItemBanco vem depois. Volte à seção sobre quem decide o apagar.</p></details><pre><code id="work-relacoes">&quot;&quot;&quot;O ORM dos kits (A23 e A24). Troque o seu kits/orm.py por este e complete os dois relacionamentos.
+
+O esquema continua sendo o sql/mysql/esquema.sql: as classes descrevem as tabelas que ele cria, e ninguém
+chama create_all. Assim, o SQL direto e o ORM leem e gravam as mesmas tabelas.
+&quot;&quot;&quot;
+from sqlalchemy import URL, ForeignKey, String, create_engine
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, relationship  # relationship é novo
+
+from kits.banco import ler_config
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class KitBanco(Base):
+    &quot;&quot;&quot;Uma linha da tabela kit. O nome Banco separa do Kit do domínio (A05), que tem as regras.&quot;&quot;&quot;
+    __tablename__ = &#x27;kit&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str] = mapped_column(String(80))
+    # Complete (A24): itens, a lista dos ItemBanco do kit, em ordem de id, ligada ao atributo kit do ItemBanco.
+    # Ao apagar um kit, o ORM não pode mexer nos itens: nem apagar, nem trocar o kit_id por NULL. Quem decide é a
+    # chave estrangeira do banco. Procure passive_deletes na documentação (seção Fontes).
+
+
+class ItemBanco(Base):
+    &quot;&quot;&quot;Uma linha da tabela item.&quot;&quot;&quot;
+    __tablename__ = &#x27;item&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    kit_id: Mapped[int] = mapped_column(ForeignKey(&#x27;kit.id&#x27;))
+    nome: Mapped[str] = mapped_column(String(80))
+    quantidade: Mapped[int]
+    # Complete (A24): kit, o KitBanco deste item, o outro lado da mesma ligação.
+
+
+def criar_motor(config=None):
+    &quot;&quot;&quot;O motor (Engine) a partir do banco.ini, como o conexao_banco da A08. URL.create monta o endereço com
+    cada parte no seu lugar: uma senha com @ ou : não quebra nada. O motor guarda um conjunto de conexões
+    abertas (pool) e as empresta a cada sessão; pool_pre_ping confere se a emprestada ainda está viva.&quot;&quot;&quot;
+    cfg = config or ler_config()
+    url = URL.create(&#x27;mysql+mysqlconnector&#x27;, username=cfg[&#x27;user&#x27;], password=cfg[&#x27;password&#x27;], host=cfg[&#x27;host&#x27;],
+                     port=cfg[&#x27;port&#x27;], database=cfg[&#x27;database&#x27;])
+    return create_engine(url, pool_pre_ping=True)
+
+
+def em_sessao(operacao, motor):
+    &quot;&quot;&quot;Roda operacao(sessao) numa transação: confirma no fim, desfaz tudo se algo der errado.
+    É o em_transacao da A10, para o ORM; a sessão fecha e devolve a conexão ao motor.&quot;&quot;&quot;
+    with Session(motor) as sessao, sessao.begin():
+        return operacao(sessao)
+</code></pre><div class="atelier" data-source="work-relacoes" data-filename="orm.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, com o tests/test_orm.py desta aula (atividade 4)."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, com o tests/test_orm.py desta aula (atividade 4).</p></div><div class="workbench"><h3>kits/repositorio_orm.py: o resto da janela</h3><p>Troque o começo do seu kits/repositorio_orm.py pelo começo deste arquivo (imports e constantes) e acrescente no fim as cinco funções, com as mesmas regras do kits/repositorio.py: busca com escape e ordem da lista, edição com conferência, remoção de kit pelo banco, resumo com os kits vazios e itens abaixo do limite. Entrega: kits/repositorio_orm.py.</p><p>Concluído quando: Os testes de busca, ordem, edição, remoção de kit, resumo e itens abaixo de tests/test_orm.py passam, e o test_camadas continua passando.</p><details><summary>Dica para realizar a atividade</summary><p>Para cada função, abra a mesma no kits/repositorio.py e ache no SQL dela a trava, o escape e o LEFT JOIN. Onde cada um aparece no ORM?</p></details><pre><code id="work-repositorio-orm">&quot;&quot;&quot;Acrescente ao seu kits/repositorio_orm.py (A24): troque o começo do arquivo por este, até as constantes,
+e ponha as funções novas no fim. As operações que a janela usa, com a sessão no lugar da
+conexão e objetos no lugar do SQL escrito à mão. Cada função recebe a sessão; nenhuma confirma nem desfaz.
+
+As exceções, a lista de ordens e o escape do LIKE vêm do kits/repositorio.py: a janela e o serviço de dados
+recebem os mesmos erros, seja qual for o repositório. A importação da planilha continua só no SQL direto.
+&quot;&quot;&quot;
+from sqlalchemy import exc, func, select
+from sqlalchemy.orm import selectinload
+
+from kits.modelo import Kit
+from kits.orm import ItemBanco, KitBanco
+from kits.repositorio import ORDENS, ItemMudou, KitComItens, escapar_like
+
+SEM_KIT = 1452  # chave estrangeira: o kit_id não existe
+TEM_ITENS = 1451  # chave estrangeira: ainda há itens apontando para o kit
+COLUNAS = {&#x27;nome&#x27;: ItemBanco.nome, &#x27;quantidade&#x27;: ItemBanco.quantidade}  # as mesmas chaves de ORDENS (o teste confere)
+
+
+# ... listar_kits, criar_kit, adicionar_item e remover_item continuam como na A23 ...
+
+
+def consultar_itens(sessao, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+    &quot;&quot;&quot;(id, nome, quantidade) dos itens do kit com o trecho no nome, na ordem pedida (A16). O trecho vai com
+    escapar_like e escape=&#x27;\\&#x27;. A coluna sai de COLUNAS; ordem fora dela: ValueError(&#x27;Ordem desconhecida: ...&#x27;).
+    Empate pelo id.&quot;&quot;&quot;
+    ...
+
+
+def editar_item(sessao, item_id, antes, depois):
+    &quot;&quot;&quot;A14 com o ORM: sessao.get(ItemBanco, item_id, with_for_update=True). Sumiu: LookupError(&#x27;Item 9 não existe&#x27;).
+    Diferente do antes: ItemMudou. Outro item do kit com o nome novo (com trava): ValueError(&#x27;O kit já tem um item Cabo&#x27;).
+    Senão, troque os atributos. Nada de commit.&quot;&quot;&quot;
+    ...
+
+
+def remover_kit(sessao, kit_id):
+    &quot;&quot;&quot;A14 com o ORM: sessao.get; None: LookupError(&#x27;Kit 9 não existe&#x27;). sessao.delete(kit) e sessao.flush() dentro
+    do try, para o erro do banco aparecer aqui: errno TEM_ITENS vira KitComItens(&#x27;Kit 1 ainda tem itens: ...&#x27;).&quot;&quot;&quot;
+    ...
+
+
+def resumo_kits(sessao):
+    &quot;&quot;&quot;(id, nome, itens, unidades) de cada kit, inclusive os vazios, em ordem de nome e id (A17): outerjoin pelo
+    relacionamento, func.count de uma coluna do item, func.coalesce da soma, group_by pelo id e o nome. int() na soma.&quot;&quot;&quot;
+    ...
+
+
+def itens_abaixo(sessao, limite):
+    &quot;&quot;&quot;(kit, item, quantidade) dos itens com quantidade &lt; limite, os menores primeiro, depois kit e item (A17).
+    join pelo relacionamento ItemBanco.kit.&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio-orm" data-filename="repositorio_orm.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>Consultas novas: vazios, faixa, nomes e estatísticas</h3><p>Acrescente ao fim do kits/repositorio_orm.py as cinco consultas deste arquivo. Antes de cada uma, rode a consulta equivalente no cliente mysql, no kits_teste, como no Guia de consultas, e confira se o ORM devolve o mesmo. Entrega: kits/repositorio_orm.py.</p><p>Concluído quando: Os testes de kits vazios, faixa, nomes cadastrados, estatísticas e relatório passam; o relatório faz 2 SELECT com 8 kits.</p><details><summary>Dica para realizar a atividade</summary><p>Uma consulta por vez, olhando o SQL gerado com o evento do tutorial. A média de 3, 2, 8 e 1 é 3,5.</p></details><pre><code id="work-consultas-novas"># Acrescente ao fim do seu kits/repositorio_orm.py (A24): consultas que a janela ainda não usa.
+
+
+def kits_vazios(sessao):
+    &quot;&quot;&quot;[(id, nome)] dos kits sem itens, em ordem de nome: outerjoin e ItemBanco.id.is_(None).&quot;&quot;&quot;
+    ...
+
+
+def itens_entre(sessao, minimo, maximo):
+    &quot;&quot;&quot;(kit, item, quantidade) com quantidade de minimo a maximo, pontas incluídas (between), na ordem do
+    itens_abaixo. minimo &gt; maximo: ValueError(&#x27;Faixa vazia: 5 é maior que 2&#x27;).&quot;&quot;&quot;
+    ...
+
+
+def nomes_cadastrados(sessao, nomes):
+    &quot;&quot;&quot;Dos nomes pedidos, os que existem em algum kit: in_, distinct, em ordem. Lista vazia: [] sem ir ao banco.&quot;&quot;&quot;
+    ...
+
+
+def estatisticas(sessao):
+    &quot;&quot;&quot;(kit, itens, menor, maior, média) de cada kit com itens, em ordem de nome: func.count, min, max e avg,
+    com join. A média chega como Decimal: devolva round(float(media), 1).&quot;&quot;&quot;
+    ...
+
+
+def relatorio_kits(sessao):
+    &quot;&quot;&quot;[(kit, [(item, quantidade), ...])] de todos os kits, inclusive os vazios, em ordem de nome, lendo kit.itens.
+    Com 40 kits, no máximo 2 SELECT: use selectinload(KitBanco.itens) nas options.&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-consultas-novas" data-filename="consultas_orm.py" data-execution="No projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm. No cliente mysql, use o kits_teste, nunca o kits."></div><p>No projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm. No cliente mysql, use o kits_teste, nunca o kits.</p></div><div class="workbench"><h3>tests/test_orm.py: os 23 testes</h3><p>Troque o seu tests/test_orm.py por este. Ele tem os dez testes da A23 e os novos da A24. Escreva os três marcados com Complete. Entrega: tests/test_orm.py.</p><p>Concluído quando: Os 23 testes passam com o seu código. Depois tire o selectinload do relatorio_kits: o seu teste das duas consultas precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>A contagem: uma lista vazia, event.listen com uma função que guarda o terceiro argumento (o SQL), e só os que começam com SELECT.</p></details><pre><code id="work-testes-orm">&quot;&quot;&quot;O ORM dos kits no kits_teste: o mapeamento confere com as tabelas, e as operações fazem o mesmo que o SQL.&quot;&quot;&quot;
+import threading
+import unittest
+
+from sqlalchemy import event, inspect
+
+from kits import repositorio_orm as orm_repo
+from kits.banco import conexao_banco
+from kits.modelo import ItemKit
+from kits.orm import Base, KitBanco, criar_motor, em_sessao
+from kits.repositorio import ORDENS, ItemMudou, KitComItens
+from tests.test_repositorio import TESTE, comandos
+
+ESTOQUE_INICIAL = [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)]
+
+
+class TestOrm(unittest.TestCase):
+    def setUp(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for comando in [&#x27;SET SESSION lock_wait_timeout = 5&#x27;, *[c for s in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(s)]]:
+                cur.execute(comando)
+        self.motor = criar_motor(TESTE)
+        self.addCleanup(self.motor.dispose)
+
+    def fazer(self, funcao, *args):
+        return em_sessao(lambda sessao: funcao(sessao, *args), self.motor)
+
+    def estoque(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;)
+            return cur.fetchall()
+
+    def mais_itens(self):
+        &quot;&quot;&quot;Kit 3 vazio e mais dois itens no kit 1, para as consultas terem o que separar.&quot;&quot;&quot;
+        self.fazer(orm_repo.criar_kit, &#x27;Oficina Montagem&#x27;)
+        self.fazer(orm_repo.adicionar_item, 1, ItemKit(&#x27;Cabo_USB&#x27;, 8))
+        self.fazer(orm_repo.adicionar_item, 1, ItemKit(&#x27;Switch&#x27;, 1))
+
+    def test_cada_classe_mapeia_as_colunas_da_tabela_do_esquema(self):
+        banco = inspect(self.motor)
+        for tabela in Base.metadata.tables.values():
+            with self.subTest(tabela.name):
+                self.assertEqual([c.name for c in tabela.columns], [c[&#x27;name&#x27;] for c in banco.get_columns(tabela.name)])
+
+    def test_listar_kits_em_ordem_de_nome(self):
+        self.assertEqual(self.fazer(orm_repo.listar_kits), [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)])
+
+    def test_criar_kit_devolve_o_id_e_grava(self):
+        kit_id = self.fazer(orm_repo.criar_kit, &#x27;  Almoxarifado &#x27;)
+        self.assertIn((kit_id, &#x27;Almoxarifado&#x27;), self.fazer(orm_repo.listar_kits))
+
+    def test_criar_kit_com_nome_repetido_e_recusado_pela_comparacao_do_banco(self):
+        with self.assertRaisesRegex(ValueError, &#x27;Já existe o kit Treinamento Redes&#x27;):
+            self.fazer(orm_repo.criar_kit, &#x27;treinamento redes&#x27;)
+
+    def test_adicionar_soma_no_item_de_mesmo_nome(self):
+        self.assertEqual(self.fazer(orm_repo.adicionar_item, 1, ItemKit(&#x27;cabo&#x27;, 2)), 1)
+        self.assertEqual(self.estoque()[0], (1, 1, &#x27;Cabo&#x27;, 5))
+
+    def test_adicionar_item_novo_cria_a_linha(self):
+        item_id = self.fazer(orm_repo.adicionar_item, 2, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque()[-1], (item_id, 2, &#x27;Alicate&#x27;, 4))
+
+    def test_kit_que_nao_existe_vira_lookup_error_e_nada_fica(self):
+        with self.assertRaisesRegex(LookupError, &#x27;Kit 9 não existe&#x27;):
+            self.fazer(orm_repo.adicionar_item, 9, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL)
+
+    def test_remover_apaga_so_o_pedido_e_o_inexistente_e_recusado(self):
+        self.fazer(orm_repo.remover_item, 1)
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL[1:])
+        with self.assertRaisesRegex(LookupError, &#x27;Item 1 não existe&#x27;):
+            self.fazer(orm_repo.remover_item, 1)
+
+    def test_erro_no_meio_da_sessao_desfaz_tudo(self):
+        def duas_coisas(sessao):
+            orm_repo.adicionar_item(sessao, 1, ItemKit(&#x27;Alicate&#x27;, 4))
+            orm_repo.remover_item(sessao, 99)
+        with self.assertRaises(LookupError):
+            em_sessao(duas_coisas, self.motor)
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL)
+
+    def test_duas_somas_ao_mesmo_tempo_nao_se_perdem(self):
+        largada = threading.Barrier(2)
+
+        def tecnico():
+            def somar(sessao):
+                largada.wait()
+                orm_repo.adicionar_item(sessao, 1, ItemKit(&#x27;Cabo&#x27;, 1))
+            em_sessao(somar, self.motor)
+
+        tecnicos = [threading.Thread(target=tecnico) for _ in range(2)]
+        for t in tecnicos:
+            t.start()
+        for t in tecnicos:
+            t.join()
+        self.assertEqual(self.estoque()[0], (1, 1, &#x27;Cabo&#x27;, 5))
+
+    # A24: relacionamentos, o resto das operações da janela e as consultas.
+
+    def test_relacionamento_liga_o_kit_aos_itens_e_o_item_ao_kit(self):
+        def ler(sessao):
+            kit = sessao.get(KitBanco, 1)
+            return [i.nome for i in kit.itens], kit.itens[0].kit.nome
+        self.assertEqual(self.fazer(ler), ([&#x27;Cabo&#x27;, &#x27;Notebook&#x27;], &#x27;Treinamento Redes&#x27;))
+
+    def test_consultar_itens_escapa_curingas_e_ordena_com_desempate(self):
+        self.mais_itens()
+        self.assertEqual(self.fazer(orm_repo.consultar_itens, 1, &#x27;_&#x27;), [(4, &#x27;Cabo_USB&#x27;, 8)])
+        self.assertEqual(self.fazer(orm_repo.consultar_itens, 1, &#x27; CA &#x27;, &#x27;quantidade&#x27;, True), [(4, &#x27;Cabo_USB&#x27;, 8), (1, &#x27;Cabo&#x27;, 3)])
+        self.assertEqual(self.fazer(orm_repo.consultar_itens, 1, &quot;d&#x27;agua&quot;), [])
+
+    def test_ordem_fora_da_lista_e_recusada_e_a_lista_e_a_do_sql(self):
+        self.assertEqual(orm_repo.COLUNAS.keys(), ORDENS.keys())
+        with self.assertRaisesRegex(ValueError, &#x27;Ordem desconhecida&#x27;):
+            self.fazer(orm_repo.consultar_itens, 1, &#x27;&#x27;, &#x27;kit_id&#x27;)
+
+    def test_editar_troca_nome_e_quantidade_se_o_item_nao_mudou(self):
+        self.fazer(orm_repo.editar_item, 2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook i5&#x27;, 4))
+        self.assertEqual(self.estoque()[1], (2, 1, &#x27;Notebook i5&#x27;, 4))
+
+    def test_editar_recusa_item_que_mudou_nome_repetido_e_item_que_sumiu(self):
+        with self.assertRaises(ItemMudou):
+            self.fazer(orm_repo.editar_item, 2, ItemKit(&#x27;Notebook&#x27;, 1), ItemKit(&#x27;Notebook&#x27;, 4))
+        with self.assertRaisesRegex(ValueError, &#x27;O kit já tem um item Cabo&#x27;):
+            self.fazer(orm_repo.editar_item, 2, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;cabo&#x27;, 4))
+        with self.assertRaisesRegex(LookupError, &#x27;Item 9 não existe&#x27;):
+            self.fazer(orm_repo.editar_item, 9, ItemKit(&#x27;Notebook&#x27;, 2), ItemKit(&#x27;Notebook&#x27;, 4))
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL)
+
+    # Complete: crie um kit vazio e remova: ele some do listar_kits. Remover o kit 1 levanta KitComItens com
+    # &#x27;Kit 1 ainda tem itens&#x27;; remover o 9, LookupError com &#x27;Kit 9 não existe&#x27;; e o estoque continua o ESTOQUE_INICIAL.
+
+    def test_resumo_inclui_o_kit_vazio_com_zero_e_soma_como_int(self):
+        self.mais_itens()
+        resumo = self.fazer(orm_repo.resumo_kits)
+        self.assertEqual(resumo, [(3, &#x27;Oficina Montagem&#x27;, 0, 0), (1, &#x27;Treinamento Redes&#x27;, 4, 14), (2, &#x27;Treinamento Suporte&#x27;, 1, 5)])
+        self.assertIs(type(resumo[1][3]), int)
+
+    def test_itens_abaixo_do_limite_de_todos_os_kits(self):
+        self.mais_itens()
+        self.assertEqual(self.fazer(orm_repo.itens_abaixo, 3),
+                         [(&#x27;Treinamento Redes&#x27;, &#x27;Switch&#x27;, 1), (&#x27;Treinamento Redes&#x27;, &#x27;Notebook&#x27;, 2)])
+
+    # Complete: sem kit vazio, kits_vazios devolve []; depois de self.mais_itens(), [(3, &#x27;Oficina Montagem&#x27;)].
+
+    def test_itens_entre_inclui_as_pontas_e_recusa_faixa_vazia(self):
+        self.mais_itens()
+        self.assertEqual(self.fazer(orm_repo.itens_entre, 2, 5), [(&#x27;Treinamento Redes&#x27;, &#x27;Notebook&#x27;, 2),
+                                                                  (&#x27;Treinamento Redes&#x27;, &#x27;Cabo&#x27;, 3), (&#x27;Treinamento Suporte&#x27;, &#x27;Cabo&#x27;, 5)])
+        with self.assertRaisesRegex(ValueError, &#x27;Faixa vazia&#x27;):
+            self.fazer(orm_repo.itens_entre, 5, 2)
+
+    def test_nomes_cadastrados_sem_repeticao_e_com_a_grafia_do_banco(self):
+        self.assertEqual(self.fazer(orm_repo.nomes_cadastrados, [&#x27;cabo&#x27;, &#x27;Monitor&#x27;, &#x27;Notebook&#x27;, &#x27;CABO&#x27;]), [&#x27;Cabo&#x27;, &#x27;Notebook&#x27;])
+        self.assertEqual(self.fazer(orm_repo.nomes_cadastrados, []), [])
+
+    def test_estatisticas_por_kit_com_media_arredondada(self):
+        self.mais_itens()
+        estatisticas = self.fazer(orm_repo.estatisticas)
+        self.assertEqual(estatisticas, [(&#x27;Treinamento Redes&#x27;, 4, 1, 8, 3.5), (&#x27;Treinamento Suporte&#x27;, 1, 5, 5, 5.0)])
+        self.assertIs(type(estatisticas[0][4]), float)  # o AVG chega como Decimal(&#x27;3.5000&#x27;), que também é == 3.5
+
+    # Complete: com self.mais_itens() e mais cinco kits, conte os SELECT do relatorio_kits com
+    # event.listen(self.motor, &#x27;before_cursor_execute&#x27;, ...): têm de ser 2. Confira também um kit vazio e o Treinamento Redes.
+</code></pre><div class="atelier" data-source="work-testes-orm" data-filename="test_orm.py" data-execution=".\.venv\Scripts\python.exe -m unittest -v tests.test_orm e depois .\.venv\Scripts\python.exe verificar.py, na raiz do projeto."></div><p>.\.venv\Scripts\python.exe -m unittest -v tests.test_orm e depois .\.venv\Scripts\python.exe verificar.py, na raiz do projeto.</p></div><div class="workbench"><h3>repositorio_orm_herdado.py: o que ficou de fora</h3><p>Siga a instrução do começo do arquivo: o herdado entra por um momento no lugar do seu kits/repositorio_orm.py, e você roda tests.test_orm. Para cada relato da partida, registre a decisão que o herdado perdeu, a linha, o teste que falhou e a correção. Devolva o seu. Entrega: a tabela no registro desta página.</p><p>Concluído quando: Os quatro relatos têm decisão, linha, teste e correção; a dupla explica, com o SQL gerado, por que o relatório faz 41 consultas com 40 kits.</p><details><summary>Dica para realizar a atividade</summary><p>Um dos relatos não tem erro nenhum na tela: só a contagem de consultas mostra.</p></details><pre><code id="work-orm-legado">&quot;&quot;&quot;Repositório ORM herdado. Para examinar: guarde o seu kits/repositorio_orm.py (copie para fora da pasta kits),
+ponha este no lugar dele, rode tests.test_orm e devolva o seu.&quot;&quot;&quot;
+from sqlalchemy import exc, func, select
+
+from kits.modelo import Kit
+from kits.orm import ItemBanco, KitBanco
+from kits.repositorio import ORDENS, ItemMudou, KitComItens, escapar_like
+
+SEM_KIT = 1452
+TEM_ITENS = 1451
+COLUNAS = {&#x27;nome&#x27;: ItemBanco.nome, &#x27;quantidade&#x27;: ItemBanco.quantidade}
+
+
+def listar_kits(sessao):
+    return [tuple(linha) for linha in sessao.execute(select(KitBanco.id, KitBanco.nome).order_by(KitBanco.nome, KitBanco.id))]
+
+
+def criar_kit(sessao, nome):
+    kit = Kit(nome)
+    outro = sessao.scalar(select(KitBanco.nome).where(KitBanco.nome == kit.nome))
+    if outro is not None:
+        raise ValueError(f&#x27;Já existe o kit {outro}&#x27;)
+    novo = KitBanco(nome=kit.nome)
+    sessao.add(novo)
+    sessao.flush()
+    return novo.id
+
+
+def adicionar_item(sessao, kit_id, item):
+    existente = sessao.scalar(select(ItemBanco).where(ItemBanco.kit_id == kit_id, ItemBanco.nome == item.nome)
+                              .with_for_update())
+    if existente is not None:
+        existente.quantidade += item.quantidade
+        return existente.id
+    novo = ItemBanco(kit_id=kit_id, nome=item.nome, quantidade=item.quantidade)
+    sessao.add(novo)
+    try:
+        sessao.flush()
+    except exc.IntegrityError as erro:
+        if getattr(erro.orig, &#x27;errno&#x27;, None) == SEM_KIT:
+            raise LookupError(f&#x27;Kit {kit_id} não existe&#x27;) from erro
+        raise
+    return novo.id
+
+
+def remover_item(sessao, item_id):
+    item = sessao.get(ItemBanco, item_id)
+    if item is None:
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+    sessao.delete(item)
+
+
+def consultar_itens(sessao, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+    if ordem not in COLUNAS:
+        raise ValueError(f&#x27;Ordem desconhecida: {ordem}&#x27;)
+    coluna = COLUNAS[ordem].desc() if descendente else COLUNAS[ordem]
+    consulta = (select(ItemBanco.id, ItemBanco.nome, ItemBanco.quantidade)
+                .where(ItemBanco.kit_id == kit_id, ItemBanco.nome.like(f&#x27;%{trecho.strip()}%&#x27;))
+                .order_by(coluna, ItemBanco.id))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def editar_item(sessao, item_id, antes, depois):
+    item = sessao.get(ItemBanco, item_id, with_for_update=True)
+    if item is None:
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+    if (item.nome, item.quantidade) != (antes.nome, antes.quantidade):
+        raise ItemMudou(f&#x27;{antes.nome} mudou depois que você leu: agora é {item.nome} com {item.quantidade}&#x27;)
+    outro = sessao.scalar(select(ItemBanco.nome).where(ItemBanco.kit_id == item.kit_id, ItemBanco.nome == depois.nome,
+                                                       ItemBanco.id != item_id).with_for_update())
+    if outro is not None:
+        raise ValueError(f&#x27;O kit já tem um item {outro}&#x27;)
+    item.nome, item.quantidade = depois.nome, depois.quantidade
+
+
+def remover_kit(sessao, kit_id):
+    kit = sessao.get(KitBanco, kit_id)
+    if kit is None:
+        raise LookupError(f&#x27;Kit {kit_id} não existe&#x27;)
+    for item in kit.itens:
+        sessao.delete(item)
+    sessao.delete(kit)
+
+
+def resumo_kits(sessao):
+    consulta = (select(KitBanco.id, KitBanco.nome, func.count(ItemBanco.id), func.coalesce(func.sum(ItemBanco.quantidade), 0))
+                .join(KitBanco.itens).group_by(KitBanco.id, KitBanco.nome).order_by(KitBanco.nome, KitBanco.id))
+    return [(kit_id, nome, itens, int(unidades)) for kit_id, nome, itens, unidades in sessao.execute(consulta)]
+
+
+def itens_abaixo(sessao, limite):
+    consulta = (select(KitBanco.nome, ItemBanco.nome, ItemBanco.quantidade).join(ItemBanco.kit)
+                .where(ItemBanco.quantidade &lt; limite).order_by(ItemBanco.quantidade, KitBanco.nome, ItemBanco.nome))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def kits_vazios(sessao):
+    consulta = (select(KitBanco.id, KitBanco.nome).outerjoin(KitBanco.itens).where(ItemBanco.id.is_(None))
+                .order_by(KitBanco.nome, KitBanco.id))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def itens_entre(sessao, minimo, maximo):
+    if minimo &gt; maximo:
+        raise ValueError(f&#x27;Faixa vazia: {minimo} é maior que {maximo}&#x27;)
+    consulta = (select(KitBanco.nome, ItemBanco.nome, ItemBanco.quantidade).join(ItemBanco.kit)
+                .where(ItemBanco.quantidade.between(minimo, maximo)).order_by(ItemBanco.quantidade, KitBanco.nome, ItemBanco.nome))
+    return [tuple(linha) for linha in sessao.execute(consulta)]
+
+
+def nomes_cadastrados(sessao, nomes):
+    if not nomes:
+        return []
+    consulta = select(ItemBanco.nome).where(ItemBanco.nome.in_(nomes)).distinct().order_by(ItemBanco.nome)
+    return list(sessao.scalars(consulta))
+
+
+def estatisticas(sessao):
+    consulta = (select(KitBanco.nome, func.count(ItemBanco.id), func.min(ItemBanco.quantidade), func.max(ItemBanco.quantidade),
+                       func.avg(ItemBanco.quantidade))
+                .join(KitBanco.itens).group_by(KitBanco.id, KitBanco.nome).order_by(KitBanco.nome, KitBanco.id))
+    return [(nome, itens, menor, maior, round(float(media), 1)) for nome, itens, menor, maior, media in sessao.execute(consulta)]
+
+
+def relatorio_kits(sessao):
+    kits = sessao.scalars(select(KitBanco).order_by(KitBanco.nome, KitBanco.id))
+    return [(kit.nome, [(item.nome, item.quantidade) for item in kit.itens]) for kit in kits]
+</code></pre><div class="atelier" data-source="work-orm-legado" data-filename="repositorio_orm_herdado.py" data-execution="Troque por um momento o kits/repositorio_orm.py pelo herdado e rode .\.venv\Scripts\python.exe -m unittest tests.test_orm. Devolva o seu antes do commit."></div><p>Troque por um momento o kits/repositorio_orm.py pelo herdado e rode .\.venv\Scripts\python.exe -m unittest tests.test_orm. Devolva o seu antes do commit.</p></div><div class="workbench"><h3>docs/arquitetura.md: as consultas lado a lado</h3><p>Acrescente ao docs/arquitetura.md a seção ORM (A24): uma tabela com resumo_kits, itens_abaixo, consultar_itens e relatorio_kits, com o que cada versão escreve, o SQL que o ORM gerou e quantas consultas cada uma faz. Ainda sem decidir: a decisão é da A25. Entrega: a seção no docs/arquitetura.md.</p><p>Concluído quando: Outra dupla, só com a tabela, diz onde está o ON do JOIN no ORM e quantas consultas o relatório faz com 40 kits.</p><details><summary>Dica para realizar a atividade</summary><p>O ON não está escrito no ORM. Onde ele está?</p></details><pre><code id="work-comparar">## ORM (A24)
+
+| Consulta | SQL direto | ORM | SQL que o ORM gerou | Consultas |
+|---|---|---|---|---|
+</code></pre><div class="atelier" data-source="work-comparar" data-filename="arquitetura.md" data-execution="Seção do docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Seção do docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: transferir com o ORM</h3><p>Mapeie a tabela movimentacao (MovimentacaoBanco) e faça transferir no repositório ORM, com as regras da A10: origem travada, destino de mesmo nome somado ou criado, kit que não existe recusado e a movimentação registrada. Use os testes do tests/test_transferencia.py como modelo. Entrega (opcional): o código e os testes no registro desta página.</p><p>Concluído quando: Os mesmos casos do tests/test_transferencia.py passam com a versão ORM, inclusive a transferência para um kit que não existe, que não deixa nada gravado.</p><details><summary>Dica para realizar a atividade</summary><p>O momento é DEFAULT CURRENT_TIMESTAMP no esquema: no mapeamento, server_default=func.current_timestamp().</p></details><pre><code id="work-bonus-transferir"># transferir com o ORM
+
+## Código
+
+## Testes
+</code></pre><div class="atelier" data-source="work-bonus-transferir" data-filename="transferir.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_orm."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_orm.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>O ORM está decidindo por você? <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#auditoria" aria-label="Versão para leitura: O ORM está decidindo por você?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando os testes ou olhando o SQL gerado antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Sem nenhuma opção no relationship, o que o SQLAlchemy faz com os itens ao apagar um kit que tem itens?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Troca o kit_id deles por NULL antes de apagar o kit" autocomplete="off">Troca o kit_id deles por NULL antes de apagar o kit</label><label class="option"><input type="radio" name="q01" value="Apaga os itens junto com o kit" autocomplete="off">Apaga os itens junto com o kit</label><label class="option"><input type="radio" name="q01" value="Nada: deixa o banco decidir" autocomplete="off">Nada: deixa o banco decidir</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 3 do tutorial.</p></details></fieldset><fieldset data-question="q02"><legend>Uma tela percorre 40 kits e lê kit.itens de cada um, sem opções de carregamento. Quantos SELECT ela faz?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="41" autocomplete="off">41</label><label class="option"><input type="radio" name="q02" value="1" autocomplete="off">1</label><label class="option"><input type="radio" name="q02" value="2" autocomplete="off">2</label><label class="option"><input type="radio" name="q02" value="40" autocomplete="off">40</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Conte as consultas do passo 1 do tutorial, com 3 autores.</p></details></fieldset><fieldset data-question="q03"><legend>Por que o resumo usa func.count(ItemBanco.id), e não func.count()?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="O COUNT de uma coluna não conta NULL: o kit vazio fica com 0" autocomplete="off">O COUNT de uma coluna não conta NULL: o kit vazio fica com 0</label><label class="option"><input type="radio" name="q03" value="Porque é mais rápido" autocomplete="off">Porque é mais rápido</label><label class="option"><input type="radio" name="q03" value="Porque func.count() não existe" autocomplete="off">Porque func.count() não existe</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o LEFT JOIN põe nas colunas do item, para o kit vazio?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>consultar_itens monta a ordem com getattr(ItemBanco, ordem), com o texto que veio da janela.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E se a ordem vier como kit_id?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>KitBanco.itens tem passive_deletes=&#x27;all&#x27;, e remover_kit traduz o erro 1451 em KitComItens.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem decide, no SQL direto da A14?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>kits_vazios filtra com where(ItemBanco.id == None), e não com is_(None).</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Olhe o SQL gerado.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>relatorio_kits lê kit.itens dentro do laço, sem selectinload.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>remover_kit chama sessao.delete(kit) e deixa o erro da chave estrangeira aparecer no fim do em_sessao, sem flush.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Onde está o try que traduz o 1451?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>O repositório devolve objetos KitBanco à janela, e a janela lê kit.itens depois que a sessão fechou.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quando sai o SELECT dos itens?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-resumo"><p>Outra dupla entregou o resumo_kits abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def resumo_kits(sessao):
+    consulta = (select(KitBanco.id, KitBanco.nome, func.count(), func.sum(ItemBanco.quantidade))
+                .outerjoin(KitBanco.itens).group_by(KitBanco.id, KitBanco.nome).order_by(KitBanco.nome))
+    return [tuple(linha) for linha in sessao.execute(consulta)]</code></pre><fieldset data-question="ac-contagem" data-claim="ac-contagem"><legend>O kit vazio aparece com 1 item: func.count() conta linhas, e o LEFT JOIN deixa uma linha para ele.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-contagem" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-contagem" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-soma" data-claim="ac-soma"><legend>O kit vazio aparece com None nas unidades, e as somas dos outros chegam como Decimal.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-soma" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-soma" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-on" data-claim="ac-on"><legend>O outerjoin pelo relacionamento não tem a condição do ON e junta cada kit com todos os itens.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-on" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-on" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o repositório ORM inteiro <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#registro" aria-label="Versão para leitura: Entregue o repositório ORM inteiro">↗</a></h2><p>Entregue, no repositório do projeto: kits/orm.py com os relacionamentos, kits/repositorio_orm.py com as operações e as consultas, tests/test_orm.py com os 23 testes e a seção ORM (A24) no docs/arquitetura.md. O acervo_relacoes.py e o herdado ficam fora do commit.</p><p>No registro desta página, cole a saída do verificar.py, a tabela dos quatro relatos e o SQL gerado pelo relatorio_kits, com e sem selectinload. Se fez o bônus, cole o código e os testes.</p><p>Faça um commit revisado, como na A04, só depois de verificar.py terminar com código 0.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Em qual das suas consultas o ORM escondeu uma parte do SQL (um ON, um IN, um UPDATE), e como você descobriu?</p><p>A A25 põe o SQL direto e o ORM lado a lado, com UNION, subconsultas, CASE, índices e visões, e a turma registra a decisão: o aplicativo continua no SQL direto, passa para o ORM ou usa os dois?</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.sqlalchemy.org/en/21/orm/basic_relationships.html">SQLAlchemy 2.1: Basic Relationship Patterns (relationship e back_populates)</a></li><li><a href="https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html">SQLAlchemy 2.1: Relationship Loading Techniques (lazy loading e selectinload)</a></li><li><a href="https://docs.sqlalchemy.org/en/21/orm/cascades.html">SQLAlchemy 2.1: Cascades (delete, delete-orphan e passive_deletes)</a></li><li><a href="https://docs.sqlalchemy.org/en/21/orm/queryguide/select.html">SQLAlchemy 2.1: ORM Querying Guide — joins</a></li><li><a href="https://docs.sqlalchemy.org/en/21/core/operators.html">SQLAlchemy 2.1: Operator Reference (like com escape, between, in_, is_)</a></li></ul><a data-idoc="source" href="leitura-0024-orm-relacionamentos-crud-e-consultas.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-24</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>

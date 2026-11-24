@@ -444,3 +444,13 @@ h2 .section-source{display:inline-block;font:600 .6em var(--sans);text-decoratio
 .tema-toggle .icone-sol, .tema-toggle[aria-pressed="true"] .icone-lua { display: none; }
 .tema-toggle[aria-pressed="true"] .icone-sol { display: block; }
 @media print { html:root[data-theme], html:root:not([data-theme]) { --paper: #fff; --ink: #000; --ink-soft: #333; --paper-sunk: #f4f4f4; --code-bg: #f4f4f4; --rule: #bbb; --blue: #004A8D; color-scheme: light; } }
+
+/* Guia de consultas (guia/consultas.html): página de referência fora das aulas. */
+.guia-pagina { max-width: var(--col-larga, 92rem); margin: 0 auto; padding: 1.2rem clamp(1rem, 5vw, 5rem) 3rem; }
+.guia-sumario ol { columns: 2 16rem; padding-left: 1.4rem; }
+.guia-sumario li { margin: .2rem 0; break-inside: avoid; }
+.guia-topico { margin: 2rem 0 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+.guia-topico h3 { margin-top: 0; }
+.guia-forma { margin: .5rem 0 1rem; padding: .75rem 1rem; border-left: 4px solid var(--orange); background: var(--paper-sunk); overflow-x: auto; }
+.guia-visto { font-family: var(--sans); font-size: .95em; color: var(--ink-soft); }
+.guia-visto a { font-weight: 700; }

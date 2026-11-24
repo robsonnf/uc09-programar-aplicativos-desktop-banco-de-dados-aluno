@@ -1,0 +1,843 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A16 · Ache o item: busca, ordenação e a lista vazia que explica</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A16" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A16</span><span>Filtros, ordenação e consulta vazia<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Cadê o alicate?</a></li><li><a href="#esteira">Da tecla à lista</a></li><li><a href="#like">LIKE: o que % e _ fazem com a busca</a></li><li><a href="#ordem">Ordenar: o banco ordena, e a coluna não vem de fora</a></li><li><a href="#vazio">A lista vazia que explica</a></li><li><a href="#adiar">Buscar quando a pessoa parar de digitar</a></li><li><a href="#tutorial">Tutorial: busca no acervo, do jeito que a pessoa usa</a></li><li><a href="#pratica">A busca nos kits</a></li><li><a href="#auditoria">A busca encontra o que deve?</a></li><li><a href="#registro">Entregue o que prova a busca</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A16</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Ache o item: busca, ordenação e a lista vazia que explica</h1><p class="thesis">Com dezenas de itens por kit, rolar a lista deixou de funcionar. Hoje a janela ganha um campo de busca que filtra no MySQL, cabeçalhos que ordenam por nome ou quantidade e uma lista vazia que diz por que está vazia. No caminho, você aprende o que o LIKE faz com % e _, por que o nome da coluna não pode ir por parâmetro e como não consultar o banco a cada tecla. No fim, depura uma busca herdada que quebrava com apóstrofo e punha 10 antes de 9.</p><p data-idoc="caveat">A aula continua na janela da A15, no DadosMySQL e no MySQL da A08. A lista passa a vir em ordem de nome, e não mais na ordem do id. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Filtrar itens no MySQL com LIKE e parâmetro, escapando %, _ e a barra para que valham como letras</li><li>Ordenar pela coluna escolhida na janela sem colar no SQL nada que veio de fora, com uma lista de colunas permitidas</li><li>Explicar a lista vazia de dois jeitos diferentes: busca sem resultado e kit sem itens</li><li>Adiar a busca até a pessoa parar de digitar, com after e after_cancel</li><li>Rastrear e corrigir uma busca herdada a partir de quatro relatos, ligando cada defeito a um teste</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A15: kits/janela.py com Novo kit e atalhos, abrir_janela.py com DadosMySQL, tests/test_janela.py, tests/test_fontes.py e tests/test_fluxo.py passando</li><li>Consultas parametrizadas da A08 e a comparação do MySQL que ignora maiúsculas, da A13</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Cadê o alicate? <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#partida" aria-label="Versão para leitura: Cadê o alicate?">↗</a></h2><p>O kit do almoxarifado passou de cinquenta itens, e achar o alicate virou rolar a lista com atenção. Outra equipe fez uma busca para a mesma janela, abrir_legado.py, e vieram quatro relatos.</p><p>Buscar Caixa d&#x27;água fechou a busca com um erro no terminal. Ordenar por quantidade pôs 10 antes de 9. Buscar martelo, que não existe, mostrou Este kit ainda não tem itens, e uma técnica achou que o kit tinha sido apagado. E, alguns segundos depois de buscar cabo, a lista voltou a mostrar tudo, com cabo ainda escrito no campo.</p><p>Em dupla, antes de abrir o código: o que o apóstrofo de Caixa d&#x27;água tem a ver com SQL?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: consultar_itens e escapar_like em kits/repositorio.py; DadosMySQL.listar_itens com busca e ordem em abrir_janela.py; kits/janela.py com busca, ordem pelo cabeçalho e lista vazia explicada; tests/test_janela.py e tests/test_fontes.py, com o tests/test_fluxo.py da A15 ainda passando; e a seção Busca e ordem no README.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: os testes passam, e buscar _ mostra só os itens com _ no nome.</p></div></section><section id="esteira" data-stop="esteira"><h2>Da tecla à lista <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#esteira" aria-label="Versão para leitura: Da tecla à lista">↗</a></h2><ol class="pipeline"><li><strong>Digitar</strong><p>Cada tecla no campo de busca adia a consulta mais um pouco.</p></li><li><strong>Parar</strong><p>300 milissegundos depois da última tecla, a janela pede os itens.</p></li><li><strong>Escapar</strong><p>O trecho vira parâmetro do LIKE, com %, _ e a barra escapados.</p></li><li><strong>Ordenar</strong><p>A coluna sai de uma lista de permitidas; a direção, de um if.</p></li><li><strong>Mostrar</strong><p>As linhas na ordem do banco, ou a explicação de por que não há nenhuma.</p></li><li><strong>Manter</strong><p>A sincronização da A14 relê com a mesma busca e a mesma ordem.</p></li></ol></section><section id="like" data-stop="like"><h2>LIKE: o que % e _ fazem com a busca <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#like" aria-label="Versão para leitura: LIKE: o que % e _ fazem com a busca">↗</a></h2><p>nome LIKE %s com o parâmetro &#x27;%cabo%&#x27; encontra os nomes que têm cabo em qualquer lugar. No LIKE, % vale qualquer texto, até vazio, e _ vale exatamente um caractere. Como a comparação do banco kits ignora maiúsculas e acentos (A13), cabo encontra Cabo, e algodao encontra algodão.</p><p>O parâmetro protege o SQL: Caixa d&#x27;água chega ao banco como texto, e o apóstrofo não fecha nada. Mas o parâmetro não muda o que o LIKE faz com o texto. Se a pessoa digitar _, o padrão vira &#x27;%_%&#x27;, e qualquer nome com pelo menos uma letra passa: a busca devolve o kit inteiro. Por isso, antes de pôr o trecho entre %, escapar_like põe uma barra antes de cada %, _ e da própria barra. Com a barra na frente, o LIKE do MySQL trata o caractere como letra.</p><p>A ordem da troca importa: primeiro a barra, depois % e _. Ao contrário, as barras acabadas de pôr seriam dobradas também.</p><div class="table-wrap"><table><caption>O que cada busca encontra no kit com Cabo, Cabo_USB e Fita 50% algodão</caption><thead><tr><th scope="col">Digitado</th><th scope="col">Padrão sem escapar</th><th scope="col">Encontra</th><th scope="col">Padrão escapado</th><th scope="col">Encontra</th></tr></thead><tbody><tr><td>cabo</td><td>%cabo%</td><td>Cabo, Cabo_USB</td><td>%cabo%</td><td>Cabo, Cabo_USB</td></tr><tr><td>_</td><td>%_%</td><td>Todos</td><td>%\_%</td><td>Cabo_USB</td></tr><tr><td>50%</td><td>%50%%</td><td>Fita 50% algodão (por acaso)</td><td>%50\%%</td><td>Fita 50% algodão</td></tr><tr><td>%</td><td>%%%</td><td>Todos</td><td>%\%%</td><td>Fita 50% algodão</td></tr></tbody></table></div></section><section id="ordem" data-stop="ordem"><h2>Ordenar: o banco ordena, e a coluna não vem de fora <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#ordem" aria-label="Versão para leitura: Ordenar: o banco ordena, e a coluna não vem de fora">↗</a></h2><p>Quem ordena é o banco, com ORDER BY. Ordenar na janela parece mais fácil, mas a Treeview guarda tudo como texto: ordenado como texto, 10 vem antes de 9, porque o 1 vem antes do 9. No banco, quantidade é INT, e a ordem é a dos números.</p><p>O nome da coluna e o ASC ou DESC não podem ir por parâmetro. Com ORDER BY %s, o conector manda &#x27;quantidade&#x27; entre aspas: o banco ordena por um texto que é igual em todas as linhas, ou seja, não ordena nada. Então esses pedaços entram no SQL com f-string, mas nunca com o texto que veio de fora: a janela pede quantidade, e consultar_itens procura esse nome em ORDENS, um dicionário com as colunas permitidas. O que não estiver lá é recusado antes de montar o SQL. A direção sai de um if com dois resultados possíveis.</p><p>Depois da coluna, ORDER BY também usa o id. Sem isso, dois itens com a mesma quantidade podem trocar de lugar entre uma leitura e outra, e a sincronização faria a lista mudar sozinha.</p><div class="versus"><div class="bad"><h3>Colar o que veio de fora</h3><p>Qualquer texto vira SQL; e o parâmetro, aqui, não ordenaria nada.</p><pre><code>cur.execute(f&#x27;... ORDER BY {ordem}&#x27;)
+cur.execute(&#x27;... ORDER BY %s&#x27;, (ordem,))</code></pre></div><div class="good"><h3>Escolher de uma lista</h3><p>A janela pede um nome; o SQL só recebe colunas conhecidas.</p><pre><code>if ordem not in ORDENS:
+    raise ValueError(f&#x27;Ordem desconhecida: {ordem}&#x27;)
+... ORDER BY {ORDENS[ordem]} {direcao}, id</code></pre></div></div></section><section id="vazio" data-stop="vazio"><h2>A lista vazia que explica <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#vazio" aria-label="Versão para leitura: A lista vazia que explica">↗</a></h2><p>Uma lista sem linhas pode querer dizer três coisas: a busca não achou nada, o kit não tem itens ou a leitura falhou. Para quem usa, as três parecem iguais, e a técnica do relato 3 achou que o kit tinha sumido. A janela diz qual é: com busca, Nenhum item com o trecho neste kit, e como voltar a ver todos; sem busca, Este kit ainda não tem itens, e onde cadastrar. A falha de conexão continua no status, como na A13.</p><p>A mensagem fica num CTkLabel na mesma célula da grade em que está a lista. Com grid, o widget de cima aparece por cima do outro; grid_remove o esconde e grid o traz de volta para o mesmo lugar, como o Cancelar da A14. Lista vazia não é erro: o aviso vermelho do formulário continua vazio.</p></section><section id="adiar" data-stop="adiar"><h2>Buscar quando a pessoa parar de digitar <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#adiar" aria-label="Versão para leitura: Buscar quando a pessoa parar de digitar">↗</a></h2><p>Ligar a busca ao &lt;KeyRelease&gt; faz uma consulta por tecla: digitar alicate são sete consultas, e só a última interessa. Com o MySQL, cada uma abre uma conexão.</p><p>A saída é adiar. Cada tecla desmarca a consulta que estava marcada, com after_cancel, e marca outra para daqui a 300 milissegundos, com after. Enquanto a pessoa digita, a consulta vai sendo empurrada; quando ela para, só a última acontece. O identificador do after fica guardado, e o destroy da janela também o cancela, como a sincronização da A14.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: busca no acervo, do jeito que a pessoa usa <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#tutorial" aria-label="Versão para leitura: Tutorial: busca no acervo, do jeito que a pessoa usa">↗</a></h2><p>O tutorial usa um acervo em memória, com cinco livros; a função consultar faz o papel do banco e escreve no terminal cada consulta que recebe. Crie acervo.py na raiz do projeto com o passo 1. Os passos 2 e 3 trocam funções e o passo 4 troca a ligação da busca, como diz cada legenda. Rode com .\.venv\Scripts\python.exe acervo.py.</p><p>As imagens são capturas reais das janelas geradas por esse código, depois das ações de cada legenda; as telas do terminal são de execuções reais, digitando atlas uma letra de cada vez. Windows 11, Python 3.14 e CustomTkinter 6.0.0.</p><figure class="code-block"><figcaption>Passo 1 · O arquivo acervo.py inteiro</figcaption><pre><code>from tkinter import ttk
+
+import customtkinter as ctk
+
+ACERVO = {1: (&#x27;Guia de Redes&#x27;, 2), 2: (&#x27;Atlas&#x27;, 1), 3: (&#x27;Dicionário&#x27;, 4), 4: (&#x27;Atlas Escolar&#x27;, 12), 5: (&#x27;Gramática&#x27;, 3)}
+
+ctk.set_appearance_mode(&#x27;light&#x27;)
+janela = ctk.CTk()
+janela.title(&#x27;Acervo do Centro&#x27;)
+janela.geometry(&#x27;520x330&#x27;)
+janela.grid_columnconfigure(0, weight=1)
+janela.grid_rowconfigure(1, weight=1)
+
+busca = ctk.CTkEntry(janela, placeholder_text=&#x27;Buscar pelo título&#x27;)
+busca.grid(row=0, column=0, sticky=&#x27;ew&#x27;, padx=12, pady=(12, 0))
+lista = ttk.Treeview(janela, columns=(&#x27;titulo&#x27;, &#x27;exemplares&#x27;), show=&#x27;headings&#x27;)
+lista.heading(&#x27;titulo&#x27;, text=&#x27;Título&#x27;)
+lista.heading(&#x27;exemplares&#x27;, text=&#x27;Exemplares&#x27;)
+lista.column(&#x27;exemplares&#x27;, width=110, anchor=&#x27;e&#x27;)
+lista.grid(row=1, column=0, sticky=&#x27;nsew&#x27;, padx=12, pady=12)
+
+
+def consultar(trecho):
+    &quot;&quot;&quot;Faz o papel do banco: devolve (id, título, exemplares) dos livros com o trecho no título.&quot;&quot;&quot;
+    print(f&#x27;consulta: {trecho!r}&#x27;)
+    return [(i, t, q) for i, (t, q) in ACERVO.items() if trecho.casefold() in t.casefold()]
+
+
+def mostrar():
+    lista.delete(*lista.get_children())
+    for livro_id, titulo, quantos in consultar(busca.get().strip()):
+        lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(livro_id), values=(titulo, quantos))
+
+
+busca.bind(&#x27;&lt;KeyRelease&gt;&#x27;, lambda evento: mostrar())
+mostrar()
+janela.mainloop()
+</code></pre></figure><figure class="janela"><figcaption>Passo 1 · A busca filtra</figcaption><p>Rode e digite atl no campo de busca.</p><img src="../figuras/A16/passo1.png" width="522" height="362" alt="Janela Acervo do Centro com atl no campo de busca e a lista com Atlas 1 e Atlas Escolar 12."></figure><figure class="code-block"><figcaption>Passo 2 · Troque a função mostrar</figcaption><pre><code>vazio = ctk.CTkLabel(janela, text=&#x27;&#x27;, fg_color=&#x27;white&#x27;, text_color=&#x27;gray35&#x27;)
+
+
+def mostrar():
+    lista.delete(*lista.get_children())
+    trecho = busca.get().strip()
+    livros = consultar(trecho)
+    for livro_id, titulo, quantos in livros:
+        lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(livro_id), values=(titulo, quantos))
+    if livros:
+        vazio.grid_remove()
+    else:
+        # Na mesma célula da lista, por cima dela: só aparece quando não há linha.
+        vazio.configure(text=f&#x27;Nenhum título com “{trecho}”. Apague a busca para ver todos.&#x27;)
+        vazio.grid(row=1, column=0)
+</code></pre></figure><figure class="janela"><figcaption>Passo 2 · A lista vazia explica</figcaption><p>Digite zz.</p><img src="../figuras/A16/passo2.png" width="522" height="362" alt="A mesma janela com zz no campo de busca e, no lugar das linhas, o texto Nenhum título com “zz”. Apague a busca para ver todos."></figure><figure class="code-block"><figcaption>Passo 3 · Troque a função consultar</figcaption><pre><code>ORDEM = {&#x27;coluna&#x27;: &#x27;titulo&#x27;, &#x27;decrescente&#x27;: False}
+TITULOS = {&#x27;titulo&#x27;: &#x27;Título&#x27;, &#x27;exemplares&#x27;: &#x27;Exemplares&#x27;}
+
+
+def consultar(trecho):
+    &quot;&quot;&quot;Faz o papel do banco: filtra pelo trecho e devolve na ordem escolhida.&quot;&quot;&quot;
+    print(f&#x27;consulta: {trecho!r}&#x27;)
+    livros = [(i, t, q) for i, (t, q) in ACERVO.items() if trecho.casefold() in t.casefold()]
+    posicao = 1 if ORDEM[&#x27;coluna&#x27;] == &#x27;titulo&#x27; else 2
+    return sorted(livros, key=lambda livro: livro[posicao], reverse=ORDEM[&#x27;decrescente&#x27;])
+
+
+def ordenar(coluna):
+    &quot;&quot;&quot;Primeiro clique: crescente. Clique de novo na mesma coluna: inverte.&quot;&quot;&quot;
+    if ORDEM[&#x27;coluna&#x27;] == coluna:
+        ORDEM[&#x27;decrescente&#x27;] = not ORDEM[&#x27;decrescente&#x27;]
+    else:
+        ORDEM[&#x27;coluna&#x27;], ORDEM[&#x27;decrescente&#x27;] = coluna, False
+    for nome, texto in TITULOS.items():
+        seta = (&#x27; ▼&#x27; if ORDEM[&#x27;decrescente&#x27;] else &#x27; ▲&#x27;) if nome == ORDEM[&#x27;coluna&#x27;] else &#x27;&#x27;
+        lista.heading(nome, text=texto + seta)
+    mostrar()
+
+
+# c=nome guarda o valor de cada volta do laço, como na A12.
+for nome in TITULOS:
+    lista.heading(nome, command=lambda c=nome: ordenar(c))
+lista.heading(&#x27;titulo&#x27;, text=&#x27;Título ▲&#x27;)
+</code></pre></figure><figure class="janela"><figcaption>Passo 3 · O cabeçalho ordena</figcaption><p>Clique duas vezes no cabeçalho Exemplares.</p><img src="../figuras/A16/passo3.png" width="522" height="362" alt="A janela com o cabeçalho Exemplares ▼ e os livros de 12 a 1 exemplar: Atlas Escolar, Dicionário, Gramática, Guia de Redes e Atlas."><p class="tela-nota"><strong>Repare:</strong> Aqui quem ordena é o Python, porque o acervo está num dicionário, com números de verdade. No projeto, quem ordena é o banco.</p></figure><figure class="tela"><figcaption>Passo 3 · Uma consulta por tecla</figcaption><p>Rode, digite atlas e feche a janela.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 3 · Uma consulta por tecla"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo.py</kbd>
+consulta: &#x27;&#x27;
+consulta: &#x27;a&#x27;
+consulta: &#x27;at&#x27;
+consulta: &#x27;atl&#x27;
+consulta: &#x27;atla&#x27;
+consulta: &#x27;atlas&#x27;</code></pre><p class="tela-nota"><strong>Repare:</strong> A primeira consulta é a da abertura, com a busca vazia; depois, uma por letra.</p></figure><figure class="code-block"><figcaption>Passo 4 · Troque a linha busca.bind(&#x27;&lt;KeyRelease&gt;&#x27;, ...)</figcaption><pre><code>agendada = None
+
+
+def adiar():
+    &quot;&quot;&quot;Cada tecla desmarca a consulta marcada e marca outra: só a última tecla chega ao banco.&quot;&quot;&quot;
+    global agendada
+    if agendada is not None:
+        janela.after_cancel(agendada)
+    agendada = janela.after(300, mostrar)
+
+
+busca.bind(&#x27;&lt;KeyRelease&gt;&#x27;, lambda evento: adiar())
+</code></pre></figure><figure class="tela"><figcaption>Passo 4 · Uma consulta quando a pessoa para</figcaption><p>Rode, digite atlas do mesmo jeito e feche.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 4 · Uma consulta quando a pessoa para"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo.py</kbd>
+consulta: &#x27;&#x27;
+consulta: &#x27;atlas&#x27;</code></pre><p class="tela-nota"><strong>Repare:</strong> As teclas chegaram com menos de 300 milissegundos entre uma e outra; cada uma desmarcou a consulta da anterior.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A busca nos kits <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#pratica" aria-label="Versão para leitura: A busca nos kits">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: repositório com os testes no kits_teste, DadosMySQL, janela com os testes de mentira, e só então a busca herdada. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><figure class="janela"><figcaption>Buscando cabo, por quantidade</figcaption><p>Capturada com abrir_janela.py lendo o banco kits, com Cabo USB 10 e Alicate 9 cadastrados a mais no kit 1, depois de clicar duas vezes em Quantidade e digitar cabo.</p><img src="../figuras/A16/kits-busca.png" width="782" height="552" alt="Janela Kits de manutenção com cabo no campo de busca, o cabeçalho Quantidade ▼, a lista com Cabo USB 10 e Cabo 3, e o status 2 itens com “cabo” · 13 unidades."></figure><figure class="janela"><figcaption>Quando a busca não acha nada</figcaption><p>Capturada do mesmo jeito, digitando martelo.</p><img src="../figuras/A16/kits-vazio.png" width="782" height="552" alt="Janela Kits de manutenção com martelo no campo de busca e, no lugar das linhas, o texto Nenhum item com “martelo” neste kit. Apague a busca (Esc) para ver todos."></figure><div class="workbench"><h3>kits/repositorio.py: consultar_itens e escapar_like</h3><p>Acrescente ao repositório ORDENS, escapar_like e consultar_itens, seguindo os comentários: ordem conferida antes do SQL, trecho escapado por parâmetro, coluna de ORDENS, direção de um if e desempate pelo id. Entrega: kits/repositorio.py.</p><p>Concluído quando: Os testes de busca e ordem de tests/test_fontes.py passam, e os testes das aulas anteriores continuam passando.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à tabela da seção do LIKE. Qual das três trocas precisa vir primeiro?</p></details><pre><code id="work-repositorio"># Acrescente ao fim do seu kits/repositorio.py.
+
+ORDENS = {&#x27;nome&#x27;: &#x27;nome&#x27;, &#x27;quantidade&#x27;: &#x27;quantidade&#x27;}  # o que a janela pode pedir -&gt; a coluna do SQL
+
+
+def escapar_like(trecho):
+    r&quot;&quot;&quot;Faz %, _ e \ valerem como letras no LIKE. Comece pela barra: ela é o escape dos outros dois.&quot;&quot;&quot;
+    ...
+
+
+def consultar_itens(con, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+    &quot;&quot;&quot;(id, nome, quantidade) dos itens do kit cujo nome contém o trecho, na ordem pedida.&quot;&quot;&quot;
+    # 1. ordem fora de ORDENS: ValueError(&#x27;Ordem desconhecida: ...&#x27;), antes de montar qualquer SQL.
+    # 2. O trecho (sem os espaços das pontas) vai por parâmetro, escapado e entre %: nome LIKE %s.
+    # 3. A coluna sai de ORDENS e a direção (ASC ou DESC) de um if: placeholders não servem para nomes
+    #    de coluna nem para palavras do SQL. Nunca cole no SQL o texto que veio de fora.
+    # 4. Em caso de empate, ordene também pelo id, para a lista não trocar de lugar sozinha.
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio" data-filename="repositorio.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_fontes.py: busca e ordem no MySQL</h3><p>Acrescente à classe TestFontes os testes do arquivo e escreva os dois marcados com Complete: os curingas como letras e a ordem desconhecida recusada. Entrega: tests/test_fontes.py.</p><p>Concluído quando: Os vinte e quatro testes passam com o seu código. Depois tire a chamada a escapar_like de consultar_itens: o seu teste dos curingas precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Para provar que o DROP não aconteceu, compare o estoque inteiro com o ESTOQUE_INICIAL.</p></details><pre><code id="work-testes-fontes">    # Acrescente à classe TestFontes do seu tests/test_fontes.py.
+
+    # A16: buscar e ordenar.
+
+    def com_itens_de_busca(self):
+        self.gravar(&quot;INSERT INTO item (id, kit_id, nome, quantidade) VALUES &quot;
+                    &quot;(4, 1, &#x27;Cabo_USB&#x27;, 10), (5, 1, &#x27;Fita 50% algodão&#x27;, 9), (6, 1, &#x27;Caixa d&#x27;&#x27;água&#x27;, 1)&quot;)
+
+    def nomes(self, *args):
+        return [nome for _, nome, _ in self.dados.listar_itens(1, *args)]
+
+    def test_sem_busca_vem_tudo_em_ordem_de_nome(self):
+        self.com_itens_de_busca()
+        self.assertEqual(self.nomes(), [&#x27;Cabo&#x27;, &#x27;Cabo_USB&#x27;, &quot;Caixa d&#x27;água&quot;, &#x27;Fita 50% algodão&#x27;, &#x27;Notebook&#x27;])
+
+    def test_busca_ignora_maiusculas_e_acentos_como_o_mysql(self):
+        self.com_itens_de_busca()
+        self.assertEqual(self.nomes(&#x27;CABO&#x27;), [&#x27;Cabo&#x27;, &#x27;Cabo_USB&#x27;])
+        self.assertEqual(self.nomes(&#x27;algodao&#x27;), [&#x27;Fita 50% algodão&#x27;])
+
+    # Complete: buscar _ traz só o Cabo_USB, e buscar 50% só a Fita 50% algodão.
+
+    def test_apostrofo_na_busca_e_so_uma_letra(self):
+        self.com_itens_de_busca()
+        self.assertEqual(self.nomes(&quot;d&#x27;água&quot;), [&quot;Caixa d&#x27;água&quot;])
+
+    def test_ordem_por_quantidade_e_numerica_nos_dois_sentidos(self):
+        self.com_itens_de_busca()
+        quantidades = lambda descendente: [q for _, _, q in self.dados.listar_itens(1, &#x27;&#x27;, &#x27;quantidade&#x27;, descendente)]
+        self.assertEqual(quantidades(False), [1, 2, 3, 9, 10])
+        self.assertEqual(quantidades(True), [10, 9, 3, 2, 1])
+
+    # Complete: listar_itens(1, &#x27;&#x27;, &#x27;quantidade; DROP TABLE item&#x27;) levanta ValueError com &#x27;Ordem desconhecida&#x27;,
+    # e o estoque continua o ESTOQUE_INICIAL.
+
+    def test_busca_de_outro_kit_nao_aparece(self):
+        self.assertEqual([k for k, *_ in self.dados.listar_itens(2, &#x27;cabo&#x27;)], [3])
+</code></pre><div class="atelier" data-source="work-testes-fontes" data-filename="test_fontes.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>abrir_janela.py: listar_itens com busca e ordem</h3><p>Troque o listar_itens do DadosMySQL pelo do arquivo, lendo com consultar_itens. Entrega: abrir_janela.py.</p><p>Concluído quando: Os testes de busca de tests/test_fontes.py passam com o DadosMySQL.</p><details><summary>Dica para realizar a atividade</summary><p>É uma linha com _consultar, passando os quatro argumentos.</p></details><pre><code id="work-dados"># Mudança no seu abrir_janela.py da A15. O resto continua igual.
+
+# No import do repositório, troque listar_itens por consultar_itens.
+
+
+class DadosMySQL:
+    ...
+
+    def listar_itens(self, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+        &quot;&quot;&quot;Os itens do kit que passam na busca, na ordem pedida, lidos com consultar_itens.&quot;&quot;&quot;
+        ...
+</code></pre><div class="atelier" data-source="work-dados" data-filename="abrir_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>kits/janela.py: busca, ordem e lista vazia</h3><p>Faça na sua JanelaItens da A15 as mudanças descritas no arquivo: o campo de busca com a consulta adiada e o Esc, os cabeçalhos que ordenam com a seta, a lista vazia explicada e o destroy cancelando também a busca. A janela não filtra nem ordena nada: pede ao dados. Ajuste o tests/test_janela.py pelo arquivo do campo seguinte. Entrega: kits/janela.py.</p><p>Concluído quando: Os quarenta e oito testes de tests/test_janela.py passam, inclusive os três que você vai completar, e as duas imagens acima se repetem na sua máquina.</p><details><summary>Dica para realizar a atividade</summary><p>Volte ao passo 4 do tutorial. E a mensagem da lista vazia: em que célula da grade ela fica?</p></details><pre><code id="work-janela"># Mudanças na sua kits/janela.py da A15. O resto da JanelaItens continua igual.
+
+SETAS = {False: &#x27; ▲&#x27;, True: &#x27; ▼&#x27;}  # crescente, decrescente
+ESPERA_BUSCA_MS = 300  # quanto tempo depois da última tecla a busca vai ao banco
+
+
+class JanelaItens(ctk.CTk):
+    &quot;&quot;&quot;dados.listar_itens passa a receber (kit_id, trecho, ordem, descendente).&quot;&quot;&quot;
+
+    def __init__(self, dados, perguntar, intervalo_ms=10_000, pedir_nome=None):
+        # self._busca_agendada = None e self._ordem = (&#x27;nome&#x27;, False), antes de montar a lista.
+        ...
+
+    def _montar_lista(self):
+        # Linha 0 do quadro: self.busca, um CTkEntry &#x27;Buscar pelo nome&#x27;; &lt;KeyRelease&gt; agenda a busca e
+        # &lt;Escape&gt; chama self.limpar_busca. A lista desce para a linha 1, que é a que cresce; os botões, para a 2.
+        # Cada cabeçalho chama self.ordenar_por(coluna) (cuidado com o lambda no laço, A12).
+        # self.vazio: um CTkLabel na mesma célula da lista, escondido com grid_remove.
+        # No fim, self._marcar_ordem() põe a seta no cabeçalho do nome.
+        ...
+
+    def _sem_dados(self, mensagem):
+        # Como antes, e também esconde self.vazio.
+        ...
+
+    def mostrar(self):
+        &quot;&quot;&quot;Pede ao dados os itens com o texto da busca e a ordem atual; quem filtra e ordena é o banco.
+        Status: &#x27;2 itens com “cabo” · 13 unidades&#x27; (sem busca, como antes). Depois, self._explicar_vazio.&quot;&quot;&quot;
+        ...
+
+    def _explicar_vazio(self, itens, trecho):
+        &quot;&quot;&quot;Com itens, esconde self.vazio. Sem itens, mostra por quê:
+        com busca: &#x27;Nenhum item com “trecho” neste kit. Apague a busca (Esc) para ver todos.&#x27;
+        sem busca: &#x27;Este kit ainda não tem itens. Cadastre o primeiro no formulário ao lado.&#x27;&quot;&quot;&quot;
+        ...
+
+    def _agendar_busca(self):
+        &quot;&quot;&quot;Desmarca a busca marcada, se houver, e marca outra para daqui a ESPERA_BUSCA_MS.&quot;&quot;&quot;
+        ...
+
+    def limpar_busca(self):
+        ...
+
+    def ordenar_por(self, coluna):
+        &quot;&quot;&quot;Coluna nova: crescente. Mesma coluna: inverte. Depois marca a seta e mostra de novo.&quot;&quot;&quot;
+        ...
+
+    def _marcar_ordem(self):
+        &quot;&quot;&quot;Seta só no cabeçalho da coluna da ordem; os outros, só com o título.&quot;&quot;&quot;
+        ...
+
+    def destroy(self):
+        # Cancele também a busca marcada.
+        ...
+
+    def confirmar(self):
+        # Como na A15; depois de adicionar, apague a busca: o item novo precisa aparecer.
+        ...
+</code></pre><div class="atelier" data-source="work-janela" data-filename="janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>tests/test_janela.py: buscar e ordenar</h3><p>O arquivo substitui o da A15: o BancoDeMentira agora busca e ordena como o MySQL faria com aqueles dados e guarda cada pedido em consultas, e dois testes antigos passaram a esperar a ordem de nome. Ele já tem quarenta e cinco testes, inclusive o que conta as consultas ao digitar alicate. Escreva os três marcados com Complete. Entrega: tests/test_janela.py.</p><p>Concluído quando: Os quarenta e oito testes passam com o seu código. Depois ligue o &lt;KeyRelease&gt; da busca direto ao mostrar, sem adiar: o teste de digitar rápido precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>Os ajudantes buscar e clicar_no_cabecalho já fazem a parte da pessoa. Para o banco mudar, acrescente a tupla na lista do kit: self.banco.itens[1].append((6, &#x27;Cabo HDMI&#x27;, 1)).</p></details><pre><code id="work-testes-janela">&quot;&quot;&quot;A janela com um banco de mentira, um objeto com os mesmos métodos do DadosMySQL: roda sem MySQL, mas abre uma janela de verdade por alguns instantes.&quot;&quot;&quot;
+import copy
+import time
+import unittest
+
+from kits.janela import JanelaItens
+
+KITS = [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)]
+VARIOS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2), (4, &#x27;Cabo USB&#x27;, 10), (5, &#x27;Alicate&#x27;, 9)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+ITENS = {1: [(1, &#x27;Cabo&#x27;, 3), (2, &#x27;Notebook&#x27;, 2)], 2: [(3, &#x27;Cabo&#x27;, 5)]}
+FORA = ConnectionError(&#x27;Sem conexão com o MySQL (erro 2003).&#x27;)
+
+
+def fechar(janela):
+    # O CustomTkinter agenda tarefas com after (o ícone da barra de título, por exemplo).
+    # Cancelar antes de destruir evita avisos de &quot;invalid command name&quot; no fim do teste.
+    for tarefa in janela.tk.call(&#x27;after&#x27;, &#x27;info&#x27;):
+        janela.after_cancel(tarefa)
+    janela.destroy()
+
+
+class BancoDeMentira:
+    &quot;&quot;&quot;Guarda kits e itens em listas e registra o que a janela pediu. falhas: {nome do método: exceção}.&quot;&quot;&quot;
+
+    def __init__(self, kits=KITS, itens=ITENS, resposta=True, nome_novo=None):
+        self.kits = list(kits)
+        self.itens = copy.deepcopy(itens)
+        self.resposta = resposta
+        self.nome_novo = nome_novo
+        self.pedidos_de_nome = []
+        self.kits_criados = []
+        self.falhas = {}
+        self.pedidos = []
+        self.consultas = []
+        self.entregues = []
+        self.removidos = []
+        self.perguntas = []
+        self.editados = []
+        self.kits_removidos = []
+
+    def _talvez_falhar(self, nome):
+        if nome in self.falhas:
+            raise self.falhas[nome]
+
+    def listar_kits(self):
+        self._talvez_falhar(&#x27;listar_kits&#x27;)
+        return list(self.kits)
+
+    def listar_itens(self, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+        &quot;&quot;&quot;Busca e ordena como o MySQL faria com estes dados: trecho em qualquer parte do nome, sem
+        diferenciar maiúsculas; empate pelo id. Guarda cada pedido em consultas.&quot;&quot;&quot;
+        self._talvez_falhar(&#x27;listar_itens&#x27;)
+        self.pedidos.append(kit_id)
+        self.consultas.append((kit_id, trecho, ordem, descendente))
+        itens = [i for i in self.itens.get(kit_id, []) if trecho.casefold() in i[1].casefold()]
+        coluna = {&#x27;nome&#x27;: 1, &#x27;quantidade&#x27;: 2}[ordem]
+        itens.sort(key=lambda i: i[0])
+        itens.sort(key=lambda i: i[coluna].casefold() if coluna == 1 else i[coluna], reverse=descendente)
+        return itens
+
+    def criar_kit(self, nome):
+        self._talvez_falhar(&#x27;criar_kit&#x27;)
+        kit_id = max([k for k, _ in self.kits], default=0) + 1
+        self.kits.append((kit_id, nome.strip()))
+        self.kits_criados.append(nome)
+        return kit_id
+
+    def adicionar(self, kit_id, item):
+        self._talvez_falhar(&#x27;adicionar&#x27;)
+        self.entregues.append((kit_id, item.nome, item.quantidade))
+        self.itens.setdefault(kit_id, []).append((100 + len(self.entregues), item.nome, item.quantidade))
+
+    def remover(self, item_id):
+        self._talvez_falhar(&#x27;remover&#x27;)
+        self.removidos.append(item_id)
+        for kit_id, itens in self.itens.items():
+            self.itens[kit_id] = [i for i in itens if i[0] != item_id]
+
+    def editar(self, item_id, antes, depois):
+        self._talvez_falhar(&#x27;editar&#x27;)
+        for itens in self.itens.values():
+            for i, (atual_id, nome, quantidade) in enumerate(itens):
+                if atual_id == item_id:
+                    if (nome, quantidade) != (antes.nome, antes.quantidade):
+                        raise ValueError(f&#x27;{antes.nome} mudou depois que você leu: agora é {nome} com {quantidade}&#x27;)
+                    itens[i] = (item_id, depois.nome, depois.quantidade)
+                    self.editados.append((item_id, depois.nome, depois.quantidade))
+                    return
+        raise LookupError(f&#x27;Item {item_id} não existe&#x27;)
+
+    def remover_kit(self, kit_id):
+        self._talvez_falhar(&#x27;remover_kit&#x27;)
+        if self.itens.get(kit_id):
+            raise ValueError(f&#x27;Kit {kit_id} ainda tem itens: remova os itens antes&#x27;)
+        self.kits = [k for k in self.kits if k[0] != kit_id]
+        self.kits_removidos.append(kit_id)
+
+    def perguntar(self, texto):
+        self.perguntas.append(texto)
+        return self.resposta
+
+    def pedir_nome(self, texto):
+        self.pedidos_de_nome.append(texto)
+        return self.nome_novo
+
+
+class TestJanela(unittest.TestCase):
+    def abrir(self, banco=None, intervalo_ms=60_000):
+        self.banco = banco or BancoDeMentira()
+        janela = JanelaItens(self.banco, self.banco.perguntar, intervalo_ms, pedir_nome=self.banco.pedir_nome)
+        self.addCleanup(fechar, janela)
+        janela.update()
+        return janela
+
+    def linhas(self, janela):
+        return [tuple(janela.lista.item(i, &#x27;values&#x27;)) for i in janela.lista.get_children()]
+
+    def escolher(self, janela, kit_id):
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(f&#x27;(kit {kit_id})&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+
+    def preencher(self, janela, nome, quantidade):
+        for campo, texto in ((janela.nome, nome), (janela.quantidade, quantidade)):
+            campo.delete(0, &#x27;end&#x27;)
+            if texto:
+                campo.insert(0, texto)
+
+    def selecionar(self, janela, item_id):
+        janela.lista.selection_set(str(item_id))
+        janela.update()
+
+    def erros(self, janela):
+        return janela.erro_nome.cget(&#x27;text&#x27;), janela.erro_quantidade.cget(&#x27;text&#x27;)
+
+    # A11: a lista e a grade.
+
+    def test_abre_no_primeiro_kit_com_os_itens_dele(self):
+        janela = self.abrir()
+        self.assertEqual(janela.kit_atual(), 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+
+    def test_cada_linha_guarda_o_id_do_item(self):
+        janela = self.abrir()
+        self.assertEqual(janela.lista.get_children(), (&#x27;1&#x27;, &#x27;2&#x27;))
+
+    def test_trocar_de_kit_troca_a_lista_sem_repetir(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.escolher(janela, 1)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(self.banco.pedidos, [1, 2, 1])
+
+    def test_status_conta_itens_e_unidades(self):
+        janela = self.abrir()
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens · 5 unidades&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;1 item · 5 unidades&#x27;)
+
+    def test_lista_cresce_com_a_janela(self):
+        janela = self.abrir()
+        janela.geometry(&#x27;640x420&#x27;)
+        janela.update()
+        largura, altura = janela.lista.winfo_width(), janela.lista.winfo_height()
+        janela.geometry(&#x27;1100x740&#x27;)
+        janela.update()
+        self.assertGreater(janela.lista.winfo_width(), largura + 300)
+        self.assertGreater(janela.lista.winfo_height(), altura + 200)
+
+    def test_sem_kits_avisa_e_nao_deixa_adicionar(self):
+        janela = self.abrir(BancoDeMentira(kits=[]))
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;Nenhum kit cadastrado.&#x27;)
+        self.assertEqual(self.banco.pedidos, [])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    # A12: eventos e validação.
+
+    def test_abre_sem_erros_e_so_o_clique_valida(self):
+        janela = self.abrir()
+        self.assertEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        janela.adicionar.invoke()
+        self.assertNotEqual(self.erros(janela), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_valido_entrega_e_a_lista_mostra_o_item_novo(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;  Alicate &#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;&#x27;, &#x27;&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Adicionado: Alicate (4).&#x27;)
+        self.assertIn((&#x27;Alicate&#x27;, &#x27;4&#x27;), self.linhas(janela))
+
+    def test_quantidade_invalida_mostra_a_mensagem_do_dominio(self):
+        janela = self.abrir()
+        for texto, mensagem in ((&#x27;dez&#x27;, &quot;&#x27;dez&#x27; não é um número inteiro&quot;), (&#x27;0&#x27;, &#x27;0 não é maior que zero&#x27;),
+                                (&#x27;2.5&#x27;, &quot;&#x27;2.5&#x27; não é um número inteiro&quot;)):
+            with self.subTest(texto):
+                self.preencher(janela, &#x27;Alicate&#x27;, texto)
+                janela.adicionar.invoke()
+                self.assertEqual(self.erros(janela), (&#x27;&#x27;, mensagem))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_nome_em_branco_e_quantidade_errada_aparecem_juntos(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;   &#x27;, &#x27;-1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;-1 não é maior que zero&#x27;))
+
+    def test_enter_no_campo_confirma_como_o_botao(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Return&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.entregues, [(1, &#x27;Alicate&#x27;, 4)])
+
+    def test_digitar_no_campo_apaga_o_erro_dele(self):
+        janela = self.abrir()
+        self.preencher(janela, &#x27;&#x27;, &#x27;dez&#x27;)
+        janela.adicionar.invoke()
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=&#x27;BackSpace&#x27;)
+        janela.update()
+        self.assertEqual(self.erros(janela), (&#x27;nome deve ser texto não vazio&#x27;, &#x27;&#x27;))
+
+    def test_recusa_de_quem_grava_aparece_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = LookupError(&#x27;Kit 1 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não adicionado: Kit 1 não existe&#x27;)
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Alicate&#x27;, &#x27;4&#x27;))
+
+    def test_defeito_de_quem_grava_nao_e_escondido(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;adicionar&#x27;] = AttributeError(&quot;&#x27;ItemKit&#x27; object has no attribute &#x27;nme&#x27;&quot;)
+        janela = self.abrir(banco)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        with self.assertRaises(AttributeError):
+            janela.confirmar()
+
+    # A13: remover e banco fora do ar.
+
+    def test_remover_so_liga_com_uma_linha_escolhida(self):
+        janela = self.abrir()
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.selecionar(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        self.escolher(janela, 2)
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+
+    def test_remover_pergunta_e_apaga_pelo_id_so_com_sim(self):
+        janela = self.abrir(BancoDeMentira(resposta=False))
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Notebook deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [])
+        self.banco.resposta = True
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(self.banco.removidos, [2])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Removido: Notebook.&#x27;)
+
+    def test_remover_recusado_avisa_e_mostra_a_lista_de_agora(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;remover&#x27;] = LookupError(&#x27;Item 2 não existe&#x27;)
+        janela = self.abrir(banco)
+        self.selecionar(janela, 2)
+        janela.remover.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não removido: Item 2 não existe&#x27;)
+        self.assertEqual(banco.pedidos, [1, 1])
+
+    def test_banco_fora_ao_abrir_avisa_e_recarregar_recupera(self):
+        banco = BancoDeMentira()
+        banco.falhas[&#x27;listar_kits&#x27;] = FORA
+        janela = self.abrir(banco)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        del banco.falhas[&#x27;listar_kits&#x27;]
+        janela.recarregar_botao.invoke()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;2&#x27;)])
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_recarregar_mantem_o_kit_e_mostra_o_que_mudou(self):
+        janela = self.abrir()
+        self.escolher(janela, 2)
+        self.banco.itens[2].append((4, &#x27;Alicate&#x27;, 1))
+        janela.recarregar_botao.invoke()
+        self.assertEqual(janela.kit_atual(), 2)
+        self.assertEqual(self.linhas(janela), [(&#x27;Alicate&#x27;, &#x27;1&#x27;), (&#x27;Cabo&#x27;, &#x27;5&#x27;)])  # A16: em ordem de nome
+
+    def test_banco_fora_ao_adicionar_avisa_e_os_campos_ficam(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;adicionar&#x27;] = FORA
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Não adicionado: {FORA}&#x27;)
+        self.assertEqual(janela.nome.get(), &#x27;Alicate&#x27;)
+
+    def test_banco_fora_ao_trocar_de_kit_avisa_no_status(self):
+        banco = BancoDeMentira()
+        janela = self.abrir(banco)
+        banco.falhas[&#x27;listar_itens&#x27;] = FORA
+        self.escolher(janela, 2)
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), str(FORA))
+        self.assertEqual(self.linhas(janela), [])
+
+    # A14: editar, sincronizar e remover kit.
+
+    def editar_o(self, janela, item_id):
+        self.selecionar(janela, item_id)
+        janela.editar.invoke()
+
+    def test_editar_preenche_o_formulario_e_troca_o_botao(self):
+        janela = self.abrir()
+        self.assertEqual(janela.editar.cget(&#x27;state&#x27;), &#x27;disabled&#x27;)
+        self.editar_o(janela, 2)
+        janela.update()
+        self.assertEqual((janela.nome.get(), janela.quantidade.get()), (&#x27;Notebook&#x27;, &#x27;2&#x27;))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.adicionar.cget(&#x27;text&#x27;)), (&#x27;Editar item&#x27;, &#x27;Salvar&#x27;))
+        self.assertTrue(janela.cancelar.winfo_ismapped())
+
+    def test_salvar_grava_e_volta_ao_novo_item(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook i5&#x27;, &#x27;3&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(self.banco.editados, [(2, &#x27;Notebook i5&#x27;, 3)])
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook i5&#x27;, &#x27;3&#x27;)])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Salvo: Notebook i5 (3).&#x27;)
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.entregues, [])
+
+    def test_salvar_quando_outra_pessoa_mudou_avisa_e_mostra_o_banco(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 5)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;1&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Não salvo: Notebook mudou depois que você leu: agora é Notebook com 5&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;5&#x27;)])
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+
+    def test_cancelar_volta_sem_gravar(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.cancelar.invoke()
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertFalse(janela.cancelar.winfo_ismapped())
+        self.assertEqual(self.banco.editados, [])
+
+    def test_trocar_de_kit_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 2)&#x27;))
+        janela.kit.set(rotulo)
+        janela._trocou_kit(rotulo)
+        self.assertEqual(janela.titulo_form.cget(&#x27;text&#x27;), &#x27;Novo item&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;5&#x27;)])
+
+    def test_sincronizar_mostra_o_que_mudou_e_mantem_a_linha_escolhida(self):
+        janela = self.abrir()
+        self.selecionar(janela, 2)
+        self.banco.itens[1][1] = (2, &#x27;Notebook&#x27;, 7)
+        janela.sincronizar()
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Notebook&#x27;, &#x27;7&#x27;)])
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual(janela.remover.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_sincronizar_nao_mexe_durante_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        self.preencher(janela, &#x27;Notebook&#x27;, &#x27;9&#x27;)
+        pedidos = len(self.banco.pedidos)
+        janela.sincronizar()
+        self.assertEqual(len(self.banco.pedidos), pedidos)
+        self.assertEqual(janela.quantidade.get(), &#x27;9&#x27;)
+
+    def test_sincroniza_sozinha_a_cada_intervalo_sem_acumular(self):
+        # 200 ms durante 0,7 s: três leituras. Se os agendamentos se acumulassem, seriam 2 + 4 + 8.
+        janela = self.abrir(intervalo_ms=200)
+        pedidos = len(self.banco.pedidos)
+        fim = time.monotonic() + 0.7
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+        novos = len(self.banco.pedidos) - pedidos
+        self.assertGreaterEqual(novos, 2)
+        self.assertLessEqual(novos, 5)
+
+    def test_remover_kit_vazio_pergunta_e_recarrega(self):
+        banco = BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)])
+        janela = self.abrir(banco)
+        rotulo = next(r for r in janela.kit.cget(&#x27;values&#x27;) if r.endswith(&#x27;(kit 3)&#x27;))
+        janela.kit.set(rotulo)
+        janela.mostrar()
+        janela.remover_kit.invoke()
+        self.assertEqual(banco.perguntas, [f&#x27;Remover o kit {rotulo}? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(banco.kits_removidos, [3])
+        self.assertNotIn(rotulo, janela.kit.cget(&#x27;values&#x27;))
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), f&#x27;Kit removido: {rotulo}.&#x27;)
+
+    def test_remover_kit_com_itens_avisa_e_o_kit_fica(self):
+        janela = self.abrir()
+        janela.remover_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não removido: Kit 1 ainda tem itens: remova os itens antes&#x27;)
+        self.assertEqual(janela.kit_atual(), 1)
+
+    # A15: novo kit e atalhos.
+
+    def test_novo_kit_cadastra_e_ja_mostra_o_kit_vazio(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=&#x27;Almoxarifado&#x27;))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.pedidos_de_nome, [&#x27;Nome do kit novo:&#x27;])
+        self.assertEqual(self.banco.kits_criados, [&#x27;Almoxarifado&#x27;])
+        self.assertEqual((janela.kit.get(), janela.kit_atual()), (&#x27;Almoxarifado (kit 3)&#x27;, 3))
+        self.assertEqual(self.linhas(janela), [])
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit criado: Almoxarifado (kit 3).&#x27;)
+
+    def test_novo_kit_cancelado_nao_grava_nada(self):
+        janela = self.abrir(BancoDeMentira(nome_novo=None))
+        janela.novo_kit.invoke()
+        self.assertEqual(self.banco.kits_criados, [])
+        self.assertEqual(janela.kit_atual(), 1)
+
+    def test_novo_kit_recusado_avisa_e_fica_no_kit_de_antes(self):
+        banco = BancoDeMentira(nome_novo=&#x27;treinamento redes&#x27;)
+        banco.falhas[&#x27;criar_kit&#x27;] = ValueError(&#x27;Já existe o kit Treinamento Redes&#x27;)
+        janela = self.abrir(banco)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.aviso.cget(&#x27;text&#x27;), &#x27;Kit não criado: Já existe o kit Treinamento Redes&#x27;)
+        self.assertEqual(janela.kit_atual(), 1)
+
+    def test_sem_kits_ainda_da_para_criar_o_primeiro(self):
+        janela = self.abrir(BancoDeMentira(kits=[], itens={}, nome_novo=&#x27;Almoxarifado&#x27;))
+        self.assertEqual(janela.novo_kit.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+        janela.novo_kit.invoke()
+        self.assertEqual(janela.kit.get(), &#x27;Almoxarifado (kit 1)&#x27;)
+        self.assertEqual(janela.adicionar.cget(&#x27;state&#x27;), &#x27;normal&#x27;)
+
+    def test_duplo_clique_na_linha_edita_o_item(self):
+        janela = self.abrir()
+        _, y, _, altura = janela.lista.bbox(&#x27;2&#x27;)
+        # O Tk não gera &lt;Double-1&gt; pronto: dois cliques seguidos no mesmo ponto viram um duplo clique.
+        for _ in range(2):
+            janela.lista.event_generate(&#x27;&lt;ButtonPress-1&gt;&#x27;, x=20, y=y + altura // 2)
+            janela.lista.event_generate(&#x27;&lt;ButtonRelease-1&gt;&#x27;, x=20, y=y + altura // 2)
+        janela.update()
+        self.assertEqual(janela.lista.selection(), (&#x27;2&#x27;,))
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Editar item&#x27;, &#x27;Notebook&#x27;))
+
+    def test_esc_cancela_a_edicao(self):
+        janela = self.abrir()
+        self.editar_o(janela, 2)
+        janela.quantidade.focus_set()
+        janela.update()
+        janela.quantidade.event_generate(&#x27;&lt;Escape&gt;&#x27;)
+        janela.update()
+        self.assertEqual((janela.titulo_form.cget(&#x27;text&#x27;), janela.nome.get()), (&#x27;Novo item&#x27;, &#x27;&#x27;))
+        self.assertEqual(self.banco.editados, [])
+
+    def test_delete_na_lista_remove_com_pergunta(self):
+        janela = self.abrir()
+        self.selecionar(janela, 1)
+        janela.lista.focus_set()
+        janela.update()
+        janela.lista.event_generate(&#x27;&lt;Delete&gt;&#x27;)
+        janela.update()
+        self.assertEqual(self.banco.perguntas, [&#x27;Remover Cabo deste kit? A remoção não pode ser desfeita.&#x27;])
+        self.assertEqual(self.banco.removidos, [1])
+
+    # A16: buscar, ordenar e explicar a lista vazia.
+
+    def buscar(self, janela, texto):
+        &quot;&quot;&quot;Digita no campo como a pessoa (uma tecla de cada vez) e espera a busca adiada acontecer.&quot;&quot;&quot;
+        janela.busca.focus_set()
+        janela.update()
+        for letra in texto:
+            janela.busca.insert(&#x27;end&#x27;, letra)
+            janela.busca.event_generate(&#x27;&lt;KeyRelease&gt;&#x27;, keysym=letra)
+        fim = time.monotonic() + 0.6
+        while time.monotonic() &lt; fim:
+            janela.update()
+            time.sleep(0.02)
+
+    def clicar_no_cabecalho(self, janela, coluna):
+        # O cabeçalho guarda o command como um comando do Tcl; chamá-lo é o clique, com o command de verdade.
+        janela.tk.call(janela.lista.heading(coluna, &#x27;command&#x27;))
+        janela.update()
+
+    def test_abre_em_ordem_de_nome_com_a_seta_no_cabecalho(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.assertEqual([n for n, _ in self.linhas(janela)], [&#x27;Alicate&#x27;, &#x27;Cabo&#x27;, &#x27;Cabo USB&#x27;, &#x27;Notebook&#x27;])
+        self.assertEqual((janela.lista.heading(&#x27;nome&#x27;, &#x27;text&#x27;), janela.lista.heading(&#x27;quantidade&#x27;, &#x27;text&#x27;)), (&#x27;Item ▲&#x27;, &#x27;Quantidade&#x27;))
+
+    def test_busca_mostra_so_os_itens_com_o_trecho(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.buscar(janela, &#x27;cabo&#x27;)
+        self.assertEqual(self.linhas(janela), [(&#x27;Cabo&#x27;, &#x27;3&#x27;), (&#x27;Cabo USB&#x27;, &#x27;10&#x27;)])
+        self.assertEqual(janela.status.cget(&#x27;text&#x27;), &#x27;2 itens com “cabo” · 13 unidades&#x27;)
+
+    def test_digitar_rapido_faz_uma_busca_so(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        antes = len(self.banco.consultas)
+        self.buscar(janela, &#x27;alicate&#x27;)
+        self.assertEqual(self.banco.consultas[antes:], [(1, &#x27;alicate&#x27;, &#x27;nome&#x27;, False)])
+
+    # Complete: buscar martelo mostra self.vazio com &#x27;Nenhum item com “martelo” neste kit. Apague a busca (Esc) para ver todos.&#x27;
+    # e não escreve nada no aviso.
+
+    def test_kit_sem_itens_explica_diferente_da_busca(self):
+        janela = self.abrir(BancoDeMentira(kits=KITS + [(3, &#x27;Almoxarifado&#x27;)]))
+        self.escolher(janela, 3)
+        janela.update()
+        self.assertEqual(janela.vazio.cget(&#x27;text&#x27;), &#x27;Este kit ainda não tem itens. Cadastre o primeiro no formulário ao lado.&#x27;)
+        self.escolher(janela, 1)
+        janela.update()
+        self.assertFalse(janela.vazio.winfo_ismapped())
+
+    def test_cabecalho_ordena_e_o_segundo_clique_inverte(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.assertEqual([q for _, q in self.linhas(janela)], [&#x27;2&#x27;, &#x27;3&#x27;, &#x27;9&#x27;, &#x27;10&#x27;])
+        self.clicar_no_cabecalho(janela, &#x27;quantidade&#x27;)
+        self.assertEqual([q for _, q in self.linhas(janela)], [&#x27;10&#x27;, &#x27;9&#x27;, &#x27;3&#x27;, &#x27;2&#x27;])
+        self.assertEqual((janela.lista.heading(&#x27;nome&#x27;, &#x27;text&#x27;), janela.lista.heading(&#x27;quantidade&#x27;, &#x27;text&#x27;)), (&#x27;Item&#x27;, &#x27;Quantidade ▼&#x27;))
+        self.assertEqual(self.banco.consultas[-1], (1, &#x27;&#x27;, &#x27;quantidade&#x27;, True))
+
+    # Complete: clicar no cabeçalho do nome e depois no da quantidade pede (1, &#x27;&#x27;, &#x27;quantidade&#x27;, False) ao banco.
+
+    # Complete: com a ordem por quantidade e a busca cabo, um Cabo HDMI 1 novo no banco aparece primeiro depois de
+    # sincronizar(), e a busca continua escrita.
+
+    def test_esc_na_busca_apaga_e_mostra_todos(self):
+        janela = self.abrir(BancoDeMentira(itens=VARIOS))
+        self.buscar(janela, &#x27;cabo&#x27;)
+        janela.busca.event_generate(&#x27;&lt;Escape&gt;&#x27;)
+        janela.update()
+        self.assertEqual((janela.busca.get(), len(self.linhas(janela))), (&#x27;&#x27;, 4))
+
+    def test_adicionar_apaga_a_busca_para_o_item_novo_aparecer(self):
+        janela = self.abrir()
+        self.buscar(janela, &#x27;cabo&#x27;)
+        self.preencher(janela, &#x27;Alicate&#x27;, &#x27;4&#x27;)
+        janela.adicionar.invoke()
+        self.assertEqual(janela.busca.get(), &#x27;&#x27;)
+        self.assertIn((&#x27;Alicate&#x27;, &#x27;4&#x27;), self.linhas(janela))
+</code></pre><div class="atelier" data-source="work-testes-janela" data-filename="test_janela.py" data-execution="Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam."></div><p>Na raiz do projeto. Testes: .\.venv\Scripts\python.exe -m unittest -v, na raiz do projeto. Os testes da janela usam um banco de mentira e abrem janelas de verdade por alguns instantes; não mexa no mouse nem no teclado enquanto rodam.</p></div><div class="workbench"><h3>abrir_legado.py: rastreie os quatro relatos</h3><p>Salve o script abaixo como abrir_legado.py na raiz: ele herda da sua JanelaItens e do seu DadosMySQL e troca só quatro métodos. Cadastre no kit 1, pelo cliente mysql, Caixa d&#x27;água 1, Cabo USB 10 e Alicate 9, e reproduza cada relato. No relato 1, busque também %&#x27; OR kit_id &gt; &#x27;0 e anote de que kits vieram os itens. Para cada relato, registre a linha culpada, a evidência, a correção e o teste do seu projeto que reprova o mesmo defeito. Entrega: a tabela no registro desta página. O abrir_legado.py não vai para o commit.</p><p>Concluído quando: Os quatro relatos têm linha, evidência observada, correção e teste; o relato 1 explica a diferença entre colar o trecho no SQL e mandá-lo por parâmetro.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 4, compare o que a JanelaLegada.sincronizar pede ao dados com o que o seu mostrar pede.</p></details><pre><code id="work-busca-legado">&quot;&quot;&quot;Busca e ordenação herdadas, por cima da sua janela e do seu DadosMySQL. Uso: python abrir_legado.py&quot;&quot;&quot;
+from abrir_janela import DadosMySQL, perguntar, pedir_nome
+from kits.banco import conexao_banco
+from kits.janela import JanelaItens
+
+INTERVALO_MS = 10_000
+
+
+class DadosLegados(DadosMySQL):
+    def listar_itens(self, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+        with conexao_banco(self.config) as con:
+            cur = con.cursor()
+            cur.execute(f&quot;SELECT id, nome, quantidade FROM item WHERE kit_id = {kit_id} &quot;
+                        f&quot;AND nome LIKE &#x27;%{trecho}%&#x27; ORDER BY nome&quot;)
+            return cur.fetchall()
+
+
+class JanelaLegada(JanelaItens):
+    def ordenar_por(self, coluna):
+        linhas = [(self.lista.set(iid, coluna), iid) for iid in self.lista.get_children()]
+        linhas.sort()
+        for posicao, (_, iid) in enumerate(linhas):
+            self.lista.move(iid, &#x27;&#x27;, posicao)
+
+    def _explicar_vazio(self, itens, trecho):
+        if itens:
+            self.vazio.grid_remove()
+        else:
+            self.vazio.configure(text=&#x27;Este kit ainda não tem itens. Cadastre o primeiro no formulário ao lado.&#x27;)
+            self.vazio.grid()
+
+    def sincronizar(self):
+        if self._editando is None:
+            self.lista.delete(*self.lista.get_children())
+            for item_id, nome, quantidade in self._dados.listar_itens(self.kit_atual()):
+                self.lista.insert(&#x27;&#x27;, &#x27;end&#x27;, iid=str(item_id), values=(nome, quantidade))
+        self.after(INTERVALO_MS, self.sincronizar)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    JanelaLegada(DadosLegados(), perguntar, INTERVALO_MS, pedir_nome=pedir_nome).mainloop()
+</code></pre><div class="atelier" data-source="work-busca-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o banco kits recriado e os três itens a mais: .\.venv\Scripts\python.exe abrir_legado.py."></div><p>Na raiz do projeto, com o banco kits recriado e os três itens a mais: .\.venv\Scripts\python.exe abrir_legado.py.</p></div><div class="workbench"><h3>README.md: a seção Busca e ordem</h3><p>Acrescente ao README.md do projeto a seção Busca e ordem: como buscar e ordenar na janela, o que cada mensagem de lista vazia quer dizer, e como o código garante que %, _ e apóstrofo são letras e que a ordem não aceita texto de fora. Entrega: a seção no README.md da raiz.</p><p>Concluído quando: Outra dupla, só com o README, encontra um item pela busca, ordena por quantidade e explica as duas mensagens de lista vazia.</p><details><summary>Dica para realizar a atividade</summary><p>Quem ler vai perguntar por que a ordem não vai por parâmetro como o trecho. Está explicado?</p></details><pre><code id="work-readme">## Busca e ordem
+
+### Na janela
+
+### Quando a lista está vazia
+
+### Como o código garante
+</code></pre><div class="atelier" data-source="work-readme" data-filename="README.md" data-execution="Texto para colar no README.md do projeto. A prova é outra dupla seguir sem perguntar nada."></div><p>Texto para colar no README.md do projeto. A prova é outra dupla seguir sem perguntar nada.</p></div><div class="workbench"><h3>Bônus: 2 de 5 itens</h3><p>Com busca, mostre no status quantos itens passaram e quantos o kit tem (2 de 5 itens com “cabo”), contando no banco com SELECT COUNT(*), e não lendo todos os itens para contar no Python. Entrega (opcional): o código, o teste e o texto no registro desta página.</p><p>Concluído quando: O status mostra os dois números, com e sem busca, e o teste com o banco de mentira confere o texto.</p><details><summary>Dica para realizar a atividade</summary><p>É a primeira agregação da UC; a A17 continua daqui, com SUM e GROUP BY.</p></details><pre><code id="work-bonus-contagem"># 2 de 5 itens
+
+## A consulta
+
+## Na janela
+
+## O teste
+</code></pre><div class="atelier" data-source="work-bonus-contagem" data-filename="contagem.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>A busca encontra o que deve? <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#auditoria" aria-label="Versão para leitura: A busca encontra o que deve?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira no cliente mysql ou rodando os testes antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Com o parâmetro &#x27;%_%&#x27;, sem escapar, o que nome LIKE %s encontra?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Todos os itens cujo nome tem pelo menos um caractere" autocomplete="off">Todos os itens cujo nome tem pelo menos um caractere</label><label class="option"><input type="radio" name="q01" value="Só os itens com _ no nome" autocomplete="off">Só os itens com _ no nome</label><label class="option"><input type="radio" name="q01" value="Nenhum: _ não é letra" autocomplete="off">Nenhum: _ não é letra</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que _ vale no LIKE?</p></details></fieldset><fieldset data-question="q02"><legend>cur.execute(&#x27;SELECT ... ORDER BY %s&#x27;, (&#x27;quantidade&#x27;,)). Em que ordem os itens vêm?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Em nenhuma ordem garantida: o banco ordena pelo texto &#x27;quantidade&#x27;, igual em todas as linhas" autocomplete="off">Em nenhuma ordem garantida: o banco ordena pelo texto &#x27;quantidade&#x27;, igual em todas as linhas</label><label class="option"><input type="radio" name="q02" value="Por quantidade, crescente" autocomplete="off">Por quantidade, crescente</label><label class="option"><input type="radio" name="q02" value="Dá erro de sintaxe" autocomplete="off">Dá erro de sintaxe</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o parâmetro vira dentro do SQL?</p></details></fieldset><fieldset data-question="q03"><legend>A janela ordena os valores da coluna Quantidade da Treeview: &#x27;9&#x27;, &#x27;10&#x27; e &#x27;2&#x27;. Em ordem crescente, como ficam?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="&#x27;10&#x27;, &#x27;2&#x27;, &#x27;9&#x27;" autocomplete="off">&#x27;10&#x27;, &#x27;2&#x27;, &#x27;9&#x27;</label><label class="option"><input type="radio" name="q03" value="&#x27;2&#x27;, &#x27;9&#x27;, &#x27;10&#x27;" autocomplete="off">&#x27;2&#x27;, &#x27;9&#x27;, &#x27;10&#x27;</label><label class="option"><input type="radio" name="q03" value="&#x27;9&#x27;, &#x27;10&#x27;, &#x27;2&#x27;" autocomplete="off">&#x27;9&#x27;, &#x27;10&#x27;, &#x27;2&#x27;</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>A Treeview guarda números ou texto?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>consultar_itens monta ORDER BY {ORDENS[ordem]} com f-string, depois de recusar a ordem que não está em ORDENS.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>De onde vem o texto que entra no SQL?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>A busca vai ao banco a cada tecla, sem adiar.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 3 do tutorial e conte as consultas.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>Quando a busca não acha nada, a lista fica em branco, sem mensagem.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>Ao clicar no cabeçalho, a janela reordena as linhas que já estão na Treeview, sem consultar o banco.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte à pergunta 3.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Depois de Adicionar, a janela apaga a busca.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O item novo apareceria com a busca de antes?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>O trecho vai por parâmetro, mas com os curingas sem escapar.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que acontece ao buscar _?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-busca"><p>Outra dupla entregou o consultar_itens abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def consultar_itens(con, kit_id, trecho=&#x27;&#x27;, ordem=&#x27;nome&#x27;, descendente=False):
+    direcao = &#x27;DESC&#x27; if descendente else &#x27;ASC&#x27;
+    cur = con.cursor()
+    cur.execute(f&#x27;SELECT id, nome, quantidade FROM item WHERE kit_id = %s &#x27;
+                f&#x27;AND nome LIKE %s ORDER BY {ordem} {direcao}&#x27;,
+                (kit_id, f&#x27;%{trecho}%&#x27;))
+    return cur.fetchall()</code></pre><fieldset data-question="ac-ordem" data-claim="ac-ordem"><legend>ordem entra no SQL sem passar por uma lista de colunas permitidas: qualquer texto que chegue ali vira SQL.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-ordem" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-ordem" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-curinga" data-claim="ac-curinga"><legend>Buscar _ ou % devolve o kit inteiro: os curingas não são escapados.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-curinga" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-curinga" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-trecho" data-claim="ac-trecho"><legend>O trecho é colado no SQL pela f-string e permite injeção com apóstrofo.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-trecho" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-trecho" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a busca <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#registro" aria-label="Versão para leitura: Entregue o que prova a busca">↗</a></h2><p>Entregue, no repositório do projeto: kits/repositorio.py com consultar_itens e escapar_like; abrir_janela.py com o listar_itens novo; kits/janela.py; tests/test_janela.py e tests/test_fontes.py, com o tests/test_fluxo.py da A15 ainda passando; e a seção Busca e ordem no README.md. O acervo.py e o abrir_legado.py ficam fora do commit.</p><p>No registro desta página, cole a tabela dos quatro relatos da busca herdada, a saída dos testes e o que a busca %&#x27; OR kit_id &gt; &#x27;0 mostrou na janela herdada e na sua. Se fez o bônus, cole o código e o teste.</p><p>Faça um commit revisado, como na A04: confira com git diff --cached que banco.ini não entrou. A exportação reúne o que você preencheu aqui; os arquivos do projeto seguem pelo commit e pelo canal da turma.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>O trecho da busca vai por parâmetro, e a coluna da ordem não. Por quê, e o que protege cada um?</p><p>A A17 junta tabelas: a lista de kits passa a mostrar quantos itens e unidades cada um tem, com JOIN, SUM e GROUP BY.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#operator_like">MySQL 8.4: LIKE, % e _ e o escape com barra</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/sorting-rows.html">MySQL 8.4: ORDER BY</a></li><li><a href="https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html">MySQL Connector/Python: parâmetros do execute</a></li><li><a href="https://www.tcl-lang.org/man/tcl9.0/TkCmd/ttk_treeview.html">Tk: ttk::treeview heading -command</a></li><li><a href="https://docs.python.org/3/library/tkinter.html">Python 3: tkinter (after e after_cancel)</a></li></ul><a data-idoc="source" href="leitura-0016-filtros-ordenacao-e-consulta-vazia.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

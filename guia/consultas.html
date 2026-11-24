@@ -1,0 +1,714 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guia de consultas SQL · UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="guia"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="guia-pagina"><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Guia de consultas SQL</h1><p class="thesis">Os comandos do MySQL que você usa na UC, cada um com a forma geral, um exemplo no banco dos kits e a tela real do cliente mysql.</p></div><main id="conteudo"><p>Use este guia para consultar um comando quando precisar, não para ler de uma vez. Cada tópico traz a forma geral do comando, um exemplo rodado no cliente mysql com os dados fictícios do guia e a resposta que o servidor deu de verdade. No fim de cada tópico, &quot;Visto em&quot; leva à aula onde o comando foi ensinado ou onde ele vai ser usado.</p><p>Os exemplos rodam no banco kits_teste, com o usuário kits_app criado na A08. Nunca rode o guia.sql no banco kits: ele apaga e recria as tabelas. Os testes do projeto recriam o kits_teste sozinhos, então você pode usar esse banco à vontade.</p><p>Os tempos entre parênteses, como (0.00 sec), e o número da conexão mudam a cada execução. O resto da tela deve sair igual no seu computador. Se sair diferente, confira se o guia.sql foi carregado por último.</p><nav class="guia-sumario" aria-label="Sumário do guia"><h2>Sumário</h2><ol><li><a href="#comecar">Antes de começar</a></li><li><a href="#ler">Ler dados</a></li><li><a href="#filtrar">Filtrar com mais precisão</a></li><li><a href="#agregar">Contar, somar e agrupar</a></li><li><a href="#juntar">Juntar tabelas</a></li><li><a href="#combinar">Combinar consultas e decidir na consulta</a></li><li><a href="#alterar">Incluir, alterar e remover</a></li><li><a href="#estrutura">Criar e mudar a estrutura</a></li><li><a href="#desempenho">Índices e visões</a></li><li><a href="#python">Do terminal ao Python</a></li></ol></nav><section id="comecar"><h2>Antes de começar</h2><p>Os dados do guia são quatro kits e nove itens. O kit Oficina Montagem não tem nenhum item, e o Teclado está com quantidade zero: esses dois casos aparecem em vários tópicos, porque é neles que as consultas costumam errar.</p><article class="guia-topico" id="preparar"><h3>Carregar os dados do guia</h3><p>Salve o conteúdo acima como guia.sql na pasta onde você abre o terminal. Entre no kits_teste e carregue o arquivo com SOURCE. As tabelas são as mesmas do projeto (kit, item e movimentacao), sem a importacao da A19.</p><pre class="guia-forma" aria-label="Forma geral"><code>-- guia.sql: dados fictícios do Guia de consultas. Rode só no kits_teste: apaga e recria as tabelas.
+DROP TABLE IF EXISTS emprestimo, importacao, movimentacao, item, kit;
+
+CREATE TABLE kit (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE item (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  kit_id INT NOT NULL,
+  nome VARCHAR(80) NOT NULL,
+  quantidade INT NOT NULL,
+  CONSTRAINT quantidade_nao_negativa CHECK (quantidade &gt;= 0),
+  CONSTRAINT item_kit FOREIGN KEY (kit_id) REFERENCES kit(id)
+);
+
+CREATE TABLE movimentacao (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  origem_id INT NOT NULL,
+  destino_id INT NOT NULL,
+  quantidade INT NOT NULL,
+  momento TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT movimentacao_positiva CHECK (quantidade &gt; 0)
+);
+
+INSERT INTO kit (id, nome) VALUES
+  (1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;), (3, &#x27;Oficina Montagem&#x27;), (4, &#x27;Oficina Arduino&#x27;);
+
+INSERT INTO item (id, kit_id, nome, quantidade) VALUES
+  (1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5), (4, 1, &#x27;Switch&#x27;, 1), (5, 2, &#x27;Mouse&#x27;, 8),
+  (6, 2, &#x27;Teclado&#x27;, 0), (7, 4, &#x27;Placa&#x27;, 6), (8, 4, &#x27;Protoboard&#x27;, 10), (9, 4, &#x27;Jumper&#x27;, 40);
+
+INSERT INTO movimentacao (origem_id, destino_id, quantidade, momento) VALUES
+  (3, 1, 2, &#x27;2026-11-03 09:15:00&#x27;), (8, 2, 1, &#x27;2026-11-04 14:30:00&#x27;), (3, 1, 1, &#x27;2026-11-10 10:00:00&#x27;);
+</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Carregar os dados do guia"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>mysql -u kits_app -p kits_teste</kbd>
+<span class="tela-prompt">Enter password: </span><kbd>*****************</kbd>
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4781
+Server version: 8.4.9 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SOURCE guia.sql</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected, 5 warnings (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+Query OK, 9 rows affected (0.00 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SHOW TABLES;</kbd>
++----------------------+
+| Tables_in_kits_teste |
++----------------------+
+| item                 |
+| kit                  |
+| movimentacao         |
++----------------------+
+3 rows in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> os 5 warnings do DROP TABLE IF EXISTS avisam que as tabelas ainda não existiam. No seu computador o número pode ser outro, conforme o que já havia no kits_teste.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a></p></article></section><section id="ler"><h2>Ler dados</h2><p>SELECT escolhe as colunas, FROM diz de qual tabela, WHERE filtra as linhas e ORDER BY põe em ordem. É nessa ordem que se escreve; a cláusula LIMIT vem sempre por último.</p><article class="guia-topico" id="select"><h3>SELECT: escolher colunas</h3><p>Liste só as colunas de que você precisa. Sem ORDER BY, o MySQL não promete nenhuma ordem: aqui as linhas saíram na ordem do id, mas não conte com isso no aplicativo.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT coluna1, coluna2 FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: SELECT: escolher colunas"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item;</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Cabo       |          3 |
+| Notebook   |          2 |
+| Cabo       |          5 |
+| Switch     |          1 |
+| Mouse      |          8 |
+| Teclado    |          0 |
+| Placa      |          6 |
+| Protoboard |         10 |
+| Jumper     |         40 |
++------------+------------+
+9 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a></p></article><article class="guia-topico" id="select-tudo"><h3>SELECT *: todas as colunas</h3><p>O asterisco traz todas as colunas. Serve para olhar uma tabela no terminal; no código do aplicativo, nomeie as colunas, para uma coluna nova na tabela não mudar o que a consulta devolve.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT * FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: SELECT *: todas as colunas"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT * FROM kit;</kbd>
++----+---------------------+
+| id | nome                |
++----+---------------------+
+|  1 | Treinamento Redes   |
+|  2 | Treinamento Suporte |
+|  3 | Oficina Montagem    |
+|  4 | Oficina Arduino     |
++----+---------------------+
+4 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0007-conexao-python-banco-e-ciclo-da-conexao.html" title="Conexão Python–banco e ciclo da conexão">A07</a></p></article><article class="guia-topico" id="apelidos"><h3>AS: apelidos de coluna</h3><p>AS dá outro nome à coluna no resultado, sem mudar a tabela. Os apelidos ficam ainda mais úteis com funções, como COUNT(*) AS itens, e com JOIN, para apelidar tabelas.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT coluna AS apelido FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: AS: apelidos de coluna"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome AS material, quantidade AS qtd FROM item WHERE kit_id = 4;</kbd>
++------------+-----+
+| material   | qtd |
++------------+-----+
+| Placa      |   6 |
+| Protoboard |  10 |
+| Jumper     |  40 |
++------------+-----+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article><article class="guia-topico" id="distinct"><h3>DISTINCT: sem repetições</h3><p>Os kits 1 e 2 têm seis itens, mas Cabo aparece nos dois. DISTINCT junta as linhas iguais, e o resultado tem cinco nomes. Ele compara a linha inteira do resultado: com duas colunas, só some o que for igual nas duas.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT DISTINCT coluna FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: DISTINCT: sem repetições"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT DISTINCT nome FROM item WHERE kit_id IN (1, 2);</kbd>
++----------+
+| nome     |
++----------+
+| Cabo     |
+| Notebook |
+| Switch   |
+| Mouse    |
+| Teclado  |
++----------+
+5 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="where"><h3>WHERE: filtrar linhas</h3><p>A condição compara colunas com valores. Os operadores são =, &lt;&gt; (diferente), &lt;, &lt;=, &gt; e &gt;=. Repare que &gt;= 6 inclui a Placa, que tem exatamente 6.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT colunas FROM tabela WHERE condição;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: WHERE: filtrar linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE kit_id = 2;</kbd>
++---------+------------+
+| nome    | quantidade |
++---------+------------+
+| Cabo    |          5 |
+| Mouse   |          8 |
+| Teclado |          0 |
++---------+------------+
+3 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE quantidade &gt;= 6;</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Mouse      |          8 |
+| Placa      |          6 |
+| Protoboard |         10 |
+| Jumper     |         40 |
++------------+------------+
+4 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a></p></article><article class="guia-topico" id="and-or-not"><h3>AND, OR e NOT</h3><p>AND exige as duas condições; OR aceita qualquer uma; NOT inverte. AND é avaliado antes de OR, por isso os parênteses na segunda consulta: sem eles, o NOT kit_id = 4 valeria só para o Cabo, e um item esgotado do kit 4 também entraria no resultado.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE condição1 AND (condição2 OR condição3)
+WHERE NOT condição</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: AND, OR e NOT"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE kit_id = 1 AND quantidade &lt; 3;</kbd>
++----------+------------+
+| nome     | quantidade |
++----------+------------+
+| Notebook |          2 |
+| Switch   |          1 |
++----------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, kit_id, nome FROM item WHERE NOT kit_id = 4 AND (nome = &#x27;Cabo&#x27; OR quantidade = 0);</kbd>
++----+--------+---------+
+| id | kit_id | nome    |
++----+--------+---------+
+|  1 |      1 | Cabo    |
+|  3 |      2 | Cabo    |
+|  6 |      2 | Teclado |
++----+--------+---------+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a>, <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a></p></article><article class="guia-topico" id="order-by"><h3>ORDER BY: pôr em ordem</h3><p>DESC ordena do maior para o menor; sem nada, a ordem é crescente (ASC). A segunda coluna só decide quando a primeira empata; aqui nenhuma quantidade se repete, então o nome não chegou a ser usado. Os dois Cabo saíram separados porque têm quantidades diferentes.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT colunas FROM tabela ORDER BY coluna1 DESC, coluna2;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: ORDER BY: pôr em ordem"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item ORDER BY quantidade DESC, nome;</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Jumper     |         40 |
+| Protoboard |         10 |
+| Mouse      |          8 |
+| Placa      |          6 |
+| Cabo       |          5 |
+| Cabo       |          3 |
+| Notebook   |          2 |
+| Switch     |          1 |
+| Teclado    |          0 |
++------------+------------+
+9 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a></p></article><article class="guia-topico" id="limit"><h3>LIMIT e OFFSET: só algumas linhas</h3><p>LIMIT 3 traz as três primeiras linhas; OFFSET 3 pula as três primeiras, que é como se faz a segunda página de uma lista. Use LIMIT sempre com ORDER BY, e com um desempate que não se repete (o id), ou a página muda de uma execução para outra.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT colunas FROM tabela ORDER BY coluna LIMIT quantas OFFSET pular;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: LIMIT e OFFSET: só algumas linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item ORDER BY quantidade DESC, id LIMIT 3;</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Jumper     |         40 |
+| Protoboard |         10 |
+| Mouse      |          8 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item ORDER BY quantidade DESC, id LIMIT 3 OFFSET 3;</kbd>
++-------+------------+
+| nome  | quantidade |
++-------+------------+
+| Placa |          6 |
+| Cabo  |          5 |
+| Cabo  |          3 |
++-------+------------+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a>, <a href="../lessons/0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html" title="Carga massiva, inconsistências e transações em lote">A19</a></p></article></section><section id="filtrar"><h2>Filtrar com mais precisão</h2><p>Estes operadores encurtam condições que, escritas com AND e OR, ficariam longas e fáceis de errar.</p><article class="guia-topico" id="in"><h3>IN: um valor de uma lista</h3><p>IN equivale a vários OR seguidos. Monitor não existe nos dados e não causa erro: só não traz linha.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna IN (valor1, valor2, valor3)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: IN: um valor de uma lista"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome FROM item WHERE nome IN (&#x27;Cabo&#x27;, &#x27;Mouse&#x27;, &#x27;Monitor&#x27;);</kbd>
++----+-------+
+| id | nome  |
++----+-------+
+|  1 | Cabo  |
+|  3 | Cabo  |
+|  5 | Mouse |
++----+-------+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="between"><h3>BETWEEN: dentro de uma faixa</h3><p>BETWEEN inclui as duas pontas: o 2 e o 6 entraram. Com datas, cuidado: &#x27;2026-11-05&#x27; quer dizer meia-noite do dia 5, então uma movimentação às 10h do dia 5 ficaria de fora.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna BETWEEN mínimo AND máximo</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: BETWEEN: dentro de uma faixa"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE quantidade BETWEEN 2 AND 6 ORDER BY quantidade;</kbd>
++----------+------------+
+| nome     | quantidade |
++----------+------------+
+| Notebook |          2 |
+| Cabo     |          3 |
+| Cabo     |          5 |
+| Placa    |          6 |
++----------+------------+
+4 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, quantidade, momento FROM movimentacao WHERE momento BETWEEN &#x27;2026-11-01&#x27; AND &#x27;2026-11-05&#x27;;</kbd>
++----+------------+---------------------+
+| id | quantidade | momento             |
++----+------------+---------------------+
+|  1 |          2 | 2026-11-03 09:15:00 |
+|  2 |          1 | 2026-11-04 14:30:00 |
++----+------------+---------------------+
+2 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="like"><h3>LIKE: procurar por trecho</h3><p>% vale qualquer quantidade de caracteres, inclusive nenhuma; _ vale exatamente um. Para procurar um % ou um _ de verdade, é preciso escapar o caractere, como a A16 faz na busca da janela.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna LIKE &#x27;P%&#x27;    -- % é qualquer sequência
+WHERE coluna LIKE &#x27;_abo&#x27;  -- _ é exatamente um caractere</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: LIKE: procurar por trecho"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome FROM item WHERE nome LIKE &#x27;P%&#x27;;</kbd>
++------------+
+| nome       |
++------------+
+| Placa      |
+| Protoboard |
++------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT DISTINCT nome FROM item WHERE nome LIKE &#x27;_abo&#x27;;</kbd>
++------+
+| nome |
++------+
+| Cabo |
++------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a></p></article><article class="guia-topico" id="is-null"><h3>IS NULL: o valor que falta</h3><p>NULL quer dizer &quot;não há valor&quot;. Ele aparece, por exemplo, nas colunas do item quando o LEFT JOIN não acha nenhum item para o kit. Qualquer comparação com NULL usando = dá desconhecido, nem verdadeiro nem falso: por isso a segunda consulta contou zero linhas. Use sempre IS NULL.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna IS NULL
+WHERE coluna IS NOT NULL</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: IS NULL: o valor que falta"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT k.nome AS kit, i.nome AS item FROM kit AS k LEFT JOIN item AS i ON i.kit_id = k.id WHERE i.id IS NULL;</kbd>
++------------------+------+
+| kit              | item |
++------------------+------+
+| Oficina Montagem | NULL |
++------------------+------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) FROM kit AS k LEFT JOIN item AS i ON i.kit_id = k.id WHERE i.id = NULL;</kbd>
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article></section><section id="agregar"><h2>Contar, somar e agrupar</h2><p>As funções de agregação resumem muitas linhas num número. Com GROUP BY, o resumo sai por grupo, por exemplo um total para cada kit.</p><article class="guia-topico" id="contar"><h3>COUNT: quantas linhas</h3><p>COUNT(*) conta linhas. COUNT(DISTINCT coluna) conta valores diferentes: são 9 itens, mas só 8 nomes, porque Cabo se repete, e só 3 kits têm itens.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT COUNT(*) FROM tabela;
+SELECT COUNT(DISTINCT coluna) FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: COUNT: quantas linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) AS itens, COUNT(DISTINCT nome) AS nomes, COUNT(DISTINCT kit_id) AS kits FROM item;</kbd>
++-------+-------+------+
+| itens | nomes | kits |
++-------+-------+------+
+|     9 |     8 |    3 |
++-------+-------+------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a>, <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article><article class="guia-topico" id="sum-avg"><h3>SUM e AVG: total e média</h3><p>SUM soma e AVG calcula a média. A média de números inteiros sai com casas decimais (75 / 9 = 8,3333). No Python, o conector entrega esses valores como Decimal, como a A17 mostrou.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT SUM(coluna), AVG(coluna) FROM tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: SUM e AVG: total e média"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT SUM(quantidade) AS total, AVG(quantidade) AS media FROM item;</kbd>
++-------+--------+
+| total | media  |
++-------+--------+
+|    75 | 8.3333 |
++-------+--------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="min-max"><h3>MIN e MAX: menor e maior</h3><p>O WHERE filtra antes de agregar: aqui só os itens do kit 1 entraram na conta.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT MIN(coluna), MAX(coluna) FROM tabela WHERE condição;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: MIN e MAX: menor e maior"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT MIN(quantidade) AS menor, MAX(quantidade) AS maior FROM item WHERE kit_id = 1;</kbd>
++-------+-------+
+| menor | maior |
++-------+-------+
+|     1 |     3 |
++-------+-------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="group-by"><h3>GROUP BY: um resumo por grupo</h3><p>Cada valor diferente de kit_id vira uma linha do resultado. Toda coluna do SELECT que não está numa função precisa estar no GROUP BY; senão o MySQL recusa a consulta (erro 1055, visto na A17). O kit 3 não aparece porque não tem itens: para ele aparecer, é preciso partir do kit com LEFT JOIN.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT coluna, COUNT(*), SUM(outra) FROM tabela GROUP BY coluna;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: GROUP BY: um resumo por grupo"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT kit_id, COUNT(*) AS itens, SUM(quantidade) AS total FROM item GROUP BY kit_id;</kbd>
++--------+-------+-------+
+| kit_id | itens | total |
++--------+-------+-------+
+|      1 |     3 |     6 |
+|      2 |     3 |    13 |
+|      4 |     3 |    56 |
++--------+-------+-------+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article><article class="guia-topico" id="having"><h3>HAVING: filtrar grupos</h3><p>WHERE filtra linhas antes de agrupar; HAVING filtra os grupos depois. Uma condição sobre o total do kit só pode ir no HAVING, porque o total só existe depois do GROUP BY.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT coluna, SUM(outra) FROM tabela GROUP BY coluna HAVING SUM(outra) &gt; valor;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: HAVING: filtrar grupos"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT kit_id, SUM(quantidade) AS total FROM item GROUP BY kit_id HAVING SUM(quantidade) &gt; 10;</kbd>
++--------+-------+
+| kit_id | total |
++--------+-------+
+|      2 |    13 |
+|      4 |    56 |
++--------+-------+
+2 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article></section><section id="juntar"><h2>Juntar tabelas</h2><p>O JOIN liga as linhas de duas tabelas pela condição do ON, quase sempre a chave estrangeira com a chave primária. Apelide as tabelas (item AS i, kit AS k) para a consulta caber na linha.</p><article class="guia-topico" id="inner-join"><h3>JOIN (INNER JOIN): só o que tem par</h3><p>Cada item aparece junto com o nome do seu kit. Um kit sem item não tem par e fica de fora. Escrever INNER JOIN ou só JOIN dá no mesmo.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT a.coluna, b.coluna FROM a JOIN b ON b.id = a.b_id;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: JOIN (INNER JOIN): só o que tem par"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT k.nome AS kit, i.nome AS item, i.quantidade</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM item AS i JOIN kit AS k ON k.id = i.kit_id</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  WHERE i.quantidade &gt; 0 ORDER BY k.nome, i.nome;</kbd>
++---------------------+------------+------------+
+| kit                 | item       | quantidade |
++---------------------+------------+------------+
+| Oficina Arduino     | Jumper     |         40 |
+| Oficina Arduino     | Placa      |          6 |
+| Oficina Arduino     | Protoboard |         10 |
+| Treinamento Redes   | Cabo       |          3 |
+| Treinamento Redes   | Notebook   |          2 |
+| Treinamento Redes   | Switch     |          1 |
+| Treinamento Suporte | Cabo       |          5 |
+| Treinamento Suporte | Mouse      |          8 |
++---------------------+------------+------------+
+8 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article><article class="guia-topico" id="left-join"><h3>LEFT JOIN: todos da esquerda</h3><p>Todos os kits aparecem, inclusive a Oficina Montagem, que não tem itens. Nela as colunas do item vêm NULL, e COUNT(i.id) conta zero, porque COUNT de uma coluna não conta NULL. Com COUNT(*), o kit vazio apareceria com 1, o erro que a A17 investiga.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT a.coluna, COUNT(b.id) FROM a LEFT JOIN b ON b.a_id = a.id GROUP BY a.id, a.coluna;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: LEFT JOIN: todos da esquerda"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT k.nome AS kit, COUNT(i.id) AS itens</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM kit AS k LEFT JOIN item AS i ON i.kit_id = k.id</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  GROUP BY k.id, k.nome ORDER BY k.id;</kbd>
++---------------------+-------+
+| kit                 | itens |
++---------------------+-------+
+| Treinamento Redes   |     3 |
+| Treinamento Suporte |     3 |
+| Oficina Montagem    |     0 |
+| Oficina Arduino     |     3 |
++---------------------+-------+
+4 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article><article class="guia-topico" id="right-join"><h3>RIGHT JOIN: todos da direita</h3><p>É o LEFT JOIN visto do outro lado: guarda todas as linhas da tabela da direita. Dá o mesmo resultado que trocar as tabelas de lugar e usar LEFT JOIN, que é a forma mais comum e mais fácil de ler.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT a.coluna, b.coluna FROM a RIGHT JOIN b ON b.id = a.b_id;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: RIGHT JOIN: todos da direita"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT k.nome AS kit, i.nome AS item FROM item AS i RIGHT JOIN kit AS k ON k.id = i.kit_id WHERE i.id IS NULL;</kbd>
++------------------+------+
+| kit              | item |
++------------------+------+
+| Oficina Montagem | NULL |
++------------------+------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="cross-join"><h3>CROSS JOIN: todas as combinações</h3><p>CROSS JOIN junta cada linha de uma tabela com cada linha da outra: 4 kits × 9 itens = 36 linhas. É o que acontece por engano num JOIN sem a condição certa no ON. Com a condição, voltam as 9 linhas de verdade.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT ... FROM a CROSS JOIN b;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: CROSS JOIN: todas as combinações"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) FROM kit CROSS JOIN item;</kbd>
++----------+
+| COUNT(*) |
++----------+
+|       36 |
++----------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) FROM kit JOIN item ON item.kit_id = kit.id;</kbd>
++----------+
+| COUNT(*) |
++----------+
+|        9 |
++----------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="self-join"><h3>Autojunção: a tabela com ela mesma</h3><p>A mesma tabela entra duas vezes, com apelidos diferentes. Aqui ela acha itens de mesmo nome em kits diferentes. O a.id &lt; b.id evita comparar um item com ele mesmo e mostrar o mesmo par duas vezes.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT a.coluna, b.coluna FROM t AS a JOIN t AS b ON a.coluna = b.coluna AND a.id &lt; b.id;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Autojunção: a tabela com ela mesma"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT a.nome, a.kit_id AS kit_a, b.kit_id AS kit_b</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM item AS a JOIN item AS b ON a.nome = b.nome AND a.id &lt; b.id;</kbd>
++------+-------+-------+
+| nome | kit_a | kit_b |
++------+-------+-------+
+| Cabo |     1 |     2 |
++------+-------+-------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article></section><section id="combinar"><h2>Combinar consultas e decidir na consulta</h2><p>Uma consulta pode usar o resultado de outra, juntar dois resultados ou calcular um valor diferente para cada linha.</p><article class="guia-topico" id="union"><h3>UNION e UNION ALL: um resultado embaixo do outro</h3><p>UNION põe o segundo resultado embaixo do primeiro e tira as repetições; UNION ALL mantém todas as linhas. Os dois SELECT precisam ter o mesmo número de colunas, e o nome da coluna vem do primeiro.</p><pre class="guia-forma" aria-label="Forma geral"><code>SELECT coluna FROM a UNION SELECT coluna FROM b;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: UNION e UNION ALL: um resultado embaixo do outro"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT origem_id AS item_id FROM movimentacao UNION SELECT destino_id FROM movimentacao;</kbd>
++---------+
+| item_id |
++---------+
+|       3 |
+|       8 |
+|       1 |
+|       2 |
++---------+
+4 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT origem_id AS item_id FROM movimentacao UNION ALL SELECT destino_id FROM movimentacao;</kbd>
++---------+
+| item_id |
++---------+
+|       3 |
+|       8 |
+|       3 |
+|       1 |
+|       2 |
+|       1 |
++---------+
+6 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="subconsulta"><h3>Subconsulta: uma consulta dentro da outra</h3><p>A consulta entre parênteses roda e devolve um valor, a média 8,3333, que a de fora usa no WHERE. Só a Protoboard e o Jumper estão acima da média.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna &gt; (SELECT AVG(coluna) FROM tabela)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Subconsulta: uma consulta dentro da outra"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE quantidade &gt; (SELECT AVG(quantidade) FROM item);</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Protoboard |         10 |
+| Jumper     |         40 |
++------------+------------+
+2 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="exists"><h3>EXISTS e NOT EXISTS: existe alguma linha?</h3><p>EXISTS é verdadeiro quando a subconsulta acha pelo menos uma linha; o que ela seleciona não importa, por isso o SELECT 1. A primeira consulta acha o kit com item esgotado; a segunda, o kit sem nenhum item.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE EXISTS (SELECT 1 FROM outra WHERE outra.a_id = a.id AND condição)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: EXISTS e NOT EXISTS: existe alguma linha?"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome FROM kit AS k WHERE EXISTS (SELECT 1 FROM item AS i WHERE i.kit_id = k.id AND i.quantidade = 0);</kbd>
++---------------------+
+| nome                |
++---------------------+
+| Treinamento Suporte |
++---------------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome FROM kit AS k WHERE NOT EXISTS (SELECT 1 FROM item AS i WHERE i.kit_id = k.id);</kbd>
++------------------+
+| nome             |
++------------------+
+| Oficina Montagem |
++------------------+
+1 row in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="any-all"><h3>ANY e ALL: comparar com uma lista</h3><p>&gt; ALL exige ser maior que todos os valores da lista (os do kit 2 são 5, 8 e 0, então precisa passar de 8). &lt; ANY basta ser menor que algum deles: todos os itens do kit 1 são menores que 8.</p><pre class="guia-forma" aria-label="Forma geral"><code>WHERE coluna &gt; ALL (SELECT ...)
+WHERE coluna &lt; ANY (SELECT ...)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: ANY e ALL: comparar com uma lista"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE quantidade &gt; ALL (SELECT quantidade FROM item WHERE kit_id = 2);</kbd>
++------------+------------+
+| nome       | quantidade |
++------------+------------+
+| Protoboard |         10 |
+| Jumper     |         40 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade FROM item WHERE kit_id = 1 AND quantidade &lt; ANY (SELECT quantidade FROM item WHERE kit_id = 2);</kbd>
++----------+------------+
+| nome     | quantidade |
++----------+------------+
+| Cabo     |          3 |
+| Notebook |          2 |
+| Switch   |          1 |
++----------+------------+
+3 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="case"><h3>CASE: um valor conforme a condição</h3><p>CASE testa as condições na ordem e para na primeira verdadeira. Por isso o zero vira &quot;esgotado&quot; e não &quot;baixo&quot;, embora 0 também seja menor que 3.</p><pre class="guia-forma" aria-label="Forma geral"><code>CASE WHEN condição1 THEN valor1 WHEN condição2 THEN valor2 ELSE outro END</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: CASE: um valor conforme a condição"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, quantidade,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CASE WHEN quantidade = 0 THEN &#x27;esgotado&#x27; WHEN quantidade &lt; 3 THEN &#x27;baixo&#x27; ELSE &#x27;ok&#x27; END AS situacao</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM item WHERE kit_id IN (1, 2) ORDER BY quantidade;</kbd>
++----------+------------+----------+
+| nome     | quantidade | situacao |
++----------+------------+----------+
+| Teclado  |          0 | esgotado |
+| Switch   |          1 | baixo    |
+| Notebook |          2 | baixo    |
+| Cabo     |          3 | ok       |
+| Cabo     |          5 | ok       |
+| Mouse    |          8 | ok       |
++----------+------------+----------+
+6 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="coalesce"><h3>COALESCE e IFNULL: trocar NULL por um valor</h3><p>SUM de nenhuma linha dá NULL, não zero, como se vê no kit sem itens. COALESCE devolve o primeiro valor que não é NULL; IFNULL faz o mesmo com dois valores. O resumo da A17 usa COALESCE para o kit vazio mostrar 0.</p><pre class="guia-forma" aria-label="Forma geral"><code>COALESCE(expressão, valor_se_for_null)
+IFNULL(expressão, valor_se_for_null)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: COALESCE e IFNULL: trocar NULL por um valor"><code><span class="tela-prompt">mysql&gt; </span><kbd>SELECT k.nome AS kit, SUM(i.quantidade) AS soma, COALESCE(SUM(i.quantidade), 0) AS total</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM kit AS k LEFT JOIN item AS i ON i.kit_id = k.id GROUP BY k.id, k.nome ORDER BY k.id;</kbd>
++---------------------+------+-------+
+| kit                 | soma | total |
++---------------------+------+-------+
+| Treinamento Redes   |    6 |     6 |
+| Treinamento Suporte |   13 |    13 |
+| Oficina Montagem    | NULL |     0 |
+| Oficina Arduino     |   56 |    56 |
++---------------------+------+-------+
+4 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0017-join-agregacoes-e-listagens-estruturadas.html" title="JOIN, agregações e listagens estruturadas">A17</a></p></article></section><section id="alterar"><h2>Incluir, alterar e remover</h2><p>Os exemplos desta parte abrem uma transação com START TRANSACTION e terminam com ROLLBACK, que desfaz tudo. Assim os dados do guia continuam iguais para os outros tópicos. No aplicativo, quem confirma é o COMMIT, como na A10.</p><article class="guia-topico" id="insert"><h3>INSERT INTO: incluir linhas</h3><p>Um INSERT pode incluir várias linhas de uma vez. O id veio do AUTO_INCREMENT (10 e 11). Depois do ROLLBACK, os itens sumiram; no código Python os valores vão por parâmetro, nunca colados no texto do SQL.</p><pre class="guia-forma" aria-label="Forma geral"><code>INSERT INTO tabela (coluna1, coluna2) VALUES (valor1, valor2), (valor3, valor4);</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: INSERT INTO: incluir linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO item (kit_id, nome, quantidade) VALUES (3, &#x27;Fonte&#x27;, 2), (3, &#x27;Multimetro&#x27;, 1);</kbd>
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome, quantidade FROM item WHERE kit_id = 3;</kbd>
++----+------------+------------+
+| id | nome       | quantidade |
++----+------------+------------+
+| 10 | Fonte      |          2 |
+| 11 | Multimetro |          1 |
++----+------------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) FROM item WHERE kit_id = 3;</kbd>
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> o ROLLBACK desfaz as linhas, mas não devolve os números do AUTO_INCREMENT: o próximo item incluído recebe 12, não 10.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a></p></article><article class="guia-topico" id="insert-select"><h3>INSERT ... SELECT: incluir a partir de uma consulta</h3><p>No lugar de VALUES vai uma consulta, e cada linha do resultado vira uma linha nova. Aqui o kit 3 recebeu uma unidade de cada item do kit 4. Os ids começam em 12: o ROLLBACK do tópico anterior não devolveu o 10 e o 11.</p><pre class="guia-forma" aria-label="Forma geral"><code>INSERT INTO tabela (colunas) SELECT valores FROM outra WHERE condição;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: INSERT ... SELECT: incluir a partir de uma consulta"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO item (kit_id, nome, quantidade) SELECT 3, nome, 1 FROM item WHERE kit_id = 4;</kbd>
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome, quantidade FROM item WHERE kit_id = 3;</kbd>
++----+------------+------------+
+| id | nome       | quantidade |
++----+------------+------------+
+| 12 | Placa      |          1 |
+| 13 | Protoboard |          1 |
+| 14 | Jumper     |          1 |
++----+------------+------------+
+3 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="update"><h3>UPDATE: alterar linhas</h3><p>A conta dentro do SET (quantidade - 1) usa o valor que está no banco naquele momento, por isso duas retiradas ao mesmo tempo não se perdem. A condição quantidade &gt;= 1 recusa a retirada do Teclado: Rows matched: 0 avisa que nada foi alterado.</p><pre class="guia-forma" aria-label="Forma geral"><code>UPDATE tabela SET coluna = novo_valor WHERE condição;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: UPDATE: alterar linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE item SET quantidade = quantidade - 1 WHERE id = 1 AND quantidade &gt;= 1;</kbd>
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>UPDATE item SET quantidade = quantidade - 1 WHERE id = 6 AND quantidade &gt;= 1;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, nome, quantidade FROM item WHERE id IN (1, 6);</kbd>
++----+---------+------------+
+| id | nome    | quantidade |
++----+---------+------------+
+|  1 | Cabo    |          2 |
+|  6 | Teclado |          0 |
++----+---------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> um UPDATE sem WHERE altera todas as linhas da tabela.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a>, <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a></p></article><article class="guia-topico" id="delete"><h3>DELETE FROM: remover linhas</h3><p>Remova pelo id, como na A09. O kit 1 ainda tem itens, e a chave estrangeira item_kit recusa a remoção (erro 1451): o banco não deixa sobrar item órfão.</p><pre class="guia-forma" aria-label="Forma geral"><code>DELETE FROM tabela WHERE condição;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: DELETE FROM: remover linhas"><code><span class="tela-prompt">mysql&gt; </span><kbd>START TRANSACTION;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM item WHERE id = 6;</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DELETE FROM kit WHERE id = 1;</kbd>
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`kits_teste`.`item`, CONSTRAINT `item_kit` FOREIGN KEY (`kit_id`) REFERENCES `kit` (`id`))
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT COUNT(*) FROM item;</kbd>
++----------+
+| COUNT(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ROLLBACK;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> um DELETE sem WHERE apaga todas as linhas da tabela.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a>, <a href="../lessons/0013-cadastro-e-listagem-integrados-ao-banco.html" title="Cadastro e listagem integrados ao banco">A13</a></p></article></section><section id="estrutura"><h2>Criar e mudar a estrutura</h2><p>Estes comandos mudam as tabelas, não os dados. No MySQL eles confirmam sozinhos (commit implícito, A10): um ROLLBACK depois não desfaz um CREATE TABLE. A tabela emprestimo destes exemplos é só do guia e é apagada no fim.</p><article class="guia-topico" id="create-table"><h3>CREATE TABLE e as restrições</h3><p>PRIMARY KEY identifica a linha, e AUTO_INCREMENT numera sozinho. NOT NULL exige um valor; NULL o deixa opcional, como a devolução que ainda não aconteceu. DEFAULT dá o valor quando o INSERT não informa a coluna. FOREIGN KEY e CHECK são as regras que o banco garante. DESCRIBE mostra como a tabela ficou.</p><pre class="guia-forma" aria-label="Forma geral"><code>CREATE TABLE tabela (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  coluna TIPO NOT NULL DEFAULT valor,
+  CONSTRAINT nome FOREIGN KEY (coluna) REFERENCES outra(id),
+  CONSTRAINT nome CHECK (condição)
+);</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: CREATE TABLE e as restrições"><code><span class="tela-prompt">mysql&gt; </span><kbd>CREATE TABLE emprestimo (</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  id INT AUTO_INCREMENT PRIMARY KEY,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  item_id INT NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  tecnico VARCHAR(60) NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  quantidade INT NOT NULL DEFAULT 1,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  retirada DATE NOT NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  devolucao DATE NULL,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CONSTRAINT emprestimo_item FOREIGN KEY (item_id) REFERENCES item(id),</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  CONSTRAINT emprestimo_positivo CHECK (quantidade &gt; 0)</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>);</kbd>
+Query OK, 0 rows affected (0.03 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DESCRIBE emprestimo;</kbd>
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| item_id    | int         | NO   | MUL | NULL    |                |
+| tecnico    | varchar(60) | NO   |     | NULL    |                |
+| quantidade | int         | NO   |     | 1       |                |
+| retirada   | date        | NO   |     | NULL    |                |
+| devolucao  | date        | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a></p></article><article class="guia-topico" id="restricoes"><h3>As restrições recusando dados</h3><p>Item 99 não existe (chave estrangeira, erro 1452); quantidade 0 não passa no CHECK (erro 3819); sem técnico, o NOT NULL sem DEFAULT recusa (erro 1364). No Python, esses erros chegam como exceções do conector, e o aplicativo traduz cada uma numa mensagem para quem usa.</p><pre class="guia-forma" aria-label="Forma geral"><code>-- cada regra recusa o INSERT com um erro e um número</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: As restrições recusando dados"><code><span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO emprestimo (item_id, tecnico, retirada) VALUES (99, &#x27;Tecnica A&#x27;, &#x27;2026-11-03&#x27;);</kbd>
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`kits_teste`.`emprestimo`, CONSTRAINT `emprestimo_item` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`))
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO emprestimo (item_id, tecnico, quantidade, retirada) VALUES (2, &#x27;Tecnica A&#x27;, 0, &#x27;2026-11-03&#x27;);</kbd>
+ERROR 3819 (HY000): Check constraint &#x27;emprestimo_positivo&#x27; is violated.
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO emprestimo (item_id, retirada) VALUES (2, &#x27;2026-11-03&#x27;);</kbd>
+ERROR 1364 (HY000): Field &#x27;tecnico&#x27; doesn&#x27;t have a default value</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0006-modelagem-relacional-e-sql-essencial.html" title="Modelagem relacional e SQL essencial">A06</a>, <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a></p></article><article class="guia-topico" id="datas"><h3>Datas: DATE, DATE_FORMAT e DATEDIFF</h3><p>DATE guarda o dia e TIMESTAMP, o dia com a hora. Digite as datas no formato &#x27;AAAA-MM-DD&#x27;; DATE_FORMAT mostra no formato brasileiro. DATEDIFF conta os dias entre duas datas e dá NULL quando falta uma delas, como no empréstimo ainda não devolvido.</p><pre class="guia-forma" aria-label="Forma geral"><code>DATE_FORMAT(data, &#x27;%d/%m/%Y&#x27;)
+DATEDIFF(data_final, data_inicial)</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Datas: DATE, DATE_FORMAT e DATEDIFF"><code><span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO emprestimo (item_id, tecnico, retirada, devolucao) VALUES (2, &#x27;Tecnica A&#x27;, &#x27;2026-11-03&#x27;, &#x27;2026-11-07&#x27;);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>INSERT INTO emprestimo (item_id, tecnico, quantidade, retirada) VALUES (5, &#x27;Tecnico B&#x27;, 2, &#x27;2026-11-12&#x27;);</kbd>
+Query OK, 1 row affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, tecnico, quantidade, DATE_FORMAT(retirada, &#x27;%d/%m/%Y&#x27;) AS retirada,</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  DATEDIFF(devolucao, retirada) AS dias FROM emprestimo;</kbd>
++----+-----------+------------+------------+------+
+| id | tecnico   | quantidade | retirada   | dias |
++----+-----------+------------+------------+------+
+|  2 | Tecnica A |          1 | 03/11/2026 |    4 |
+|  3 | Tecnico B |          2 | 12/11/2026 | NULL |
++----+-----------+------------+------------+------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT tecnico FROM emprestimo WHERE devolucao IS NULL;</kbd>
++-----------+
+| tecnico   |
++-----------+
+| Tecnico B |
++-----------+
+1 row in set (0.00 sec)
+</code></pre><p class="tela-nota"><strong>Repare:</strong> os empréstimos começam no id 2: o INSERT recusado pela chave estrangeira no tópico anterior já tinha gastado o 1 do AUTO_INCREMENT.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a>, <a href="../lessons/0024-orm-relacionamentos-crud-e-consultas.html" title="ORM: relacionamentos, CRUD e consultas">A24</a></p></article><article class="guia-topico" id="alter-table"><h3>ALTER TABLE: mudar uma tabela que já tem dados</h3><p>Uma coluna nova em tabela com dados precisa aceitar NULL ou ter DEFAULT, senão as linhas que já existem ficariam sem valor. Mudanças assim no projeto vão para um arquivo de migração, como na A09.</p><pre class="guia-forma" aria-label="Forma geral"><code>ALTER TABLE tabela ADD COLUMN coluna TIPO NULL;
+ALTER TABLE tabela DROP COLUMN coluna;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: ALTER TABLE: mudar uma tabela que já tem dados"><code><span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE emprestimo ADD COLUMN observacao VARCHAR(120) NULL;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT id, tecnico, observacao FROM emprestimo;</kbd>
++----+-----------+------------+
+| id | tecnico   | observacao |
++----+-----------+------------+
+|  2 | Tecnica A | NULL       |
+|  3 | Tecnico B | NULL       |
++----+-----------+------------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>ALTER TABLE emprestimo DROP COLUMN observacao;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a>, <a href="../lessons/0010-transacoes-integridade-e-persistencia.html" title="Transações, integridade e persistência">A10</a></p></article><article class="guia-topico" id="drop-table"><h3>DROP TABLE: apagar a tabela</h3><p>DROP TABLE apaga a tabela com todos os dados, sem pedir confirmação. Rodar de novo dá erro 1051, porque ela já não existe; IF EXISTS troca o erro por um aviso, por isso os scripts de esquema começam com ele.</p><pre class="guia-forma" aria-label="Forma geral"><code>DROP TABLE tabela;
+DROP TABLE IF EXISTS tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: DROP TABLE: apagar a tabela"><code><span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE emprestimo;</kbd>
+Query OK, 0 rows affected (0.02 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE emprestimo;</kbd>
+ERROR 1051 (42S02): Unknown table &#x27;kits_teste.emprestimo&#x27;
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP TABLE IF EXISTS emprestimo;</kbd>
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0009-atualizacao-e-remocao-por-identificador.html" title="Atualização e remoção por identificador">A09</a></p></article><article class="guia-topico" id="banco"><h3>SHOW DATABASES e CREATE DATABASE</h3><p>O kits_app só enxerga os bancos em que tem permissão e não pode criar outros (erro 1044). Isso é de propósito: o aplicativo não precisa criar bancos, então o usuário dele não pode. Os bancos kits e kits_teste foram criados com o root na A08.</p><pre class="guia-forma" aria-label="Forma geral"><code>SHOW DATABASES;
+CREATE DATABASE nome;    -- só com o root
+DROP DATABASE nome;      -- só com o root</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: SHOW DATABASES e CREATE DATABASE"><code><span class="tela-prompt">mysql&gt; </span><kbd>SHOW DATABASES;</kbd>
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| kits               |
+| kits_teste         |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE DATABASE guia_extra;</kbd>
+ERROR 1044 (42000): Access denied for user &#x27;kits_app&#x27;@&#x27;localhost&#x27; to database &#x27;guia_extra&#x27;</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a></p></article></section><section id="desempenho"><h2>Índices e visões</h2><p>Um índice deixa a busca mais rápida; uma visão guarda uma consulta com nome. Os dois ficam para quando o projeto precisar deles, e a A25 discute quando vale a pena.</p><article class="guia-topico" id="index"><h3>CREATE INDEX e EXPLAIN</h3><p>EXPLAIN mostra como o MySQL vai buscar, sem rodar a consulta. Sem índice, type ALL quer dizer ler a tabela inteira (9 linhas). Com o índice em nome, type ref e key item_nome: ele vai direto às 2 linhas de Cabo. ANALYZE TABLE atualiza as estatísticas que o EXPLAIN usa. O \G no lugar do ponto e vírgula mostra uma coluna por linha, o que ajuda quando a tabela do resultado é larga.</p><pre class="guia-forma" aria-label="Forma geral"><code>EXPLAIN SELECT ...;
+CREATE INDEX nome ON tabela (coluna);
+DROP INDEX nome ON tabela;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: CREATE INDEX e EXPLAIN"><code><span class="tela-prompt">mysql&gt; </span><kbd>ANALYZE TABLE item;</kbd>
++-----------------+---------+----------+----------+
+| Table           | Op      | Msg_type | Msg_text |
++-----------------+---------+----------+----------+
+| kits_teste.item | analyze | status   | OK       |
++-----------------+---------+----------+----------+
+1 row in set (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXPLAIN SELECT id, quantidade FROM item WHERE nome = &#x27;Cabo&#x27;\G</kbd>
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: item
+   partitions: NULL
+         type: ALL
+possible_keys: NULL
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 9
+     filtered: 11.11
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>CREATE INDEX item_nome ON item (nome);</kbd>
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXPLAIN SELECT id, quantidade FROM item WHERE nome = &#x27;Cabo&#x27;\G</kbd>
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: item
+   partitions: NULL
+         type: ref
+possible_keys: item_nome
+          key: item_nome
+      key_len: 322
+          ref: const
+         rows: 2
+     filtered: 100.00
+        Extra: NULL
+1 row in set, 1 warning (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP INDEX item_nome ON item;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+</code></pre><p class="tela-nota"><strong>Repare:</strong> com 9 linhas a diferença não se sente; o índice compensa com milhares de linhas, e cada índice deixa INSERT e UPDATE um pouco mais lentos.</p></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article><article class="guia-topico" id="view"><h3>CREATE VIEW: uma consulta com nome</h3><p>A visão não guarda dados: cada SELECT nela roda a consulta de novo, com os dados do momento. Ela se consulta como uma tabela, inclusive com WHERE.</p><pre class="guia-forma" aria-label="Forma geral"><code>CREATE VIEW nome AS SELECT ...;
+SELECT * FROM nome;
+DROP VIEW nome;</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: CREATE VIEW: uma consulta com nome"><code><span class="tela-prompt">mysql&gt; </span><kbd>CREATE VIEW resumo_kit AS</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  SELECT k.id, k.nome, COUNT(i.id) AS itens, COALESCE(SUM(i.quantidade), 0) AS total</kbd>
+<span class="tela-prompt">    -&gt; </span><kbd>  FROM kit AS k LEFT JOIN item AS i ON i.kit_id = k.id GROUP BY k.id, k.nome;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SELECT nome, itens, total FROM resumo_kit WHERE total &lt; 10;</kbd>
++-------------------+-------+-------+
+| nome              | itens | total |
++-------------------+-------+-------+
+| Treinamento Redes |     3 |     6 |
+| Oficina Montagem  |     0 |     0 |
++-------------------+-------+-------+
+2 rows in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DROP VIEW resumo_kit;</kbd>
+Query OK, 0 rows affected (0.01 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0025-sql-direto-orm-e-decisao-documentada.html" title="SQL direto × ORM e decisão documentada">A25</a></p></article></section><section id="python"><h2>Do terminal ao Python</h2><p>No aplicativo, os valores nunca entram colados no texto do SQL. O próprio MySQL tem uma forma de separar o comando dos valores, e é o mesmo que o conector faz quando você usa %s.</p><article class="guia-topico" id="parametros"><h3>Parâmetros: o comando separado dos valores</h3><p>PREPARE guarda o comando com ? no lugar dos valores, e EXECUTE ... USING envia os valores à parte. Um apóstrofo no valor não quebra o comando nem muda o que ele faz. No Python, o %s do mysql.connector cumpre o mesmo papel: os valores vão na tupla, nunca numa f-string.</p><pre class="guia-forma" aria-label="Forma geral"><code>cursor.execute(
+    &#x27;SELECT nome, quantidade FROM item WHERE kit_id = %s AND nome LIKE %s&#x27;,
+    (kit_id, trecho + &#x27;%&#x27;))</code></pre><figure class="tela"><figcaption>No cliente mysql</figcaption><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Parâmetros: o comando separado dos valores"><code><span class="tela-prompt">mysql&gt; </span><kbd>PREPARE busca FROM &#x27;SELECT nome, quantidade FROM item WHERE kit_id = ? AND nome LIKE ?&#x27;;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+Statement prepared
+
+<span class="tela-prompt">mysql&gt; </span><kbd>SET @kit = 2, @trecho = &#x27;M%&#x27;;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>EXECUTE busca USING @kit, @trecho;</kbd>
++-------+------------+
+| nome  | quantidade |
++-------+------------+
+| Mouse |          8 |
++-------+------------+
+1 row in set (0.00 sec)
+
+<span class="tela-prompt">mysql&gt; </span><kbd>DEALLOCATE PREPARE busca;</kbd>
+Query OK, 0 rows affected (0.00 sec)
+</code></pre></figure><p class="guia-visto">Visto em: <a href="../lessons/0008-insercao-e-consulta-parametrizadas.html" title="Inserção e consulta parametrizadas">A08</a>, <a href="../lessons/0016-filtros-ordenacao-e-consulta-vazia.html" title="Filtros, ordenação e consulta vazia">A16</a></p></article></section><h2>Fontes</h2><ul><li><a href="https://www.w3schools.com/mysql/mysql_sql.asp">W3Schools — MySQL Tutorial (referência complementar, em inglês)</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/sql-statements.html">MySQL 8.4 Reference Manual — SQL Statements</a></li><li><a href="https://dev.mysql.com/doc/refman/8.4/en/functions.html">MySQL 8.4 Reference Manual — Functions and Operators</a></li></ul></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time>2026-11-24</time></p><a href="../index.html">Voltar ao índice</a></footer></div></body></html>

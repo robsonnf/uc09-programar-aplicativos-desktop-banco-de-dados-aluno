@@ -1,0 +1,263 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A23 · ORM com SQLAlchemy: tabelas como classes, sessão como transação</title><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A23" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A22</span><a href="0022-consolidacao-arquitetural-e-testes-de-regressao.html"><span>Consolidação arquitetural e testes de regressão<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A23</span><span>ORM: ambiente, mapeamento, sessão e transação<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Mais curto, e errado</a></li><li><a href="#esteira">Do esquema às classes</a></li><li><a href="#orm">O que o ORM faz, e o que continua sendo seu</a></li><li><a href="#mapeamento">Mapear, ligar e abrir a sessão</a></li><li><a href="#travas">As decisões que o ORM não toma</a></li><li><a href="#tutorial">Tutorial: o SQL que o ORM escreve</a></li><li><a href="#pratica">O repositório com a sessão</a></li><li><a href="#auditoria">O ORM está fazendo o que o SQL fazia?</a></li><li><a href="#registro">Entregue o que prova o ORM</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A23</span></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>ORM com SQLAlchemy: tabelas como classes, sessão como transação</h1><p class="thesis">Até aqui, cada operação dos kits é um SQL escrito à mão. Hoje o projeto ganha um segundo jeito de falar com o mesmo banco: o SQLAlchemy 2, um ORM, que descreve as tabelas como classes Python e escreve o SQL a partir de objetos. Você instala a biblioteca, mapeia kit e item sem mudar o esquema, monta o motor a partir do banco.ini, usa a sessão como transação e refaz quatro operações do repositório com ela, provando com os mesmos critérios dos testes do SQL. O aplicativo continua usando o SQL direto: a decisão de trocar é da A25.</p><p data-idoc="caveat">A aula continua no projeto da A22. Instale o SQLAlchemy 2.1.9 no .venv (pip install SQLAlchemy==2.1.9) e acrescente a linha ao requirements.txt. O esquema não muda. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Explicar o que um ORM faz e o que ele não faz, a partir do SQL que ele gera</li><li>Mapear tabelas existentes para classes com DeclarativeBase e Mapped, sem create_all</li><li>Montar o motor a partir do banco.ini com URL.create e usar a sessão como uma transação</li><li>Refazer listar, criar, adicionar e remover com a sessão, mantendo as regras e as travas do SQL direto</li><li>Achar, rodando os testes, os defeitos de um repositório ORM herdado</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A22 com verificar.py terminando com código 0</li><li>O esquema.sql da A06 e da A19, em_transacao da A10 e o FOR UPDATE da A13</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Mais curto, e errado <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#partida" aria-label="Versão para leitura: Mais curto, e errado">↗</a></h2><p>Outra equipe começou a usar o SQLAlchemy e entregou um repositorio_orm.py bem mais curto que o SQL. Vieram quatro relatos.</p><p>Duas técnicas somaram itens ao mesmo tempo, e uma soma sumiu. O kit treinamento redes foi criado mesmo já existindo Treinamento Redes. Remover um item que outra pessoa já tinha removido não avisou nada. E uma operação que devia ser desfeita inteira deixou a primeira metade gravada.</p><p>Em dupla, antes de abrir o código: o ORM escreve o SQL. Ele também decide quando a transação termina e onde a linha fica travada?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: SQLAlchemy==2.1.9 no requirements.txt; kits/orm.py; kits/repositorio_orm.py; tests/test_orm.py; as regras dos dois arquivos novos em tests/test_camadas.py e o tests.test_orm no grupo do MySQL do verificar.py. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: verificar.py termina com código 0, com os testes do ORM no grupo do MySQL.</p></div></section><section id="esteira" data-stop="esteira"><h2>Do esquema às classes <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#esteira" aria-label="Versão para leitura: Do esquema às classes">↗</a></h2><ol class="pipeline"><li><strong>Instalar</strong><p>SQLAlchemy 2.1.9 no .venv e no requirements.txt.</p></li><li><strong>Mapear</strong><p>Uma classe por tabela, com as colunas do esquema.sql.</p></li><li><strong>Ligar</strong><p>O motor a partir do banco.ini, com URL.create.</p></li><li><strong>Abrir a sessão</strong><p>Uma sessão por operação, que é uma transação.</p></li><li><strong>Refazer</strong><p>Quatro operações do repositório, com objetos.</p></li><li><strong>Provar</strong><p>Os mesmos critérios do SQL, inclusive concorrência.</p></li></ol></section><section id="orm" data-stop="orm"><h2>O que o ORM faz, e o que continua sendo seu <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#orm" aria-label="Versão para leitura: O que o ORM faz, e o que continua sendo seu">↗</a></h2><p>Um ORM, mapeador objeto-relacional, liga linhas de tabela a objetos. Você escreve sessao.add(KitBanco(nome=&#x27;Almoxarifado&#x27;)) e ele escreve INSERT INTO kit; você muda item.quantidade e ele escreve o UPDATE. As consultas viram expressões Python: select(KitBanco).where(KitBanco.nome == nome). O tutorial mostra, linha por linha, o SQL que sai de cada uma.</p><p>O que o ORM não decide por você é o que a A08 à A19 ensinaram: quando a transação começa e termina, que linha precisa de trava, como a comparação do banco trata maiúsculas, o que fazer com o erro de chave estrangeira. Um repositório ORM correto mantém tudo isso; o herdado ficou mais curto porque perdeu essas decisões.</p><p>Nesta UC, o esquema continua sendo o esquema.sql. As classes descrevem as tabelas que ele cria, e o teste confere que as colunas batem. Ninguém chama create_all no projeto: assim, o SQL direto e o ORM leem e gravam as mesmas tabelas, e a turma pode comparar os dois na A25.</p></section><section id="mapeamento" data-stop="mapeamento"><h2>Mapear, ligar e abrir a sessão <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#mapeamento" aria-label="Versão para leitura: Mapear, ligar e abrir a sessão">↗</a></h2><p>Cada classe herda de uma Base (DeclarativeBase), diz a tabela em __tablename__ e declara cada coluna com Mapped e o tipo do Python. As classes chamam KitBanco e ItemBanco para não confundir com o Kit e o ItemKit do domínio (A05), que têm as regras: o objeto da tabela guarda linhas, e o do domínio decide o que é válido.</p><p>O motor (Engine) sabe chegar ao banco. Ele é montado com URL.create, com cada parte do endereço no seu lugar: uma senha com @ ou dois-pontos não quebra nada, e o render_as_string(hide_password=True) mostra o endereço sem a senha. O motor guarda conexões abertas e as empresta; pool_pre_ping confere se a emprestada ainda está viva.</p><p>A sessão é o lugar onde os objetos vivem durante uma operação. Com with Session(motor) as sessao, sessao.begin(), tudo o que acontece dentro do bloco é uma transação: confirmada no fim, desfeita se algo sair errado. É o em_transacao da A10, e o kits/orm.py ganha o em_sessao, que faz isso para uma função que recebe a sessão.</p></section><section id="travas" data-stop="travas"><h2>As decisões que o ORM não toma <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#travas" aria-label="Versão para leitura: As decisões que o ORM não toma">↗</a></h2><p>Soma de itens: o SQL da A13 lê o item com FOR UPDATE. No ORM é .with_for_update() na consulta; sem ele, duas sessões leem o mesmo 3, cada uma soma 1 e as duas gravam 4. O teste com duas threads prova a trava.</p><p>Nome repetido: o WHERE nome = ... vai para o banco, e a comparação é a do MySQL (A13): treinamento redes é o mesmo kit. Comparar em Python, depois de trazer todos os kits, é mais lento e diferencia maiúsculas.</p><p>Commit: nenhuma função do repositório ORM confirma. Um sessao.commit() no meio faz a primeira metade de uma operação maior ficar, como o commit por linha da A19. flush é diferente: manda o SQL agora, para o banco dar o id ou recusar, mas a transação continua aberta.</p></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: o SQL que o ORM escreve <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#tutorial" aria-label="Versão para leitura: Tutorial: o SQL que o ORM escreve">↗</a></h2><p>O tutorial mapeia um livro num SQLite em memória e mostra cada comando que o SQLAlchemy manda ao banco, com um evento before_cursor_execute. Crie acervo_orm.py na raiz com o passo 1; o passo 2 entra no fim. Rode com .\.venv\Scripts\python.exe acervo_orm.py.</p><p>As telas são de execuções reais desse código, com Python 3.14 e SQLAlchemy 2.1.9.</p><figure class="code-block"><figcaption>Passo 1 · acervo_orm.py: mapear, gravar e ler</figcaption><pre><code>from sqlalchemy import String, create_engine, event, select
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Livro(Base):
+    __tablename__ = &#x27;livro&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(80))
+    exemplares: Mapped[int]
+
+
+motor = create_engine(&#x27;sqlite://&#x27;)  # SQLite em memória, só para o tutorial
+Base.metadata.create_all(motor)      # no projeto, quem cria as tabelas é o esquema.sql
+
+
+@event.listens_for(motor, &#x27;before_cursor_execute&#x27;)
+def mostrar_sql(conexao, cursor, sql, parametros, contexto, varios):
+    print(&#x27;  SQL:&#x27;, &#x27; &#x27;.join(sql.split()), parametros)
+
+
+print(&#x27;-- gravar dois livros&#x27;)
+with Session(motor) as sessao, sessao.begin():
+    sessao.add_all([Livro(titulo=&#x27;Atlas&#x27;, exemplares=1), Livro(titulo=&#x27;Gramática&#x27;, exemplares=3)])
+
+print(&#x27;-- ler&#x27;)
+with Session(motor) as sessao:
+    for livro in sessao.scalars(select(Livro).order_by(Livro.titulo)):
+        print(f&#x27;{livro.id} {livro.titulo}: {livro.exemplares}&#x27;)
+</code></pre></figure><figure class="tela"><figcaption>Passo 1 · add vira INSERT, select vira SELECT</figcaption><p>Rode.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 1 · add vira INSERT, select vira SELECT"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo_orm.py</kbd>
+-- gravar dois livros
+  SQL: INSERT INTO livro (titulo, exemplares) VALUES (?, ?) RETURNING id (&#x27;Atlas&#x27;, 1)
+  SQL: INSERT INTO livro (titulo, exemplares) VALUES (?, ?) RETURNING id (&#x27;Gramática&#x27;, 3)
+-- ler
+  SQL: SELECT livro.id, livro.titulo, livro.exemplares FROM livro ORDER BY livro.titulo ()
+1 Atlas: 1
+2 Gramática: 3</code></pre></figure><figure class="code-block"><figcaption>Passo 2 · Acrescente ao fim: mudar e desistir</figcaption><pre><code>print(&#x27;-- mudar um atributo&#x27;)
+with Session(motor) as sessao, sessao.begin():
+    atlas = sessao.scalar(select(Livro).where(Livro.titulo == &#x27;Atlas&#x27;))
+    atlas.exemplares += 2
+    print(&#x27;  (ainda nada no banco: o UPDATE sai no fim da transação)&#x27;)
+
+print(&#x27;-- erro no meio: a sessão desfaz&#x27;)
+try:
+    with Session(motor) as sessao, sessao.begin():
+        sessao.get(Livro, 2).exemplares = 0
+        raise ValueError(&#x27;a pessoa desistiu&#x27;)
+except ValueError as erro:
+    print(&#x27;  recusado:&#x27;, erro)
+
+with Session(motor) as sessao:
+    print(&#x27;-- depois:&#x27;, [(l.titulo, l.exemplares) for l in sessao.scalars(select(Livro).order_by(Livro.id))])
+</code></pre></figure><figure class="tela"><figcaption>Passo 2 · A mudança vira UPDATE no fim; a desistência nem chega ao banco</figcaption><p>Rode de novo.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Passo 2 · A mudança vira UPDATE no fim; a desistência nem chega ao banco"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe acervo_orm.py</kbd>
+-- gravar dois livros
+  SQL: INSERT INTO livro (titulo, exemplares) VALUES (?, ?) RETURNING id (&#x27;Atlas&#x27;, 1)
+  SQL: INSERT INTO livro (titulo, exemplares) VALUES (?, ?) RETURNING id (&#x27;Gramática&#x27;, 3)
+-- ler
+  SQL: SELECT livro.id, livro.titulo, livro.exemplares FROM livro ORDER BY livro.titulo ()
+1 Atlas: 1
+2 Gramática: 3
+-- mudar um atributo
+  SQL: SELECT livro.id, livro.titulo, livro.exemplares FROM livro WHERE livro.titulo = ? (&#x27;Atlas&#x27;,)
+  (ainda nada no banco: o UPDATE sai no fim da transação)
+  SQL: UPDATE livro SET exemplares=? WHERE livro.id = ? (3, 1)
+-- erro no meio: a sessão desfaz
+  SQL: SELECT livro.id, livro.titulo, livro.exemplares FROM livro WHERE livro.id = ? (2,)
+  recusado: a pessoa desistiu
+  SQL: SELECT livro.id, livro.titulo, livro.exemplares FROM livro ORDER BY livro.id ()
+-- depois: [(&#x27;Atlas&#x27;, 3), (&#x27;Gramática&#x27;, 3)]</code></pre><p class="tela-nota"><strong>Repare:</strong> O UPDATE do Atlas só saiu quando a transação terminou. Na segunda sessão, o erro veio antes: a mudança da Gramática nunca virou SQL, e o 3 continuou.</p></figure></section><section id="pratica" data-stop="pratica"><h2>O repositório com a sessão <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#pratica" aria-label="Versão para leitura: O repositório com a sessão">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Instale o SQLAlchemy e rode verificar.py antes de começar. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: kits/orm.py, o teste do mapeamento, kits/repositorio_orm.py com os testes, as regras novas do test_camadas e do verificar.py, e o repositório herdado. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando os testes.</p><div class="workbench"><h3>kits/orm.py: classes, motor e sessão</h3><p>Instale o SQLAlchemy 2.1.9 e acrescente SQLAlchemy==2.1.9 ao requirements.txt. Crie kits/orm.py a partir do arquivo: o ItemBanco, criar_motor e em_sessao. Entrega: kits/orm.py e o requirements.txt.</p><p>Concluído quando: O teste do mapeamento de tests/test_orm.py passa: as colunas de cada classe batem com as da tabela no kits_teste.</p><details><summary>Dica para realizar a atividade</summary><p>O kit_id é Mapped[int] com mapped_column(ForeignKey(&#x27;kit.id&#x27;)). E a quantidade, que não tem nada de especial?</p></details><pre><code id="work-modulo-orm">&quot;&quot;&quot;O ORM dos kits (A23). Salve como kits/orm.py.
+
+O esquema continua sendo o sql/mysql/esquema.sql: as classes descrevem as tabelas, e ninguém chama create_all.
+&quot;&quot;&quot;
+from sqlalchemy import URL, ForeignKey, String, create_engine
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
+
+from kits.banco import ler_config
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class KitBanco(Base):
+    &quot;&quot;&quot;Uma linha da tabela kit. O nome Banco separa do Kit do domínio (A05), que tem as regras.&quot;&quot;&quot;
+    __tablename__ = &#x27;kit&#x27;
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str] = mapped_column(String(80))
+
+
+class ItemBanco(Base):
+    &quot;&quot;&quot;Uma linha da tabela item: id, kit_id (chave estrangeira para kit.id), nome (80) e quantidade, nessa ordem.&quot;&quot;&quot;
+    ...
+
+
+def criar_motor(config=None):
+    &quot;&quot;&quot;create_engine a partir do banco.ini (ou da config recebida), com URL.create(&#x27;mysql+mysqlconnector&#x27;, ...)
+    e pool_pre_ping=True. Nunca monte a URL com f-string: uma senha com @ quebraria o endereço.&quot;&quot;&quot;
+    ...
+
+
+def em_sessao(operacao, motor):
+    &quot;&quot;&quot;with Session(motor) as sessao, sessao.begin(): devolva operacao(sessao).&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-modulo-orm" data-filename="orm.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe -m pip install SQLAlchemy==2.1.9 e depois .\.venv\Scripts\python.exe -m unittest -v tests.test_orm."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe -m pip install SQLAlchemy==2.1.9 e depois .\.venv\Scripts\python.exe -m unittest -v tests.test_orm.</p></div><div class="workbench"><h3>kits/repositorio_orm.py: quatro operações com a sessão</h3><p>Crie kits/repositorio_orm.py a partir do arquivo, completando as quatro funções com as mesmas regras do kits/repositorio.py. Acrescente ao tests/test_camadas.py as regras dos dois arquivos novos (nem tkinter nem a janela; o repositório ORM também não importa mysql) e ponha tests.test_orm no grupo do MySQL do verificar.py. Entrega: kits/repositorio_orm.py, tests/test_camadas.py e verificar.py.</p><p>Concluído quando: Os dez testes de tests/test_orm.py passam, inclusive os três que você vai completar, e verificar.py termina com código 0.</p><details><summary>Dica para realizar a atividade</summary><p>Volte à seção das decisões que o ORM não toma: trava, comparação no banco e nada de commit.</p></details><pre><code id="work-repositorio-orm">&quot;&quot;&quot;O repositório dos kits com o ORM (A23). Salve como kits/repositorio_orm.py.
+As mesmas operações do kits/repositorio.py, com a sessão no lugar da conexão. Nenhuma função confirma nem desfaz.
+&quot;&quot;&quot;
+from sqlalchemy import exc, select
+
+from kits.modelo import Kit
+from kits.orm import ItemBanco, KitBanco
+
+SEM_KIT = 1452  # chave estrangeira: o kit_id não existe
+
+
+def listar_kits(sessao):
+    &quot;&quot;&quot;[(id, nome)] em ordem de nome e id: select(KitBanco.id, KitBanco.nome).order_by(...).&quot;&quot;&quot;
+    ...
+
+
+def criar_kit(sessao, nome):
+    &quot;&quot;&quot;Kit(nome) do domínio; outro kit com o nome (deixe o WHERE comparar, no banco): ValueError(&#x27;Já existe o kit
+    Nome&#x27;); senão, sessao.add de um KitBanco, sessao.flush() para o banco dar o id, e devolva o id.&quot;&quot;&quot;
+    ...
+
+
+def adicionar_item(sessao, kit_id, item):
+    &quot;&quot;&quot;O item de mesmo nome do kit, lido com .with_for_update(): se existe, some a quantidade no atributo e
+    devolva o id. Senão, add de um ItemBanco e flush; IntegrityError com erro.orig.errno == SEM_KIT vira
+    LookupError(&#x27;Kit 9 não existe&#x27;). Nada de commit: quem confirma é o em_sessao.&quot;&quot;&quot;
+    ...
+
+
+def remover_item(sessao, item_id):
+    &quot;&quot;&quot;sessao.get pelo id; None: LookupError(&#x27;Item 1 não existe&#x27;); senão, sessao.delete.&quot;&quot;&quot;
+    ...
+</code></pre><div class="atelier" data-source="work-repositorio-orm" data-filename="repositorio_orm.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>tests/test_orm.py: os mesmos critérios do SQL</h3><p>Salve em tests/test_orm.py. Cada teste recria as tabelas do kits_teste e roda uma operação com em_sessao. Ele já tem sete testes. Escreva os três marcados com Complete. Entrega: tests/test_orm.py.</p><p>Concluído quando: Os dez testes passam com o seu código. Depois tire o .with_for_update() do adicionar_item: o seu teste das duas somas precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>O teste da concorrência é o da A14 (duas técnicas), com threading.Barrier para as duas começarem juntas.</p></details><pre><code id="work-testes-orm">&quot;&quot;&quot;O ORM dos kits no kits_teste: o mapeamento confere com as tabelas, e as operações fazem o mesmo que o SQL.&quot;&quot;&quot;
+import threading
+import unittest
+
+from sqlalchemy import inspect
+
+from kits import repositorio_orm as orm_repo
+from kits.banco import conexao_banco
+from kits.modelo import ItemKit
+from kits.orm import Base, criar_motor, em_sessao
+from tests.test_repositorio import TESTE, comandos
+
+ESTOQUE_INICIAL = [(1, 1, &#x27;Cabo&#x27;, 3), (2, 1, &#x27;Notebook&#x27;, 2), (3, 2, &#x27;Cabo&#x27;, 5)]
+
+
+class TestOrm(unittest.TestCase):
+    def setUp(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            for comando in [&#x27;SET SESSION lock_wait_timeout = 5&#x27;, *[c for s in (&#x27;esquema.sql&#x27;, &#x27;dados.sql&#x27;) for c in comandos(s)]]:
+                cur.execute(comando)
+        self.motor = criar_motor(TESTE)
+        self.addCleanup(self.motor.dispose)
+
+    def fazer(self, funcao, *args):
+        return em_sessao(lambda sessao: funcao(sessao, *args), self.motor)
+
+    def estoque(self):
+        with conexao_banco(TESTE) as con:
+            cur = con.cursor()
+            cur.execute(&#x27;SELECT id, kit_id, nome, quantidade FROM item ORDER BY id&#x27;)
+            return cur.fetchall()
+
+    def test_cada_classe_mapeia_as_colunas_da_tabela_do_esquema(self):
+        banco = inspect(self.motor)
+        for tabela in Base.metadata.tables.values():
+            with self.subTest(tabela.name):
+                self.assertEqual([c.name for c in tabela.columns], [c[&#x27;name&#x27;] for c in banco.get_columns(tabela.name)])
+
+    def test_listar_kits_em_ordem_de_nome(self):
+        self.assertEqual(self.fazer(orm_repo.listar_kits), [(1, &#x27;Treinamento Redes&#x27;), (2, &#x27;Treinamento Suporte&#x27;)])
+
+    def test_criar_kit_devolve_o_id_e_grava(self):
+        kit_id = self.fazer(orm_repo.criar_kit, &#x27;  Almoxarifado &#x27;)
+        self.assertIn((kit_id, &#x27;Almoxarifado&#x27;), self.fazer(orm_repo.listar_kits))
+
+    # Complete: criar_kit com &#x27;treinamento redes&#x27; levanta ValueError com &#x27;Já existe o kit Treinamento Redes&#x27;.
+
+    def test_adicionar_soma_no_item_de_mesmo_nome(self):
+        self.assertEqual(self.fazer(orm_repo.adicionar_item, 1, ItemKit(&#x27;cabo&#x27;, 2)), 1)
+        self.assertEqual(self.estoque()[0], (1, 1, &#x27;Cabo&#x27;, 5))
+
+    def test_adicionar_item_novo_cria_a_linha(self):
+        item_id = self.fazer(orm_repo.adicionar_item, 2, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque()[-1], (item_id, 2, &#x27;Alicate&#x27;, 4))
+
+    def test_kit_que_nao_existe_vira_lookup_error_e_nada_fica(self):
+        with self.assertRaisesRegex(LookupError, &#x27;Kit 9 não existe&#x27;):
+            self.fazer(orm_repo.adicionar_item, 9, ItemKit(&#x27;Alicate&#x27;, 4))
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL)
+
+    def test_remover_apaga_so_o_pedido_e_o_inexistente_e_recusado(self):
+        self.fazer(orm_repo.remover_item, 1)
+        self.assertEqual(self.estoque(), ESTOQUE_INICIAL[1:])
+        with self.assertRaisesRegex(LookupError, &#x27;Item 1 não existe&#x27;):
+            self.fazer(orm_repo.remover_item, 1)
+
+    # Complete: uma operação que adiciona um Alicate 4 no kit 1 e depois remove o item 99, numa sessão só (em_sessao),
+    # levanta LookupError e não deixa o Alicate: o estoque continua o ESTOQUE_INICIAL.
+
+    # Complete: duas threads, cada uma com o seu em_sessao, somam 1 no Cabo do kit 1 depois de uma threading.Barrier(2):
+    # o Cabo termina com 5.
+</code></pre><div class="atelier" data-source="work-testes-orm" data-filename="test_orm.py" data-execution="Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto."></div><p>Testes: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm, na raiz do projeto, com o MySQL ligado e o banco.ini da A08. Os testes recriam as tabelas no kits_teste; o kits fica intacto.</p></div><div class="workbench"><h3>repositorio_orm_herdado.py: o que ficou de fora</h3><p>Siga a instrução do começo do arquivo: o herdado entra por um momento no lugar do seu kits/repositorio_orm.py, e você roda tests.test_orm. Para cada relato da partida, registre a decisão que o herdado perdeu, a linha, o teste que falhou e a correção. Devolva o seu. Entrega: a tabela no registro desta página.</p><p>Concluído quando: Os quatro relatos têm decisão, linha, teste e correção; a dupla explica a diferença entre flush e commit com o relato 4.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 2, quem compara os nomes no herdado: o banco ou o Python?</p></details><pre><code id="work-orm-legado">&quot;&quot;&quot;Repositório ORM herdado. Para examinar: guarde o seu kits/repositorio_orm.py (copie para fora da pasta kits),
+ponha este no lugar dele, rode tests.test_orm e devolva o seu.&quot;&quot;&quot;
+from sqlalchemy import delete, exc, select
+
+from kits.modelo import Kit
+from kits.orm import ItemBanco, KitBanco
+
+
+def listar_kits(sessao):
+    return [tuple(linha) for linha in sessao.execute(select(KitBanco.id, KitBanco.nome).order_by(KitBanco.nome, KitBanco.id))]
+
+
+def criar_kit(sessao, nome):
+    kit = Kit(nome)
+    if any(k.nome == kit.nome for k in sessao.scalars(select(KitBanco))):
+        raise ValueError(f&#x27;Já existe o kit {kit.nome}&#x27;)
+    novo = KitBanco(nome=kit.nome)
+    sessao.add(novo)
+    sessao.flush()
+    return novo.id
+
+
+def adicionar_item(sessao, kit_id, item):
+    existente = sessao.scalar(select(ItemBanco).where(ItemBanco.kit_id == kit_id, ItemBanco.nome == item.nome))
+    if existente is not None:
+        existente.quantidade += item.quantidade
+        sessao.commit()
+        return existente.id
+    novo = ItemBanco(kit_id=kit_id, nome=item.nome, quantidade=item.quantidade)
+    sessao.add(novo)
+    try:
+        sessao.commit()
+    except exc.IntegrityError as erro:
+        raise LookupError(f&#x27;Kit {kit_id} não existe&#x27;) from erro
+    return novo.id
+
+
+def remover_item(sessao, item_id):
+    sessao.execute(delete(ItemBanco).where(ItemBanco.id == item_id))
+</code></pre><div class="atelier" data-source="work-orm-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o herdado no lugar: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm. Depois, devolva o seu."></div><p>Na raiz do projeto, com o herdado no lugar: .\.venv\Scripts\python.exe -m unittest -v tests.test_orm. Depois, devolva o seu.</p></div><div class="workbench"><h3>docs/arquitetura.md: SQL direto e ORM lado a lado</h3><p>Acrescente ao docs/arquitetura.md a seção ORM: uma tabela com as quatro operações, o número de linhas de cada versão, o SQL que o ORM gerou para cada uma (use o evento do tutorial no seu projeto, por alguns minutos) e o que cada versão deixa explícito. Não decida ainda: a decisão é da A25. Entrega: a seção no docs/arquitetura.md.</p><p>Concluído quando: Outra dupla, só com a tabela, diz em que versão é mais fácil achar a trava do adicionar_item, e por quê.</p><details><summary>Dica para realizar a atividade</summary><p>O SQL gerado do adicionar_item tem o FOR UPDATE?</p></details><pre><code id="work-comparar">## ORM (A23)
+
+| Operação | SQL direto (linhas) | ORM (linhas) | SQL que o ORM gerou | O que fica explícito |
+|---|---|---|---|---|
+</code></pre><div class="atelier" data-source="work-comparar" data-filename="arquitetura.md" data-execution="Seção do docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Seção do docs/arquitetura.md do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: editar_item com o ORM</h3><p>Faça editar_item no repositório ORM, com a conferência da A14: o item lido com trava, comparado com o antes, ItemMudou se mudou, nome repetido recusado. Use os testes de edição do tests/test_fontes.py como modelo. Entrega (opcional): o código e os testes no registro desta página.</p><p>Concluído quando: Duas edições ao mesmo tempo: uma salva, a outra recebe ItemMudou, como na A14.</p><details><summary>Dica para realizar a atividade</summary><p>sessao.get(ItemBanco, item_id, with_for_update=True) lê e trava.</p></details><pre><code id="work-bonus-editar"># editar_item com o ORM
+
+## Código
+
+## Testes
+</code></pre><div class="atelier" data-source="work-bonus-editar" data-filename="editar.md" data-execution="No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_orm."></div><p>No projeto, rodando .\.venv\Scripts\python.exe -m unittest -v tests.test_orm.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>O ORM está fazendo o que o SQL fazia? <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#auditoria" aria-label="Versão para leitura: O ORM está fazendo o que o SQL fazia?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando os testes ou olhando o SQL gerado antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Dentro de with Session(motor) as sessao, sessao.begin(), a pessoa muda item.quantidade. Quando o UPDATE chega ao banco?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="No flush, que acontece no fim da transação (ou antes, se alguém pedir)" autocomplete="off">No flush, que acontece no fim da transação (ou antes, se alguém pedir)</label><label class="option"><input type="radio" name="q01" value="Na hora da atribuição" autocomplete="off">Na hora da atribuição</label><label class="option"><input type="radio" name="q01" value="Só se alguém chamar update()" autocomplete="off">Só se alguém chamar update()</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao passo 2 do tutorial.</p></details></fieldset><fieldset data-question="q02"><legend>Qual é a diferença entre sessao.flush() e sessao.commit()?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="flush manda o SQL e mantém a transação aberta; commit confirma e termina" autocomplete="off">flush manda o SQL e mantém a transação aberta; commit confirma e termina</label><label class="option"><input type="radio" name="q02" value="Nenhuma: os dois gravam" autocomplete="off">Nenhuma: os dois gravam</label><label class="option"><input type="radio" name="q02" value="flush desfaz; commit confirma" autocomplete="off">flush desfaz; commit confirma</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Por que criar_kit chama flush?</p></details></fieldset><fieldset data-question="q03"><legend>Por que o projeto não chama Base.metadata.create_all?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="O esquema.sql é quem cria as tabelas; as classes só as descrevem, e o teste confere que batem" autocomplete="off">O esquema.sql é quem cria as tabelas; as classes só as descrevem, e o teste confere que batem</label><label class="option"><input type="radio" name="q03" value="Porque create_all não funciona no MySQL" autocomplete="off">Porque create_all não funciona no MySQL</label><label class="option"><input type="radio" name="q03" value="Porque create_all apaga os dados" autocomplete="off">Porque create_all apaga os dados</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem mais lê e grava essas tabelas?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>adicionar_item lê o item de mesmo nome com .with_for_update().</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 1.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>Uma função do repositório ORM chama sessao.commit() no fim.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 4.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>O motor é montado com f&#x27;mysql+mysqlconnector://{usuario}:{senha}@{host}/{banco}&#x27;.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>E se a senha tiver @?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>criar_kit traz todos os kits e compara os nomes em Python.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 2.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>As classes se chamam KitBanco e ItemBanco, e o domínio continua com Kit e ItemKit.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem tem as regras?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Uma sessão só é aberta quando a janela abre e usada até ela fechar.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que a sessão guarda dos objetos que já leu?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-orm"><p>Outra dupla entregou o remover_item abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def remover_item(sessao, item_id):
+    sessao.execute(delete(ItemBanco).where(ItemBanco.id == item_id))
+    sessao.commit()</code></pre><fieldset data-question="ac-silencio" data-claim="ac-silencio"><legend>Remover um item que não existe não avisa nada: a função não confere quantas linhas saíram.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-silencio" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-silencio" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-commit" data-claim="ac-commit"><legend>O commit dentro do repositório confirma o que veio antes na mesma sessão, mesmo que a operação maior falhe depois.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-commit" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-commit" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-injecao" data-claim="ac-injecao"><legend>O item_id entra no SQL sem parâmetro e permite injeção.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-injecao" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-injecao" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova o ORM <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#registro" aria-label="Versão para leitura: Entregue o que prova o ORM">↗</a></h2><p>Entregue, no repositório do projeto: o requirements.txt com o SQLAlchemy, kits/orm.py, kits/repositorio_orm.py, tests/test_orm.py, as regras novas em tests/test_camadas.py, o grupo do verificar.py e a seção ORM no docs/arquitetura.md. O acervo_orm.py e o herdado ficam fora do commit.</p><p>No registro desta página, cole a saída do verificar.py, a tabela dos quatro relatos e o SQL gerado de uma operação. Se fez o bônus, cole o código e os testes.</p><p>Faça um commit revisado, como na A04, só depois de verificar.py terminar com código 0.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Que decisão do seu adicionar_item com SQL direto você precisou repetir no ORM, e onde ela aparece no SQL que ele gerou?</p><p>A A24 usa os relacionamentos do ORM (um kit e os seus itens), completa as operações e faz as consultas da busca e do resumo com ele.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.sqlalchemy.org/en/21/tutorial/index.html">SQLAlchemy 2.1: Unified Tutorial</a></li><li><a href="https://docs.sqlalchemy.org/en/21/orm/declarative_tables.html">SQLAlchemy 2.1: Declarative mapping com Mapped</a></li><li><a href="https://docs.sqlalchemy.org/en/21/orm/session_basics.html">SQLAlchemy 2.1: Session basics (begin, flush, commit)</a></li><li><a href="https://docs.sqlalchemy.org/en/21/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqlconnector">SQLAlchemy 2.1: URL.create e o dialeto mysqlconnector</a></li><li><a href="https://docs.sqlalchemy.org/en/21/core/selectable.html#sqlalchemy.sql.expression.Select.with_for_update">SQLAlchemy 2.1: with_for_update</a></li></ul><a data-idoc="source" href="leitura-0023-orm-ambiente-mapeamento-sessao-e-transacao.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript></body></html>

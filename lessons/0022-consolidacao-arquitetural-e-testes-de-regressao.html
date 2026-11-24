@@ -1,0 +1,291 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A22 · Consolidar: as regras da arquitetura viram testes, e a suíte vira um comando</title><script src="../assets/tema.js"></script><link rel="stylesheet" href="../assets/course.css"><link rel="stylesheet" href="../assets/atelier.css"><link rel="stylesheet" href="../assets/theme.css"></head><body class="lesson" data-lesson="A22" data-course="uc09-programar-aplicativos-desktop-banco-de-dados"><a class="skip" href="#conteudo">Pular para conteúdo</a><div class="curso-app"><aside id="course-sidebar" class="course-sidebar curso-lateral"><h2>Grade das aulas</h2><button id="grade-close" class="js-only">Ocultar grade · P</button><ol class="grade-list"><li class="grade-item "><span class="grade-number">A01</span><a href="0001-abertura-e-diagnostico.html"><span>Abertura, ambiente e diagnóstico<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A02</span><a href="0002-requisitos-etica-e-organizacao-do-trabalho.html"><span>Requisitos, ética e organização do trabalho<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A03</span><a href="0003-raciocinio-no-papel-pseudocodigo-e-traducao-para-python.html"><span>Raciocínio no papel, pseudocódigo e tradução para Python<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A04</span><a href="0004-ambiente-virtual-modulos-excecoes-e-historico-local.html"><span>Ambiente virtual, módulos, exceções e histórico local<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A05</span><a href="0005-poo-basica-classes-objetos-e-composicao.html"><span>POO básica: classes, objetos e composição<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A06</span><a href="0006-modelagem-relacional-e-sql-essencial.html"><span>Modelagem relacional e SQL essencial<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A07</span><a href="0007-conexao-python-banco-e-ciclo-da-conexao.html"><span>Conexão Python–banco e ciclo da conexão<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A08</span><a href="0008-insercao-e-consulta-parametrizadas.html"><span>Inserção e consulta parametrizadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A09</span><a href="0009-atualizacao-e-remocao-por-identificador.html"><span>Atualização e remoção por identificador<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A10</span><a href="0010-transacoes-integridade-e-persistencia.html"><span>Transações, integridade e persistência<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A11</span><a href="0011-interface-desktop-janela-organizacao-e-widgets.html"><span>Interface desktop: janela, organização e widgets<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A12</span><a href="0012-eventos-callbacks-e-validacao-de-entradas.html"><span>Eventos, callbacks e validação de entradas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A13</span><a href="0013-cadastro-e-listagem-integrados-ao-banco.html"><span>Cadastro e listagem integrados ao banco<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A14</span><a href="0014-edicao-exclusao-e-sincronizacao-da-interface.html"><span>Edição, exclusão e sincronização da interface<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A15</span><a href="0015-sprint-crud-testes-de-fluxo-e-devolutiva.html"><span>Sprint CRUD, testes de fluxo e devolutiva<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A16</span><a href="0016-filtros-ordenacao-e-consulta-vazia.html"><span>Filtros, ordenação e consulta vazia<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A17</span><a href="0017-join-agregacoes-e-listagens-estruturadas.html"><span>JOIN, agregações e listagens estruturadas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A18</span><a href="0018-arquivos-caminhos-codificacao-e-csv.html"><span>Arquivos, caminhos, codificação e CSV<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A19</span><a href="0019-carga-massiva-inconsistencias-e-transacoes-em-lote.html"><span>Carga massiva, inconsistências e transações em lote<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A20</span><a href="0020-mvc-aplicado-a-refatoracao-do-aplicativo.html"><span>MVC aplicado à refatoração do aplicativo<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A21</span><a href="0021-repository-dao-servicos-e-responsabilidades.html"><span>Repository/DAO, serviços e responsabilidades<small>Disponível</small></span></a></li><li class="grade-item current"><span class="grade-number">A22</span><span>Consolidação arquitetural e testes de regressão<small>Nesta aula</small></span><ol class="grade-sections"><li><a href="#partida">Tudo verde, e o banco nunca foi testado</a></li><li><a href="#esteira">Da regra na cabeça ao comando antes do commit</a></li><li><a href="#regras">A regra de arquitetura como teste</a></li><li><a href="#suite">Uma suíte de regressão em grupos</a></li><li><a href="#intermitente">O teste que falha de vez em quando</a></li><li><a href="#tutorial">Tutorial: uma suíte em grupos no acervo</a></li><li><a href="#pratica">A suíte do projeto</a></li><li><a href="#auditoria">Dá para confiar no verde?</a></li><li><a href="#registro">Entregue o que prova a regressão</a></li><li><a href="#fechamento">Pergunta de saída</a></li></ol></li><li class="grade-item "><span class="grade-number">A23</span><a href="0023-orm-ambiente-mapeamento-sessao-e-transacao.html"><span>ORM: ambiente, mapeamento, sessão e transação<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A24</span><a href="0024-orm-relacionamentos-crud-e-consultas.html"><span>ORM: relacionamentos, CRUD e consultas<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A25</span><a href="0025-sql-direto-orm-e-decisao-documentada.html"><span>SQL direto × ORM e decisão documentada<small>Disponível</small></span></a></li><li class="grade-item "><span class="grade-number">A26</span><span>Depuração sistemática, testes e recuperação de falhas<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A27</span><span>Documentação e reprodução do ambiente<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A28</span><span>Executável, recursos e banco gravável<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A29</span><span>Teste cruzado no destino e distribuição<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A30</span><span>Ajustes finais e preparação da defesa<small>Planejada</small></span></li><li class="grade-item "><span class="grade-number">A31</span><span>Defesa, entrega final, retrospectiva e manutenção<small>Planejada</small></span></li></ol></aside><div class="curso-conteudo"><button id="grade-toggle" class="grade-toggle js-only" aria-controls="course-sidebar">Grade · P</button><header class="top"><div class="wordmark">UC09</div><div class="top-acoes"><span class="badge" data-idoc="status">Aula A22</span><button id="tema" class="tema-toggle js-only" type="button" aria-pressed="false" aria-label="Tema escuro" title="Alternar tema claro e escuro"><svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div></header><div class="hero"><div class="eyebrow">Técnico em Desenvolvimento de Sistemas · Plano de Curso 01/2025</div><h1>Consolidar: as regras da arquitetura viram testes, e a suíte vira um comando</h1><p class="thesis">Depois de três aulas separando camadas, o projeto tem regras que só existem na cabeça de quem as escreveu: o controle não importa Tk, a janela não importa o banco. Hoje essas regras viram um teste que lê os imports de cada arquivo. Os mais de cento e cinquenta testes viram uma suíte de regressão com um comando só, em três grupos, do mais rápido ao mais lento, que não para no primeiro problema e diz com o código de saída se o commit pode sair. E um teste que falhou uma vez sem motivo aparente é tratado como defeito: repetido até mostrar a frequência, explicado e corrigido.</p><p data-idoc="caveat">A aula continua no projeto da A21. O comportamento do aplicativo não muda. Use dados fictícios.</p><div class="meta"><span>180 minutos · 15 de pausa</span><span>Aluno</span></div></div><main id="conteudo"><div class="actions js-only"><button id="presentation" aria-pressed="false">Ampliar para apresentação</button><button data-export>Exportar registros da aula</button><a href="#registro">Identificação e registros</a></div><h2>Objetivos</h2><ul><li>Transformar as regras de camada em um teste que lê os imports de cada arquivo com ast</li><li>Organizar a suíte de regressão em grupos, do mais rápido ao mais lento, com um código de saída confiável</li><li>Contar erros, e não só falhas, como problema, e não deixar nenhum arquivo de teste fora da suíte</li><li>Reconhecer um teste intermitente, medir a frequência repetindo-o e corrigir a causa</li><li>Achar, rodando a própria suíte, os defeitos de um verificador herdado</li></ul><h2>Antes de começar</h2><ul><li>Projeto da A21 com todos os testes passando e docs/arquitetura.md com a tabela do que cada arquivo não importa</li><li>unittest da A04 em diante, e os testes de tecla com foco da A12</li><li>MySQL Server 8.4 ligado, com os bancos kits e kits_teste e o usuário kits_app</li></ul><section id="partida" data-stop="partida"><h2>Tudo verde, e o banco nunca foi testado <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#partida" aria-label="Versão para leitura: Tudo verde, e o banco nunca foi testado">↗</a></h2><p>Outra equipe já tinha um verificador de regressão, verificar_herdado.py, que a turma passou a rodar antes de cada commit. Vieram quatro relatos.</p><p>Um commit com um teste falhando passou, porque o verificador terminou dizendo Fim. e o código de saída foi 0. Um arquivo de teste renomeado parou de rodar, e o verificador contou zero problemas. Os testes do MySQL ficaram semanas sem rodar, porque um teste da janela falhava antes e o verificador parava ali. E o test_fluxo.py nunca esteve em grupo nenhum.</p><p>No mesmo período, um teste da busca falhou uma vez no computador de uma dupla e passou quando rodaram de novo. Ninguém registrou.</p><p>Em dupla, antes de abrir o código: qual desses problemas é o mais perigoso para quem confia no verde?</p><div class="callout ok"><span class="callout-title">Entrega desta aula</span><p>No repositório do projeto: tests/test_camadas.py; verificar.py na raiz; tests/test_verificar.py e tests/amostras_verificar.py; o ajudante focar em tests/test_janela.py; o NullHandler em kits/dados.py; e a seção Mapa da regressão no docs/testes.md. Faça um commit revisado e envie pelo canal combinado com a turma junto com o registro exportado desta página. Critério: verificar.py termina com Tudo certo e código 0, e o teste da busca repetido vinte vezes não falha nenhuma.</p></div></section><section id="esteira" data-stop="esteira"><h2>Da regra na cabeça ao comando antes do commit <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#esteira" aria-label="Versão para leitura: Da regra na cabeça ao comando antes do commit">↗</a></h2><ol class="pipeline"><li><strong>Escrever a regra</strong><p>A tabela do que cada arquivo não pode importar.</p></li><li><strong>Testar a regra</strong><p>ast lê os imports e o teste falha com o nome do arquivo.</p></li><li><strong>Agrupar</strong><p>Rápidos, com janela, com MySQL: nessa ordem.</p></li><li><strong>Rodar tudo</strong><p>Todos os grupos, mesmo com problema, e um resumo no fim.</p></li><li><strong>Decidir</strong><p>Código de saída 0 só com tudo certo; 1 segura o commit.</p></li><li><strong>Caçar o intermitente</strong><p>Repetir até ver a frequência, achar a causa e corrigir.</p></li></ol></section><section id="regras" data-stop="regras"><h2>A regra de arquitetura como teste <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#regras" aria-label="Versão para leitura: A regra de arquitetura como teste">↗</a></h2><p>A tabela de imports proibidos da A21 é uma regra que ninguém confere: num dia de pressa, alguém importa o repositório na janela para resolver rápido, e as camadas voltam a se misturar sem nenhum teste falhar. tests/test_camadas.py transforma a tabela em teste. O módulo ast lê o arquivo como árvore, sem rodá-lo, e cada nó Import ou ImportFrom diz um módulo importado.</p><p>O teste também falha quando aparece um arquivo novo em kits/ sem regra, e quando um arquivo de teste existe mas não está em nenhum grupo da suíte: as duas formas de a regra ficar velha sem ninguém perceber.</p></section><section id="suite" data-stop="suite"><h2>Uma suíte de regressão em grupos <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#suite" aria-label="Versão para leitura: Uma suíte de regressão em grupos">↗</a></h2><p>Regressão é um defeito que volta, ou que aparece onde já funcionava, depois de uma mudança. A suíte de regressão é o conjunto de testes que prova que nada do que já funcionava quebrou; ela só serve se for rodada sempre, então precisa ser um comando só.</p><p>verificar.py roda em três grupos: primeiro os que não usam banco nem janela, que levam segundos; depois os da janela; por último os do MySQL. Um defeito de regra aparece logo, sem esperar janelas e banco. Mas o verificador não para no primeiro grupo com problema: o resumo no fim mostra tudo de uma vez, e quem corrige sabe o tamanho do trabalho.</p><p>Problema não é só falha. Um teste que levanta exceção, ou um módulo de teste que nem importa (um arquivo renomeado), aparece no unittest como erro, e erro também impede o commit. O código de saída, 0 ou 1, é o que outros programas leem: um gancho de commit, um script de entrega, a integração contínua.</p></section><section id="intermitente" data-stop="intermitente"><h2>O teste que falha de vez em quando <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#intermitente" aria-label="Versão para leitura: O teste que falha de vez em quando">↗</a></h2><p>Um teste intermitente passa e falha com o mesmo código. Rodar de novo e seguir em frente ensina a turma a ignorar o vermelho, e o dia em que a falha for real ninguém olha. O primeiro passo é medir: verificar.py --repetir 20 NOME roda o teste vinte vezes e diz quantas falhou.</p><p>O teste da busca da A16 digitava com focus_set e gerava as teclas logo em seguida. Ele falhou uma vez, num computador carregado, e passou nas seguintes. A causa mais provável: o foco ainda não tinha chegado ao campo quando a tecla foi gerada, e o Tk entrega tecla a quem tem o foco, então a busca nunca acontecia. A correção não é esperar mais tempo, e sim esperar o que importa: o ajudante focar chama focus_force e confere com focus_get até o foco chegar, como o teste de Enter das capturas da A12. Todos os testes de tecla passam a usá-lo.</p><p>Na mesma revisão, outro incômodo: as recusas de importação apareciam escritas no meio da saída dos testes. Sem configuração, o logging escreve avisos no terminal. Um NullHandler no registrador do kits/dados.py cala isso quando ninguém configurou o log; o abrir_janela.py continua decidindo o arquivo, e o assertLogs continua capturando.</p><figure class="code-block"><figcaption>tests/test_janela.py: acrescente à classe TestJanela e use no lugar de cada focus_set seguido de update</figcaption><pre><code>    def focar(self, janela, widget):
+        &quot;&quot;&quot;Põe o foco no widget e espera ele chegar de verdade. Uma tecla gerada sem foco é perdida:
+        num computador carregado, focus_set ainda não valeu quando o event_generate acontece (A22).&quot;&quot;&quot;
+        for _ in range(60):
+            janela.update()
+            widget.focus_force()
+            janela.update()
+            if str(janela.focus_get() or &#x27;&#x27;).startswith(str(widget)):
+                return
+            time.sleep(0.05)
+        self.fail(f&#x27;o foco não chegou em {widget}&#x27;)
+</code></pre></figure><figure class="code-block"><figcaption>kits/dados.py: acrescente a linha do NullHandler logo depois do registrador</figcaption><pre><code>registro = logging.getLogger(&#x27;kits.importacao&#x27;)
+# Sem configuração (nos testes, num script), o log não escreve no terminal; quem liga as peças decide (A22).
+registro.addHandler(logging.NullHandler())
+</code></pre></figure></section><section id="tutorial" data-stop="tutorial"><h2>Tutorial: uma suíte em grupos no acervo <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#tutorial" aria-label="Versão para leitura: Tutorial: uma suíte em grupos no acervo">↗</a></h2><p>O tutorial monta uma suíte pequena com dois arquivos de teste do acervo e um grupo que aponta para um arquivo que foi renomeado. Crie os três arquivos na raiz do projeto, com os nomes das legendas, e rode .\.venv\Scripts\python.exe suite.py.</p><p>A tela é de uma execução real desse código, com Python 3.14.</p><figure class="code-block"><figcaption>Passo 1 · test_rapidos.py</figcaption><pre><code>&quot;&quot;&quot;test_rapidos.py e test_lentos.py: dois arquivos de teste do acervo, um que passa e um com um defeito.&quot;&quot;&quot;
+import unittest
+
+
+class TestRapidos(unittest.TestCase):
+    def test_soma_exemplares(self):
+        self.assertEqual(sum([2, 1, 4]), 7)
+
+    def test_titulo_sem_espacos(self):
+        self.assertEqual(&#x27;  Atlas &#x27;.strip(), &#x27;Atlas&#x27;)
+</code></pre></figure><figure class="code-block"><figcaption>Passo 2 · suite.py</figcaption><pre><code>&quot;&quot;&quot;suite.py: roda os grupos em ordem, mostra o resumo e devolve o código de saída.&quot;&quot;&quot;
+import io
+import sys
+import unittest
+
+GRUPOS = ((&#x27;rápidos&#x27;, [&#x27;test_rapidos&#x27;]), (&#x27;lentos&#x27;, [&#x27;test_lentos&#x27;]), (&#x27;esquecido&#x27;, [&#x27;test_renomeado&#x27;]))
+
+
+def rodar(nomes):
+    suite = unittest.defaultTestLoader.loadTestsFromNames(nomes)
+    return unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
+
+
+codigo = 0
+for nome, modulos in GRUPOS:
+    resultado = rodar(modulos)
+    ruins = [teste.id() for teste, _ in resultado.failures + resultado.errors]
+    print(f&#x27;{nome}: {resultado.testsRun} testes, {len(ruins)} com problema&#x27;)
+    for teste in ruins:
+        print(f&#x27;  {teste}&#x27;)
+    if not resultado.wasSuccessful():
+        codigo = 1
+print(&#x27;código de saída:&#x27;, codigo)
+sys.exit(codigo)
+</code></pre></figure><figure class="code-block"><figcaption>Passo 3 · test_lentos.py</figcaption><pre><code>&quot;&quot;&quot;test_lentos.py: um teste que falha de verdade.&quot;&quot;&quot;
+import unittest
+
+
+class TestLentos(unittest.TestCase):
+    def test_emprestimo_baixa_um(self):
+        exemplares = 3
+        exemplares -= 2  # defeito: deveria baixar um
+        self.assertEqual(exemplares, 2)
+</code></pre></figure><figure class="tela"><figcaption>Os três grupos e o código de saída</figcaption><p>Rode a suíte.</p><pre class="tela-tela" tabindex="0" aria-label="Tela do terminal: Os três grupos e o código de saída"><code><span class="tela-prompt">PS C:\projetos\kits&gt; </span><kbd>.\.venv\Scripts\python.exe suite.py</kbd>
+rápidos: 2 testes, 0 com problema
+lentos: 1 testes, 1 com problema
+  test_lentos.TestLentos.test_emprestimo_baixa_um
+esquecido: 1 testes, 1 com problema
+  unittest.loader._FailedTest.test_renomeado
+código de saída: 1</code></pre><p class="tela-nota"><strong>Repare:</strong> O grupo esquecido não tem teste nenhum de verdade: o arquivo não existe, e o unittest devolve um erro no lugar dele. Contando só falhas, ele passaria como zero problemas.</p></figure></section><section id="pratica" data-stop="pratica"><h2>A suíte do projeto <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#pratica" aria-label="Versão para leitura: A suíte do projeto">↗</a></h2><p>Continue no repositório do projeto, na raiz, com o .venv e o banco.ini da A08. Uma pessoa opera e a outra confere; troquem os papéis depois do intervalo.</p><p>A ordem importa: o teste das camadas, verificar.py com os testes dele, a correção do teste intermitente medida antes e depois, o verificador herdado e o mapa. Se consultar IA, registre a ajuda recebida e confirme cada sugestão rodando a suíte.</p><div class="workbench"><h3>tests/test_camadas.py: as regras de imports</h3><p>Salve em tests/test_camadas.py e complete a tabela PROIBIDOS com os arquivos que faltam, pela tabela de camadas da A21, e o teste de que todo arquivo de teste está num grupo da suíte. Entrega: tests/test_camadas.py.</p><p>Concluído quando: Os três testes passam. Depois acrescente import mysql.connector em kits/janela.py: o teste das camadas precisa falhar dizendo janela.py. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>ast.parse lê o texto; ast.walk passa por todos os nós; ast.ImportFrom tem .module, e ast.Import tem .names.</p></details><pre><code id="work-camadas">&quot;&quot;&quot;As regras de arquitetura como teste (A22): o que cada arquivo de kits/ não pode importar, e que nenhum
+teste fica fora da suíte de regressão. Lê o código com ast, sem rodar nada.&quot;&quot;&quot;
+import ast
+import unittest
+from pathlib import Path
+
+import verificar
+
+RAIZ = Path(__file__).resolve().parent.parent
+
+# Arquivo de kits/ -&gt; módulos que ele não pode importar (nem os que começam com esses nomes).
+PROIBIDOS = {
+    &#x27;repositorio.py&#x27;: {&#x27;tkinter&#x27;, &#x27;customtkinter&#x27;, &#x27;kits.janela&#x27;, &#x27;kits.controle&#x27;, &#x27;kits.dados&#x27;},
+    # Complete: dados.py, controle.py, janela.py, resumo.py, importacao.py e dialogos.py, pela tabela da seção.
+    &#x27;planilha.py&#x27;: {&#x27;tkinter&#x27;, &#x27;customtkinter&#x27;, &#x27;mysql&#x27;},
+    &#x27;modelo.py&#x27;: {&#x27;tkinter&#x27;, &#x27;customtkinter&#x27;, &#x27;mysql&#x27;, &#x27;kits.banco&#x27;, &#x27;kits.repositorio&#x27;},
+    &#x27;regras.py&#x27;: {&#x27;tkinter&#x27;, &#x27;customtkinter&#x27;, &#x27;mysql&#x27;, &#x27;kits.banco&#x27;, &#x27;kits.repositorio&#x27;},
+}
+
+
+def importados(caminho):
+    &quot;&quot;&quot;Os nomes de módulo que o arquivo importa, lidos da árvore do código.&quot;&quot;&quot;
+    for no in ast.walk(ast.parse(caminho.read_text(encoding=&#x27;utf-8&#x27;))):
+        if isinstance(no, ast.Import):
+            yield from (nome.name for nome in no.names)
+        elif isinstance(no, ast.ImportFrom) and no.module:
+            yield no.module
+
+
+def proibido(modulo, proibidos):
+    return any(modulo == p or modulo.startswith(p + &#x27;.&#x27;) for p in proibidos)
+
+
+class TestCamadas(unittest.TestCase):
+    def test_cada_arquivo_so_importa_o_que_a_camada_dele_pode(self):
+        for nome, proibidos in PROIBIDOS.items():
+            with self.subTest(nome):
+                caminho = RAIZ / &#x27;kits&#x27; / nome
+                errados = [m for m in importados(caminho) if proibido(m, proibidos)]
+                self.assertEqual(errados, [], f&#x27;{nome} importa {errados}&#x27;)
+
+    def test_todo_arquivo_de_kits_tem_regra(self):
+        arquivos = {p.name for p in (RAIZ / &#x27;kits&#x27;).glob(&#x27;*.py&#x27;)} - {&#x27;__init__.py&#x27;, &#x27;banco.py&#x27;}
+        self.assertEqual(arquivos - set(PROIBIDOS), set(), &#x27;arquivo novo em kits/ sem regra de camada&#x27;)
+
+    # Complete: todo tests/test_*.py está em algum grupo de verificar.GRUPOS, e todo módulo dos grupos existe.
+</code></pre><div class="atelier" data-source="work-camadas" data-filename="test_camadas.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_camadas."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_camadas.</p></div><div class="workbench"><h3>verificar.py: a suíte de regressão</h3><p>Crie verificar.py na raiz a partir do arquivo: os grupos que faltam, problemas, suite_inteira e repetir. Salve também tests/amostras_verificar.py, abaixo: são os testes de amostra que o tests/test_verificar.py usa. Entrega: verificar.py e tests/amostras_verificar.py.</p><p>Concluído quando: .\.venv\Scripts\python.exe verificar.py termina com Tudo certo. e $LASTEXITCODE 0; os quatro testes de tests/test_verificar.py passam.</p><details><summary>Dica para realizar a atividade</summary><p>resultado.failures e resultado.errors são listas de (teste, texto). E o código de saída: quem decide é o return do main.</p></details><pre><code id="work-verificar">&quot;&quot;&quot;Suíte de regressão (A22): roda todos os testes em três grupos, do mais rápido ao mais lento.
+Salve como verificar.py, na raiz do projeto.
+
+Uso: python verificar.py                      todos os grupos; sai com 0 só se tudo passar
+     python verificar.py --repetir 20 NOME    roda um teste 20 vezes e conta as falhas (teste intermitente)
+&quot;&quot;&quot;
+import io
+import sys
+import unittest
+
+# Cada grupo: (nome, [módulos de teste]). Todo tests/test_*.py do projeto precisa estar em um grupo.
+GRUPOS = (
+    (&#x27;sem banco nem janela&#x27;, [&#x27;tests.test_camadas&#x27;, &#x27;tests.test_verificar&#x27;, &#x27;tests.test_controle&#x27;, &#x27;tests.test_dados&#x27;,
+                              &#x27;tests.test_planilha&#x27;]),
+    # Complete: &#x27;com janela, sem banco&#x27; e &#x27;com o MySQL&#x27;, com os módulos do seu projeto.
+)
+
+
+def rodar(nomes):
+    &quot;&quot;&quot;Roda os testes pelos nomes e devolve o resultado do unittest, sem escrever nada na tela.&quot;&quot;&quot;
+    suite = unittest.defaultTestLoader.loadTestsFromNames(nomes)
+    return unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
+
+
+def problemas(resultado):
+    &quot;&quot;&quot;Os ids dos testes com falha E com erro: um módulo que não importa também é problema.&quot;&quot;&quot;
+    ...
+
+
+def suite_inteira(escrever=print):
+    &quot;&quot;&quot;Roda TODOS os grupos, mesmo depois de um com problema, escrevendo
+    &#x27;nome: N testes, M com problema&#x27; e os ids embaixo; no fim, &#x27;Tudo certo.&#x27; ou
+    &#x27;Há testes com problema: corrija antes do commit.&#x27;. Devolve 0 ou 1.&quot;&quot;&quot;
+    ...
+
+
+def repetir(vezes, nome, escrever=print):
+    &quot;&quot;&quot;Roda o teste vezes vezes; escreve &#x27;NOME: falhou F de V&#x27; e devolve 0 só se F for 0.&quot;&quot;&quot;
+    ...
+
+
+def main(argumentos, escrever=print):
+    if argumentos[:1] == [&#x27;--repetir&#x27;]:
+        return repetir(int(argumentos[1]), argumentos[2], escrever)
+    return suite_inteira(escrever)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    sys.exit(main(sys.argv[1:]))
+
+
+# tests/amostras_verificar.py
+&quot;&quot;&quot;Testes de amostra para tests/test_verificar.py. O nome não começa com test_: a descoberta não os roda.&quot;&quot;&quot;
+import unittest
+
+
+class Passa(unittest.TestCase):
+    def test_passa(self):
+        self.assertTrue(True)
+
+
+class Falha(unittest.TestCase):
+    def test_falha(self):
+        self.assertEqual(1, 2)
+
+
+class Quebra(unittest.TestCase):
+    def test_quebra(self):
+        raise KeyError(&#x27;defeito&#x27;)
+
+
+class AlternaComOChamador(unittest.TestCase):
+    &quot;&quot;&quot;Passa e falha alternadamente: um teste intermitente de mentira.&quot;&quot;&quot;
+    vez = 0
+
+    def test_alterna(self):
+        AlternaComOChamador.vez += 1
+        self.assertEqual(AlternaComOChamador.vez % 2, 1)
+</code></pre><div class="atelier" data-source="work-verificar" data-filename="verificar.py" data-execution="Na raiz do projeto, com o MySQL ligado: .\.venv\Scripts\python.exe verificar.py."></div><p>Na raiz do projeto, com o MySQL ligado: .\.venv\Scripts\python.exe verificar.py.</p></div><div class="workbench"><h3>tests/test_verificar.py: o verificador verificado</h3><p>Salve em tests/test_verificar.py. Os testes trocam os GRUPOS por grupos de amostra com mock.patch.object e capturam o que o verificador escreve. Ele já tem dois testes. Escreva os dois marcados com Complete. Entrega: tests/test_verificar.py.</p><p>Concluído quando: Os quatro testes passam. Depois ponha um break no laço da suite_inteira, depois de um grupo com problema: o seu teste dos grupos precisa falhar. Desfaça a troca.</p><details><summary>Dica para realizar a atividade</summary><p>self.rodar(grupos) devolve (código, linhas escritas).</p></details><pre><code id="work-testes-verificar">&quot;&quot;&quot;A suíte de regressão: roda todos os grupos, conta erro como problema e diz pelo código de saída.&quot;&quot;&quot;
+import unittest
+from unittest import mock
+
+import verificar
+
+A = &#x27;tests.amostras_verificar.&#x27;
+
+
+class TestVerificar(unittest.TestCase):
+    def rodar(self, grupos, argumentos=()):
+        linhas = []
+        with mock.patch.object(verificar, &#x27;GRUPOS&#x27;, grupos):
+            codigo = verificar.main(list(argumentos), escrever=linhas.append)
+        return codigo, linhas
+
+    def test_tudo_passando_sai_com_zero(self):
+        self.assertEqual(self.rodar(((&#x27;rápidos&#x27;, [A + &#x27;Passa&#x27;]),)), (0, [&#x27;rápidos: 1 testes, 0 com problema&#x27;, &#x27;Tudo certo.&#x27;]))
+
+    # Complete: com os grupos rápidos (Falha) e lentos (Passa), o código é 1 e as quatro linhas mostram os dois grupos
+    # e a frase final de problema.
+
+    # Complete: um grupo com Quebra e &#x27;tests.nao_existe&#x27; sai com 1 e conta 2 testes, 2 com problema.
+
+    def test_repetir_conta_as_falhas_do_teste_intermitente(self):
+        verificar_amostra = A + &#x27;AlternaComOChamador.test_alterna&#x27;
+        codigo, linhas = self.rodar((), [&#x27;--repetir&#x27;, &#x27;6&#x27;, verificar_amostra])
+        self.assertEqual((codigo, linhas), (1, [f&#x27;{verificar_amostra}: falhou 3 de 6&#x27;]))
+</code></pre><div class="atelier" data-source="work-testes-verificar" data-filename="test_verificar.py" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_verificar."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe -m unittest -v tests.test_verificar.</p></div><div class="workbench"><h3>tests/test_janela.py: o teste da busca, medido e corrigido</h3><p>Antes de mudar qualquer coisa, rode verificar.py --repetir 20 com o teste da busca e anote o resultado; se possível, repita com o computador ocupado (um vídeo rodando, por exemplo). Acrescente o ajudante focar da seção sobre o teste intermitente e troque os cinco focus_set seguidos de update por ele. Meça de novo. Acrescente também o NullHandler ao kits/dados.py. Entrega: o ajudante no tests/test_janela.py e, no registro desta página, as duas medições e a explicação da causa.</p><p>Concluído quando: Depois da correção, falhou 0 de 20; a explicação diz por que esperar mais tempo não seria a correção.</p><details><summary>Dica para realizar a atividade</summary><p>Quem recebe uma tecla gerada com event_generate: o widget pedido, ou quem tem o foco?</p></details><pre><code id="work-busca-intermitente"># O teste intermitente da busca
+
+## Antes (falhou ... de 20)
+
+## A causa
+
+## Depois (falhou ... de 20)
+</code></pre><div class="atelier" data-source="work-busca-intermitente" data-filename="intermitente.md" data-execution="Na raiz do projeto: .\.venv\Scripts\python.exe verificar.py --repetir 20 tests.test_janela.TestJanela.test_busca_mostra_so_os_itens_com_o_trecho."></div><p>Na raiz do projeto: .\.venv\Scripts\python.exe verificar.py --repetir 20 tests.test_janela.TestJanela.test_busca_mostra_so_os_itens_com_o_trecho.</p></div><div class="workbench"><h3>verificar_herdado.py: o verificador que dizia Fim.</h3><p>Siga a instrução do começo do arquivo: o herdado entra por um momento no lugar do seu verificar.py, e você roda tests.test_verificar, tests.test_camadas e o próprio verificar.py. Para cada relato da partida, registre a linha culpada, o teste que falhou e a correção. Devolva o seu. Entrega: a tabela no registro desta página.</p><p>Concluído quando: Os quatro relatos têm linha, teste e correção; a dupla mostra o $LASTEXITCODE do herdado com um teste falhando.</p><details><summary>Dica para realizar a atividade</summary><p>No relato 2, o que o unittest devolve no lugar de um módulo que não importa: uma falha ou um erro?</p></details><pre><code id="work-suite-legado">&quot;&quot;&quot;Suíte de regressão herdada. Para examinar: guarde o seu verificar.py (copie para verificar_bom.py), ponha este
+no lugar dele, rode os testes rápidos e o próprio script, e devolva o seu.&quot;&quot;&quot;
+import io
+import sys
+import unittest
+
+GRUPOS = (
+    (&#x27;sem banco nem janela&#x27;, [&#x27;tests.test_camadas&#x27;, &#x27;tests.test_verificar&#x27;, &#x27;tests.test_controle&#x27;, &#x27;tests.test_dados&#x27;,
+                              &#x27;tests.test_planilha&#x27;]),
+    (&#x27;com janela, sem banco&#x27;, [&#x27;tests.test_janela&#x27;, &#x27;tests.test_resumo&#x27;, &#x27;tests.test_importacao&#x27;]),
+    (&#x27;com o MySQL&#x27;, [&#x27;tests.test_repositorio&#x27;, &#x27;tests.test_retirada&#x27;, &#x27;tests.test_transferencia&#x27;, &#x27;tests.test_fontes&#x27;]),
+)
+
+
+def rodar(nomes):
+    suite = unittest.defaultTestLoader.loadTestsFromNames(nomes)
+    return unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
+
+
+def problemas(resultado):
+    return [teste.id() for teste, _ in resultado.failures]
+
+
+def suite_inteira(escrever=print):
+    for nome, modulos in GRUPOS:
+        resultado = rodar(modulos)
+        ruins = problemas(resultado)
+        escrever(f&#x27;{nome}: {resultado.testsRun} testes, {len(ruins)} com problema&#x27;)
+        for teste in ruins:
+            escrever(f&#x27;  {teste}&#x27;)
+        if ruins:
+            break
+    escrever(&#x27;Fim.&#x27;)
+    return 0
+
+
+def repetir(vezes, nome, escrever=print):
+    falhas = sum(1 for _ in range(vezes) if not rodar([nome]).wasSuccessful())
+    escrever(f&#x27;{nome}: falhou {falhas} de {vezes}&#x27;)
+    return 0 if falhas == 0 else 1
+
+
+def main(argumentos, escrever=print):
+    if argumentos[:1] == [&#x27;--repetir&#x27;]:
+        return repetir(int(argumentos[1]), argumentos[2], escrever)
+    return suite_inteira(escrever)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    sys.exit(main(sys.argv[1:]))
+</code></pre><div class="atelier" data-source="work-suite-legado" data-filename="legado.md" data-execution="Na raiz do projeto, com o herdado no lugar do verificar.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_verificar tests.test_camadas. Depois, devolva o seu."></div><p>Na raiz do projeto, com o herdado no lugar do verificar.py: .\.venv\Scripts\python.exe -m unittest -v tests.test_verificar tests.test_camadas. Depois, devolva o seu.</p></div><div class="workbench"><h3>docs/testes.md: o mapa da regressão</h3><p>Acrescente ao docs/testes.md da A15 a seção Mapa da regressão: cada arquivo de teste, o grupo, o que ele protege (com a aula em que entrou) e quanto tempo leva no seu computador; e a regra do time: verificar.py com código 0 antes de cada commit, e teste intermitente é defeito. Entrega: a seção no docs/testes.md.</p><p>Concluído quando: Outra dupla, só com o mapa, diz que arquivo de teste rodaria primeiro depois de mudar o editar_item, e por quê.</p><details><summary>Dica para realizar a atividade</summary><p>O verificar.py já diz quantos testes tem cada grupo; o tempo, o unittest mostra no Ran.</p></details><pre><code id="work-mapa">## Mapa da regressão
+
+| Arquivo | Grupo | Protege | Aula | Tempo |
+|---|---|---|---|---|
+
+### Regras do time
+</code></pre><div class="atelier" data-source="work-mapa" data-filename="testes.md" data-execution="Seção do docs/testes.md do projeto. A prova é a pergunta do critério para outra dupla."></div><p>Seção do docs/testes.md do projeto. A prova é a pergunta do critério para outra dupla.</p></div><div class="workbench"><h3>Bônus: o verificador antes de cada commit</h3><p>Crie um gancho de pre-commit do Git que roda só o grupo rápido do verificar.py e impede o commit com código diferente de 0. Explique por que só o rápido, e como pular o gancho quando for preciso (e por que isso deve ser raro). Entrega (opcional): o gancho e o texto no registro desta página.</p><p>Concluído quando: Um commit com um teste rápido falhando é recusado; com tudo certo, passa.</p><details><summary>Dica para realizar a atividade</summary><p>O gancho é .git/hooks/pre-commit e não vai para o repositório: registre no README como instalar.</p></details><pre><code id="work-bonus-gancho"># Gancho de pre-commit
+
+## O gancho
+
+## Por que só o grupo rápido
+</code></pre><div class="atelier" data-source="work-bonus-gancho" data-filename="gancho.md" data-execution="No projeto, com git commit."></div><p>No projeto, com git commit.</p></div></section><section id="auditoria" data-stop="auditoria"><h2>Dá para confiar no verde? <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#auditoria" aria-label="Versão para leitura: Dá para confiar no verde?">↗</a></h2><p>Responda às perguntas, classifique as situações e julgue os achados da revisão. Sempre que puder, confira rodando a suíte antes de decidir. A correção é feita com o professor depois da tentativa.</p><fieldset data-question="q01"><legend>Um arquivo de teste foi renomeado, e o grupo ainda aponta para o nome antigo. O que o unittest devolve no lugar dele?</legend><div class="question-options"><label class="option"><input type="radio" name="q01" value="Um erro, num teste _FailedTest com o nome antigo" autocomplete="off">Um erro, num teste _FailedTest com o nome antigo</label><label class="option"><input type="radio" name="q01" value="Nada: o grupo fica vazio e passa" autocomplete="off">Nada: o grupo fica vazio e passa</label><label class="option"><input type="radio" name="q01" value="Uma falha com o nome do arquivo novo" autocomplete="off">Uma falha com o nome do arquivo novo</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao tutorial.</p></details></fieldset><fieldset data-question="q02"><legend>Por que o verificador não para no primeiro grupo com problema?</legend><div class="question-options"><label class="option"><input type="radio" name="q02" value="Para o resumo mostrar todos os problemas de uma vez, inclusive dos grupos lentos" autocomplete="off">Para o resumo mostrar todos os problemas de uma vez, inclusive dos grupos lentos</label><label class="option"><input type="radio" name="q02" value="Porque o unittest não deixa parar" autocomplete="off">Porque o unittest não deixa parar</label><label class="option"><input type="radio" name="q02" value="Para ficar mais rápido" autocomplete="off">Para ficar mais rápido</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 3.</p></details></fieldset><fieldset data-question="q03"><legend>Um teste de tecla falha 2 vezes em 20. Qual é a correção certa?</legend><div class="question-options"><label class="option"><input type="radio" name="q03" value="Esperar o foco chegar antes de gerar a tecla" autocomplete="off">Esperar o foco chegar antes de gerar a tecla</label><label class="option"><input type="radio" name="q03" value="Pôr um time.sleep(1) antes da tecla" autocomplete="off">Pôr um time.sleep(1) antes da tecla</label><label class="option"><input type="radio" name="q03" value="Rodar o teste de novo quando falhar" autocomplete="off">Rodar o teste de novo quando falhar</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>A espera precisa ser pelo quê?</p></details></fieldset><div id="audit-list"><article class="audit-item" id="au01"><fieldset data-question="au01"><legend>test_camadas.py lê os imports com ast, sem importar os arquivos.</legend><div class="question-options"><label class="option"><input type="radio" name="au01" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au01" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Importar kits/janela.py abriria o quê?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au01"> Marcar para discussão</label></article><article class="audit-item" id="au02"><fieldset data-question="au02"><legend>O verificador termina sempre com sys.exit(0) e confia que a pessoa leia o resumo.</legend><div class="question-options"><label class="option"><input type="radio" name="au02" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au02" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 1.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au02"> Marcar para discussão</label></article><article class="audit-item" id="au03"><fieldset data-question="au03"><legend>Os testes do MySQL rodam por último.</legend><div class="question-options"><label class="option"><input type="radio" name="au03" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au03" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Qual grupo dá a resposta mais rápido?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au03"> Marcar para discussão</label></article><article class="audit-item" id="au04"><fieldset data-question="au04"><legend>Um teste que falhou uma vez é marcado com skip até alguém ter tempo.</legend><div class="question-options"><label class="option"><input type="radio" name="au04" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au04" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>O que o skip protege depois disso?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au04"> Marcar para discussão</label></article><article class="audit-item" id="au05"><fieldset data-question="au05"><legend>Um arquivo novo em kits/ sem regra na tabela faz o teste das camadas falhar.</legend><div class="question-options"><label class="option"><input type="radio" name="au05" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au05" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Quem decide a camada do arquivo novo?</p></details></fieldset><label><input class="discussion" type="checkbox" value="au05"> Marcar para discussão</label></article><article class="audit-item" id="au06"><fieldset data-question="au06"><legend>Erros de teste (exceções) contam como problema, igual às falhas.</legend><div class="question-options"><label class="option"><input type="radio" name="au06" value="É problema" autocomplete="off">É problema</label><label class="option"><input type="radio" name="au06" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p><details class="reasoning-hint"><summary>Dica para raciocinar</summary><p>Volte ao relato 2.</p></details></fieldset><label><input class="discussion" type="checkbox" value="au06"> Marcar para discussão</label></article></div><article class="audit-case" id="caso-suite"><p>Outra dupla entregou o trecho de verificador abaixo, e uma ferramenta de revisão listou três achados. Julgue cada um: é problema real ou não?</p><pre><code>def suite_inteira(escrever=print):
+    codigo = 0
+    for nome, modulos in GRUPOS:
+        resultado = rodar(modulos)
+        escrever(f&#x27;{nome}: {resultado.testsRun} testes, {len(resultado.failures)} falhas&#x27;)
+        if resultado.failures:
+            codigo = 1
+    return codigo</code></pre><fieldset data-question="ac-erros" data-claim="ac-erros"><legend>Um grupo só com erros (exceções ou módulo que não importa) sai com código 0.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-erros" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-erros" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-quais" data-claim="ac-quais"><legend>O resumo diz quantas falhas, mas não quais testes, e quem corrige precisa rodar tudo de novo para descobrir.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-quais" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-quais" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset><fieldset data-question="ac-para" data-claim="ac-para"><legend>O laço para no primeiro grupo com falha e os grupos seguintes não rodam.</legend><div class="question-options"><label class="option"><input type="radio" name="ac-para" value="É problema real" autocomplete="off">É problema real</label><label class="option"><input type="radio" name="ac-para" value="Não é problema" autocomplete="off">Não é problema</label></div><p class="selected-text" aria-live="polite"></p></fieldset></article><p id="count" aria-live="polite">0 itens marcados para discussão</p><button class="js-only" id="register">Registrar discussão</button><p id="registered" aria-live="polite"></p></section><section id="registro" data-stop="registro"><h2>Entregue o que prova a regressão <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#registro" aria-label="Versão para leitura: Entregue o que prova a regressão">↗</a></h2><p>Entregue, no repositório do projeto: tests/test_camadas.py, verificar.py, tests/test_verificar.py, tests/amostras_verificar.py, o ajudante focar em tests/test_janela.py, o NullHandler em kits/dados.py e o Mapa da regressão no docs/testes.md. Os arquivos do tutorial e o verificar_herdado.py ficam fora do commit.</p><p>No registro desta página, cole a saída do verificar.py, as duas medições do teste da busca, a tabela dos quatro relatos e o mapa. Se fez o bônus, cole o gancho.</p><p>Faça um commit revisado, como na A04, só depois de verificar.py terminar com código 0.</p><div class="grid"><label>Nome do aluno<input id="student-name" autocomplete="off"></label><label>Turma<input id="student-class" autocomplete="off"></label><label>Data<input id="lesson-date" type="date"></label></div><label for="practice-notes">Registros da prática</label><textarea id="practice-notes" autocomplete="off"></textarea><label for="reflection">Reflexão e próximo passo</label><textarea id="reflection" autocomplete="off"></textarea><div class="actions js-only"><button id="export" data-export>Exportar registros da aula</button><button id="reset">Limpar sessão</button></div><p id="export-status" aria-live="polite"></p></section><section id="fechamento" data-stop="fechamento"><h2>Pergunta de saída <a class="section-source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html#fechamento" aria-label="Versão para leitura: Pergunta de saída">↗</a></h2><p>Que defeito a suíte de hoje pegaria que nenhum teste da A21 pegava, e qual ela ainda não pegaria?</p><p>A A23 começa o ORM: o SQLAlchemy mapeia as tabelas para classes, e a suíte de hoje é o que vai dizer se a troca do repositório quebrou alguma coisa.</p></section><h2>Fontes e anexos</h2><ul><li><a href="https://docs.python.org/3/library/ast.html">Python 3: ast (parse, walk, Import, ImportFrom)</a></li><li><a href="https://docs.python.org/3/library/unittest.html#unittest.TestResult">Python 3: unittest TestResult (failures e errors) e loadTestsFromNames</a></li><li><a href="https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library">Python 3: logging NullHandler para bibliotecas</a></li><li><a href="https://git-scm.com/book/pt-br/v2/Customizando-o-Git-Hooks-do-Git">Git: ganchos (pre-commit)</a></li><li><a href="https://martinfowler.com/articles/nonDeterminism.html">Martin Fowler: Eradicating Non-Determinism in Tests</a></li></ul><a data-idoc="source" href="leitura-0022-consolidacao-arquitetural-e-testes-de-regressao.html">Versão para leitura ou impressão</a></main><footer><p>UC09 — Programar aplicativos computacionais com integração de banco de dados para desktop · atualizado em <time data-idoc="asof">2026-11-21</time></p><p data-idoc="nonbinding">Registre sua tentativa e confira a correção com o professor.</p><a href="../index.html">Voltar ao índice</a></footer></div></div><noscript><p>Sem JavaScript, leia o material e registre a tentativa no seu editor ou caderno. Exportação e editores interativos exigem JavaScript.</p></noscript><script defer src="../assets/aulas.js"></script><script defer src="../assets/shell.js"></script><script defer src="../assets/course.js"></script><script defer src="../assets/atelier.js"></script></body></html>
